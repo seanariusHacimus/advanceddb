@@ -1,0 +1,2506 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: QueryRoot
+    mutation: MutationRoot
+}
+
+type Account {
+    activated_at: DateTime!
+    "Comment on request"
+    comment: NonEmptyString
+    created_at: DateTime!
+    creator: Account
+    denied_at: DateTime!
+    disabled_at: DateTime!
+    "Account email address"
+    email: NonEmptyString
+    email_confirmed_at: DateTime!
+    "First name"
+    first_name: String!
+    "Unique account identifier"
+    id: Uuid!
+    invite_confirmed_at: DateTime!
+    invite_sent_at: DateTime!
+    job_position: String
+    "First name"
+    last_name: NonEmptyString
+    "Last session which was used by this account"
+    last_session: LastSession
+    leader_groups: [IndicatorGroup!]
+    member_groups: [IndicatorGroup!]
+    "First name"
+    middle_name: NonEmptyString
+    notification_settings: NotificationSettings
+    "Organization in which user works in"
+    organization: Organization
+    "Account phone"
+    phone: NonEmptyString
+    photo: MinioFile
+    prefix: NonEmptyString
+    "Whether to request password change?"
+    request_password_change: Boolean
+    requested_at: DateTime!
+    rocket_user_id: String
+    "Account role"
+    role: AccountRole!
+    "Search score based on q filter"
+    search_score: Float
+    "Account status"
+    status: AccountStatus!
+    "Use this to save account settings"
+    storage: Json
+    type: AccountType!
+    updated_at: DateTime!
+}
+
+type AccountConnection {
+    nodes: [Account!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type AccountConnectionConnection {
+    nodes: [AccountConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type AccountInfo {
+    "Comment on request. Can be null, but not empty"
+    comment: NonEmptyString
+    "Account email"
+    email: NonEmptyString
+    "First name"
+    first_name: NonEmptyString
+    id: Uuid!
+    "Can be null, but not empty"
+    job_position: NonEmptyString
+    "Last name"
+    last_name: NonEmptyString
+    "Ids of indicator group"
+    leader_groups: [IndicatorGroupInfo!]
+    "Ids of indicator group"
+    member_groups: [IndicatorGroupInfo!]
+    "Middle name"
+    middle_name: NonEmptyString
+    "Can be null, but not empty"
+    organization: Organization
+    "Account phone"
+    phone: NonEmptyString
+    "Prefix for name. Can be null, but not empty"
+    prefix: NonEmptyString
+    "Account role"
+    role: AccountRole!
+    "Account status"
+    status: AccountStatus!
+    type: AccountType!
+}
+
+type AccountInfoConnection {
+    nodes: [AccountInfo!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Action {
+    action_boundaries: ActionBoundaries
+    action_logs: [ActionLog!]
+    attachments: [Attachment!]
+    "Completion time"
+    completed_at: DateTime
+    "Account which completed the action"
+    completer: Account
+    created_at: DateTime!
+    creator: Account!
+    deleted_at: DateTime
+    description: String
+    end_at: DateTime!
+    group: IndicatorGroupInfo
+    "Unique action identifier"
+    id: Uuid!
+    "Action name"
+    name: String!
+    number: Int!
+    "Responsive account"
+    responsive_accounts: [Account!]
+    responsive_tags: [Tag!]
+    "Search score based on q filter"
+    search_score: Float
+    start_at: DateTime!
+    status: ActionStatus!
+    sub_action_stats: ActionStats
+    sub_actions: [SubAction!]!
+    updated_at: DateTime
+}
+
+type ActionBoundaries {
+    "Min end_at date"
+    end_at: DateTime
+    "Max start_at date"
+    start_at: DateTime
+}
+
+type ActionBoundariesConnection {
+    nodes: [ActionBoundaries!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type ActionConnection {
+    nodes: [Action!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type ActionConnectionConnection {
+    nodes: [ActionConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type ActionLog {
+    committed_data: Json!
+    created_at: DateTime!
+    event: String!
+    event_description: String!
+    "Unique action identifier"
+    id: Uuid!
+    initiator: Account!
+    initiator_id: Uuid!
+    location: String
+    previous_data: Json
+}
+
+type ActionLogConnection {
+    nodes: [ActionLog!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type ActionLogConnectionConnection {
+    nodes: [ActionLogConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type ActionStats {
+    "Completed count without deleted"
+    completed: BigInt!
+    deleted: BigInt!
+    "Not started count without deleted"
+    not_started: BigInt!
+    "Ongoing past deadline count without deleted"
+    ongoing_past_deadline: BigInt!
+    "Ongoing within deadline count without deleted"
+    ongoing_within_deadline: BigInt!
+    "Total count without deleted"
+    total: BigInt!
+}
+
+type ActionStatsConnection {
+    nodes: [ActionStats!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Attachment {
+    "If deleted, time of deletion"
+    deleted_at: DateTime
+    "Attachment file"
+    file: MinioFile
+    "File title name"
+    filename: String
+    "Unique attachment identifier"
+    id: Uuid!
+    "Attachment type"
+    type: String
+}
+
+type AttachmentConnection {
+    nodes: [Attachment!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Country {
+    "Unique access token"
+    code: String!
+    """
+
+    Last accessed IP address
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    flag: String
+    "Created time"
+    name: LocalizedString!
+}
+
+type CountryConnection {
+    nodes: [Country!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type HistoryIndicator
+
+type HistoryIndicatorConnection {
+    nodes: [HistoryIndicator!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type HistoryRecord {
+    country: HistoryCountry!
+    indicators: HistoryIndicator!
+    year: Int!
+}
+
+type HistoryRecordConnection {
+    nodes: [HistoryRecord!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type IndicatorGroup {
+    action_stats: ActionStats
+    "Created time"
+    created_at: DateTime!
+    deleted_at: DateTime
+    icon: MinioFile
+    "Unique group identifier"
+    id: Uuid!
+    "List of members of this group"
+    leaders: [Account!]!
+    "List of members of this group"
+    members: [Account!]!
+    methodology: String
+    my_role: GroupRole
+    number: IntegerString
+    removable: Boolean
+    "Search score based on q filter"
+    search_score: Float
+    sidebar_visible: Boolean
+    storage: Json
+    sub_action_stats: ActionStats
+    "Group name"
+    title: String
+    visible: Boolean
+    what_to_reform: String
+}
+
+type IndicatorGroupConnection {
+    nodes: [IndicatorGroup!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type IndicatorGroupConnectionConnection {
+    nodes: [IndicatorGroupConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type IndicatorGroupInfo {
+    "Url of icon"
+    icon: String
+    "Unique group identifier"
+    id: Uuid!
+    methodology: String
+    removable: Boolean
+    sidebar_visible: Boolean
+    "Group name"
+    title: String
+    visible: Boolean
+    what_to_reform: String
+}
+
+type IndicatorGroupInfoConnection {
+    nodes: [IndicatorGroupInfo!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type IndicatorGroupInfoConnectionConnection {
+    nodes: [IndicatorGroupInfoConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type LastSession {
+    "Address taken by ip"
+    address: String
+    "Associated country object taken by ip"
+    country: Country
+    "Created time"
+    created_at: DateTime!
+    "Expired time"
+    expired_at: DateTime!
+    "Unique session identifier"
+    id: Uuid!
+    """
+
+    Invalidated time
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    invalidated_at: DateTime
+    """
+
+    Last accessed time
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    last_used_at: DateTime
+    """
+
+    Last accessed IP address
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    last_used_ip: String
+}
+
+type LastSessionConnection {
+    nodes: [LastSession!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Locale {
+    "Version of locale"
+    code: String!
+    "Dictionary"
+    dictionary: Json!
+    "Version of locale"
+    version: String!
+}
+
+type LocaleConnection {
+    nodes: [Locale!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type LocalizedString {
+    "Translation German (Germany) language"
+    de_DE: String
+    "Translation detected by Accept-Language header"
+    default: String
+    "Translation English (United States) language"
+    en_US: String
+    "Translation Spanish (Spain) language"
+    es_ES: String
+    "Translation French (France) language"
+    fr_FR: String
+    "Translation Italian (Italy) language"
+    it_IT: String
+    "Translation Japanese language"
+    ja_JP: String
+    "Translation in Kazakh language in Cyrillic alphabet"
+    kk_Cyrl_KZ: String
+    "Translation in Kazakh language in Latin alphabet"
+    kk_Latn_KZ: String
+    "Translation Korean language"
+    ko_KR: String
+    "Translation Kyrgyz language"
+    ky_KG: String
+    "Translation Russian language"
+    ru_RU: String
+    "Translation Tajik language"
+    tg_TJ: String
+    "Translation Turkmen language"
+    tk_TM: String
+    "Translation in Uzbek language in Cyrillic alphabet"
+    uz_Cyrl_UZ: String
+    "Translation in Uzbek language in Latin alphabet"
+    uz_Latn_UZ: String
+    "Translation Chinese (S) language"
+    zh_cn: String
+}
+
+type LocalizedStringConnection {
+    nodes: [LocalizedString!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type MeetingMinute {
+    attachments: [Attachment!]
+    comment: String
+    created_at: DateTime!
+    creator: Account!
+    date: DateTime!
+    deleted_at: DateTime!
+    group: IndicatorGroup!
+    id: Uuid!
+    name: String!
+    "Search score based on q filter"
+    search_score: Float
+}
+
+type MeetingMinuteConnection {
+    nodes: [MeetingMinute!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type MeetingMinuteConnectionConnection {
+    nodes: [MeetingMinuteConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type MinioFile {
+    download_url: String!
+    id: Uuid!
+    url: String!
+}
+
+type MinioFileConnection {
+    nodes: [MinioFile!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+"Root of all mutations."
+type MutationRoot {
+    """
+
+    Activate pending account
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    activate_account(id: Uuid!): Account
+    """
+
+    Activate account by invitation
+
+    Public, accessible without sign-in
+    """
+    activate_account_by_invitation(
+        "Invitation token"
+        token: String
+    ): AccountInfo
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    add_attachments(
+        "Id of action or subaction"
+        action_id: Uuid,
+        attachments: [File!]!,
+        meeting_minute_id: Uuid,
+        "Id of reform"
+        reform_id: IntegerString
+    ): [Attachment!]
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    add_group_leaders(
+        "Id of group"
+        group_id: Uuid!,
+        "Ids of leaders"
+        leaders: [Uuid!]!
+    ): IndicatorGroup
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    add_group_members(
+        "Id of group"
+        group_id: Uuid!,
+        "Ids of members"
+        members: [Uuid!]!
+    ): IndicatorGroup
+    """
+
+    Deletes account
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    cancel_account_invite(id: Uuid!): Boolean
+    """
+
+    Cancel password reset, always return Reset
+
+    Public, accessible without sign-in
+    """
+    cancel_password_reset(id: Uuid!): Reset
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    cancel_request(id: Uuid!): Boolean
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    complete_action(
+        "Id of action"
+        action_id: Uuid!
+    ): Boolean
+    """
+
+    Confirm account by token
+
+    Public, accessible without sign-in
+    """
+    confirm_account(
+        "Token sent by email"
+        confirm_token: String!
+    ): AccountInfo
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    create_action(action: CreateActionInput!, attachments: [File]): Action
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    create_indicator_group(
+        group: CreateIndicatorGroupInput!,
+        "Ids of leaders"
+        leaders: [Uuid!],
+        "Ids of members"
+        members: [Uuid!]
+    ): IndicatorGroup
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    create_meeting_minute(attachments: [File], meeting_minute: CreateMeetingMinuteInput!): MeetingMinute
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    create_organization(organization: CreateOrganizationInput!): Organization
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    create_reform(attachments: [File], reform: CreateReformInput!): Reform
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    create_sub_action(
+        "Parent action id"
+        action_id: Uuid!,
+        attachments: [File],
+        sub_action: CreateActionInput!
+    ): SubAction
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    delete_account(id: Uuid!): Account
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    delete_action(
+        "Id of action"
+        action_id: Uuid!
+    ): Boolean
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    delete_indicator_group(id: Uuid!): IndicatorGroup
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    delete_meeting_minute(
+        "Id of meeting_minute"
+        meeting_minute_id: Uuid!
+    ): MeetingMinute
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    delete_notifications(filter: ReadOrDeleteNotificationFilter!): [Notification!]
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    delete_reform(
+        "Id of reform"
+        reform_id: IntegerString!
+    ): Reform
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    delete_tag(
+        "Tag name"
+        title: String!
+    ): [Tag!]
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    deny_account(id: Uuid!): Account
+    """
+
+    Send password reset to email
+
+    Public, accessible without sign-in
+    """
+    init_password_reset(email: String!): Reset
+    """
+
+    Create and send invitation
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    invite_account(account: InviteAccountInput!): Account
+    """
+
+    Reset password
+
+    Public, accessible without sign-in
+    """
+    password_reset(
+        confirm_password: String!,
+        password: String!,
+        "Reset token sent by email"
+        reset_token: String!
+    ): Account
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    read_notifications(filter: ReadOrDeleteNotificationFilter!): [Notification!]
+    """
+
+    Public, accessible without sign-in
+    """
+    register_account(account: RegisterAccountInput!, has_invite: Boolean): AccountInfo
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    remove_attachments(
+        "Id of action or subaction"
+        action_id: Uuid,
+        attachments: [String!]!,
+        meeting_minute_id: Uuid,
+        "Id of reform"
+        reform_id: IntegerString
+    ): [Attachment!]
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    remove_group_members(
+        "Id of to return group"
+        group_id: Uuid!,
+        "Ids of members or leaders"
+        members: [Uuid!]!
+    ): IndicatorGroup
+    """
+
+    Public, accessible without sign-in
+    """
+    resend_account_confirm(id: Uuid!): AccountInfo
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    resend_account_invite(id: Uuid!): Account
+    """
+
+    Public, accessible without sign-in
+    """
+    resend_account_not_expired_invite(id: Uuid!): AccountInfo
+    """
+
+    Sign in the rocket chat
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    rocket_sign_in: RocketSession
+    """
+
+    Update self push token
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    set_push_token(push_token: String): Boolean
+    """
+
+    Sign in an account
+
+    Public, accessible without sign-in
+    """
+    sign_in(
+        "Account email"
+        email: String!,
+        "Account base64 password"
+        password: String!
+    ): Session
+    """
+
+    Close current active session
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    sign_out: Session
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    uncomplete_action(
+        "Id of action"
+        action_id: Uuid!
+    ): Boolean
+    """
+
+    Can be used to update storage or password, cannot update self, use update_my_account
+
+    Requires one of the roles:
+
+    -superuser
+    """
+    update_account(account: UpdateAccountInput, id: Uuid!): Account
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    update_action(action: UpdateActionInput!, action_id: Uuid!): Boolean
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    update_indicator_group(
+        group: UpdateIndicatorGroupInput!,
+        id: Uuid!,
+        "Ids of leaders"
+        leaders: [Uuid!],
+        "Ids of members"
+        members: [Uuid!]
+    ): IndicatorGroup
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    update_meeting_minute(meeting_minute: UpdateMeetingMinuteInput!, meeting_minute_id: Uuid!): MeetingMinute
+    """
+
+    Update self account
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    update_my_account(account: UpdateMyAccountInput!): Account
+    """
+
+    Update self password
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    update_my_password(new_password: NonEmptyString, old_password: NonEmptyString): Account
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    update_organization(id: Uuid!, organization: UpdateOrganizationInput!): Organization
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    update_reform(reform: UpdateReformInput!, reform_id: IntegerString!): Reform
+    """
+
+    Requires one of the roles:
+
+    -coordinator
+
+    -superuser
+    """
+    update_tag(
+        "Tag name"
+        new_title: String!,
+        "Tag name"
+        title: String!
+    ): [Tag!]
+}
+
+type Notification {
+    created_at: DateTime!
+    deleted_at: DateTime
+    emailed_at: DateTime
+    id: Uuid!
+    link: NotificationLink
+    pushed_at: DateTime
+    read_at: DateTime
+    status: NotificationStatus!
+    target_action: Action
+    text: String
+    trigger_account: Account
+    type: NotificationType!
+}
+
+type NotificationConnection {
+    nodes: [Notification!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type NotificationConnectionConnection {
+    nodes: [NotificationConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type NotificationLink {
+    absolute_url: String
+    relative_url: String
+}
+
+type NotificationLinkConnection {
+    nodes: [NotificationLink!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type NotificationSetting {
+    email: Boolean!
+    push: Boolean!
+}
+
+type NotificationSettingConnection {
+    nodes: [NotificationSetting!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type NotificationSettings {
+    access_requested: NotificationSetting!
+    action_almost_expired: NotificationSetting!
+    action_approved: NotificationSetting!
+    action_canceled: NotificationSetting!
+    action_completed: NotificationSetting!
+    action_created: NotificationSetting!
+    action_deleted: NotificationSetting!
+    action_expired: NotificationSetting!
+    action_rejected: NotificationSetting!
+    action_review_requested: NotificationSetting!
+    action_updated: NotificationSetting!
+}
+
+type NotificationSettingsConnection {
+    nodes: [NotificationSettings!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Organization {
+    "Unique organization identifier"
+    id: Uuid!
+    "Search score based on q filter"
+    search_score: Float
+    "Organization name"
+    title: String
+}
+
+type OrganizationConnection {
+    nodes: [Organization!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type OrganizationConnectionConnection {
+    nodes: [OrganizationConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type PeriodStats {
+    anchor_date: DateTime
+    unit: ChronoUnit
+    values: [PeriodStatsValue!]!
+}
+
+type PeriodStatsConnection {
+    nodes: [PeriodStats!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type PeriodStatsValue {
+    completed_count: BigInt
+    created_count: BigInt
+    deleted_count: BigInt
+    time_offset: Int
+}
+
+type PeriodStatsValueConnection {
+    nodes: [PeriodStatsValue!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+"Root of all queries."
+type QueryRoot {
+    """
+
+    Query information about account
+
+    Public, accessible without sign-in
+    """
+    account_info(id: Uuid!): AccountInfo
+    """
+
+    Return accounts
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    accounts(filter: AccountFilter, order: AccountOrder, pagination: Pagination): AccountConnection!
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    action_logs(filter: ActionLogFilter, order: ActionLogOrder, pagination: Pagination): ActionLogConnection
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    action_period_stats(
+        "Number periods"
+        last_n: Int,
+        "Unit of period, step"
+        unit: ChronoUnit
+    ): PeriodStats
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    action_stats: ActionStats
+    """
+
+    By default queries all actions with statuses:
+
+    completed, not_started, ongoing_within_deadline, ongoing_past_deadline.
+
+    To see archived actions, use filter status: ["deleted"]
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    actions(filter: ActionFilter, order: ActionOrder, pagination: Pagination): ActionConnection
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    history(country: HistoryCountry, year: Int): [HistoryRecord]
+    """
+
+    Return groups info
+
+    Public, accessible without sign-in
+    """
+    indicator_group_infos(filter: IndicatorGroupFilter, order: IndicatorGroupOrder, pagination: Pagination): IndicatorGroupInfoConnection!
+    """
+
+    Return groups
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    indicator_groups(filter: IndicatorGroupFilter, order: IndicatorGroupOrder, pagination: Pagination): IndicatorGroupConnection!
+    """
+
+    Return locales
+
+    Public, accessible without sign-in
+    """
+    locales(code: [String!]): [Locale!]
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    meeting_minutes(filter: MeetingMinuteFilter, order: MeetingMinuteOrder, pagination: Pagination): MeetingMinuteConnection
+    """
+
+    Query information about self
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    my_account: Account
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    notifications(filter: NotificationFilter, pagination: Pagination): NotificationConnection
+    """
+
+    Return organizations
+
+    Public, accessible without sign-in
+    """
+    organizations(filter: OrganizationFilter, pagination: Pagination): OrganizationConnection!
+    """
+
+    Query information about password reset
+
+    Public, accessible without sign-in
+    """
+    password_reset_info(id: Uuid!): Reset
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    reforms(filter: ReformFilter, order: ReformOrder, pagination: Pagination): ReformConnection
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    simulate(input: SimulateInput): SimulateOutput!
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    sub_action_period_stats(
+        "Number periods"
+        last_n: Int,
+        "Unit of period, step"
+        unit: ChronoUnit
+    ): PeriodStats
+    """
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    sub_action_stats: ActionStats
+    """
+
+    By default queries all actions with statuses:
+
+    completed, not_started, ongoing_within_deadline, ongoing_past_deadline.
+
+    To see archived actions, use filter status: ["deleted"]
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    sub_actions(filter: SubActionFilter, order: ActionOrder, pagination: Pagination): SubActionConnection
+    """
+
+    Return tags
+
+    Requires one of the roles:
+
+    -participant
+
+    -coordinator
+
+    -superuser
+    """
+    tags(filter: TagFilter, pagination: Pagination): TagConnection!
+}
+
+type Reform {
+    attachments: [Attachment!]
+    created_at: DateTime!
+    creator: Account!
+    date_of_entry: DateTime
+    description: String
+    geo_impact: String
+    group: IndicatorGroupInfo
+    "Reform number"
+    id: BigInt!
+    legal_basis: String
+    "Search score based on q filter"
+    search_score: Float
+    sub_index_impacted: String!
+    suggested_data_modification: String
+    suggested_date: DateTime
+    "Type, for example: reform"
+    type_of_update: String!
+}
+
+type ReformConnection {
+    nodes: [Reform!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type ReformConnectionConnection {
+    nodes: [ReformConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Reset {
+    "Reset Canceled time"
+    canceled_at: DateTime
+    "Reset Confirm time"
+    confirmed_at: DateTime
+    "Created time"
+    created_at: DateTime!
+    "Account email"
+    email: NonEmptyString
+    "Reset expiring time"
+    expired_at: DateTime!
+    "Unique reset identifier"
+    id: Uuid!
+    "Reset status, computed"
+    status: ResetStatus
+}
+
+type ResetConnection {
+    nodes: [Reset!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type RocketSession {
+    "RocketChat user token"
+    token: String!
+    "RocketChat user id"
+    user_id: String!
+}
+
+type RocketSessionConnection {
+    nodes: [RocketSession!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Session {
+    "Unique access token, non null only in sign_in or sing_out"
+    access_token: String
+    "Associated account object"
+    account: Account!
+    "Associated account identifier"
+    account_id: Uuid!
+    "Address taken by ip"
+    address: String
+    "Associated country object taken by ip"
+    country: Country
+    "Created time"
+    created_at: DateTime!
+    "Expired time"
+    expired_at: DateTime!
+    "Unique session identifier"
+    id: Uuid!
+    """
+
+    Invalidated time
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    invalidated_at: DateTime
+    """
+
+    Last accessed time
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    last_used_at: DateTime
+    """
+
+    Last accessed IP address
+
+    Requires one of the roles:
+
+    -admin
+
+    -operator
+    """
+    last_used_ip: String
+}
+
+type SessionConnection {
+    nodes: [Session!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type SimulateOutput
+
+type SimulateOutputConnection {
+    nodes: [SimulateOutput!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type SubAction {
+    action_logs: [ActionLog!]
+    attachments: [Attachment!]
+    "Completion time"
+    completed_at: DateTime
+    "Account which completed the action"
+    completer: Account
+    created_at: DateTime!
+    creator: Account!
+    deleted_at: DateTime
+    description: String
+    end_at: DateTime!
+    group: IndicatorGroupInfo
+    "Unique action identifier"
+    id: Uuid!
+    "Action name"
+    name: String!
+    number: Int!
+    parent_action: Action!
+    "Responsive account"
+    responsive_accounts: [Account!]
+    responsive_tags: [Tag!]
+    "Search score based on q filter"
+    search_score: Float
+    start_at: DateTime!
+    status: ActionStatus!
+    updated_at: DateTime
+}
+
+type SubActionConnection {
+    nodes: [SubAction!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type SubActionConnectionConnection {
+    nodes: [SubActionConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type Tag {
+    "Search score based on q filter"
+    search_score: Float
+    "Tag name"
+    title: String
+}
+
+type TagConnection {
+    nodes: [Tag!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+type TagConnectionConnection {
+    nodes: [TagConnection!]!
+    "Current page"
+    page: Int!
+    "Total number of pages"
+    pages: Int!
+    "Page size"
+    size: Int!
+    "Total number of nodes"
+    total: Int!
+}
+
+enum AccountOrderFields {
+    comment
+    created_at
+    disabled
+    email
+    first_name
+    id
+    job_position
+    last_name
+    middle_name
+    phone
+    prefix
+    request_password_change
+    role
+    status
+    updated_at
+}
+
+enum AccountRole {
+    coordinator
+    participant
+    superuser
+}
+
+enum AccountStatus {
+    active
+    denied
+    disabled
+    invite_expired
+    invite_sent
+    pending
+    unconfirmed
+}
+
+enum AccountType {
+    invited
+    requested
+}
+
+enum ActionLogOrderFields {
+    created_at
+    event
+}
+
+enum ActionOrderFields {
+    created_at
+    description
+    end_at
+    name
+    number
+    start_at
+    updated_at
+}
+
+enum ActionStatus {
+    completed
+    deleted
+    not_started
+    on_review
+    ongoing_past_deadline
+    ongoing_within_deadline
+}
+
+enum ChronoUnit {
+    days
+    hours
+    minutes
+    months
+    weeks
+    years
+}
+
+enum ConfirmStatus {
+    canceled
+    created
+    expired
+    failed
+    succeeded
+}
+
+enum GroupRole {
+    coordinator
+    leader
+    member
+    observer
+    superuser
+}
+
+enum HistoryCountry {
+    "This value is replaced on start."
+    UZS
+}
+
+enum IndicatorOrderFields {
+    id
+    number
+    title
+    visible
+}
+
+enum IsValue {
+    nothing
+    something
+}
+
+enum MeetingMinuteOrderFields {
+    created_at
+    date
+    id
+}
+
+enum NotificationStatus {
+    created
+    deleted
+    read
+}
+
+enum NotificationType {
+    access_requested
+    action_almost_expired
+    action_approved
+    action_canceled
+    action_completed
+    action_created
+    action_deleted
+    action_expired
+    action_rejected
+    action_review_requested
+    action_updated
+}
+
+enum OrderDirection {
+    asc
+    desc
+}
+
+enum ReformOrderFields {
+    created_at
+    description
+    end_at
+    id
+    name
+    number
+    start_at
+    updated_at
+}
+
+enum ResetStatus {
+    canceled
+    confirmed
+    created
+    expired
+}
+
+input AccountFilter {
+    created_at: DateTimeRange
+    email: String
+    first_name: String
+    group_id: [Uuid!]
+    "Ids of invitations"
+    id: [Uuid!]
+    last_name: String
+    middle_name: String
+    q: String
+    role: [AccountRole!]
+    status: [AccountStatus!]
+    type: [AccountType!]
+    updated_at: DateTimeRange
+}
+
+input AccountOrder {
+    direction: OrderDirection!
+    key: AccountOrderFields!
+}
+
+input ActionFilter {
+    description: String
+    group_id: [Uuid!]
+    "Ids of Actions"
+    id: [Uuid!]
+    "Was this action completed? By default, false"
+    is_completed: Boolean
+    name: String
+    number: Int
+    q: String
+    status: [ActionStatus!]
+}
+
+input ActionLogFilter {
+    action_id: [Uuid!]
+    created_at: DateTimeRange
+    event: [String!]
+    event_description: String
+    initiator_id: [Uuid!]
+    location: String
+}
+
+input ActionLogOrder {
+    direction: OrderDirection!
+    key: ActionLogOrderFields!
+}
+
+input ActionOrder {
+    direction: OrderDirection!
+    key: ActionOrderFields!
+}
+
+input AttachmentFilter {
+    "Ids of Attachments"
+    id: [Uuid!]
+}
+
+input BigDecimalRange {
+    eq: BigDecimal
+    gt: BigDecimal
+    gte: BigDecimal
+    is: IsValue
+    lt: BigDecimal
+    lte: BigDecimal
+}
+
+input BigIntRange {
+    eq: BigInt
+    gt: BigInt
+    gte: BigInt
+    is: IsValue
+    lt: BigInt
+    lte: BigInt
+}
+
+input CreateActionInput {
+    description: String
+    end_at: DateTime!
+    "Id of group"
+    group_id: Uuid!
+    name: String!
+    number: IntegerString
+    "Account ids"
+    responsive_account_ids: [Uuid!]!
+    responsive_tags: [String!]
+    start_at: DateTime!
+}
+
+input CreateIndicatorGroupInput {
+    icon: File
+    methodology: String
+    number: IntegerString
+    "Group name"
+    title: String!
+    what_to_reform: String
+}
+
+input CreateMeetingMinuteInput {
+    comment: String
+    date: DateTime!
+    group_id: Uuid!
+    name: String!
+}
+
+input CreateOrganizationInput {
+    "Organization name"
+    title: String!
+}
+
+input CreateReformInput {
+    attachments: [File]
+    date_of_entry: DateTime
+    description: String
+    geo_impact: String
+    group_id: Uuid!
+    legal_basis: String
+    sub_index_impacted: String!
+    suggested_data_modification: String
+    suggested_date: DateTime
+    "Type, for example: reform"
+    type_of_update: String!
+}
+
+input DateRange {
+    eq: Date
+    gt: Date
+    gte: Date
+    is: IsValue
+    lt: Date
+    lte: Date
+}
+
+input DateTimeRange {
+    eq: DateTime
+    gt: DateTime
+    gte: DateTime
+    is: IsValue
+    lt: DateTime
+    lte: DateTime
+}
+
+input IndicatorGroupFilter {
+    "Ids of Groups"
+    id: [Uuid!]
+    q: String
+    removable: Boolean
+    sidebar_visible: Boolean
+    title: String
+    visible: Boolean
+}
+
+input IndicatorGroupOrder {
+    direction: OrderDirection!
+    key: IndicatorOrderFields!
+}
+
+input IntRange {
+    eq: Int
+    gt: Int
+    gte: Int
+    is: IsValue
+    lt: Int
+    lte: Int
+}
+
+input InviteAccountInput {
+    comment: NonEmptyString
+    "Account email"
+    email: NonEmptyString!
+    "First name"
+    first_name: NonEmptyString!
+    "Last name"
+    last_name: NonEmptyString
+    "Ids of indicator group"
+    leader_groups: [Uuid!]
+    "Ids of indicator group"
+    member_groups: [Uuid!]
+    "Middle name"
+    middle_name: NonEmptyString
+    "Can be null, but not empty"
+    organization: NonEmptyString
+    role: AccountRole
+}
+
+input LocalizedStringInput {
+    "Translation German (Germany) language"
+    de_DE: String
+    "Translation English (United States) language"
+    en_US: String
+    "Translation Spanish (Spain) language"
+    es_ES: String
+    "Translation French (France) language"
+    fr_FR: String
+    "Translation Italian (Italy) language"
+    it_IT: String
+    "Translation Japanese language"
+    ja_JP: String
+    "Translation in Kazakh language in Cyrillic alphabet"
+    kk_Cyrl_KZ: String
+    "Translation in Kazakh language in Latin alphabet"
+    kk_Latn_KZ: String
+    "Translation Korean language"
+    ko_KR: String
+    "Translation Kyrgyz language"
+    ky_KG: String
+    "Translation Russian language"
+    ru_RU: String
+    "Translation Tajik language"
+    tg_TJ: String
+    "Translation Turkmen language"
+    tk_TM: String
+    "Translation in Uzbek language in Cyrillic alphabet"
+    uz_Cyrl_UZ: String
+    "Translation in Uzbek language in Latin alphabet"
+    uz_Latn_UZ: String
+    "Translation Chinese (S) language"
+    zh_cn: String
+}
+
+input MeetingMinuteFilter {
+    created_at: DateTimeRange
+    date: DateTimeRange
+    group_id: [Uuid!]
+    q: String
+}
+
+input MeetingMinuteOrder {
+    direction: OrderDirection!
+    key: MeetingMinuteOrderFields!
+}
+
+input NotificationFilter {
+    id: [Uuid!]
+    status: [NotificationStatus!]
+    type: [NotificationType!]
+}
+
+input NotificationSettingInput {
+    email: Boolean!
+    push: Boolean!
+}
+
+input NotificationSettingsInput {
+    action_almost_expired: NotificationSettingInput!
+    action_approved: NotificationSettingInput!
+    action_canceled: NotificationSettingInput!
+    action_completed: NotificationSettingInput!
+    action_created: NotificationSettingInput!
+    action_deleted: NotificationSettingInput!
+    action_expired: NotificationSettingInput!
+    action_rejected: NotificationSettingInput!
+    action_review_requested: NotificationSettingInput!
+    action_updated: NotificationSettingInput!
+}
+
+input OrganizationFilter {
+    "Ids of Organizations"
+    id: [Uuid!]
+    q: String
+    title: String
+}
+
+input Pagination {
+    page: Int
+    size: Int
+}
+
+input ReadOrDeleteNotificationFilter {
+    id: [Uuid!]!
+}
+
+input ReformFilter {
+    group_id: [Uuid!]
+    "Ids of Reforms"
+    id: [BigInt!]
+    q: String
+}
+
+input ReformOrder {
+    direction: OrderDirection!
+    key: ReformOrderFields!
+}
+
+"""
+
+if included make all empty values for:
+
+-prefix
+
+-job_position
+
+-organization
+
+-comment be null
+"""
+input RegisterAccountInput {
+    "Comment on request. Can be null, but not empty"
+    comment: NonEmptyString
+    "Repeat password"
+    confirm_password: NonEmptyString
+    "Account email"
+    email: NonEmptyString!
+    "First name"
+    first_name: NonEmptyString!
+    "Can be null, but not empty"
+    job_position: NonEmptyString
+    "Last name"
+    last_name: NonEmptyString!
+    "Ids of indicator group"
+    leader_groups: [Uuid!]
+    "Ids of indicator group"
+    member_groups: [Uuid!]
+    "Middle name"
+    middle_name: NonEmptyString
+    "Can be null, but not empty"
+    organization: NonEmptyString
+    """
+
+    Account password, if empty, will be generated and sent to email.
+
+    Can be empty
+    """
+    password: NonEmptyString
+    "Account phone"
+    phone: NonEmptyString!
+    "Prefix for name. Can be null, but not empty"
+    prefix: NonEmptyString
+}
+
+input SimulateInput
+
+input SubActionFilter {
+    description: String
+    group_id: [Uuid!]
+    "Ids"
+    id: [Uuid!]
+    name: String
+    number: Int
+    parent_action_id: [Uuid!]
+    q: String
+    status: [ActionStatus!]
+}
+
+input TagFilter {
+    action_id: [Uuid!]
+    q: String
+    title: String
+}
+
+input UpdateAccountInput {
+    "Comment on request, if null, remain unchanged"
+    comment: NonEmptyString
+    disabled: Boolean
+    "Account email"
+    email: String
+    "First name"
+    first_name: String
+    job_position: NonEmptyString
+    "Last name"
+    last_name: String
+    "Ids of indicator group"
+    leader_groups: [Uuid!]
+    "Ids of indicator group"
+    member_groups: [Uuid!]
+    "Middle name"
+    middle_name: NonEmptyString
+    notification_settings: NotificationSettingsInput
+    organization: NonEmptyString
+    "Account password, if empty, remain unchanged"
+    password: String
+    "Account phone"
+    phone: String
+    photo: File
+    prefix: NonEmptyString
+    role: AccountRole
+    "Use this to save account settings"
+    storage: Json
+}
+
+input UpdateActionInput {
+    description: String
+    end_at: DateTime
+    name: String
+    number: IntegerString
+    "Account ids"
+    responsive_account_ids: [Uuid!]
+    responsive_tags: [String!]
+    start_at: DateTime
+}
+
+input UpdateIndicatorGroupInput {
+    icon: File
+    methodology: String
+    number: IntegerString
+    removable: Boolean
+    sidebar_visible: Boolean
+    storage: Json
+    "Group name"
+    title: String
+    visible: Boolean
+    what_to_reform: String
+}
+
+input UpdateMeetingMinuteInput {
+    comment: String
+    date: DateTime
+    id: [Uuid!]
+    name: String
+}
+
+input UpdateMyAccountInput {
+    "Comment on request, if empty, will be nulled"
+    comment: NonEmptyString
+    "Account email"
+    email: NonEmptyString
+    "First name"
+    first_name: NonEmptyString
+    job_position: NonEmptyString
+    "Last name"
+    last_name: NonEmptyString
+    "Middle name"
+    middle_name: NonEmptyString
+    notification_settings: NotificationSettingsInput
+    "Organization in which user works, if empty, will be nulled"
+    organization: NonEmptyString
+    "Account phone"
+    phone: NonEmptyString
+    photo: File
+    prefix: NonEmptyString
+    "Use this to save account settings"
+    storage: Json
+}
+
+input UpdateOrganizationInput {
+    "Organization name"
+    title: String
+}
+
+input UpdateReformInput {
+    date_of_entry: DateTime
+    description: String
+    geo_impact: String
+    group_id: Uuid
+    legal_basis: String
+    sub_index_impacted: String
+    suggested_data_modification: String
+    suggested_date: DateTime
+    type_of_update: String
+}
+
+input UpdateSubActionInput {
+    completer_id: Uuid
+    description: String
+    end_at: DateTime
+    name: String
+    number: IntegerString
+    "Account ids"
+    responsive_account_ids: [Uuid!]
+    responsive_tags: [String!]
+    start_at: DateTime
+}
+
+input UpdateTagInput {
+    "Tag name"
+    title: String
+}
+
+
+scalar BigDecimal
+
+scalar BigInt
+
+scalar BooleanString
+
+scalar Date
+
+scalar DateTime
+
+scalar File
+
+scalar IntegerString
+
+scalar InternationalPhoneNumber
+
+scalar Json
+
+scalar NonEmptyString
+
+scalar Uuid

@@ -1,0 +1,243 @@
+@import '~antd/dist/antd.css';
+:root {
+    --blue: #527BDD;
+    --dark-blue: #313976;
+    --title: #0D0C21;
+    --text: #252A32;
+    --dark: #535263;
+    --danger: #F181AB;
+    --text-light: #717A8F;
+    --background: #FCFDFF;
+    --icon-color: #DADCE2;
+    --border-grey: #E2E4ED;
+    --default-dark: #e8e8e8;
+    --default-light: #F3F3F4;
+    --chart-yellow: #F4D581;
+    --chart-blue: #527BDD;
+    --chart-red: #F4C9D9;
+    --chart-grey: #E5E7EF;
+    --box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+button {
+    outline: none;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-light {
+    color: var(--text-light);
+}
+
+.text-primary {
+    color: var(--blue);
+}
+
+.text-default {
+    color: var(--text);
+}
+
+.text-title {
+    color: var(--title);
+}
+
+.text-white {
+    color: #fff;
+}
+
+.border-color {
+    color: var(--border-grey);
+}
+
+.link-light {
+    color: var(--text-light);
+}
+
+.pt-30 {
+    padding-top: 30px;
+}
+
+.pl-30 {
+    padding-left: 30px;
+}
+
+.pb-30 {
+    padding-bottom: 30px;
+}
+
+.pr-30 {
+    padding-right: 30px;
+}
+
+.px-30 {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.py-30 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.ant-select-item {
+    height: 38px;
+    min-height: 38px;
+    line-height: 28px;
+    color: #FCFDFF;
+}
+
+.select-item {
+    height: 38px;
+    min-height: 38px;
+    line-height: 28px;
+    color: #FCFDFF;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #777685;
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    color: #C1D3FF;
+    font-weight: 600;
+    background-color: transparent;
+}
+
+.ant-select-show-search.ant-select-multiple .ant-select-selector {
+    height: 100%;
+    min-height: 56px;
+}
+
+
+/* -------- TINY MYCE --------- */
+
+.tox:not([dir=rtl]) .tox-statusbar__branding,
+.tox-notifications-container {
+    display: none !important;
+}
+
+.tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
+    border-right: none !important;
+}
+
+.tox-toolbar__primary {
+    background: var(--background) !important;
+}
+
+.tox .tox-statusbar {
+    height: 12px !important;
+}
+
+.tox .tox-statusbar__text-container {
+    display: none !important;
+}
+
+.ant-skeleton-content .ant-skeleton-paragraph>li {
+    height: 20px;
+    background-color: #F0F1F7;
+}
+
+.ant-tabs {
+    overflow: initial;
+}
+
+.more-action-btn-table {
+    background-color: rgb(83, 82, 99);
+    color: #fff;
+    border-radius: 4px;
+    border-color: transparent;
+}
+
+.more-action-btn-table {
+    background-color: rgb(83, 82, 99);
+    color: #fff;
+    border-radius: 4px;
+}
+
+.ant-menu-item,
+.ant-menu-item-selected {
+    color: #fff;
+    background: transparent;
+}
+
+.more-action-btn button {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.ant-table-tbody>tr>td {
+    border-color: var(--border-grey);
+}
+
+.custom-select-tag.ant-select-multiple.ant-select-lg .ant-select-selection-item {
+    background: transparent !important;
+    border: none;
+}
+
+.custom-select-tag .anticon.anticon-close {
+    display: none;
+}
+
+.small-confirm-btn {
+    padding: 5px 30px;
+    background-color: var(--blue);
+    font-size: 14px;
+}
+
+#inner-search-wrapper {
+    position: relative;
+    margin-right: 8px;
+}
+
+#inner-search-wrapper input {
+    height: 34px;
+}
+
+#inner-search-wrapper span {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+}
+
+#inner-search-wrapper span:hover {
+    background: var(--default-light);
+}
+
+.more-action-btn-table .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: transparent !important;
+    color: #fff !important;
+}

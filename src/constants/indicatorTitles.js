@@ -1,0 +1,78 @@
+export default {
+  dealing_with_construction_permits: {
+    procedures: "Procedures (number)",
+    time: "Time (days)",
+    cost: "Cost (% of Warehouse value)",
+    building_quality_control_index_db16_20: "Building quality control index (0-15) (DB16-20 methodology)",
+  },
+  ease_of_doing_business: {
+    ease_of_doing_business_rank: "Ease of doing business rank",
+    ease_of_doing_business_score_db10_14: "Ease of doing business score (DB17-20 methodology)",
+    ease_of_doing_business_score_db15: "Ease of doing business score (DB15 methodology)",
+    ease_of_doing_business_score_db17_20: "Ease of doing business score (DB10-14 methodology)",
+  },
+  enforcing_contracts: {
+    time: "Time (days)",
+    cost: "Cost (% of claim)",
+    quality_of_judicial_processes_index_db17_20: "Quality of judicial processes index (0-18) (DB17-20 methodology)",
+  },
+  getting_credit: {
+    strength_of_legal_rights_index_db15_20: "Strength of legal rights index (0-12) (DB15-20 methodology)",
+    depth_of_credit_information_index_db15_20: "Depth of credit information index (0-8) (DB15-20 methodology)",
+    credit_registry_coverage: "Credit registry coverage (% of adults)",
+    credit_bureau_coverage: "Credit bureau coverage (% of adults)",
+  },
+  getting_electricity: {
+    procedures: "Procedures (number)",
+    time: "Time (days)",
+    cost: "Cost (% of income per capita)",
+    reliability_of_supply_and_transparency_of_tariff_index_db16_20: "Reliability of supply and transparency of tariff index (0-8) (DB16-20 methodology)",
+  },
+  paying_taxes: {
+    payments: "Payments (number per year)",
+    time: "Time (hours per year)",
+    total_tax_and_contribution_rate: "Total tax and contribution rate (% of profit)",
+    score_postfiling_index_db17_20: "Score Postfiling index (0-100) (DB17-20 methodology)",
+  },
+  protecting_minority_investors: {
+    extent_of_disclosure_index: "Extent of disclosure index (0-10)",
+    extent_of_director_liability_index: "Extent of director liability index (0-10)",
+    ease_of_shareholder_suits_index_db15_20: "Ease of shareholder suits index (0-10) (DB15-20 methodology)",
+    extent_of_shareholder_rights_index_db15_20: "Extent of shareholder rights index (0-6) (DB15-20 methodology)",
+    extent_of_ownership_and_control_index_db15_20: "Extent of ownership and control index (0-7) (DB15-20 methodology)",
+    extent_of_corporate_transparency_index_db15_20: "Extent of corporate transparency index (0-7) (DB15-20 methodology)",
+    strength_of_minority_investor_protection_index_db15_20: "Strength of minority investor protection index (0-50) (DB15-20 methodology) ",
+  },
+  registering_property: {
+    procedures: "Procedures (number)",
+    time: "Time (days)",
+    cost: "Cost (% of property value)",
+    quality_of_land_administration_index_db17_20: "Quality of land administration index (0-30) (DB17-20 methodology)",
+  },
+  resolving_insolvency: {
+    recovery_rate: "Recovery rate (cents on the dollar)",
+    time: "Time (years)",
+    cost: "Cost (% of estate)",
+    outcome: "Outcome (0 as piecemeal sale and 1 as going concern)",
+    strength_of_insolvency_framework_index: "Strength of insolvency framework index (0-16)",
+  },
+  starting_a_business: {
+    procedures_men: "Procedures - Men (number)",
+    time_men: "Time - Men (days)",
+    cost_men: "Cost - Men (% of income per capita)",
+    procedures_women: "Procedures - Women (number)",
+    time_women: "Time - Women (days)",
+    cost_women: "Cost - Women (% of income per capita)",
+    paid_in_minimum_capital: "Paid-in Minimum capital (% of income per capita)",
+  },
+  trading_across_borders: {
+    time_to_export_documentary_compliance_db16_20: "Time to export: Documentary compliance (hours) (DB16-20 methodology)",
+    time_to_import_documentary_compliance_db16_20: "Time to import: Documentary compliance (hours) (DB16-20 methodology)",
+    time_to_export_border_compliance_db16_20: "Time to export: Border compliance (hours) (DB16-20 methodology)",
+    time_to_import_border_compliance_db16_20: "Time to import: Border compliance (hours) (DB16-20 methodology)",
+    cost_to_export_documentary_compliance_db16_20: "Cost to export: Documentary compliance (USD) (DB16-20 methodology)",
+    cost_to_import_documentary_compliance_db16_20: "Cost to import: Documentary compliance (USD) (DB16-20 methodology)",
+    cost_to_export_border_compliance_db16_20: "Cost to export: Border compliance (USD) (DB16-20 methodology)",
+    cost_to_import_border_compliance_db16_20: "Cost to import: Border compliance (USD) (DB16-20 methodology)",
+  }
+}
