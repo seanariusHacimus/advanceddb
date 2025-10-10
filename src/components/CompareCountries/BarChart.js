@@ -1,10 +1,17 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 import {
-  BarChart, Bar, ResponsiveContainer, Cell, LabelList, XAxis, YAxis, Text
-} from 'recharts';
-import constants from '../../constants';
+  BarChart,
+  Bar,
+  ResponsiveContainer,
+  Cell,
+  LabelList,
+  XAxis,
+  YAxis,
+  Text,
+} from "recharts";
+import constants from "../../constants";
 
-const CustomizedLabel = props => {
+const CustomizedLabel = (props) => {
   const { x, y, payload } = props;
 
   return (
@@ -16,12 +23,14 @@ const CustomizedLabel = props => {
       textAnchor="middle"
       verticalAnchor="start"
       width={15}
-      style={{ lineHeight: 2.5, textTransform: 'capitalize' }}
-    >{payload.value.replace(/Ease of|\(rank\)/ig, '')}</Text>
+      style={{ lineHeight: 2.5, textTransform: "capitalize" }}
+    >
+      {payload.value.replace(/Ease of|\(rank\)/gi, "")}
+    </Text>
   );
 };
 
-const CustomizedValue = props => {
+const CustomizedValue = (props) => {
   const { x, y, width, payload, index } = props;
   return (
     <Text
@@ -32,8 +41,10 @@ const CustomizedValue = props => {
       textAnchor="middle"
       verticalAnchor="start"
       // width={35}
-      style={{ lineHeight: 2.5, textTransform: 'capitalize', }}
-    >{payload[index].noPractice ? 'no practice' : payload[index].value}</Text>
+      style={{ lineHeight: 2.5, textTransform: "capitalize" }}
+    >
+      {payload[index].noPractice ? "no practice" : payload[index].value}
+    </Text>
   );
 };
 
@@ -41,13 +52,22 @@ export default class BarModule extends PureComponent {
   render() {
     const { data = [], color } = this.props;
     return (
-      <div style={{ width: '100%', height: 260, maxWidth: data.length > 1 ? (data.length * 90) : 150, }}>
+      <div
+        style={{
+          width: "100%",
+          height: 260,
+          maxWidth: data.length > 1 ? data.length * 90 : 150,
+        }}
+      >
         <ResponsiveContainer>
           <BarChart
             data={data}
             barGap={20}
             margin={{
-              top: 30, right: 0, left: 0, bottom: 5,
+              top: 30,
+              right: 0,
+              left: 0,
+              bottom: 5,
             }}
           >
             {/* <Tooltip
@@ -56,7 +76,6 @@ export default class BarModule extends PureComponent {
             <Bar
               dataKey="value"
               fill="#8884d8"
-              barGap={1}
               barGap={2}
               maxBarSize={50}
               minPointSize={5}
@@ -64,11 +83,23 @@ export default class BarModule extends PureComponent {
               label={<CustomizedValue payload={data} />}
               animationDuration={constants.animationSpeed}
             >
-              {
-                data.map((entry, index) => <Cell dataKey="value" key={`cell-${index}`} minPointSize={5} fill={color[index]} />)
-              }
+              {data.map((entry, index) => (
+                <Cell
+                  dataKey="value"
+                  key={`cell-${index}`}
+                  minPointSize={5}
+                  fill={color[index]}
+                />
+              ))}
             </Bar>
-            <XAxis dataKey="name" interval={0} height={100} axisLine={false} tickLine={false} tick={<CustomizedLabel />} />
+            <XAxis
+              dataKey="name"
+              interval={0}
+              height={100}
+              axisLine={false}
+              tickLine={false}
+              tick={<CustomizedLabel />}
+            />
             <YAxis />
           </BarChart>
         </ResponsiveContainer>
@@ -76,4 +107,3 @@ export default class BarModule extends PureComponent {
     );
   }
 }
-

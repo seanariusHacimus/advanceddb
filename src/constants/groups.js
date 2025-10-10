@@ -1,14 +1,31 @@
-export default [
-  { id: 'starting-a-business', name: 'Starting a Business' },
-  { id: 'dealing-with-construction-permits', name: 'Dealing with Construction Permits' },
-  { id: 'getting-electricity', name: 'Getting Electricity' },
-  { id: 'registering-property', name: 'Registering Property' },
-  { id: 'getting-credit', name: 'Getting Credit' },
-  { id: 'protecting-minority-investors', name: 'Protecting Minority Investors' },
-  { id: 'paying-taxes', name: 'Paying Taxes' },
-  { id: 'trading-across-borders', name: 'Trading across Borders' },
-  { id: 'enforcing-contracts', name: 'Enforcing Contracts' },
-  { id: 'resolving-insolvency', name: 'Resolving Insolvency' },
-  { id: 'contracting-with-the-government', name: 'Contracting with the Government' },
-  { id: 'create-a-new-working-group', name: 'Create a New Working Group' },
-]
+export const GROUP_NAMES = {
+  BUSINESS_ENTRY: { id: "business-entry", name: "Business Entry" },
+  BUSINESS_LOCATION: { id: "business-location", name: "Business Location" },
+  UTILITY_SERVICES: { id: "utility-services", name: "Utility Services" },
+  LABOR: { id: "labor", name: "Labor" },
+  FINANCIAL_SERVICES: { id: "financial-services", name: "Financial Services" },
+  INTERNATIONAL_TRADE: {
+    id: "international-trade",
+    name: "International Trade",
+  },
+  TAXATION: { id: "taxation", name: "Taxation" },
+  DISPUTE_RESOLUTION: { id: "dispute-resolution", name: "Dispute Resolution" },
+  MARKET_COMPETITION: { id: "market-competition", name: "Market Competition" },
+  BUSINESS_INSOLVENCY: {
+    id: "business-insolvency",
+    name: "Business Insolvency",
+  },
+};
+
+const updatedGroupNamesFromDoingBusinessAndBeReady = {
+  starting_a_business: "Business Entry",
+  dealing_with_construction_permits: "Business Location",
+  getting_electricity: "Utility Services",
+  registering_property: "Labor",
+  getting_credit: "Financial Services",
+  protecting_minority_investors: "International Trade",
+  paying_taxes: "Taxation",
+  trading_across_borders: "Dispute Resolution",
+  enforcing_contracts: "Market Competition",
+  resolving_insolvency: "Business Insolvency",
+};

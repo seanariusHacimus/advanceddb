@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   .print-btn {
@@ -9,10 +9,10 @@ export default styled.div`
     height: 34px;
     margin-left: auto;
     padding: 8.5px 10px;
-    background: #FCFDFF;
-    border: 1px solid #D6D9E4;
+    background: #fcfdff;
+    border: 1px solid #d6d9e4;
     border-radius: 5px;
-    color: #828A9D;
+    color: #828a9d;
   }
   .inner-block {
     padding: 20px;
@@ -25,11 +25,11 @@ export default styled.div`
   .ant-tabs-nav::before {
     border-color: var(--border-grey);
   }
- 
+
   .ant-tabs-tab-btn {
-    color: #717A8F;
+    color: #717a8f;
   }
-  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn, 
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn,
   .ant-tabs-tab:hover {
     color: var(--blue);
     font-weight: 600;
@@ -113,7 +113,7 @@ export default styled.div`
       border-left: none;
       border-right: none;
       margin: 15px 0;
-      padding: 15px  0;
+      padding: 15px 0;
     }
     .col-right {
       padding-left: 0;
@@ -129,25 +129,24 @@ export default styled.div`
 `;
 
 export const ActionPlanPage = styled.div`
-
   #header {
     width: calc(100% + 40px);
     margin: 23px 0;
     padding: 11px 40px;
-    background: #F3F5F9;
-    border-top: 1px solid #527BDD;
+    background: #f3f5f9;
+    border-top: 1px solid #527bdd;
     position: relative;
     left: -20px;
   }
   .dynamic-input {
-    background-color: #FAFBFC;
+    background-color: #fafbfc;
   }
-   input[type=date]:required:invalid::-webkit-datetime-edit {
+  input[type="date"]:required:invalid::-webkit-datetime-edit {
     color: transparent;
   }
-  
-  input[type=date]:focus::-webkit-datetime-edit {
-      color: black !important;
+
+  input[type="date"]:focus::-webkit-datetime-edit {
+    color: black !important;
   }
 
   .btn-group {
@@ -169,11 +168,11 @@ export const ActionPlanPage = styled.div`
     .cancel {
       margin-left: auto;
       margin-right: 12px;
-      background-color: #DFE4ED;
+      background-color: #dfe4ed;
     }
     .cancel:hover {
-      background-color: #D6D6DD;
-      border-color: #D6D6DD;
+      background-color: #d6d6dd;
+      border-color: #d6d6dd;
     }
   }
 
@@ -192,19 +191,22 @@ export const ActionPlanPage = styled.div`
     margin-left: auto;
   }
   .list-btn.active {
-    background-color: #E7EAF0;
+    background-color: #e7eaf0;
     border: 1px solid var(--border-grey);
   }
 
-  .tox-tinymce {
+  /* Keep previous TinyMCE styles and apply same to Quill editor container */
+  .tox-tinymce,
+  .custom-tiyn-editor .ql-container {
     border: 1px solid var(--border-grey);
     border-radius: 5px;
   }
-  .tox-tinymce:focus {
+  .tox-tinymce:focus,
+  .custom-tiyn-editor .ql-container:focus-within {
     border: 1px solid var(--blue);
   }
 
-   .user-icon {
+  .user-icon {
     margin-right: 11px;
   }
 
@@ -243,7 +245,7 @@ export const ActionTablePage = styled.div`
   .status-btn {
     border-radius: 30px;
     text-transform: capitalize;
-  } 
+  }
   .status-btn-inside {
     width: 100%;
     margin: 7px 0;
@@ -253,8 +255,9 @@ export const ActionTablePage = styled.div`
     margin: auto;
     font-size: 13px;
   }
-  .ongoing_within_deadline, .on_review {
-    background-color: #F8DD96;
+  .ongoing_within_deadline,
+  .on_review {
+    background-color: #f8dd96;
     color: #886710;
     text-transform: capitalize;
   }
@@ -268,23 +271,24 @@ export const ActionTablePage = styled.div`
     color: red;
   }
   .ongoing_past_deadline {
-    background-color: #FFC6CC;
-    color: #9C353D;
+    background-color: #ffc6cc;
+    color: #9c353d;
     text-transform: capitalize;
   }
   .not_started {
-    background-color: #ECEEF4;
-    color: #828A9D;
+    background-color: #eceef4;
+    color: #828a9d;
     text-transform: capitalize;
   }
 
-  .ant-menu-item, .ant-menu-item-selected {
+  .ant-menu-item,
+  .ant-menu-item-selected {
     color: #fff !important;
     background: transparent !important;
   }
   .ant-table-tbody > tr.ant-table-row > td,
   .ant-table-tbody > tr.ant-table-row:hover > td,
-  .ant-table-expanded-row > td, 
+  .ant-table-expanded-row > td,
   .ant-table-expanded-row:hover > td,
   .ant-table-thead > tr > th {
     background-color: var(--background);
@@ -301,18 +305,18 @@ export const ActionTablePage = styled.div`
     background-color: var(--background);
   }
 
-  .custom-table-row:hover, 
+  .custom-table-row:hover,
   .custom-table-row:hover > td,
   .custom-table-expanded-row tr:hover,
   .custom-table-expanded-row tr:hover > td {
-    background: #F0F1F6 !important;
+    background: #f0f1f6 !important;
     transition: all 0s;
   }
 
   .sub-action-wrapper {
     width: 100%;
   }
-   
+
   .ant-table-tbody > tr > td {
     transition: all 0s;
   }
@@ -320,7 +324,7 @@ export const ActionTablePage = styled.div`
     padding: 0;
   }
   .ant-table-cell.ant-table-row-expand-icon-cell {
-    padding-left:0;
+    padding-left: 0;
   }
   .table-date {
     white-space: nowrap;
@@ -329,7 +333,7 @@ export const ActionTablePage = styled.div`
     max-width: 55px;
     width: 55px;
   }
-  .ant-table-cell.ant-table-row-expand-icon-cell +td {
+  .ant-table-cell.ant-table-row-expand-icon-cell + td {
     padding-left: 0;
   }
   .add-subaction-btn {
@@ -351,60 +355,72 @@ export const ActionTablePage = styled.div`
   .ant-table-content::-webkit-scrollbar-track {
     background: var(--background);
   }
- 
+
   .ant-table-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(to right,#638fce82 20%,#ffeb3b00 10px );
+    background: linear-gradient(to right, #638fce82 20%, #ffeb3b00 10px);
     border-radius: 3px;
     border: 6px solid var(--background);
   }
-  .sub-action-row td, .sub-action-row {
+  .sub-action-row td,
+  .sub-action-row {
     background: #f3f6fd !important;
   }
   .ant-table-content::-webkit-scrollbar {
     width: 4px;
   }
 
-  .custom-draggable-table tr.drop-over-downward td  {
+  .custom-draggable-table tr.drop-over-downward td {
     border-bottom: 2px dashed #1890ff !important;
   }
   .custom-draggable-table tr.drop-over-upward td {
     border-top: 2px dashed #1890ff;
   }
 
-  .custom-table table{
+  .custom-table table {
     background: var(--background);
   }
   .complete-checkbox {
     padding-left: 0;
     margin-left: -15px;
   }
-  .custom-table-row, .custom-table thead > tr, .custom-table-expanded-row tr {
+  .custom-table-row,
+  .custom-table thead > tr,
+  .custom-table-expanded-row tr {
     display: grid;
-    grid-template-columns: 30px minmax(200px, 1fr) minmax(150px,0.5fr) minmax(150px,0.5fr) minmax(200px,0.5fr) minmax(200px,0.5fr) 47px;
+    grid-template-columns: 30px minmax(200px, 1fr) minmax(150px, 0.5fr) minmax(
+        150px,
+        0.5fr
+      ) minmax(200px, 0.5fr) minmax(200px, 0.5fr) 47px;
     background-color: var(--background);
     align-items: center;
     width: calc(100vw - 270px - 120px);
   }
 
-  .custom-table-row, .custom-table thead > tr {
+  .custom-table-row,
+  .custom-table thead > tr {
     border-bottom: 1px solid var(--border-grey);
   }
-  .custom-table-expanded-row tr > td{
+  .custom-table-expanded-row tr > td {
     border-bottom: 1px solid var(--border-grey) !important;
   }
-  .custom-table-expanded-row tr:hover > td{
+  .custom-table-expanded-row tr:hover > td {
     border-bottom: 1px solid var(--blue) !important;
   }
-  .custom-table thead > tr > th{
+  .custom-table thead > tr > th {
     border-bottom: none;
   }
 
-  .custom-table thead > tr:first-of-type, .custom-table-expanded-row td:first-of-type {
+  .custom-table thead > tr:first-of-type,
+  .custom-table-expanded-row td:first-of-type {
     align-self: stretch;
   }
 
-  .custom-table .ant-table-tbody>tr>td{border-bottom: none;}
-  .custom-table-row .item-title, .custom-table-row .table-date, .custom-table-row .table-responsible{
+  .custom-table .ant-table-tbody > tr > td {
+    border-bottom: none;
+  }
+  .custom-table-row .item-title,
+  .custom-table-row .table-date,
+  .custom-table-row .table-responsible {
     font-weight: 500;
     font-style: normal;
     line-height: 17px;
@@ -417,12 +433,14 @@ export const ActionTablePage = styled.div`
   .ant-table-column-sorter-full {
     display: block;
   }
-  .ant-table-filter-trigger .anticon{
+  .ant-table-filter-trigger .anticon {
     position: relative;
   }
 
   @media (max-width: 1200px) {
-    .custom-table-row, .custom-table thead > tr, .custom-table-expanded-row tr {
+    .custom-table-row,
+    .custom-table thead > tr,
+    .custom-table-expanded-row tr {
       width: 100%;
     }
   }
@@ -430,7 +448,9 @@ export const ActionTablePage = styled.div`
     #dragable-move {
       width: calc(100% - 80px);
     }
-    .custom-table-row, .custom-table thead > tr, .custom-table-expanded-row tr {
+    .custom-table-row,
+    .custom-table thead > tr,
+    .custom-table-expanded-row tr {
       width: 100%;
     }
   }
@@ -440,7 +460,6 @@ export const ActionPlanEmpty = styled(ActionPlanPage)`
   #empty-table-wrapper {
     position: relative;
     margin-bottom: 100px;
-    
   }
   #empty-data-wrapper {
     position: absolute;
@@ -448,14 +467,14 @@ export const ActionPlanEmpty = styled(ActionPlanPage)`
     top: 50%;
     transform: translate(-50%, 50%);
     padding: 1px 5px;
-    background-color: #FCFDFF;
+    background-color: #fcfdff;
     z-index: 2;
     text-align: center;
   }
-  #arrow-icon{
-      position: absolute;
-      right: 45px;
-      top: -15px;
+  #arrow-icon {
+    position: absolute;
+    right: 45px;
+    top: -15px;
   }
 
   @media (max-width: 768px) {
@@ -501,7 +520,7 @@ export const MeetingMinutesPage = styled.div`
     color: var(--text);
   }
   .ant-table-tbody > tr.ant-table-row:hover > td {
-    background-color: #F0F1F6;
+    background-color: #f0f1f6;
   }
   .ant-table-thead > tr > th {
     font-weight: 500;
@@ -509,9 +528,9 @@ export const MeetingMinutesPage = styled.div`
     line-height: 15px;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    color: #828A9D;
+    color: #828a9d;
   }
-  .expanded-content h3{
+  .expanded-content h3 {
     margin-bottom: 10px;
     margin-top: 15px;
     font-weight: 500;
@@ -520,26 +539,26 @@ export const MeetingMinutesPage = styled.div`
     font-weight: 500;
     color: var(--text-light);
   }
-  .expanded-content p{
+  .expanded-content p {
     font-size: 14px;
     line-height: 150%;
-    color: #252A32;
+    color: #252a32;
   }
 
   tr.ant-table-expanded-row > td {
-      background-color: #fff;
-      border: 1px solid var(--border-grey);
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      border-top: none;
-    }
-  .bg-white > td{
+    background-color: #fff;
+    border: 1px solid var(--border-grey);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: none;
+  }
+  .bg-white > td {
     background-color: #fff !important;
   }
-  .bg-white > td:first-of-type{
+  .bg-white > td:first-of-type {
     border-left: 1px solid var(--border-grey);
   }
-  .bg-white > td:last-of-type{
+  .bg-white > td:last-of-type {
     border-right: 1px solid var(--border-grey);
   }
   .attachment-icon {
@@ -575,14 +594,14 @@ export const MeetingMinutesEmpty = styled(ActionPlanEmpty)`
     display: none;
   }
   #arrow-icon {
-    top: -65px
+    top: -65px;
   }
   .ant-table-thead {
     opacity: 0.3;
   }
   .ant-table-thead > tr > th {
     background-color: var(--background);
-    color: #828A9D;
+    color: #828a9d;
     font-size: 12px;
   }
   .add-new-action {
@@ -593,7 +612,6 @@ export const MeetingMinutesEmpty = styled(ActionPlanEmpty)`
   }
 
   @media (max-width: 768px) {
-
     #empty-data-wrapper {
       top: 30px;
     }
@@ -614,7 +632,6 @@ export const MeetingMinutesEmpty = styled(ActionPlanEmpty)`
       top: -47px;
     }
   }
-
 `;
 
 export const MembersPage = styled(MeetingMinutesPage)`
@@ -645,7 +662,7 @@ export const MembersPage = styled(MeetingMinutesPage)`
   }
 
   .pending-subtitle {
-    color: #C1D3FF;
+    color: #c1d3ff;
   }
   .small {
     width: auto;
@@ -664,54 +681,56 @@ export const MembersPage = styled(MeetingMinutesPage)`
     margin-left: 10px;
   }
 
-  .bg-dark > td, .bg-dark .icons-set .item-title {
+  .bg-dark > td,
+  .bg-dark .icons-set .item-title {
     background-color: var(--dark) !important;
-    color: #FCFDFF !important;
+    color: #fcfdff !important;
   }
   .bg-dark .ant-btn.ant-dropdown-trigger.ant-btn-default.ant-btn-icon-only {
     background: #777685;
     position: absolute;
   }
-  .bg-dark .anticon.anticon-more svg{
-    fill: #C6C5CC;
+  .bg-dark .anticon.anticon-more svg {
+    fill: #c6c5cc;
   }
   .ant-table-row-level-0.bg-dark > td:first-of-type::before,
   .bg-dark.ant-table-expanded-row > td:first-of-type::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 2px;
     top: 2px;
     bottom: 1px;
     width: 4px;
     height: calc(100% - 4px);
-    background: #C1D3FF;
+    background: #c1d3ff;
     border-radius: 3px;
   }
-  .bg-dark > td:first-of-type{
+  .bg-dark > td:first-of-type {
     border-top-left-radius: 5px;
   }
-  .bg-dark > td:last-of-type{
+  .bg-dark > td:last-of-type {
     border-top-right-radius: 5px;
   }
   .bg-dark.ant-table-expanded-row > td {
-      background-color: #fff;
-      border: 1px solid var(--border-grey);
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      border-top: none;
-    }
+    background-color: #fff;
+    border: 1px solid var(--border-grey);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: none;
+  }
   .expanded-content {
     padding: 0 25px;
   }
   .bg-dark .expanded-content h3 {
-    color: #BCBCC2;
+    color: #bcbcc2;
   }
-  .bg-dark .expanded-content p, .bg-dark .expanded-content a {
-    color: #FCFDFF;
+  .bg-dark .expanded-content p,
+  .bg-dark .expanded-content a {
+    color: #fcfdff;
   }
 
   .bg-denied > td {
-    opacity: 0.3
+    opacity: 0.3;
   }
 
   .bg-denied > td:last-of-type {
@@ -735,26 +754,28 @@ export const MembersPage = styled(MeetingMinutesPage)`
     text-transform: capitalize;
     font-weight: 500;
     font-size: 14px;
-    &.invite_expired, &.denied {
-      background: #FFC6CC ;
-      color: #9C353D;
+    &.invite_expired,
+    &.denied {
+      background: #ffc6cc;
+      color: #9c353d;
       border: none;
     }
     &.invite_sent {
-      background: #ECEEF4 ;
+      background: #eceef4;
       color: #515867;
       border: none;
     }
     &.active {
-      background: #C4F5E9;
-      color: #0C8A6B;
+      background: #c4f5e9;
+      color: #0c8a6b;
       border: none;
     }
-    &.disabled,  .not_started {
-      background-color: #828A9D;
-      color: #FCFDFF;
+    &.disabled,
+    .not_started {
+      background-color: #828a9d;
+      color: #fcfdff;
       border-color: transparent;
-    } 
+    }
   }
   .superuser {
     color: var(--blue);
@@ -765,13 +786,14 @@ export const MembersPage = styled(MeetingMinutesPage)`
     text-transform: capitalize;
   }
   .leader {
-    color: #CB7B0E;
+    color: #cb7b0e;
     text-transform: capitalize;
   }
   .member {
     text-transform: capitalize;
   }
-  .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active {
+  .ant-table-column-sorter-up.active,
+  .ant-table-column-sorter-down.active {
     background-color: transparent;
     color: var(--dark-blue);
   }
@@ -801,7 +823,7 @@ export const StyledMembersAll = styled(MembersPage)`
     min-width: 100px;
   }
   .ant-table-container {
-    background-color: var(--background); 
+    background-color: var(--background);
   }
   .ant-table-content {
     overflow: auto hidden;
@@ -814,38 +836,38 @@ export const StyledMembersAll = styled(MembersPage)`
   }
   .bg-dark .ant-table-row-expand-icon-cell::before,
   .bg-dark.ant-table-expanded-row > td:first-of-type::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 2px;
     top: 2px;
     bottom: 1px;
     width: 4px;
     height: calc(100% - 4px);
-    background: #C1D3FF;
+    background: #c1d3ff;
     border-radius: 3px;
   }
-  .bg-dark > td:first-of-type{
+  .bg-dark > td:first-of-type {
     border-top-left-radius: 5px;
   }
-  .bg-dark > td:last-of-type{
+  .bg-dark > td:last-of-type {
     border-top-right-radius: 5px;
   }
   .bg-dark.ant-table-expanded-row > td {
-      background-color: #fff;
-      border: 1px solid var(--border-grey);
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      border-top: none;
-    }
+    background-color: #fff;
+    border: 1px solid var(--border-grey);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: none;
+  }
 
-    button.small {
-      img {
-        margin-right: 5px;
-      }
-      span {
-        display: block;
-      }
+  button.small {
+    img {
+      margin-right: 5px;
     }
+    span {
+      display: block;
+    }
+  }
   .toggle-icon {
     margin-right: 12px;
     min-width: 35px;
@@ -863,26 +885,26 @@ export const StyledMembersTable = styled.div`
       text-align: center;
     }
   }
-
-  
 `;
 
-
 export const StyledOverdue = styled.div`
-    .overdue__item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 0 -10px;
-      padding: 12px 10px;
-    }
-    .sub-action {
-      background: #f3f6fd;
-    }
-    .ant-collapse-content {
-      overflow: visible;
-    }
-    .ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
-      padding-top: 0;
-    }
+  .overdue__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 -10px;
+    padding: 12px 10px;
+  }
+  .sub-action {
+    background: #f3f6fd;
+  }
+  .ant-collapse-content {
+    overflow: visible;
+  }
+  .ant-collapse-borderless
+    > .ant-collapse-item
+    > .ant-collapse-content
+    > .ant-collapse-content-box {
+    padding-top: 0;
+  }
 `;

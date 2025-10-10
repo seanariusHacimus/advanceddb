@@ -1,28 +1,41 @@
-import React from 'react';
-import { ReactComponent as IconDashboard } from '../assets/header/indicatorIcons/dashboard.svg';
-import { ReactComponent as IconStartABusiness } from '../assets/header/indicatorIcons/start-a-business.svg';
-import { ReactComponent as IconConstruction } from '../assets/header/indicatorIcons/constructions.svg';
-import { ReactComponent as IconElectricty } from '../assets/header/indicatorIcons/flash.svg';
-import { ReactComponent as IconInvestors } from '../assets/header/indicatorIcons/graph.svg';
-import { ReactComponent as IconProperty } from '../assets/header/indicatorIcons/book.svg';
-import { ReactComponent as IconCredit } from '../assets/header/indicatorIcons/credit.svg';
-import { ReactComponent as IconTax } from '../assets/header/indicatorIcons/tax.svg';
-import { ReactComponent as IconTrade } from '../assets/header/indicatorIcons/trading.svg';
-import { ReactComponent as IconEnforce } from '../assets/header/indicatorIcons/enforce.svg';
-import { ReactComponent as IconContract } from '../assets/header/indicatorIcons/contracting.svg';
-import { ReactComponent as IconInsolvency } from '../assets/header/indicatorIcons/resolving.svg';
+import React from "react";
+import { ReactComponent as IconDashboard } from "../assets/header/indicatorIcons/dashboard.svg";
+import { ReactComponent as IconElectricity } from "../assets/header/indicatorIcons/flash.svg";
+import { ReactComponent as IconBusinessEntry } from "../assets/header/indicatorIcons/business-entry.svg";
+import { ReactComponent as IconBusinessInsolvency } from "../assets/header/indicatorIcons/business-insolvency.svg";
+import { ReactComponent as IconBusinessLocation } from "../assets/header/indicatorIcons/business-location.svg";
+import { ReactComponent as IconDisputeResolution } from "../assets/header/indicatorIcons/dispute-resolution.svg";
+import { ReactComponent as IconFinancialServices } from "../assets/header/indicatorIcons/financial-services.svg";
+import { ReactComponent as IconInternationalTrade } from "../assets/header/indicatorIcons/international-trade.svg";
+import { ReactComponent as IconLabor } from "../assets/header/indicatorIcons/labor.svg";
+import { ReactComponent as IconMarketCompetition } from "../assets/header/indicatorIcons/market-competition.svg";
+import { ReactComponent as IconTaxation } from "../assets/header/indicatorIcons/taxation.svg";
+import { GROUP_NAMES } from "./groups";
 
 export default {
-  '/dashboard': <IconDashboard className="menu-icon" />,
-  'starting-a-business': <IconStartABusiness className="menu-icon" />,
-  'dealing-with-construction-permits': <IconConstruction className="menu-icon" />,
-  'getting-electricity': <IconElectricty className="menu-icon stroke" />,
-  'registering-property': <IconProperty className="menu-icon" />,
-  'getting-credit': <IconCredit className="menu-icon" />,
-  'protecting-minority-investors': <IconInvestors className="menu-icon stroke" />,
-  'paying-taxes': <IconTax className="menu-icon" />,
-  'trading-across-borders': <IconTrade className="menu-icon" />,
-  'enforcing-contracts': <IconEnforce className="menu-icon" />,
-  'resolving-insolvency': <IconInsolvency className="menu-icon" />,
-  'contracting-with-the-government': <IconContract className="menu-icon" />,
+  "/dashboard": <IconDashboard className="menu-icon" />,
+  [GROUP_NAMES.BUSINESS_ENTRY.id]: <IconBusinessEntry className="menu-icon" />,
+  [GROUP_NAMES.BUSINESS_LOCATION.id]: (
+    <IconBusinessLocation className="menu-icon" />
+  ),
+  [GROUP_NAMES.UTILITY_SERVICES.id]: (
+    <IconElectricity className="menu-icon stroke" />
+  ),
+  [GROUP_NAMES.LABOR.id]: <IconLabor className="menu-icon" />,
+  [GROUP_NAMES.FINANCIAL_SERVICES.id]: (
+    <IconFinancialServices className="menu-icon" />
+  ),
+  [GROUP_NAMES.INTERNATIONAL_TRADE.id]: (
+    <IconInternationalTrade className="menu-icon stroke" />
+  ),
+  [GROUP_NAMES.TAXATION.id]: <IconTaxation className="menu-icon" />,
+  [GROUP_NAMES.DISPUTE_RESOLUTION.id]: (
+    <IconDisputeResolution className="menu-icon" />
+  ),
+  [GROUP_NAMES.MARKET_COMPETITION.id]: (
+    <IconMarketCompetition className="menu-icon" />
+  ),
+  [GROUP_NAMES.BUSINESS_INSOLVENCY.id]: (
+    <IconBusinessInsolvency className="menu-icon" />
+  ),
 };
