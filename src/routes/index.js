@@ -19,10 +19,7 @@ import Messaging from "../components/Messaging";
 import Audit from "../components/Audit";
 import Approvals from "../components/Approvals";
 
-// Export a plain configuration array. This makes the routes easier to extend,
-// filter and test. Consumers should map these configs to <Route/> or <Redirect/>
-// when rendering.
-const routes = [
+export const ROUTES = [
   {
     key: "Dashboard",
     path: "/dashboard/home",
@@ -102,12 +99,14 @@ const routes = [
     exact: true,
     component: ProfileSecurity,
   },
-  // messaging route kept commented out in original
-  // { key: 'Messaging', path: '/dashboard/messaging', exact: true, component: Messaging },
-
-  // Routes that require a render wrapper (to add dynamic key based on params)
   {
-    key: "StartBuisness",
+    key: "Messaging",
+    path: "/dashboard/messaging",
+    exact: true,
+    component: Messaging,
+  },
+  {
+    key: "StartBusiness",
     path: "/working-group/:title",
     exact: true,
     render: (props) => (
@@ -151,4 +150,33 @@ const routes = [
   { key: "defaultRedirect", redirectTo: "/dashboard/home" },
 ];
 
-export default routes;
+//  create a object of route keys
+export const ROUTE_KEYS = {
+  Dashboard: "Dashboard",
+  WorkingGroups: "WorkingGroups",
+  Simulator: "Simulator",
+  Audit: "Audit",
+  Approvals: "Approvals",
+  Reform: "Reform",
+  Organizations: "Organizations",
+  Members: "Members",
+  MembersEdit: "MembersEdit",
+  Profile: "Profile",
+  ProfileNotificationsEdit: "ProfileNotificationsEdit",
+  ProfileEdit: "ProfileEdit",
+  ProfileSecurity: "ProfileSecurity",
+  Messaging: "Messaging",
+  StartBusiness: "StartBusiness",
+  Methodology: "Methodology",
+  CompareCountries: "CompareCountries",
+  HistoricalData: "HistoricalData",
+  WhatToReform: "WhatToReform",
+  defaultRedirect: "defaultRedirect",
+};
+
+export const HIDDEN_ROUTES = [
+  ROUTE_KEYS.HistoricalData,
+  ROUTE_KEYS.WhatToReform,
+  ROUTE_KEYS.CompareCountries,
+  ROUTE_KEYS.Messaging,
+];

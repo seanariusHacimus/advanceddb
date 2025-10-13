@@ -10,7 +10,7 @@ import iconEdit from "../../assets/startBusiness/edit.svg";
 import { groupTitleToUrl } from "../../utils";
 import { withLocale } from "../../utils/locale";
 
-const Editor = lazy(() => import("../../utils/Editor.js"));
+const Editor = lazy(() => import("../UI/Editor/Editor.js"));
 
 class Methodology extends PureComponent {
   state = { edit: false };
@@ -94,9 +94,7 @@ class Methodology extends PureComponent {
         {edit && (
           <Suspense fallback={t("Loading...")}>
             <Editor
-              advanced
               height={500}
-              toolbar_location="top"
               onChange={this.inputHandler}
               value={methodology || this.props.selectedWorkingGroup.methodology}
             />
@@ -111,6 +109,7 @@ class Methodology extends PureComponent {
         )}
         {!edit && (
           <div
+            className="editor-content"
             dangerouslySetInnerHTML={{
               __html:
                 methodology || this.props.selectedWorkingGroup.methodology,

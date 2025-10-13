@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useEffect,
 } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useLocale } from "./locale";
 import PropTypes from "prop-types";
@@ -105,8 +105,23 @@ const validateImageUrl = async (url) => {
   }
 };
 
-const QUILL_MODULES = {
-  toolbar: { container: "#custom-quill-toolbar" },
+// Default modules using array-based toolbar configuration (avoids querying DOM
+// for a toolbar container which can be problematic in SSR or dynamic mounts).
+const DEFAULT_TOOLBAR = [
+  [
+    { header: [1, 2, 3, 4, 5, 6, false] },
+    { size: ["small", false, "large", "huge"] },
+  ],
+  ["bold", "italic", "underline", "strike"],
+  [{ color: [] }, { background: [] }],
+  [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+  [{ align: [] }],
+  ["link", "image", "blockquote", "code-block"],
+  ["clean"],
+];
+
+const BASE_MODULES = {
+  toolbar: DEFAULT_TOOLBAR,
   history: {
     delay: 1000,
     maxStack: 50,
@@ -149,119 +164,10 @@ const COLOR_OPTIONS = [
   { value: "#888888", label: "Gray" },
 ];
 
-// Custom Toolbar Component
-const EditorToolbar = ({ onImageClick, onHtmlCodeClick, toolbarLocation }) => (
-  <div
-    className={`quill-toolbar-container ${
-      toolbarLocation === "bottom" ? "toolbar-bottom" : "toolbar-top"
-    }`}
-  >
-    <div id="custom-quill-toolbar">
-      {/* Headings and Text Format */}
-      <span className="ql-formats">
-        <select className="ql-header" defaultValue="">
-          <option value="">Normal</option>
-          <option value="1">Heading 1</option>
-          <option value="2">Heading 2</option>
-          <option value="3">Heading 3</option>
-          <option value="4">Heading 4</option>
-          <option value="5">Heading 5</option>
-          <option value="6">Heading 6</option>
-        </select>
-        <select className="ql-size">
-          <option value="small">Small</option>
-          <option value="">Normal</option>
-          <option value="large">Large</option>
-          <option value="huge">Huge</option>
-        </select>
-      </span>
-
-      {/* Text Formatting */}
-      <span className="ql-formats">
-        <button className="ql-bold" title="Bold" />
-        <button className="ql-italic" title="Italic" />
-        <button className="ql-underline" title="Underline" />
-        <button className="ql-strike" title="Strikethrough" />
-      </span>
-
-      {/* Text Color and Background */}
-      <span className="ql-formats">
-        <select className="ql-color" title="Text Color">
-          {COLOR_OPTIONS.map((color) => (
-            <option key={color.value} value={color.value}>
-              {color.label}
-            </option>
-          ))}
-        </select>
-        <select className="ql-background" title="Background Color">
-          {COLOR_OPTIONS.map((color) => (
-            <option key={color.value} value={color.value}>
-              {color.label}
-            </option>
-          ))}
-        </select>
-      </span>
-
-      {/* Lists and Indentation */}
-      <span className="ql-formats">
-        <button className="ql-list" value="ordered" title="Numbered List" />
-        <button className="ql-list" value="bullet" title="Bullet List" />
-        <button className="ql-indent" value="-1" title="Decrease Indent" />
-        <button className="ql-indent" value="+1" title="Increase Indent" />
-      </span>
-
-      {/* Text Alignment */}
-      <span className="ql-formats">
-        <button className="ql-align" value="" title="Align Left" />
-        <button className="ql-align" value="center" title="Align Center" />
-        <button className="ql-align" value="right" title="Align Right" />
-        <button className="ql-align" value="justify" title="Justify" />
-      </span>
-
-      {/* Links and Media */}
-      <span className="ql-formats">
-        <button className="ql-link" title="Insert Link" />
-        <button
-          className="ql-image-custom"
-          onClick={onImageClick}
-          title="Insert Image URL"
-        >
-          <svg viewBox="0 0 18 18">
-            <rect className="ql-stroke" height="10" width="12" x="3" y="4" />
-            <circle className="ql-fill" cx="6" cy="7" r="1" />
-            <polyline
-              className="ql-even ql-fill"
-              points="5,12 5,11 7,9 8,10 11,7 13,9 13,12 5,12"
-            />
-          </svg>
-        </button>
-      </span>
-
-      {/* Additional Formatting */}
-      <span className="ql-formats">
-        <button className="ql-blockquote" title="Quote" />
-        <button className="ql-code-block" title="Code Block" />
-        <button className="ql-clean" title="Remove Formatting" />
-      </span>
-
-      {/* HTML Code Button */}
-      <span className="ql-formats">
-        <button
-          className="ql-html-code"
-          onClick={onHtmlCodeClick}
-          title="Show and Copy HTML Code"
-        >
-          <svg viewBox="0 0 18 18">
-            <rect className="ql-stroke" height="10" width="12" x="3" y="4" />
-            <path className="ql-stroke" d="M5,7 L13,7" />
-            <path className="ql-stroke" d="M5,9 L13,9" />
-            <path className="ql-stroke" d="M5,11 L11,11" />
-          </svg>
-        </button>
-      </span>
-    </div>
-  </div>
-);
+// We'll rely on Quill's built-in toolbar (array) and provide custom handlers
+// for image and HTML actions. The earlier custom toolbar DOM caused
+// "Container required for toolbar" errors when Quill couldn't find the
+// container. Using handlers avoids that.
 
 // Image Modal Component
 const ImageModal = ({
@@ -606,10 +512,10 @@ const HtmlCodeModal = ({ isOpen, htmlContent, onClose, onHtmlChange }) => {
 const CharacterCounter = ({ maxChars, currentLength, customText, t }) => {
   if (maxChars) {
     return (
-      <p>
+      <div>
         {t("Maximum character size: ")}
         {`${maxChars - (currentLength || 0)}/${maxChars}`}
-      </p>
+      </div>
     );
   }
   return <p>{customText || ""}</p>;
@@ -638,8 +544,65 @@ const TinymceEditor = ({
   // HTML code modal state
   const [showHtmlModal, setShowHtmlModal] = useState(false);
 
-  // Memoized modules and formats for performance
-  const modules = useMemo(() => QUILL_MODULES, []);
+  // Register a custom icon for the HTML button once
+  useEffect(() => {
+    try {
+      const icons = Quill.import("ui/icons");
+      icons["html"] =
+        '<svg viewBox="0 0 18 18"><rect class="ql-stroke" height="10" width="12" x="3" y="4"/><path class="ql-stroke" d="M5,7 L13,7"/><path class="ql-stroke" d="M5,9 L13,9"/><path class="ql-stroke" d="M5,11 L11,11"/></svg>';
+    } catch (err) {
+      // ignore if Quill isn't available yet
+    }
+  }, []);
+
+  // Build modules with handlers so the toolbar uses built-in DOM and calls
+  // our handlers for image/html actions.
+  const modules = useMemo(() => {
+    // Extended toolbar with a custom 'html' button
+    const toolbar = [
+      [
+        { header: [1, 2, 3, 4, 5, 6, false] },
+        { size: ["small", false, "large", "huge"] },
+      ],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      [{ align: [] }],
+      ["link", "image", "blockquote", "code-block"],
+      ["clean", "html"],
+    ];
+
+    return {
+      toolbar: {
+        container: toolbar,
+        handlers: {
+          image: function () {
+            // when toolbar image clicked, open our modal
+            const quill = quillRef.current?.getEditor();
+            if (quill) {
+              const range = quill.getSelection(true);
+              setCursorPosition(range ? range.index : quill.getLength());
+            }
+            setShowImageModal(true);
+          },
+          html: function () {
+            setShowHtmlModal(true);
+          },
+        },
+      },
+      history: {
+        delay: 1000,
+        maxStack: 50,
+        userOnly: true,
+      },
+    };
+  }, []);
+
   const formats = useMemo(() => QUILL_FORMATS, []);
 
   // Handle content changes with character limit
@@ -744,35 +707,23 @@ const TinymceEditor = ({
   );
 
   return (
-    <div className="custom-tiyn-editor" style={{ width }}>
-      {/* Top Toolbar */}
-      {toolbar_location !== "bottom" && (
-        <EditorToolbar
-          onImageClick={handleImageClick}
-          onHtmlCodeClick={handleHtmlCodeClick}
-          toolbarLocation={toolbar_location}
-        />
-      )}
-
+    <div>
       {/* Quill Editor */}
       <ReactQuill
         ref={quillRef}
+        id="quill-editor"
         value={value}
         placeholder={placeholder}
         onChange={handleChanges}
-        style={{ height }}
         modules={modules}
         formats={formats}
+        style={{
+          maxHeight: height,
+          minHeight: 200,
+          overflowY: "auto",
+          "& .ql-container": { maxHeight: height * 0.8 },
+        }}
       />
-
-      {/* Bottom Toolbar */}
-      {toolbar_location === "bottom" && (
-        <EditorToolbar
-          onImageClick={handleImageClick}
-          onHtmlCodeClick={handleHtmlCodeClick}
-          toolbarLocation={toolbar_location}
-        />
-      )}
 
       {/* Character Counter */}
       <CharacterCounter

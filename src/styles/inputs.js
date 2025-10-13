@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { colors } from '../constants';
+import styled from "styled-components";
+import { colors } from "../constants";
 
 export const Input = styled.input`
   width: 100%;
@@ -8,7 +8,8 @@ export const Input = styled.input`
   background-color: #fff;
   color: ${colors.text};
   border-radius: 4px;
-  border: 1px solid ${(props) => props.hasErrors ? 'var(--danger)' : colors.borderGrey};
+  border: 1px solid
+    ${(props) => (props.hasErrors ? "var(--danger)" : colors.borderGrey)};
   font-size: 14px;
 
   &:focus {
@@ -20,12 +21,13 @@ export const Input = styled.input`
     color: ${colors.text};
     font-weight: 500;
   }
-  &:disabled, &[disabled]{
+  &:disabled,
+  &[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
-    background-color: #F3F3F4;
-    &  + label{
-     color: #717A8F;
+    background-color: #f3f3f4;
+    & + label {
+      color: #717a8f;
     }
   }
   &.dynamic-input:focus {
@@ -52,11 +54,11 @@ export const Input = styled.input`
 
 export const InputWrapper = styled.div`
   display: flex;
-  align-items: ${(props) => props.align || 'center'};
-  flex-direction: ${(props) => props.fd || 'row'};
+  align-items: ${(props) => props.align || "center"};
+  flex-direction: ${(props) => props.fd || "row"};
   position: relative;
-  margin: ${(props) => props.margin || '15px 0'};
-  
+  margin: ${(props) => props.margin || "15px 0"};
+
   &.has-messages {
     flex-direction: column;
   }
@@ -64,12 +66,12 @@ export const InputWrapper = styled.div`
     color: var(--danger);
   }
   & .custom-select-label {
-    text-align: left;    
+    text-align: left;
   }
   .custom-select {
-    &.ant-select-disabled{
+    &.ant-select-disabled {
       opacity: 0.5;
-      background-color: #F3F3F4;
+      background-color: #f3f3f4;
     }
     &.members .ant-select-selector {
       padding-top: 20px !important;
@@ -118,7 +120,7 @@ export const InputWrapper = styled.div`
       }
     }
     &.ant-select-focused {
-      &> .ant-select-selector {
+      & > .ant-select-selector {
         background-color: #fff;
       }
     }
@@ -137,7 +139,7 @@ export const InputWrapper = styled.div`
     .ant-select-selection-placeholder {
       padding: 0 5px;
     }
-  } 
+  }
   .custom-datepicker {
     border-radius: 4px;
     & input {
@@ -167,9 +169,9 @@ export const InputWrapper = styled.div`
       margin-right: 5px;
     }
   }
-  
+
   .grey {
-    background-color: #fafbfc!important;
+    background-color: #fafbfc !important;
   }
 
   .password-toggler {

@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import { QueryParamProvider } from "use-query-params";
 import SignUp from "./Auth/SignUp";
 import SignIn from "./Auth/SignIn";
-import MainContent from "./Header/Header";
-import routeConfigs from "../routes";
+import Layout from "./Layout";
+import { ROUTES, HIDDEN_ROUTES } from "../routes";
 import { ConfirmationExtended } from "./Auth/Confirmation";
 import ForgotPassword from "./Auth/ForgotPassword";
 import ResetPassword from "./Auth/ResetPassword";
@@ -15,46 +15,59 @@ import "moment/locale/es";
 import "moment/locale/ru";
 import "moment/locale/fr";
 
-function App(props) {
-  const { auth } = props;
-  // routeConfigs is an array of plain objects. Build mapped route elements
-  // when rendering while keeping the original filtering behavior.
-  const components = useMemo(() => routeConfigs, []);
-  const coordinatorComponents = useMemo(
-    () => components.filter((item) => !item.admin),
-    [components]
+// Route filtering logic
+const getVisibleRoutes = (userRole) => {
+  const visibleRoutes = ROUTES.filter(
+    (item) => !HIDDEN_ROUTES.includes(item.key)
   );
-  const memberComponents = useMemo(
-    () => components.filter((item) => !item.secret),
-    [components]
-  );
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(refreshLocales());
-  }, []);
 
-  let visibleRoutes = components;
-  if (auth?.account?.role === "coordinator") {
-    visibleRoutes = coordinatorComponents;
-  } else if (auth?.account?.role !== "superuser") {
-    visibleRoutes = memberComponents;
+  if (userRole === "coordinator") {
+    return visibleRoutes.filter(
+      (item) => !item.admin && !HIDDEN_ROUTES.includes(item.key)
+    );
+  } else if (userRole !== "superuser") {
+    return visibleRoutes.filter(
+      (item) => !item.secret && !HIDDEN_ROUTES.includes(item.key)
+    );
+  }
+  return visibleRoutes;
+};
+
+// Route rendering logic
+const renderRoute = (routeConfig) => {
+  if (routeConfig.redirectTo) {
+    return <Redirect key={routeConfig.key} to={routeConfig.redirectTo} />;
   }
 
-  const renderRoute = (rc) => {
-    if (rc.redirectTo) {
-      return <Redirect key={rc.key} to={rc.redirectTo} />;
-    }
-
-    const props = {
-      key: rc.key,
-      path: rc.path,
-      exact: rc.exact,
-    };
-
-    if (rc.component) return <Route {...props} component={rc.component} />;
-    if (rc.render) return <Route {...props} render={rc.render} />;
-    return null;
+  const routeProps = {
+    key: routeConfig.key,
+    path: routeConfig.path,
+    exact: routeConfig.exact,
   };
+
+  if (routeConfig.component) {
+    return <Route {...routeProps} component={routeConfig.component} />;
+  }
+  if (routeConfig.render) {
+    return <Route {...routeProps} render={routeConfig.render} />;
+  }
+  return null;
+};
+
+function App(props) {
+  const { auth } = props;
+  const dispatch = useDispatch();
+
+  // Memoized visible routes based on user role
+  const visibleRoutes = useMemo(
+    () => getVisibleRoutes(auth?.account?.role),
+    [auth?.account?.role]
+  );
+
+  // Initialize locales on app start
+  useEffect(() => {
+    dispatch(refreshLocales());
+  }, [dispatch]);
 
   return (
     <div id="app-container">
@@ -62,9 +75,9 @@ function App(props) {
         <QueryParamProvider ReactRouterRoute={Route}>
           <Spinner />
           {auth.isLogged && auth.access_token ? (
-            <MainContent>
+            <Layout>
               <Switch>{visibleRoutes.map(renderRoute)}</Switch>
-            </MainContent>
+            </Layout>
           ) : (
             <Switch>
               <Route path="/request-access" exact component={SignUp} />

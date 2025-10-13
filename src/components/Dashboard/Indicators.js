@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-  Modal, Menu, Row, Col, Switch,
-} from 'antd';
-import { Link } from 'react-router-dom';
-import { fetchWorkingGroupsAction } from '../../store/WorkingGroups/actions';
+import { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Modal, Menu, Row, Col, Switch } from "antd";
+import { Link } from "react-router-dom";
+import { fetchWorkingGroupsAction } from "../../store/WorkingGroups/actions";
 // ------- ASSETS & STYLING ---------
-import { IndicatorsPage } from '../../styles/indicators';
-import { Flex, Button, ButtonPrimary } from '../../styles';
-import { ReactComponent as IconSettings } from '../../assets/header/settings.svg';
-import { updateWorkingGroups } from '../../graphql/workingGroups';
+import { IndicatorsPage } from "../../styles/indicators";
+import { Flex, Button, ButtonPrimary } from "../../styles";
+import { ReactComponent as IconSettings } from "../../assets/header/settings.svg";
+import { updateWorkingGroups } from "../../graphql/workingGroups";
 import { withLocale } from "../../utils/locale";
 
 class Indicators extends Component {
   state = {
     visible: false,
-    title: '',
+    title: "",
     indicators: [],
     selectedUsers: [],
   };
@@ -56,13 +54,15 @@ class Indicators extends Component {
       return item;
     });
     this.setState({ indicators: updatedIndicators });
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { indicators } = this.state;
     const updatedData = indicators.reduce((obj, item) => {
-      const currentData = this.props.indicators.find((prop) => prop.id === item.id);
+      const currentData = this.props.indicators.find(
+        (prop) => prop.id === item.id
+      );
       if (item.visible !== currentData.visible) {
         obj.push(item);
         return obj;
@@ -75,24 +75,33 @@ class Indicators extends Component {
       return updateWorkingGroups({ id, group: { visible, title } });
     });
 
-    Promise
-      .all(bulkUpdate)
+    Promise.all(bulkUpdate)
       .then((data) => {
         this.props.fetchWorkingGroupsAction();
         this.props.modalHandler();
         this.props.fetchDashboardReport();
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   render() {
     const { indicators } = this.state;
     const { t } = this.props;
     return (
-      <IndicatorsPage ref={(el) => this.parentRef = el}>
-        <Menu theme="light" className="side-bar-menu" mode="inline" defaultSelectedKeys={['']}>
-          <Menu.Item key="indicator" icon={<IconSettings className="menu-icon" />}>
-            <Link to="/#indicators" onClick={this.showModal}>{t('Indicator settings')}</Link>
+      <IndicatorsPage ref={(el) => (this.parentRef = el)}>
+        <Menu
+          theme="light"
+          className="side-bar-menu"
+          mode="inline"
+          defaultSelectedKeys={[""]}
+        >
+          <Menu.Item
+            key="indicator"
+            icon={<IconSettings className="menu-icon" />}
+          >
+            <Link to="/#indicators" onClick={this.showModal}>
+              {t("Indicator settings")}
+            </Link>
           </Menu.Item>
         </Menu>
         <Modal
@@ -104,26 +113,42 @@ class Indicators extends Component {
           width="80%"
           style={{ maxWidth: 800 }}
         >
-          <h2 className="title">{t('Customize Dashboard Reports')}</h2>
-          <h4 className="sub-title">{t('Select the working groups to include in your report')}</h4>
-          <form action="">
-            <Row gutter={[20, 20]}>
-              {
-                indicators.map((item) => (
-                  <Col span={24} md={12} key={item.id}>
-                    <Flex jc="space-between" className={`switch ${item.visible && 'checked'}`}>
-                      <div className="switch-item-title">{t(item.title)}</div>
-                      <Switch size="small" data-id={item.id} onChange={this.handleSwitch} checked={item.visible} />
-                    </Flex>
-                  </Col>
-                ))
-              }
-            </Row>
-            <Flex>
-              <Button type="reset" onClick={this.props.modalHandler} style={{ height: 51, marginRight: 12 }}>{t('Cancel')}</Button>
-              <ButtonPrimary onClick={this.handleSubmit}>{t('Apply')}</ButtonPrimary>
-            </Flex>
-          </form>
+          <h2 className="title">{t("Customize Dashboard Reports")}</h2>
+          <h4 className="sub-title">
+            {t("Select the working groups to include in your report")}
+          </h4>
+          <Row gutter={[20, 20]}>
+            {indicators.map((item) => (
+              <Col span={24} md={12} key={item.id}>
+                <Flex
+                  jc="space-between"
+                  className={`switch ${item.visible && "checked"}`}
+                >
+                  <div className="switch-item-title">{t(item.title)}</div>
+                  <Switch
+                    size="small"
+                    data-id={item.id}
+                    onChange={this.handleSwitch}
+                    checked={item.visible}
+                  />
+                </Flex>
+              </Col>
+            ))}
+            <Col span={24}>
+              <Flex>
+                <Button
+                  type="reset"
+                  onClick={this.props.modalHandler}
+                  style={{ height: 51, marginRight: 12 }}
+                >
+                  {t("Cancel")}
+                </Button>
+                <ButtonPrimary onClick={this.handleSubmit}>
+                  {t("Apply")}
+                </ButtonPrimary>
+              </Flex>
+            </Col>
+          </Row>
         </Modal>
       </IndicatorsPage>
     );
@@ -131,6 +156,10 @@ class Indicators extends Component {
 }
 
 const mapStateToProps = (state) => ({ indicators: state.workingGroups.data });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchWorkingGroupsAction }, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ fetchWorkingGroupsAction }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocale(Indicators));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLocale(Indicators));

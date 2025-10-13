@@ -1,3 +1,42 @@
+#### 1.1.0 (2025-10-12)
+
+##### New Features
+
+*  update indicator group icons (31aa434c)
+*  move manage users and audit for profile menu (00a0d876)
+
+##### Bug Fixes
+
+*  header issues and hide working group links (4f5fbe6f)
+
+##### Other Changes
+
+*  update changelog file and bump up package.json version (7b62c899)
+*  refactor Editor (1aecad61)
+*  gql schema (3f2a84a0)
+*  app build configs (45827a1e)
+*  lock file (fac7b662)
+*  lock file (8255dae8)
+
+#### 1.0.0 (2025-10-12)
+
+##### New Features
+
+*  update indicator group icons (31aa434c)
+*  move manage users and audit for profile menu (00a0d876)
+
+##### Bug Fixes
+
+*  header issues and hide working group links (4f5fbe6f)
+
+##### Other Changes
+
+*  refactor Editor (1aecad61)
+*  gql schema (3f2a84a0)
+*  app build configs (45827a1e)
+*  lock file (fac7b662)
+*  lock file (8255dae8)
+
 #### 1.0.0 (2025-10-10)
 
 ##### Chores

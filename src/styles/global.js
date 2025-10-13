@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import colors from '../constants/colors';
+import { createGlobalStyle } from "styled-components";
+import colors from "../constants/colors";
 
 export default createGlobalStyle`
   .text-capitalize {
@@ -46,6 +46,10 @@ export default createGlobalStyle`
 
   form#header .ant-alert.ant-alert-success {
     margin-top: 12px;
+  }
+
+  .has-box-shadow .editor-content {
+    max-width: 980px;
   }
 
   .has-box-shadow {

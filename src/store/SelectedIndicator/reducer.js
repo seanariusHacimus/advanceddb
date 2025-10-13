@@ -1,7 +1,8 @@
-import * as types from './actionTypes';
+import * as types from "./actionTypes";
 
 const initialState = {
-  id: '', title: '',
+  id: "",
+  title: "",
   permissions: {
     action: {
       create: false,
@@ -27,8 +28,8 @@ const initialState = {
 
     what_to_reform: {
       update: false,
-    }
-  }
+    },
+  },
 };
 
 export default (state = initialState, action) => {
@@ -36,7 +37,7 @@ export default (state = initialState, action) => {
     case types.SELECT_WORKING_GROUP: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
 

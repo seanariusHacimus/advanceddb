@@ -195,17 +195,6 @@ export const ActionPlanPage = styled.div`
     border: 1px solid var(--border-grey);
   }
 
-  /* Keep previous TinyMCE styles and apply same to Quill editor container */
-  .tox-tinymce,
-  .custom-tiyn-editor .ql-container {
-    border: 1px solid var(--border-grey);
-    border-radius: 5px;
-  }
-  .tox-tinymce:focus,
-  .custom-tiyn-editor .ql-container:focus-within {
-    border: 1px solid var(--blue);
-  }
-
   .user-icon {
     margin-right: 11px;
   }
@@ -387,10 +376,9 @@ export const ActionTablePage = styled.div`
   .custom-table thead > tr,
   .custom-table-expanded-row tr {
     display: grid;
-    grid-template-columns: 30px minmax(200px, 1fr) minmax(150px, 0.5fr) minmax(
-        150px,
-        0.5fr
-      ) minmax(200px, 0.5fr) minmax(200px, 0.5fr) 47px;
+    grid-template-columns:
+      30px minmax(200px, 1fr) minmax(150px, 0.5fr) minmax(150px, 0.5fr)
+      minmax(200px, 0.5fr) minmax(200px, 0.5fr) 47px;
     background-color: var(--background);
     align-items: center;
     width: calc(100vw - 270px - 120px);

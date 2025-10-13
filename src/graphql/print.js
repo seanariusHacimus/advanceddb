@@ -1,4 +1,4 @@
-import { gql } from '../utils';
+import { gql } from "../utils";
 
 export const FETCH_ACTIONS_FOR_PRINT = gql`
   query actions(
@@ -45,7 +45,7 @@ export const FETCH_ACTIONS_FOR_PRINT = gql`
   }
 `;
 
-export const FETCH_ACTIONS_AND_SUBACTIONS = gql`
+export const FETCH_ACTIONS_AND_SUB_ACTIONS = gql`
   query actions(
     $filter: ActionFilter
     $pagination: Pagination
@@ -73,8 +73,12 @@ export const FETCH_ACTIONS_AND_SUBACTIONS = gql`
         status
       }
     }
-    
-    sub_actions(filter: $filterSubAction, pagination: $pagination, order: $orderSubAction) {
+
+    sub_actions(
+      filter: $filterSubAction
+      pagination: $pagination
+      order: $orderSubAction
+    ) {
       nodes {
         id
         name
@@ -97,21 +101,17 @@ export const FETCH_ACTIONS_AND_SUBACTIONS = gql`
         }
       }
     }
-  }    
+  }
 `;
 
-
-
-export const FETCH_VISIBLE_INIDCATOR_GROUPS = gql`
-   {
-      indicator_groups(filter: {sidebar_visible: true}) {
-        nodes {
-          sidebar_visible
-          title
-          id
-        }
+export const FETCH_VISIBLE_INDICATOR_GROUPS = gql`
+  {
+    indicator_groups(filter: { sidebar_visible: true }) {
+      nodes {
+        sidebar_visible
+        title
+        id
       }
     }
+  }
 `;
-
-
