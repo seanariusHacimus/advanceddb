@@ -1,7 +1,10 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import { QueryParamProvider } from "use-query-params";
+import { ToastContainer } from "react-toastify";
+import Userback from "@userback/widget";
+
 import SignUp from "./Auth/SignUp";
 import SignIn from "./Auth/SignIn";
 import Layout from "./Layout";
@@ -46,10 +49,22 @@ const renderRoute = (routeConfig) => {
   };
 
   if (routeConfig.component) {
-    return <Route {...routeProps} component={routeConfig.component} />;
+    return (
+      <Route
+        {...routeProps}
+        key={routeConfig.key}
+        component={routeConfig.component}
+      />
+    );
   }
   if (routeConfig.render) {
-    return <Route {...routeProps} render={routeConfig.render} />;
+    return (
+      <Route
+        {...routeProps}
+        key={routeConfig.key}
+        render={routeConfig.render}
+      />
+    );
   }
   return null;
 };
@@ -69,10 +84,17 @@ function App(props) {
     dispatch(refreshLocales());
   }, [dispatch]);
 
+  useEffect(async () => {
+    if (process.env.NODE_ENV === "production") {
+      await Userback("A-UPsXeP9CLLn76dCRx4hcumpHP");
+    }
+  }, []);
+
   return (
     <div id="app-container">
       <BrowserRouter>
         <QueryParamProvider ReactRouterRoute={Route}>
+          <ToastContainer position="top-right" />
           <Spinner />
           {auth.isLogged && auth.access_token ? (
             <Layout>

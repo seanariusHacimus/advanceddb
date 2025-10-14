@@ -17,27 +17,19 @@ import Axios from "../../utils/axios";
 import { roleNames } from "../../utils";
 import { useLocale } from "../../utils/locale";
 import { USER_ROLES } from "../../constants/userRoles";
-import { hasPermission, isUserRole } from "../../utils/users";
+import { isUserRole } from "../../utils/users";
+import { signOutAction } from "../../store/Auth/actions";
 
 export default function Profile(props) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [t] = useLocale();
+
   const signOutHandler = async () => {
-    try {
-      const { data } = await Axios.post("/graphql", {
-        query: SIGN_OUT_MUTATION,
-      });
-      if (data) {
-        dispatch({ type: "SIGN_OUT_SUCCESS" });
-      }
-    } catch (err) {
-      console.error("[Custom Catch Error]-->", err);
-    } finally {
-      history.push("/");
-    }
+    dispatch(signOutAction());
   };
+
   const currentUser = useSelector((state) => state.auth);
+  const approvalsCount = useSelector((state) => state.approvals.count);
   const mainRoles = [USER_ROLES.SUPERUSER, USER_ROLES.COORDINATOR];
   const {
     role,
@@ -73,11 +65,13 @@ export default function Profile(props) {
       });
     }
 
-    if (hasPermission(role, leaderGroups, [USER_ROLES.SUPERUSER], true)) {
+    if (role === USER_ROLES.SUPERUSER || leaderGroups.length > 0) {
       menuItems.push({
         key: "/dashboard/approvals",
         link: "/dashboard/approvals",
-        label: t("Approval inbox"),
+        label: `${t("Approval inbox")} ${
+          approvalsCount >= 0 ? `(${approvalsCount})` : ""
+        }`,
         icon: iconApprovals,
       });
     }

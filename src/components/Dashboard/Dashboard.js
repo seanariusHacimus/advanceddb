@@ -152,7 +152,7 @@ class Dashboard extends PureComponent {
           {(myAccount.role === "superuser" ||
             myAccount.role === "coordinator") && (
             <ButtonSecondary
-              className="transparent small customize-btn"
+              className="small customize-btn download-actions-button"
               onClick={this.modalHandler}
             >
               <img src={iconCog} alt="cog" style={{ marginRight: 5 }} />

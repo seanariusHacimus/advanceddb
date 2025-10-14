@@ -1,17 +1,23 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   .download-actions-button {
     height: 34px;
     padding: 4px 10px;
     border-radius: 4px;
+
+    &:hover {
+      background: #f3f3f4;
+      color: #656f87;
+      border-color: #8f96a5;
+    }
   }
 
   .custom-filter-dropdown {
     .ant-checkbox-group-item {
-        display: block;
-        margin-right: 8px;
-        padding: 2px 16px;
+      display: block;
+      margin-right: 8px;
+      padding: 2px 16px;
     }
   }
 
@@ -28,11 +34,10 @@ export default styled.div`
     &:hover {
       background-color: #f44336;
       color: #fff;
-      
+
       svg {
         fill: #fff;
       }
-      
     }
   }
 
@@ -45,7 +50,7 @@ export default styled.div`
 
     &:hover {
       background-color: #4caf50;
-      
+
       color: #fff;
 
       svg {

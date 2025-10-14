@@ -574,6 +574,12 @@ export default createGlobalStyle`
     border-radius: 5px;
     color: #828A9D;
     font-size: 12px;
+
+    &:hover {
+      background: #f3f3f4;
+      color: #656f87;
+      border-color: #8f96a5;
+    }
   }
 
   .ant-table-tbody > tr .ant-table-wrapper:only-child .ant-table {

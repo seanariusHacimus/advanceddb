@@ -1,6 +1,5 @@
 export { default as colors } from "./colors";
 export { default as indicators } from "./indicators";
-// export { default as groups } from './groups';
 
 export const indicatorStatus = {
   not_started: "Not started",
@@ -16,4 +15,5 @@ export default {
   defaultListSize: 4,
   doingBusiness: { score: 41.3, rank: 177 },
   rocketChatUrl: process.env.REACT_APP_ROCKET_BASE_URL,
+  autoRefreshInterval: 30000, // in milliseconds
 };

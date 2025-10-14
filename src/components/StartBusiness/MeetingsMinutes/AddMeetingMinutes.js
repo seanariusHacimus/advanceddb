@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Alert, DatePicker } from "antd";
 import moment from "moment-timezone";
-import Swal from "sweetalert2";
 import { ActionPlanPage } from "../../../styles/startBusiness";
 import {
   TitleH3,
@@ -25,6 +24,7 @@ import {
   parseErrors,
 } from "../../../utils";
 import { withLocale } from "../../../utils/locale";
+import { toast } from "react-toastify";
 
 const initialState = {
   name: "",
@@ -135,11 +135,8 @@ class AddMeetingMinutes extends Component {
       if (res.data) {
         this.props.fetchMeetings();
         this.setState({ ...initialState });
-        Swal.fire({
-          title: t("Created"),
-          text: t("Meeting minute has been created successfully"),
-          icon: "success",
-        });
+
+        toast.success(t("Meeting minute has been created successfully"));
       }
     } catch (err) {
       if (err.message.includes("422")) {

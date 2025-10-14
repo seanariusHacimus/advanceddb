@@ -1,9 +1,9 @@
-import * as types from './actionTypes';
+import * as types from "./actionTypes";
 
 const initialState = {
   error: false,
   isLogged: false,
-  msg: '',
+  msg: "",
   pending: false,
   success: false,
   account: null,
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
         error: false,
         isLogged: true,
         success: true,
-        ...action.payload
+        ...action.payload,
       };
     }
     case types.SIGN_IN_PENDING: {
@@ -45,8 +45,8 @@ export default (state = initialState, action) => {
     case types.AUTH_UPDATE: {
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     }
 
     case types.REFRESH_MY_ACCOUNT: {
@@ -54,9 +54,9 @@ export default (state = initialState, action) => {
         ...state,
         account: {
           ...state.account,
-          ...action.payload
-        }
-      }
+          ...action.payload,
+        },
+      };
     }
 
     case types.SIGN_OUT_SUCCESS: {

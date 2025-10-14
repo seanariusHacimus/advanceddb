@@ -1,20 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button, message, Table, Space, Checkbox, Input } from "antd";
 import Axios from "../../utils/axios";
-import { t } from "../../utils/locale";
 import { FETCH_ACTIONS_AND_SUB_ACTIONS } from "../../graphql/print";
 import { exportToExel, exportToPdf } from "../../utils/printer";
 import { useLocale } from "../../utils/locale";
-import {
-  CloudDownloadOutlined,
-  FileExcelOutlined,
-  FilePdfOutlined,
-} from "@ant-design/icons";
+import { FileExcelOutlined, FilePdfOutlined } from "@ant-design/icons";
 import Modal from "antd/lib/modal/Modal";
 import moment from "moment";
 import { indicatorStatus } from "../../constants";
 import StyledPrint from "../../styles/print";
 import { unionBy } from "lodash";
+import iconDownload from "../../assets/dashboard/download.svg";
 
 const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   const [t] = useLocale();
@@ -379,12 +375,7 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
         className="download-actions-button customize-btn"
         onClick={handleModal}
       >
-        {" "}
-        <CloudDownloadOutlined
-          style={{ fontSize: 20 }}
-          height={20}
-          width={20}
-        />{" "}
+        <img src={iconDownload} alt="download" style={{ marginRight: 8 }} />
         Download actions
       </Button>
       <Modal

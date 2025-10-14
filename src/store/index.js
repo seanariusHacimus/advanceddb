@@ -10,6 +10,7 @@ import localeReducer from "./Locale/reducer";
 import workingGroupsReducer from "./WorkingGroups/reducer";
 import selectedWorkingGroupReducer from "./SelectedIndicator/reducer";
 import rocketAuth from "./RocketAuth/reducer";
+import approvalsReducer from "./Approvals/reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import firebase from "firebase/app";
 import "firebase/messaging";
@@ -46,6 +47,7 @@ if (firebase.messaging.isSupported()) {
 const rootReducer = combineReducers({
   auth: authReducer,
   actions: actionsReducer,
+  approvals: approvalsReducer,
   selectedWorkingGroup: selectedWorkingGroupReducer,
   workingGroups: workingGroupsReducer,
   notifications: notificationsReducer,

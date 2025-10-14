@@ -3,6 +3,8 @@ export const USER_ROLES = {
   COORDINATOR: "coordinator",
   MEMBER: "member",
   OBSERVER: "observer",
+  LEADER: "leader",
+  PARTICIPANT: "participant",
 };
 
 export const USER_PERMISSIONS = [

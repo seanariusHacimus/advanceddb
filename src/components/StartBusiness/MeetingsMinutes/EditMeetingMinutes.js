@@ -18,10 +18,10 @@ import {
 } from "../../../graphql/meetings";
 import moment from "moment-timezone";
 import iconAttachment from "../../../assets/startBusiness/attachment.svg";
-import Swal from "sweetalert2";
 import { dissoc, ErrorAlerts, parseErrors } from "../../../utils";
 import { errorsConfig } from "./AddMeetingMinutes";
 import { withLocale } from "../../../utils/locale";
+import { toast } from "react-toastify";
 
 class ActionPlan extends Component {
   state = {
@@ -194,11 +194,7 @@ class ActionPlan extends Component {
           "success",
           t("Meeting minute has been updated successfully")
         );
-        Swal.fire({
-          title: t("Updated"),
-          text: t("Meeting minute has been updated successfully"),
-          icon: "success",
-        });
+        toast.success(t("Meeting minute has been updated successfully"));
       }
     } catch (err) {
       if (err.message.includes("422")) {

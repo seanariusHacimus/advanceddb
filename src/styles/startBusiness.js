@@ -13,6 +13,12 @@ export default styled.div`
     border: 1px solid #d6d9e4;
     border-radius: 5px;
     color: #828a9d;
+
+    &:hover {
+      background: #f3f3f4;
+      color: #656f87;
+      border-color: #8f96a5;
+    }
   }
   .inner-block {
     padding: 20px;

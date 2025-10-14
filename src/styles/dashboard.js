@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export default styled.div`
   box-shadow: none !important;
   margin-top: -35px !important;
 
- .ant-row > div {
-   display: flex;
- }
+  .ant-row > div {
+    display: flex;
+  }
   .inner-block {
     padding: 20px;
     background: #fff;
@@ -31,7 +31,7 @@ export default styled.div`
       margin-right: 0;
       margin-left: 16px;
     } */
- } 
+  }
 
   .statistic-row {
     border-bottom: 1px solid var(--border-grey);
@@ -57,24 +57,26 @@ export default styled.div`
     height: 34px;
     width: auto;
     margin-left: auto;
-    background: #FCFDFF;
-    border: 1px solid #D6D9E4;
+    background: #fcfdff;
+    border: 1px solid #d6d9e4;
     border-radius: 5px;
     font-weight: 500;
     font-size: 12px;
     line-height: 17px;
-    color: #828A9D;
+    color: #828a9d;
     padding: 0 10px;
-  
+
     &:hover {
-      
+      background: #f3f3f4;
+      color: #656f87;
+      border-color: #8f96a5;
     }
   }
   .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #F3F4F9;
+    background-color: #f3f4f9;
     border-radius: 8px;
     overflow: hidden;
     width: 100% !important;
@@ -93,12 +95,12 @@ export default styled.div`
   }
 
   .info .ant-card-actions {
-    background-color: #E5E7EF;
+    background-color: #e5e7ef;
   }
 
-  .info .ant-card-actions>li, 
-  .info .ant-card-actions>li:hover {
-    color: #394F85;
+  .info .ant-card-actions > li,
+  .info .ant-card-actions > li:hover {
+    color: #394f85;
   }
 
   .info .content {
@@ -106,7 +108,7 @@ export default styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    color: #394F85;
+    color: #394f85;
     flex-direction: column;
 
     svg {
@@ -120,7 +122,7 @@ export default styled.div`
     }
   }
   .info .content:hover {
-    color: #394F85;
+    color: #394f85;
   }
 
   .statistic {
@@ -131,7 +133,7 @@ export default styled.div`
     display: inline-block;
     width: 30px;
     height: 6px;
-    background-color: #DFE2EC;
+    background-color: #dfe2ec;
     border-radius: 19px;
   }
 
@@ -142,8 +144,8 @@ export default styled.div`
     color: var(--title);
     margin: 0;
   }
-  .statistic.blue h2{
-    color: #394F85;
+  .statistic.blue h2 {
+    color: #394f85;
   }
 
   .statistic h5 {
@@ -154,12 +156,12 @@ export default styled.div`
     margin: 0;
   }
 
-  .statistic.blue h5{
-    color: #394F85;
+  .statistic.blue h5 {
+    color: #394f85;
   }
 
   .recharts-dot.recharts-area-dot {
-    fill: #527BDD;
+    fill: #527bdd;
     fill-opacity: 1;
   }
 
@@ -186,7 +188,7 @@ export default styled.div`
         margin-left: 0;
       }
     }
-    
+
     .has-right-divider {
       border-right: none;
       padding-right: 0;

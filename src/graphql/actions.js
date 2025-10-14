@@ -1,4 +1,4 @@
-import { gql } from '../utils';
+import { gql } from "../utils";
 
 export const FETCH_WORKING_GROUPS_AND_ORGANIZATIONS = gql`
   query indicator_group_infos($filter: IndicatorGroupFilter) {
@@ -135,17 +135,19 @@ export const FETCH_ACTIONS = gql`
 `;
 
 export const UNCOMPLETE_ACTION = gql`
-    mutation($action_id: Uuid!) {
-        uncomplete_action(action_id: $action_id)
-    }`;
+  mutation ($action_id: Uuid!) {
+    uncomplete_action(action_id: $action_id)
+  }
+`;
 
 export const COMPLETE_ACTION = gql`
-    mutation($action_id: Uuid!) {
-        complete_action(action_id: $action_id)
-    }`;
+  mutation ($action_id: Uuid!) {
+    complete_action(action_id: $action_id)
+  }
+`;
 
 export const CREATE_ACTION = gql`
-  mutation($action: CreateActionInput!, $attachments: [File!]) {
+  mutation ($action: CreateActionInput!, $attachments: [File!]) {
     create_action(action: $action, attachments: $attachments) {
       ...action
     }
@@ -175,7 +177,7 @@ export const CREATE_ACTION = gql`
 `;
 
 export const UPDATE_ACTION = gql`
-  mutation($action: UpdateActionInput!, $action_id: Uuid!) {
+  mutation ($action: UpdateActionInput!, $action_id: Uuid!) {
     update_action(action: $action, action_id: $action_id) {
       ...action
     }
@@ -245,7 +247,7 @@ export const DELETE_ATTACHMENTS = gql`
 `;
 
 export const DELETE_ACTION = gql`
-  mutation($action_id: Uuid!) {
+  mutation ($action_id: Uuid!) {
     delete_action(action_id: $action_id) {
       ...action
     }
@@ -278,8 +280,8 @@ export const DELETE_ACTION = gql`
 
 // ------------- SUB ACTIONS ---------------------
 export const CREATE_SUB_ACTION = gql`
-  mutation(
-    $sub_action: CreateActionInput!
+  mutation (
+    $sub_action: CreateSubActionInput!
     $attachments: [File!]
     $action_id: Uuid!
   ) {
@@ -321,7 +323,11 @@ export const CREATE_SUB_ACTION = gql`
 `;
 
 export const OVERDUE_ACTIONS = gql`
-  query actions($filter: ActionFilter, $pagination: Pagination, $order: ActionOrder) {
+  query actions(
+    $filter: ActionFilter
+    $pagination: Pagination
+    $order: ActionOrder
+  ) {
     actions(filter: $filter, pagination: $pagination, order: $order) {
       nodes {
         ...action
@@ -353,6 +359,4 @@ export const OVERDUE_ACTIONS = gql`
     end_at
     status
   }
-
 `;
-

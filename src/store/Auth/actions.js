@@ -1,6 +1,7 @@
-import * as types from './actionTypes';
-import Axios from '../../utils/axios';
+import * as types from "./actionTypes";
+import Axios from "../../utils/axios";
 import { MY_ACCOUNT_QUERY } from "../../graphql/profile";
+import { SIGN_OUT_MUTATION } from "../../graphql/auth";
 
 // ----------- SIGN UP -----------------
 export const signUpError = (err) => ({
@@ -20,7 +21,7 @@ export const signUpSuccess = (payload) => ({
 export const signUpAction = (data) => (dispatch) => {
   dispatch(signUpPending());
 
-  return Axios.post('/auth/sign-up', data)
+  return Axios.post("/auth/sign-up", data)
     .then(({ data }) => {
       if (data.success && data.payload) {
         return dispatch(signUpSuccess(data.payload));
@@ -41,11 +42,10 @@ export const signInPending = () => ({
 });
 
 export const signInSuccess = (payload) => {
-  console.log(payload);
   return {
     type: types.SIGN_IN_SUCCESS,
     payload,
-  }
+  };
 };
 
 // ----------- SIGN OUT -----------------
@@ -63,11 +63,10 @@ export const signOutSuccess = () => ({
   type: types.SIGN_OUT_SUCCESS,
 });
 
-export const authUpdate = payload => ({
+export const authUpdate = (payload) => ({
   type: types.AUTH_UPDATE,
   payload,
 });
-
 
 export const refreshMyAccountSuccess = (payload) => ({
   type: types.REFRESH_MY_ACCOUNT,
@@ -75,14 +74,37 @@ export const refreshMyAccountSuccess = (payload) => ({
 });
 
 export const refreshMyAccount = (data) => (dispatch) => {
-  return Axios.post('/graphql', { query: MY_ACCOUNT_QUERY }, { hideSpinner: data?.hideSpinner })
-    .then(res => {
+  return Axios.post(
+    "/graphql",
+    { query: MY_ACCOUNT_QUERY },
+    { hideSpinner: data?.hideSpinner }
+  )
+    .then((res) => {
       if (res?.data) {
         const payload = res.data.data.my_account;
         return dispatch(refreshMyAccountSuccess(payload));
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
+    });
+};
+
+export const signOutAction = () => (dispatch) => {
+  return Axios.post("/graphql", {
+    query: SIGN_OUT_MUTATION,
+  })
+    .then((res) => {
+      if (res.data) {
+        dispatch(signOutSuccess());
+        window.location.href = "/";
+      }
     })
+    .catch((err) => {
+      console.error("[Custom Catch Error]-->", err);
+      return dispatch(signOutError(err));
+    })
+    .finally(() => {
+      // window.location.href = "/";
+    });
 };

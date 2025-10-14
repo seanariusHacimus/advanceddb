@@ -1,170 +1,197 @@
-import React, { Component, createRef, } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { Col, DatePicker, Row, Select, Tag, } from 'antd';
-import Swal from 'sweetalert2';
-import moment from 'moment-timezone';
-import Axios from '../../../utils/axios';
-import { CREATE_ACTION } from '../../../graphql/actions';
-import { FETCH_ORGANIZATIONS } from '../../../graphql/organizations';
-import { FETCH_TAGS } from '../../../graphql/tags';
-import { Button, ButtonPrimary, Flex, Input, InputWrapper, } from '../../../styles';
-import { ReactComponent as IconCheck } from '../../../assets/list-icon.svg';
-import { fetchActionPlans } from '../../../store/Actions/actions';
-import { dissoc, ErrorAlerts, indexBy, InputErrors, notEmptyErrorConfig, parseErrors } from "../../../utils";
+import React, { Component, createRef } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { Col, DatePicker, Row, Select, Tag } from "antd";
+import moment from "moment-timezone";
+import Axios from "../../../utils/axios";
+import { CREATE_ACTION } from "../../../graphql/actions";
+import { FETCH_ORGANIZATIONS } from "../../../graphql/organizations";
+import { FETCH_TAGS } from "../../../graphql/tags";
+import {
+  Button,
+  ButtonPrimary,
+  Flex,
+  Input,
+  InputWrapper,
+} from "../../../styles";
+import { ReactComponent as IconCheck } from "../../../assets/list-icon.svg";
+import { fetchActionPlans } from "../../../store/Actions/actions";
+import {
+  dissoc,
+  ErrorAlerts,
+  indexBy,
+  InputErrors,
+  notEmptyErrorConfig,
+  parseErrors,
+} from "../../../utils";
 import { withLocale } from "../../../utils/locale";
-import { AiOutlinePaperClip, AiOutlineCloudUpload } from 'react-icons/ai';
-import FileUpload from './FileUpload';
+import FileUpload from "./FileUpload";
+import { toast } from "react-toastify";
 
 export const errorsConfig = {
   name: {
     ...notEmptyErrorConfig,
     "should be unique": {
       alert: "Action with this name already exist",
-      msg: "should be unique"
-    }
+      msg: "should be unique",
+    },
   },
   start_at: {
     "should not be after any sub action start_at": {
       alert: "Action should not conflict with subaction deadlines",
-      msg: "should not be after subaction start"
+      msg: "should not be after subaction start",
     },
     "should be valid": {
       msg: "invalid",
-      alert: false
+      alert: false,
     },
     "should not be before parent-action start_at": {
       alert: "Action should not exceed parent action deadlines",
-      msg: "should be after parent start"
+      msg: "should be after parent start",
     },
     "should not be after end_at": {
       alert: "Action cannot end before start",
-      msg: "should be before end"
-    }
+      msg: "should be before end",
+    },
   },
   end_at: {
     "should be valid": {
       msg: "invalid",
-      alert: false
+      alert: false,
     },
     "should not be after parent-action end_at": {
       alert: "Action should not exceed parent action deadlines",
-      msg: "should be before parent end"
+      msg: "should be before parent end",
     },
     "should not be before any sub action end_at": {
       alert: "Action should not conflict with subaction deadlines",
-      msg: "should not be before subaction end"
+      msg: "should not be before subaction end",
     },
     "should not be before start_at": {
       alert: "Action cannot end before start",
-      msg: "should be after start"
-    }
+      msg: "should be after start",
+    },
   },
   action_id: {
     "should be related to your account": {
       alert: "Insufficient permissions for this group",
-      msg: false
-    }
+      msg: false,
+    },
   },
   sub_action_id: {
     "should be related to your account": {
       alert: "Insufficient permissions for this group",
-      msg: false
-    }
+      msg: false,
+    },
   },
   description: {},
   number: {},
   group_id: {
     "should be related to your account": {
       alert: "Insufficient permissions for this group",
-      msg: false
-    }
+      msg: false,
+    },
   },
   responsive_account_ids: {
     "should be active": {
       msg: "Responsive account should be invited or activated",
-      alert: "should be invited or activated"
+      alert: "should be invited or activated",
     },
     "should be related to responsive account": {
       msg: "is not related to this group",
-      alert: "Responsible account is not allowed to be responsible in this working group"
-    }
+      alert:
+        "Responsible account is not allowed to be responsible in this working group",
+    },
   },
 };
 
 export const initialState = {
-  end_at: '',
-  name: '',
+  end_at: "",
+  name: "",
   number: 0,
   responsive_account_ids: [],
   allAccounts: [],
   allOrganizations: [],
-  start_at: '',
+  start_at: "",
   entitiesByValue: {},
   errors: {},
   alerts: [],
-  accountSearch: '',
-  organizationSearch: '',
+  accountSearch: "",
+  organizationSearch: "",
   showDummyModal: false,
   isStartAtFocused: false,
   isEndAtFocused: false,
   responsive_tags: [],
-  tagSearch: '',
+  tagSearch: "",
   allTags: [],
   attachments: [],
 };
 
-export const getAllGroupAccounts = (selectedWorkingGroup, responsive_accounts = []) => {
-  const allAccounts = [...selectedWorkingGroup.members, ...responsive_accounts, ...selectedWorkingGroup.leaders,]
-    .filter(account => account.status === 'active');
-  return indexBy(allAccounts, 'id');
-}
+export const getAllGroupAccounts = (
+  selectedWorkingGroup,
+  responsive_accounts = []
+) => {
+  const allAccounts = [
+    ...selectedWorkingGroup.members,
+    ...responsive_accounts,
+    ...selectedWorkingGroup.leaders,
+  ].filter((account) => account.status === "active");
+  return indexBy(allAccounts, "id");
+};
 
 // deleted
 export const getAllOrganizations = async () => {
-  const res = await Axios.post('/graphql', {
+  const res = await Axios.post("/graphql", {
     query: FETCH_ORGANIZATIONS,
   });
   if (res?.data) {
     const allOrganizations = res.data.data.organizations?.nodes;
-    return indexBy(allOrganizations, 'id')
+    return indexBy(allOrganizations, "id");
   }
-}
+};
 
 export const getAllTags = async () => {
-  const res = await Axios.post('/graphql', {
+  const res = await Axios.post("/graphql", {
     query: FETCH_TAGS,
   });
   if (res?.data) {
     return res.data.data.tags?.nodes;
   }
-}
-
+};
 
 export class ActionPlanBase extends Component {
-  state = { ...initialState, end_at_isGreater: false }
+  state = { ...initialState, end_at_isGreater: false };
   membersRef = createRef();
   parentRef = createRef();
 
   componentDidMount() {
-    getAllTags().then(tags => {
-      const allTags = tags.map(({ title }) => ({ first_name: title, id: title, isTag: true }));
+    getAllTags().then((tags) => {
+      const allTags = tags.map(({ title }) => ({
+        first_name: title,
+        id: title,
+        isTag: true,
+      }));
       this.setState({
         allAccounts: getAllGroupAccounts(this.props.selectedWorkingGroup),
-        allTags: indexBy(allTags, 'id'),
-      })
-    })
+        allTags: indexBy(allTags, "id"),
+      });
+    });
   }
 
   refreshEntities = () => {
-    const { responsive_accounts, responsive_tags, responsive_organizations } = this.props.selectedAction
+    const { responsive_accounts, responsive_tags, responsive_organizations } =
+      this.props.selectedAction;
     const allAccounts = getAllGroupAccounts(this.props.selectedWorkingGroup);
-    getAllTags().then((allTags => {
-      const externalTags = indexBy(responsive_tags.filter(({ title }) => !allTags[title]),
-        'title')
-      const externalAccounts = indexBy(responsive_accounts
-        .filter(({ id }) => !allAccounts[id]), 'id');
+    getAllTags().then((allTags) => {
+      const externalTags = indexBy(
+        responsive_tags.filter(({ title }) => !allTags[title]),
+        "title"
+      );
+      const externalAccounts = indexBy(
+        responsive_accounts.filter(({ id }) => !allAccounts[id]),
+        "id"
+      );
       this.setState({
         allTags: {
           ...externalTags,
@@ -174,34 +201,33 @@ export class ActionPlanBase extends Component {
           ...externalAccounts,
           ...allAccounts,
         },
-      })
-    }));
-  }
-
+      });
+    });
+  };
 
   handleInput = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value, errors: dissoc(this.state.errors, name) });
-  }
+  };
 
-  handleRemoveTag = tag => {
-    const removedTag = this.state.responsive_tags.filter(i => i !== tag);
+  handleRemoveTag = (tag) => {
+    const removedTag = this.state.responsive_tags.filter((i) => i !== tag);
     this.setState({ responsive_tags: removedTag });
-  }
+  };
 
   render() {
-    throw "Function not implemented"
+    throw "Function not implemented";
     return null;
   }
 }
 
 class ActionPlanForm extends ActionPlanBase {
-  state = initialState
+  state = initialState;
 
   submitAction = async (e) => {
     e.preventDefault();
     const { t } = this.props;
-    this.setState({ alerts: [], errors: {} })
+    this.setState({ alerts: [], errors: {} });
     const {
       end_at,
       name,
@@ -213,26 +239,32 @@ class ActionPlanForm extends ActionPlanBase {
       attachments,
     } = this.state;
 
-    const sortedTags = responsive_account_ids.reduce((acc, i) => {
-      if (!allAccounts[i]) {
-        acc.responsive_tags.push(i)
-      } else {
-        acc.responsive_account_ids.push(i);
-      }
-      return acc;
-    }, { responsive_tags: [], responsive_account_ids: [] });
+    const sortedTags = responsive_account_ids.reduce(
+      (acc, i) => {
+        if (!allAccounts[i]) {
+          acc.responsive_tags.push(i);
+        } else {
+          acc.responsive_account_ids.push(i);
+        }
+        return acc;
+      },
+      { responsive_tags: [], responsive_account_ids: [] }
+    );
 
-
-    const allResponsiveTags = [... new Set(sortedTags.responsive_tags.concat(responsive_tags))];
+    const allResponsiveTags = [
+      ...new Set(sortedTags.responsive_tags.concat(responsive_tags)),
+    ];
 
     const action = {
-      start_at: moment(start_at).startOf('day').toISOString(),
-      end_at: moment(end_at).endOf('day').toISOString(),
+      start_at: moment(start_at).startOf("day").toISOString(),
+      end_at: moment(end_at).endOf("day").toISOString(),
       group_id: this.props.selectedWorkingGroup.id,
       name,
       number,
-      responsive_account_ids: sortedTags.responsive_account_ids.length ? sortedTags.responsive_account_ids : null,
-      responsive_tags: allResponsiveTags.length ? allResponsiveTags : null
+      responsive_account_ids: sortedTags.responsive_account_ids.length
+        ? sortedTags.responsive_account_ids
+        : null,
+      responsive_tags: allResponsiveTags.length ? allResponsiveTags : null,
     };
 
     if (start_at && end_at && name) {
@@ -241,58 +273,65 @@ class ActionPlanForm extends ActionPlanBase {
         query: CREATE_ACTION,
         variables: {
           action,
-          attachments: attachments.length ? Array(attachments.length).fill(null) : null,
+          attachments: attachments.length
+            ? Array(attachments.length).fill(null)
+            : null,
         },
       };
 
       // ------ Create map for FormData -------
       const map = {};
-      Array(attachments.length).fill('').forEach((item, index) => {
-        map[index] = [`variables.attachments.${index}`];
-      });
+      Array(attachments.length)
+        .fill("")
+        .forEach((item, index) => {
+          map[index] = [`variables.attachments.${index}`];
+        });
 
       // ------ APPEND data to FormDate -------
-      formData.append('operations', JSON.stringify(request));
-      formData.append('map', JSON.stringify(map));
+      formData.append("operations", JSON.stringify(request));
+      formData.append("map", JSON.stringify(map));
 
-      Array(attachments.length).fill('').forEach((item, index) => {
-        formData.append([index], attachments[index]);
-      });
+      Array(attachments.length)
+        .fill("")
+        .forEach((item, index) => {
+          formData.append([index], attachments[index]);
+        });
 
       try {
-        const res = await Axios.post('/graphql', formData);
+        const res = await Axios.post("/graphql", formData);
 
         if (res?.data.data) {
-          Swal.fire({
-            title: t('Created'),
-            text: t('Success! You have created an action'),
-            icon: 'success',
-          }).then(() => {
-            this.setState(initialState);
-            this.props.fetchCurrentWorkingGroup()
-            this.props.modalHandler();
+          toast(t("Action has been created successfully"), {
+            type: "success",
           });
+
+          this.setState(initialState);
+          this.props.fetchCurrentWorkingGroup();
+          this.props.modalHandler();
         }
       } catch (err) {
-        if (err.message.includes('422')) {
-          const { alerts, errors } = parseErrors(errorsConfig, err.response.data.errors[0].extensions?.validation?.action);
-          this.setState({ alerts, errors })
+        if (err.message.includes("422")) {
+          const { alerts, errors } = parseErrors(
+            errorsConfig,
+            err.response.data.errors[0].extensions?.validation?.action
+          );
+          this.setState({ alerts, errors });
         }
       }
     } else {
       let errors = {};
-      ['start_at', 'end_at', 'name'].forEach(item => {
+      ["start_at", "end_at", "name"].forEach((item) => {
         if (!this.state[item]) {
-          errors = { ...errors, [item]: [t('Required field')] }
+          errors = { ...errors, [item]: [t("Required field")] };
         }
       });
 
       this.setState({
-        alerts: [t('Fill all required fields')],
+        alerts: [t("Fill all required fields")],
         errors,
       });
     }
-  }
+  };
 
   fileSelection = () => {
     const data = [];
@@ -300,7 +339,7 @@ class ActionPlanForm extends ActionPlanBase {
       data.push(this.fileRef.files[i].name);
     }
     this.setState({ attachments: data });
-  }
+  };
 
   render() {
     const { t } = this.props;
@@ -317,7 +356,7 @@ class ActionPlanForm extends ActionPlanBase {
       isEndAtFocused,
       responsive_tags,
       allTags,
-      attachments = []
+      attachments = [],
     } = this.state;
     function tagRender(props) {
       const { label, value, closable, onClose } = props;
@@ -333,21 +372,23 @@ class ActionPlanForm extends ActionPlanBase {
         </Tag>
       );
     }
-    console.log(this.state)
+    console.log(this.state);
     return (
-      <div onKeyPress={e => {
-        if (e.key === 'Enter') {
-          console.log('parent Entered');
-          e.preventDefault();
-          this.submitAction(e)
-        }
-        // e.stopPropagation();
-      }}>
+      <div
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            console.log("parent Entered");
+            e.preventDefault();
+            this.submitAction(e);
+          }
+          // e.stopPropagation();
+        }}
+      >
         <form id="header" onSubmit={this.submitAction} ref={this.parentRef}>
           <ErrorAlerts alerts={alerts} />
           <Row gutter={[22]}>
-            <Col xs={24} lg={8} key='action-title'>
-              <InputWrapper className='has-messages' align='flex-end'>
+            <Col xs={24} lg={8} key="action-title">
+              <InputWrapper className="has-messages" align="flex-end">
                 <Input
                   id="action-title"
                   type="text"
@@ -356,19 +397,21 @@ class ActionPlanForm extends ActionPlanBase {
                   tabIndex="1"
                   autoFocus
                   autoComplete="off"
-                  ref={(el) => this.nameRef = el}
-                  className={`dynamic-input grey ${name ? 'has-value' : ''}`}
+                  ref={(el) => (this.nameRef = el)}
+                  className={`dynamic-input grey ${name ? "has-value" : ""}`}
                   onChange={this.handleInput}
                   hasErrors={errors.name}
                 />
-                <label htmlFor="" onClick={() => this.nameRef.focus()}>{t("Action name *")}</label>
-                <InputErrors name={'name'} errors={errors} />
+                <label htmlFor="" onClick={() => this.nameRef.focus()}>
+                  {t("Action name *")}
+                </label>
+                <InputErrors name={"name"} errors={errors} />
               </InputWrapper>
             </Col>
-            <Col xs={24} lg={8} key='start_at'>
+            <Col xs={24} lg={8} key="start_at">
               <Row gutter={[22]}>
                 <Col span={12}>
-                  <InputWrapper className='has-messages' align='flex-end'>
+                  <InputWrapper className="has-messages" align="flex-end">
                     <DatePicker
                       required
                       tabIndex="2"
@@ -376,19 +419,30 @@ class ActionPlanForm extends ActionPlanBase {
                       name="start_at"
                       value={start_at}
                       placeholder={t("Start Date *")}
-                      ref={(el) => this.start_atRef = el}
+                      ref={(el) => (this.start_atRef = el)}
                       open={isStartAtFocused}
                       onFocus={() => this.setState({ isStartAtFocused: true })}
                       onBlur={() => this.setState({ isStartAtFocused: false })}
-                      disabledDate={(current) => current < moment().startOf('day')}
-                      onChange={(val) => this.setState({ start_at: val ? val.startOf('day') : moment().startOf('day'), isStartAtFocused: false })}
-                      className={`custom-datepicker large grey ${errors.start_at && 'input-error'} ${start_at ? 'has-value' : ''}`}
+                      disabledDate={(current) =>
+                        current < moment().startOf("day")
+                      }
+                      onChange={(val) =>
+                        this.setState({
+                          start_at: val
+                            ? val.startOf("day")
+                            : moment().startOf("day"),
+                          isStartAtFocused: false,
+                        })
+                      }
+                      className={`custom-datepicker large grey ${
+                        errors.start_at && "input-error"
+                      } ${start_at ? "has-value" : ""}`}
                     />
-                    <InputErrors name={'start_at'} errors={errors} />
+                    <InputErrors name={"start_at"} errors={errors} />
                   </InputWrapper>
                 </Col>
-                <Col span={12} key='end_at'>
-                  <InputWrapper className='has-messages' align='flex-end'>
+                <Col span={12} key="end_at">
+                  <InputWrapper className="has-messages" align="flex-end">
                     <DatePicker
                       required
                       tabIndex="3"
@@ -396,49 +450,68 @@ class ActionPlanForm extends ActionPlanBase {
                       name="end_at"
                       placeholder={t("End Date *")}
                       value={end_at}
-                      ref={(el) => this.end_atRef = el}
+                      ref={(el) => (this.end_atRef = el)}
                       open={isEndAtFocused}
                       onFocus={() => this.setState({ isEndAtFocused: true })}
                       onBlur={() => this.setState({ isEndAtFocused: false })}
-                      onChange={(val) => this.setState({ end_at: val ? val.endOf('day') : moment().endOf('day'), isEndAtFocused: false })}
-                      disabledDate={(current) => current < moment(start_at).add(1, 'day')}
-                      className={`custom-datepicker large grey ${errors.end_at && 'input-error'} ${end_at ? 'has-value' : ''}`}
+                      onChange={(val) =>
+                        this.setState({
+                          end_at: val
+                            ? val.endOf("day")
+                            : moment().endOf("day"),
+                          isEndAtFocused: false,
+                        })
+                      }
+                      disabledDate={(current) =>
+                        current < moment(start_at).add(1, "day")
+                      }
+                      className={`custom-datepicker large grey ${
+                        errors.end_at && "input-error"
+                      } ${end_at ? "has-value" : ""}`}
                     />
-                    <InputErrors name={'end_at'} errors={errors} />
+                    <InputErrors name={"end_at"} errors={errors} />
                   </InputWrapper>
                 </Col>
               </Row>
             </Col>
-            <Col xs={24} lg={8} key='responsive_accounts'>
-              <InputWrapper className='has-messages' align='flex-end'>
+            <Col xs={24} lg={8} key="responsive_accounts">
+              <InputWrapper className="has-messages" align="flex-end">
                 <Select
                   mode="multiple"
                   required
                   size="large"
                   tabIndex="5"
                   placeholder={t("Responsible Entity *")}
-                  value={[... new Set(responsive_account_ids.concat(responsive_tags))]}
+                  value={[
+                    ...new Set(responsive_account_ids.concat(responsive_tags)),
+                  ]}
                   onSearch={(tagSearch) => this.setState({ tagSearch })}
-                  style={{ width: '100%', backgroundColor: '#fafbfc' }}
+                  style={{ width: "100%", backgroundColor: "#fafbfc" }}
                   optionFilterProp="children"
                   allowClear
                   showSearch
-                  onChange={arr => this.setState({ responsive_account_ids: arr })}
-                  className={`${responsive_account_ids?.length > 0 ? 'has-value' : ''} ${errors.responsive_account_ids && 'input-error'}`}
+                  onChange={(arr) =>
+                    this.setState({ responsive_account_ids: arr })
+                  }
+                  className={`${
+                    responsive_account_ids?.length > 0 ? "has-value" : ""
+                  } ${errors.responsive_account_ids && "input-error"}`}
                   getPopupContainer={(node) => node.parentNode}
                   menuItemSelectedIcon={<IconCheck className="check-icon" />}
-                  dropdownStyle={{ backgroundColor: '#535263', padding: 10 }}
+                  dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
                   // showAction={['click', 'focus']}
                   notFoundContent={null}
                   defaultActiveFirstOption={false}
                   tagRender={tagRender}
-                  ref={el => this.entityRef = el}
-                  onDeselect={tag => this.handleRemoveTag(tag)}
-                  onInputKeyDown={e => {
-                    if (e.key === 'Enter' && tagSearch.trim().length) {
-                      this.setState(prevState => ({
-                        responsive_tags: [... new Set([...prevState.responsive_tags, tagSearch])],
-                        tagSearch: '',
+                  ref={(el) => (this.entityRef = el)}
+                  onDeselect={(tag) => this.handleRemoveTag(tag)}
+                  onInputKeyDown={(e) => {
+                    if (e.key === "Enter" && tagSearch.trim().length) {
+                      this.setState((prevState) => ({
+                        responsive_tags: [
+                          ...new Set([...prevState.responsive_tags, tagSearch]),
+                        ],
+                        tagSearch: "",
                       }));
                       // This is for removing typed value from input
                       this.entityRef.blur();
@@ -446,32 +519,41 @@ class ActionPlanForm extends ActionPlanBase {
                     }
                   }}
                 >
-                  {
-                    Object.values({ ...allAccounts, ...allTags }).map((acc) => {
-                      return (
-                        <Select.Option
-                          key={acc.id}
-                          className="select-item"
-                          value={acc.id}
-                        >
-                          {acc.isTag ? '#' : ''}
-                          {`${acc.first_name || ''} ${acc.last_name || ''}`}
-                        </Select.Option>
-                      );
-                    })
-                  }
+                  {Object.values({ ...allAccounts, ...allTags }).map((acc) => {
+                    return (
+                      <Select.Option
+                        key={acc.id}
+                        className="select-item"
+                        value={acc.id}
+                      >
+                        {acc.isTag ? "#" : ""}
+                        {`${acc.first_name || ""} ${acc.last_name || ""}`}
+                      </Select.Option>
+                    );
+                  })}
                 </Select>
-                <InputErrors name={'responsive_account_ids'} errors={errors} />
+                <InputErrors name={"responsive_account_ids"} errors={errors} />
               </InputWrapper>
             </Col>
             <Col span={24} style={{ marginBottom: 15 }}>
-              <FileUpload attachemnts={[]} setAttachments={(attachments) => this.setState({ attachments })} />
+              <FileUpload
+                attachemnts={[]}
+                setAttachments={(attachments) => this.setState({ attachments })}
+              />
             </Col>
           </Row>
 
           <Flex className="btn-group">
-            <Button className="transparent small cancel" type="reset" onClick={this.props.modalHandler}>{t("Cancel")}</Button>
-            <ButtonPrimary className="small" type="submit">{t("Create a new action")}</ButtonPrimary>
+            <Button
+              className="transparent small cancel"
+              type="reset"
+              onClick={this.props.modalHandler}
+            >
+              {t("Cancel")}
+            </Button>
+            <ButtonPrimary className="small" type="submit">
+              {t("Create a new action")}
+            </ButtonPrimary>
           </Flex>
         </form>
       </div>
@@ -483,6 +565,10 @@ const mapStateToProps = (state) => ({
   selectedWorkingGroup: state.selectedWorkingGroup,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchActionPlans }, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ fetchActionPlans }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withLocale(ActionPlanForm)));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withLocale(ActionPlanForm)));

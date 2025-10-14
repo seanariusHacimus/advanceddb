@@ -1,3 +1,41 @@
+#### 1.2.0 (2025-10-14)
+
+##### New Features
+
+*  add toast for notifications, update logout logic (90bb290c)
+*  add Persistor gate (0de2ddea)
+*  upgrade react & react-dow to the latest version, fix ui issues and refactor the code (80e49867)
+
+##### Bug Fixes
+
+*  upload button auto submission issue, add userback plugin (f3513c78)
+
+##### Other Changes
+
+*  gql schema (3f2a84a0)
+*  app build configs (45827a1e)
+*  lock file (fac7b662)
+*  lock file (8255dae8)
+
+#### 1.1.0 (2025-10-14)
+
+##### New Features
+
+*  add toast for notifications, update logout logic (90bb290c)
+*  add Persistor gate (0de2ddea)
+*  upgrade react & react-dow to the latest version, fix ui issues and refactor the code (80e49867)
+
+##### Bug Fixes
+
+*  upload button auto submission issue, add userback plugin (f3513c78)
+
+##### Other Changes
+
+*  gql schema (3f2a84a0)
+*  app build configs (45827a1e)
+*  lock file (fac7b662)
+*  lock file (8255dae8)
+
 #### 1.1.0 (2025-10-12)
 
 ##### New Features
