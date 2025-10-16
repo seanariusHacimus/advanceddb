@@ -11,6 +11,7 @@ import { indicatorStatus } from "../../constants";
 import StyledPrint from "../../styles/print";
 import { unionBy } from "lodash";
 import iconDownload from "../../assets/dashboard/download.svg";
+import { ButtonAlternative, ButtonPrimary } from "../../styles/buttons";
 
 const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   const [t] = useLocale();
@@ -371,13 +372,10 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
 
   return (
     <StyledPrint ref={parentRef} style={{ marginLeft: 10, ...style }}>
-      <Button
-        className="download-actions-button customize-btn"
-        onClick={handleModal}
-      >
+      <ButtonAlternative onClick={handleModal} size="small">
         <img src={iconDownload} alt="download" style={{ marginRight: 8 }} />
-        Download actions
-      </Button>
+        {t("Download actions")}
+      </ButtonAlternative>
       <Modal
         visible={visible}
         onCancel={handleModal}

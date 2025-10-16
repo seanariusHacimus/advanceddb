@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { CheckCircleOutlined } from "@ant-design/icons";
 import { Tag, Popconfirm } from "antd";
 import iconUser from "../../assets/header/user.png";
 import icons from "../../constants/icons";
-import { ReactComponent as IconDashboard } from "../../assets/header/indicatorIcons/common.svg";
+import { ReactComponent as IconCommon } from "../../assets/header/indicatorIcons/common.svg";
 import { groupTitleToUrl } from "../../utils";
 import EditableArea from "./EditableArea";
+
+const DEFAULT_LOGO = (
+  <IconCommon className="user-icon" color="rgb(122, 125, 129)" />
+);
 
 export const columns = ({ t, ...props }) => [
   {
@@ -27,10 +29,10 @@ export const columns = ({ t, ...props }) => [
                 alt={data.title}
               />
             ) : (
-              <IconDashboard className="user-icon" fill="#7A7D81" />
+              DEFAULT_LOGO
             )
           ) : (
-            icons[url]
+            icons[url] || DEFAULT_LOGO
           )}
           <div className="item-title">
             {data.removable ? (

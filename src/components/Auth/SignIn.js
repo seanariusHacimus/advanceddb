@@ -95,7 +95,7 @@ function SignIn(props) {
               refreshToken();
             });
             if (res.data.data.sign_in.account.request_password_change) {
-              history.push("/profile/security");
+              history.push("/settings/profile/security");
             }
           } else {
             setErrorAlerts([t("Email or password is wrong")]);

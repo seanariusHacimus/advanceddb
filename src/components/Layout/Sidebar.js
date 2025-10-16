@@ -100,7 +100,7 @@ function Sidebar(props) {
                       <IconCommon className="menu-icon" />
                     )
                   ) : (
-                    icons[url]
+                    icons[url] || <IconCommon className="menu-icon" />
                   )
                 }
               >
@@ -117,11 +117,9 @@ function Sidebar(props) {
           return null;
         })}
 
-        <Menu.Item style={{ minHeight: 10 }}>
-          {disabledWorkingGroups.length ? (
-            <Divider style={{ margin: 0 }} />
-          ) : null}
-        </Menu.Item>
+        {disabledWorkingGroups.length ? (
+          <Divider style={{ margin: "0 0 12 0" }} />
+        ) : null}
 
         {disabledWorkingGroups.map((item) => {
           const url = groupTitleToUrl(item.title);
@@ -158,17 +156,15 @@ function Sidebar(props) {
           return null;
         })}
 
-        <Menu.Item style={{ minHeight: 10 }}>
-          <Divider style={{ margin: 0 }} />
-        </Menu.Item>
+        <Divider key="divider" style={{ margin: "0 0 12 0" }} />
 
         {["superuser", "coordinator"].includes(role) && (
           <Menu.Item
-            key="/dashboard/working-groups"
+            key="/working-group-settings"
             icon={<SettingOutlined className="menu-icon" />}
           >
-            <Link to="/dashboard/working-groups" style={{ fontSize: 14 }}>
-              {t("Edit Working Groups")}
+            <Link to="/working-group-settings" exact style={{ fontSize: 14 }}>
+              {t("Working Group Settings")}
             </Link>
           </Menu.Item>
         )}

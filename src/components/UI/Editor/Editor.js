@@ -166,6 +166,7 @@ const Editor = ({
         style={{
           maxHeight: height,
           minHeight: height,
+          backgroundColor: "#FAFBFC",
         }}
       />
 

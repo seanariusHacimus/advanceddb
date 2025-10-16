@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Row, Col, AutoComplete, Divider } from "antd";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -131,7 +131,7 @@ class UserProfile extends Component {
       if (res?.data.data) {
         this.props.authUpdate({ account: res.data.data.update_my_account });
         toast.success(t("Your profile has been updated successfully"));
-        this.props.history.push("/profile");
+        this.props.history.push("/settings/profile");
       }
     } catch (err) {
       console.error("[Custom Catch Error]-->", err);
@@ -157,7 +157,7 @@ class UserProfile extends Component {
         <Flex>
           <TitleH1>{t("Profile")}</TitleH1>
           <div className="btn-group">
-            <Link to="/profile" className="edit-btn transparent small">
+            <Link to="/settings/profile" className="edit-btn transparent small">
               {t("Cancel")}
             </Link>
             <ButtonPrimary className="small" onClick={this.handleSubmit}>

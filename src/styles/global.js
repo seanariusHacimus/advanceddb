@@ -466,7 +466,6 @@ export default createGlobalStyle`
   }
   .ant-table-filter-trigger{
     height: 100%;
-    width: 100%;
     &.active svg path{
       fill: var(--blue)
     }

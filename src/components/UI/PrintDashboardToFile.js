@@ -15,6 +15,7 @@ import iconDownload from "../../assets/dashboard/download.svg";
 import { useLocale } from "../../utils/locale";
 import { indicatorStatus } from "../../constants";
 import StyledPrint from "../../styles/print";
+import { ButtonAlternative } from "../../styles/buttons";
 
 const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   const [t] = useLocale();
@@ -406,13 +407,14 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
 
   return (
     <StyledPrint ref={parentRef} style={{ marginLeft: 10, ...style }}>
-      <Button
+      <ButtonAlternative
         className="download-actions-button customize-btn"
         onClick={handleModal}
+        size="small"
       >
         <img src={iconDownload} alt="download" style={{ marginRight: 8 }} />
         Download actions
-      </Button>
+      </ButtonAlternative>
       <Modal
         visible={visible}
         onCancel={handleModal}

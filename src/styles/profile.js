@@ -177,6 +177,10 @@ export const ProfileNotification = styled.div`
     border-left-color: var(--dark) !important;
   }
 
+  #profile-popover .ant-popover-inner-content {
+    width: 100%;
+  }
+
   .profile-img {
     width: 34px;
     height: 34px;

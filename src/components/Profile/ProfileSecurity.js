@@ -106,7 +106,7 @@ class PasswordEdit extends Component {
         <Flex>
           <TitleH1>{t("Set a new password")}</TitleH1>
           <div className="btn-group">
-            <Link to="/profile" className="edit-btn transparent small">
+            <Link to="/settings/profile" className="edit-btn transparent small">
               {t("Cancel")}
             </Link>
             <ButtonPrimary

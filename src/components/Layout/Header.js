@@ -9,6 +9,12 @@ import Notifications from "../Notifications/Notifications";
 import ProfilePopover from "../Profile/ProfilePopover";
 import { groupTitleToUrl } from "../../utils";
 import { useLocale } from "../../utils/locale";
+import { WORKING_GROUP_SETTINGS_PATH } from "../../routes";
+import { isUserRole } from "../../utils/users";
+import { USER_ROLES } from "../../constants/userRoles";
+import iconUserManagement from "../../assets/header/profile/user-management.svg";
+import iconApprovals from "../../assets/header/profile/approvals.svg";
+import iconAuditLog from "../../assets/header/profile/audit-log.svg";
 
 const { Header } = Layout;
 
@@ -37,7 +43,7 @@ const MENU_CONFIG = {
 
 const ROUTES = {
   WORKING_GROUP: "working-group",
-  PROFILE: "profile",
+  PROFILE: "settings",
   MESSAGING: "messaging",
 };
 
@@ -105,34 +111,71 @@ const WorkingGroupMenu = ({
   );
 };
 
-const ProfileMenu = ({ links, t }) => {
-  const menuItems = [
-    {
-      key: links[2] ? "/edit" : "/profile",
-      link: "/profile",
-      label: t("Profile"),
-    },
-    {
-      key: "/notification-settings",
-      link: "/profile/notification-settings",
-      label: t("Notification settings"),
-    },
-    {
-      key: "/security",
-      link: "/profile/security",
-      label: t("Security"),
-    },
-  ];
+const ProfileMenu = ({ t }) => {
+  const currentUser = useSelector((state) => state.auth);
+  const approvalsCount = useSelector((state) => state.approvals.count);
+
+  const { role, leaderGroups = [] } = currentUser.account || {};
+
+  const manageUsersItems = useMemo(() => {
+    const menuItems = [
+      {
+        key: "/settings/profile",
+        link: "/settings/profile",
+        label: t("Profile"),
+      },
+      {
+        key: "/settings/security",
+        link: "/settings/security",
+        label: t("Security settings"),
+      },
+      {
+        key: "/settings/notification-settings",
+        link: "/settings/notification-settings",
+        label: t("Notification settings"),
+      },
+    ];
+
+    if (!isUserRole(role, [USER_ROLES.MEMBER, USER_ROLES.OBSERVER])) {
+      menuItems.push({
+        key: "/settings/members",
+        link: "/settings/members",
+        label: t("Manage Users"),
+        icon: iconUserManagement,
+      });
+    }
+    if (isUserRole(role, [USER_ROLES.SUPERUSER, USER_ROLES.COORDINATOR])) {
+      menuItems.push({
+        key: "/settings/audit",
+        link: "/settings/audit",
+        label: t("Audit log"),
+        icon: iconAuditLog,
+      });
+    }
+
+    if (role === USER_ROLES.SUPERUSER || leaderGroups.length > 0) {
+      menuItems.push({
+        key: "/settings/approvals",
+        link: "/settings/approvals",
+        label: `${t("Approval inbox")} ${
+          approvalsCount >= 0 ? `(${approvalsCount})` : ""
+        }`,
+        icon: iconApprovals,
+      });
+    }
+
+    return menuItems;
+  }, [role, leaderGroups, t]);
 
   return (
     <Menu
       style={styles.headerMenu}
-      selectedKeys={[links[2] ? `/${links[2]}` : `/${links[1]}`]}
+      selectedKeys={[window.location.pathname]}
       mode="horizontal"
       className="custom-menu header"
       id="header-menu"
     >
-      {menuItems.map((item) => (
+      {manageUsersItems.map((item) => (
         <Menu.Item key={item.key}>
           <Link to={item.link}>{item.label}</Link>
         </Menu.Item>
@@ -141,7 +184,8 @@ const ProfileMenu = ({ links, t }) => {
   );
 };
 
-const DashboardMenu = ({ role, leaderGroups, workingGroupUrl, t }) => {
+const DashboardMenu = ({ workingGroupUrl, t }) => {
+  const currentPath = window.location.pathname;
   const menuItems = [
     {
       key: "/dashboard/home",
@@ -163,18 +207,22 @@ const DashboardMenu = ({ role, leaderGroups, workingGroupUrl, t }) => {
   ];
 
   const visibleMenuItems = useMemo(() => {
+    if (currentPath === WORKING_GROUP_SETTINGS_PATH) {
+      return [];
+    }
+
     return menuItems.filter((item) => !item.hidden);
   }, [menuItems]);
 
   return (
     <Menu
       style={styles.headerMenu}
-      selectedKeys={[window.location.pathname]}
+      selectedKeys={[currentPath]}
       mode="horizontal"
       className="custom-menu header"
       id="header-menu"
     >
-      {window.location.pathname.includes(ROUTES.MESSAGING) && (
+      {currentPath.includes(ROUTES.MESSAGING) && (
         <Menu.Item key={`/working-group/${workingGroupUrl}`}>
           <Link
             to="/home"

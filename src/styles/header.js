@@ -68,7 +68,7 @@ export default styled(Layout)`
 
   .ant-menu-inline {
     border-right: none;
-    padding-left: 40px;
+    padding-left: 32px;
     padding-right: 6px;
   }
 
@@ -84,7 +84,7 @@ export default styled(Layout)`
 
   .logo img {
     height: 42px;
-    margin-left: 40px;
+    margin-left: 32px;
   }
 
   .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected,
@@ -103,7 +103,7 @@ export default styled(Layout)`
   .menu-icon {
     fill: #7a7d81;
     color: #7a7d81;
-    margin-right: 10px;
+    margin-right: 4px;
     min-width: 15px;
     max-width: 15px;
   }

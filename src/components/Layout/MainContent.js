@@ -15,15 +15,14 @@ function MainContent(props) {
     user: state.auth.account,
   }));
 
-  const links = props.location.pathname.split("/");
+  const pathname = props.location.pathname;
+  const links = pathname.split("/");
 
   return (
     <Content
       style={{
         ...styles.content,
-        background: window.location.pathname.includes("/home")
-          ? "#f5f8fc"
-          : colors.background,
+        background: pathname.includes("/home") ? "#f5f8fc" : colors.background,
       }}
     >
       {request_password_change &&

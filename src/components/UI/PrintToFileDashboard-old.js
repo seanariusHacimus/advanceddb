@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button, message, Dropdown, Menu, Table, Tooltip } from "antd";
 import Axios from "../../utils/axios";
-import { t } from "../../utils/locale";
 import {
   FETCH_ACTIONS_FOR_PRINT,
   FETCH_VISIBLE_INDICATOR_GROUPS,
-  FETCH_VISIBLE_INIDCATOR_GROUP_ACTIONS,
 } from "../../graphql/print";
 import {
   exportToExel,
@@ -13,14 +11,8 @@ import {
   printAllActionsExcel,
   printAllActionsPdf,
 } from "../../utils/printer";
-import iconPrinter from "../../assets/simulation/printer.svg";
 import { useLocale } from "../../utils/locale";
-import store from "../../store";
-import {
-  DownloadOutlined,
-  FileExcelFilled,
-  FilePdfFilled,
-} from "@ant-design/icons";
+import { FileExcelFilled, FilePdfFilled } from "@ant-design/icons";
 import Modal from "antd/lib/modal/Modal";
 import moment from "moment";
 import { columns } from "../StartBusiness/ActionPlan/table";
@@ -35,7 +27,7 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   const [sorts, setSorts] = useState([]);
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, total: 0, size: 10 });
-  console.log(page);
+
   const handlePrintAll = async (isPdf) => {
     try {
       const { data: groups } = await Axios.post("/graphql", {
@@ -354,7 +346,9 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
           {t("Download actions")}
         </Button>
       </Dropdown> */}
-      <Button onClick={handleModal}>Download actions</Button>
+      <ButtonAlternative size="small" onClick={handleModal}>
+        {t("Download actions")}
+      </ButtonAlternative>
       <Modal
         visible={visible}
         onCancel={handleModal}

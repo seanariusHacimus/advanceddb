@@ -1,4 +1,3 @@
-import React from "react";
 import Dashboard from "../components/Dashboard/Dashboard";
 import Simulator from "../components/Simulator/Simulator";
 import Reform from "../components/Reform";
@@ -19,6 +18,8 @@ import Messaging from "../components/Messaging";
 import Audit from "../components/Audit";
 import Approvals from "../components/Approvals";
 
+export const WORKING_GROUP_SETTINGS_PATH = "/working-group-settings";
+
 export const ROUTES = [
   {
     key: "Dashboard",
@@ -28,7 +29,7 @@ export const ROUTES = [
   },
   {
     key: "WorkingGroups",
-    path: "/dashboard/working-groups",
+    path: WORKING_GROUP_SETTINGS_PATH,
     exact: true,
     secret: true,
     component: WorkingGroups,
@@ -41,7 +42,7 @@ export const ROUTES = [
   },
   {
     key: "Audit",
-    path: "/dashboard/audit",
+    path: "/settings/audit",
     exact: true,
     admin: true,
     secret: true,
@@ -49,7 +50,7 @@ export const ROUTES = [
   },
   {
     key: "Approvals",
-    path: "/dashboard/approvals",
+    path: "/settings/approvals",
     exact: true,
     admin: true,
     component: Approvals,
@@ -68,7 +69,7 @@ export const ROUTES = [
   },
   {
     key: "Members",
-    path: "/dashboard/members",
+    path: "/settings/members",
     exact: true,
     component: Members,
   },
@@ -80,22 +81,27 @@ export const ROUTES = [
     secret: true,
     component: EditMember,
   },
-  { key: "Profile", path: "/profile", exact: true, component: Profile },
+  {
+    key: "Profile",
+    path: "/settings/profile",
+    exact: true,
+    component: Profile,
+  },
   {
     key: "ProfileNotificationsEdit",
-    path: "/profile/notification-settings",
+    path: "/settings/notification-settings",
     exact: true,
     component: NotificationSettings,
   },
   {
     key: "ProfileEdit",
-    path: "/profile/edit",
+    path: "/settings/profile/edit",
     exact: true,
     component: ProfileEdit,
   },
   {
     key: "ProfileSecurity",
-    path: "/profile/security",
+    path: "/settings/security",
     exact: true,
     component: ProfileSecurity,
   },

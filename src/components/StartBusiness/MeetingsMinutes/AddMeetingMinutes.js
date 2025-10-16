@@ -150,8 +150,15 @@ class AddMeetingMinutes extends Component {
   };
 
   render() {
-    const { name, date, newMeetingMinute, attachments, alerts, errors } =
-      this.state;
+    const {
+      name,
+      date,
+      newMeetingMinute,
+      attachments,
+      alerts,
+      errors,
+      comment,
+    } = this.state;
     const { meetingMinutesPermissions } = this.props;
     const { t } = this.props;
 
@@ -214,6 +221,7 @@ class AddMeetingMinutes extends Component {
                   <Editor
                     height={125}
                     index="3"
+                    value={comment}
                     onChange={(val) => this.setState({ comment: val })}
                     className={`${errors.comment && "input-error"}`}
                   />
