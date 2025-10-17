@@ -25,11 +25,13 @@ import {
   notEmptyErrorConfig,
   parseErrors,
 } from "../../../utils";
+import {
+  getPillarCategories,
+  getPillarSubCategories,
+} from "../../../utils/pillars";
 import { withLocale } from "../../../utils/locale";
 import FileUpload from "./FileUpload";
 import { toast } from "react-toastify";
-import ActionNameSelection from "./ActionNameSelection";
-import { getCategoriesByPillar, getSubcategoriesByCategory } from "./util";
 
 export const errorsConfig = {
   name: {
@@ -232,55 +234,46 @@ export class ActionPlanBase extends Component {
       {
         category,
         sub_category: undefined,
-        subCategoriesList: getSubcategoriesByCategory(
-          this.props.indicatorGroup.title,
-          category
-        ),
+        subCategoriesList: [],
         errors: dissoc(this.state.errors, "sub_category"),
       },
-      () => this.loadSubCategories(category)
+      () => this.loadSubCategories(this.state.pillar_number, category)
     );
   };
 
-  loadCategories = (pillar) => {
+  loadCategories = async (pillar) => {
+    console.log("pillar", pillar);
     if (!pillar) return;
-
-    const topicName = this.props.indicatorGroup.title;
-    const list = getCategoriesByPillar(topicName, pillar);
-    this.setState({ categoriesList: list || [] });
+    try {
+      const list = await getPillarCategories({
+        indicator: this.props.indicatorGroup.title,
+        pillar,
+      });
+      this.setState({ categoriesList: list || [] });
+    } catch (e) {
+      console.error(e);
+      this.setState({ categoriesList: [] });
+    }
   };
 
-  loadSubCategories = async (category) => {
-    if (!category) return;
-    const topicName = this.props.indicatorGroup.title;
-    const list = getSubcategoriesByCategory(topicName, category);
-    this.setState({ subCategoriesList: list || [] });
+  loadSubCategories = async (pillar, category) => {
+    if (!pillar || !category) return;
+    try {
+      const list = await getPillarSubCategories({
+        indicator: this.props.indicatorGroup.title,
+        pillar,
+        category,
+      });
+      this.setState({ subCategoriesList: list || [] });
+    } catch (e) {
+      console.error(e);
+      this.setState({ subCategoriesList: [] });
+    }
   };
 
   handleInput = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value, errors: dissoc(this.state.errors, name) });
-  };
-
-  handleActionNameChange = (value) => {
-    this.setState((prev) => ({ ...prev, name: value }));
-  };
-
-  onSelectActionName = ({ pillar_number, category, sub_category }) => {
-    const topicName = this.props.indicatorGroup.title;
-    const categoriesList = getCategoriesByPillar(topicName, pillar_number);
-    const subCategoriesList = category
-      ? getSubcategoriesByCategory(topicName, category)
-      : [];
-
-    this.setState((prev) => ({
-      ...prev,
-      pillar_number,
-      category,
-      sub_category,
-      categoriesList,
-      subCategoriesList,
-    }));
   };
 
   handleRemoveTag = (tag) => {
@@ -290,6 +283,7 @@ export class ActionPlanBase extends Component {
 
   render() {
     throw "Function not implemented";
+    return null;
   }
 }
 
@@ -450,7 +444,6 @@ class ActionPlanForm extends ActionPlanBase {
       categoriesList = [],
       subCategoriesList = [],
     } = this.state;
-
     function tagRender(props) {
       const { label, value, closable, onClose } = props;
 
@@ -465,6 +458,7 @@ class ActionPlanForm extends ActionPlanBase {
         </Tag>
       );
     }
+    console.log(this.state);
     return (
       <div
         onKeyPress={(e) => {
@@ -475,17 +469,23 @@ class ActionPlanForm extends ActionPlanBase {
           }
         }}
       >
-        <form id="header" onSubmit={this.submitAction} ref={this.parentRef}>
+        {/* <form id="header" onSubmit={this.submitAction} ref={this.parentRef}>
           <ErrorAlerts alerts={alerts} />
           <Row gutter={[22]}>
-            <Col xs={24} lg={12} key="action-title">
+            <Col xs={24} lg={8} key="action-title">
               <InputWrapper className="has-messages" align="flex-end">
-                <ActionNameSelection
-                  onChange={this.handleActionNameChange}
-                  onSelect={this.onSelectActionName}
+                <Input
+                  id="action-title"
+                  type="text"
+                  name="name"
                   value={name}
-                  topicName={"Business Entry"}
-                  placeholder="Action name*"
+                  tabIndex="1"
+                  autoFocus
+                  autoComplete="off"
+                  ref={(el) => (this.nameRef = el)}
+                  className={`dynamic-input grey ${name ? "has-value" : ""}`}
+                  onChange={this.handleInput}
+                  hasErrors={errors.name}
                 />
                 <label htmlFor="" onClick={() => this.nameRef.focus()}>
                   {t("Action name *")}
@@ -493,7 +493,7 @@ class ActionPlanForm extends ActionPlanBase {
                 <InputErrors name={"name"} errors={errors} />
               </InputWrapper>
             </Col>
-            <Col xs={24} lg={6} key="start_at">
+            <Col xs={24} lg={8} key="start_at">
               <Row gutter={[22]}>
                 <Col span={12}>
                   <InputWrapper className="has-messages" align="flex-end">
@@ -559,14 +559,282 @@ class ActionPlanForm extends ActionPlanBase {
                 </Col>
               </Row>
             </Col>
-            <Col xs={24} lg={6} key="responsive_accounts">
+            <Col xs={24} lg={8} key="responsive_accounts">
               <InputWrapper className="has-messages" align="flex-end">
                 <Select
                   mode="multiple"
                   required
                   size="large"
                   tabIndex="5"
-                  placeholder={t("Assign to*")}
+                  placeholder={t("Responsible Entity *")}
+                  value={[
+                    ...new Set(responsive_account_ids.concat(responsive_tags)),
+                  ]}
+                  onSearch={(tagSearch) => this.setState({ tagSearch })}
+                  style={{ width: "100%", backgroundColor: "#fafbfc" }}
+                  optionFilterProp="children"
+                  allowClear
+                  showSearch
+                  onChange={(arr) =>
+                    this.setState({ responsive_account_ids: arr })
+                  }
+                  className={`${
+                    responsive_account_ids?.length > 0 ? "has-value" : ""
+                  } ${errors.responsive_account_ids && "input-error"}`}
+                  getPopupContainer={(node) => node.parentNode}
+                  menuItemSelectedIcon={<IconCheck className="check-icon" />}
+                  dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
+                  notFoundContent={null}
+                  defaultActiveFirstOption={false}
+                  tagRender={tagRender}
+                  ref={(el) => (this.entityRef = el)}
+                  onDeselect={(tag) => this.handleRemoveTag(tag)}
+                  onInputKeyDown={(e) => {
+                    if (e.key === "Enter" && tagSearch.trim().length) {
+                      this.setState((prevState) => ({
+                        responsive_tags: [
+                          ...new Set([...prevState.responsive_tags, tagSearch]),
+                        ],
+                        tagSearch: "",
+                      }));
+
+                      this.entityRef.blur();
+                      this.entityRef.focus();
+                    }
+                  }}
+                >
+                  {Object.values({ ...allAccounts, ...allTags }).map((acc) => {
+                    return (
+                      <Select.Option
+                        key={acc.id}
+                        className="select-item"
+                        value={acc.id}
+                      >
+                        {acc.isTag ? "#" : ""}
+                        {`${acc.first_name || ""} ${acc.last_name || ""}`}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+                <InputErrors name={"responsive_account_ids"} errors={errors} />
+              </InputWrapper>
+            </Col>
+            <Col span={24} style={{ marginBottom: 15 }}>
+              <FileUpload
+                attachemnts={[]}
+                setAttachments={(attachments) => this.setState({ attachments })}
+              />
+            </Col>
+          </Row>
+
+          <Flex className="btn-group">
+            <Button
+              className="transparent small cancel"
+              type="reset"
+              onClick={this.props.modalHandler}
+            >
+              {t("Cancel")}
+            </Button>
+            <ButtonPrimary className="small" type="submit">
+              {t("Create a new action")}
+            </ButtonPrimary>
+          </Flex>
+        </form> */}
+        <form id="header" onSubmit={this.submitAction} ref={this.parentRef}>
+          <ErrorAlerts alerts={alerts} />
+          <Row gutter={[22]}>
+            <Col xs={24} lg={8} key="action-title">
+              <InputWrapper className="has-messages" align="flex-end">
+                <Input
+                  id="action-title"
+                  type="text"
+                  name="name"
+                  value={name}
+                  tabIndex="1"
+                  autoFocus
+                  autoComplete="off"
+                  ref={(el) => (this.nameRef = el)}
+                  className={`dynamic-input grey ${name ? "has-value" : ""}`}
+                  onChange={this.handleInput}
+                  hasErrors={errors.name}
+                />
+                <label htmlFor="" onClick={() => this.nameRef.focus()}>
+                  {t("Action name *")}
+                </label>
+                <InputErrors name={"name"} errors={errors} />
+              </InputWrapper>
+            </Col>
+            <Col xs={24} lg={8} key="start_at">
+              <Row gutter={[22]}>
+                <Col span={12}>
+                  <InputWrapper className="has-messages" align="flex-end">
+                    <DatePicker
+                      required
+                      tabIndex="2"
+                      type="date"
+                      name="start_at"
+                      value={start_at}
+                      placeholder={t("Start Date *")}
+                      ref={(el) => (this.start_atRef = el)}
+                      open={isStartAtFocused}
+                      onFocus={() => this.setState({ isStartAtFocused: true })}
+                      onBlur={() => this.setState({ isStartAtFocused: false })}
+                      disabledDate={(current) =>
+                        current < moment().startOf("day")
+                      }
+                      onChange={(val) =>
+                        this.setState({
+                          start_at: val
+                            ? val.startOf("day")
+                            : moment().startOf("day"),
+                          isStartAtFocused: false,
+                        })
+                      }
+                      className={`custom-datepicker large grey ${
+                        errors.start_at && "input-error"
+                      } ${start_at ? "has-value" : ""}`}
+                    />
+                    <InputErrors name={"start_at"} errors={errors} />
+                  </InputWrapper>
+                </Col>
+                <Col span={12} key="end_at">
+                  <InputWrapper className="has-messages" align="flex-end">
+                    <DatePicker
+                      required
+                      tabIndex="3"
+                      type="date"
+                      name="end_at"
+                      placeholder={t("End Date *")}
+                      value={end_at}
+                      ref={(el) => (this.end_atRef = el)}
+                      open={isEndAtFocused}
+                      onFocus={() => this.setState({ isEndAtFocused: true })}
+                      onBlur={() => this.setState({ isEndAtFocused: false })}
+                      onChange={(val) =>
+                        this.setState({
+                          end_at: val
+                            ? val.endOf("day")
+                            : moment().endOf("day"),
+                          isEndAtFocused: false,
+                        })
+                      }
+                      disabledDate={(current) =>
+                        current < moment(start_at).add(1, "day")
+                      }
+                      className={`custom-datepicker large grey ${
+                        errors.end_at && "input-error"
+                      } ${end_at ? "has-value" : ""}`}
+                    />
+                    <InputErrors name={"end_at"} errors={errors} />
+                  </InputWrapper>
+                </Col>
+              </Row>
+            </Col>
+
+            <Col xs={24} lg={8} key="pillar_number">
+              <InputWrapper className="has-messages" align="flex-end">
+                <Select
+                  showSearch
+                  style={{ width: "100%" }}
+                  size="large"
+                  placeholder={t("Pillar number *")}
+                  value={pillar_number}
+                  onChange={this.onPillarChange}
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().includes(input.toLowerCase())
+                  }
+                  className={`custom-select ${
+                    pillar_number ? "has-value" : ""
+                  } ${errors.pillar_number ? "input-error" : ""}`}
+                >
+                  <Select.Option key={1} value={"1"}>
+                    Pillar 1
+                  </Select.Option>
+                  <Select.Option key={2} value={"2"}>
+                    Pillar 2
+                  </Select.Option>
+                  <Select.Option key={3} value={"3"}>
+                    Pillar 3
+                  </Select.Option>
+                </Select>
+                <InputErrors name={"pillar_number"} errors={errors} />
+              </InputWrapper>
+            </Col>
+
+            <Col xs={24} lg={8} key="category">
+              <InputWrapper className="has-messages" align="flex-end">
+                <Select
+                  showSearch
+                  style={{ width: "100%" }}
+                  size="large"
+                  placeholder={t("Category *")}
+                  value={category}
+                  onChange={this.onCategoryChange}
+                  disabled={!pillar_number}
+                  loading={!pillar_number}
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().includes(input.toLowerCase())
+                  }
+                  className={`custom-select ${category ? "has-value" : ""} ${
+                    errors.category ? "input-error" : ""
+                  }`}
+                >
+                  {categoriesList?.map((cat) => (
+                    <Select.Option key={cat} value={cat}>
+                      {cat}
+                    </Select.Option>
+                  ))}
+                </Select>
+                <InputErrors name={"category"} errors={errors} />
+              </InputWrapper>
+            </Col>
+
+            <Col xs={24} lg={8} key="sub_category">
+              <InputWrapper style={{ margin: 10 }} className="has-messages">
+                <Select
+                  showSearch
+                  style={{ width: "100%" }}
+                  placeholder={t("Sub-category *")}
+                  value={sub_category}
+                  onChange={(val) =>
+                    this.setState({
+                      sub_category: val,
+                      errors: dissoc(this.state.errors, "sub_category"),
+                    })
+                  }
+                  disabled={!category}
+                  loading={!category}
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().includes(input.toLowerCase())
+                  }
+                  className={`custom-select  ${
+                    sub_category ? "has-value" : ""
+                  } ${errors.sub_category ? "input-error" : ""}`}
+                  optionFilterProp="children"
+                  allowClear
+                  multiple={false}
+                  getPopupContainer={(node) => node.parentNode}
+                  dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
+                  size="large"
+                >
+                  {subCategoriesList?.map((sub) => (
+                    <Select.Option key={sub} value={sub}>
+                      {sub}
+                    </Select.Option>
+                  ))}
+                </Select>
+                <InputErrors name={"sub_category"} errors={errors} />
+              </InputWrapper>
+            </Col>
+
+            <Col xs={24} lg={8} key="responsive_accounts">
+              <InputWrapper className="has-messages" align="flex-end">
+                <Select
+                  mode="multiple"
+                  required
+                  size="large"
+                  tabIndex="5"
+                  placeholder={t("Responsible Entity *")}
                   value={[
                     ...new Set(responsive_account_ids.concat(responsive_tags)),
                   ]}
@@ -616,104 +884,6 @@ class ActionPlanForm extends ActionPlanBase {
                   })}
                 </Select>
                 <InputErrors name={"responsive_account_ids"} errors={errors} />
-              </InputWrapper>
-            </Col>
-
-            <Col xs={24} lg={6} key="pillar_number">
-              <InputWrapper className="has-messages" align="flex-end">
-                <Select
-                  showSearch
-                  style={{ width: "100%" }}
-                  size="large"
-                  placeholder={t("Pillar number *")}
-                  value={pillar_number}
-                  allowClear
-                  onChange={this.onPillarChange}
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().includes(input.toLowerCase())
-                  }
-                  className={`custom-select ${
-                    pillar_number ? "has-value" : ""
-                  } ${errors.pillar_number ? "input-error" : ""}`}
-                >
-                  <Select.Option key={1} value={"I"}>
-                    Pillar I
-                  </Select.Option>
-                  <Select.Option key={2} value={"II"}>
-                    Pillar II
-                  </Select.Option>
-                  <Select.Option key={3} value={"III"}>
-                    Pillar III
-                  </Select.Option>
-                </Select>
-                <InputErrors name={"pillar_number"} errors={errors} />
-              </InputWrapper>
-            </Col>
-
-            <Col xs={24} lg={9} key="category">
-              <InputWrapper className="has-messages" align="flex-end">
-                <Select
-                  showSearch
-                  style={{ width: "100%" }}
-                  size="large"
-                  placeholder={t("Category *")}
-                  value={category}
-                  onChange={this.onCategoryChange}
-                  disabled={!pillar_number}
-                  loading={!pillar_number}
-                  allowClear
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().includes(input.toLowerCase())
-                  }
-                  className={`custom-select ${category ? "has-value" : ""} ${
-                    errors.category ? "input-error" : ""
-                  }`}
-                >
-                  {categoriesList?.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-                <InputErrors name={"category"} errors={errors} />
-              </InputWrapper>
-            </Col>
-
-            <Col xs={24} lg={9} key="sub_category">
-              <InputWrapper className="has-messages">
-                <Select
-                  showSearch
-                  style={{ width: "100%" }}
-                  placeholder={t("Sub-category *")}
-                  value={sub_category}
-                  onChange={(val) =>
-                    this.setState({
-                      sub_category: val,
-                      errors: dissoc(this.state.errors, "sub_category"),
-                    })
-                  }
-                  disabled={!category}
-                  loading={!category}
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().includes(input.toLowerCase())
-                  }
-                  className={`custom-select  ${
-                    sub_category ? "has-value" : ""
-                  } ${errors.sub_category ? "input-error" : ""}`}
-                  optionFilterProp="children"
-                  allowClear
-                  multiple={false}
-                  getPopupContainer={(node) => node.parentNode}
-                  dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
-                  size="large"
-                >
-                  {subCategoriesList?.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.value}
-                    </Select.Option>
-                  ))}
-                </Select>
-                <InputErrors name={"sub_category"} errors={errors} />
               </InputWrapper>
             </Col>
             <Col span={24} style={{ marginBottom: 15 }}>

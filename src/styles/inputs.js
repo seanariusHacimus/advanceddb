@@ -69,6 +69,14 @@ export const InputWrapper = styled.div`
     text-align: left;
   }
   .custom-select {
+    .ant-select-selector {
+      padding: 0;
+      font-size: 14px;
+    }
+    #action-title {
+      padding: 0 15px;
+    }
+
     &.ant-select-disabled {
       opacity: 0.5;
       background-color: #f3f3f4;
@@ -90,18 +98,15 @@ export const InputWrapper = styled.div`
         opacity: 1;
         margin-top: auto;
         margin-bottom: auto;
+        font-weight: 500;
+        color: ${colors.text};
+        padding: 0 15px;
+        top: 0;
       }
       & .ant-select-selection-placeholder {
         font-weight: 500;
         color: ${colors.textLight};
         padding: 10px 15px;
-      }
-      & .ant-select-selection-item {
-        font-weight: 500;
-        color: ${colors.text};
-      }
-      & .ant-select-selection-item {
-        padding: 0 15px;
       }
     }
     &.padding-0 .ant-select-selector .ant-select-selection-item {

@@ -1,10 +1,10 @@
 import React, { Component, Suspense, lazy } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Menu, Dropdown } from "antd";
+import { Table, Menu, Dropdown, Popconfirm, Button } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import scrollIntoView from "scroll-into-view";
-import Swal from "sweetalert2";
+
 import { withRouter } from "react-router-dom";
 import { ReactComponent as IconChevronDown } from "../../../assets/startBusiness/chevron-down.svg";
 import { ReactComponent as IconChevronUp } from "../../../assets/startBusiness/chevron-up.svg";
@@ -27,6 +27,7 @@ import { fetchActionPlans } from "../../../store/Actions/actions";
 import { ErrorAlerts, notEmptyErrorConfig, parseErrors } from "../../../utils";
 import { withLocale } from "../../../utils/locale";
 import { toast } from "react-toastify";
+import { ButtonAlternative } from "../../../styles/buttons";
 
 const EditActionPlan = lazy(() => import("./EditActionPlan"));
 const AddSubAction = lazy(() => import("./AddSubAction"));
@@ -123,11 +124,11 @@ class ActionList extends Component {
     }
   };
 
-  updateStatus = (event, id, status) => {
+  updateStatus = async (event, id, status) => {
     event.stopPropagation();
     const { t } = this.props;
     this.setState({ alerts: [] });
-    const statusMsg = status === "completed" ? "incomplete" : "completed";
+
     let query = {};
     if (status === "completed") {
       query = {
@@ -145,37 +146,26 @@ class ActionList extends Component {
       };
     }
 
-    Swal.fire({
-      // title: t('Are you sure?'),
-      text: t("This subaction will be marked as %s", statusMsg),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-    }).then(async (result) => {
-      if (result.value) {
-        try {
-          const res = await Axios.post("/graphql", query);
-          if (res?.data) {
-            const { id } = this.props.selectedWorkingGroup;
-            this.props.fetchActionPlans(id);
-            this.props.fetchCurrentWorkingGroup();
-            this.props.fetchOverdueActions();
-          }
-        } catch (err) {
-          if (err.message.includes("422")) {
-            const { alerts } = parseErrors(
-              errorsConfig,
-              err.response.data.errors[0].extensions?.validation?.actions?.find(
-                (a) => a
-              )
-            );
-            this.setState({ alerts });
-          }
-          this.setState({ loading: false });
-        }
+    try {
+      const res = await Axios.post("/graphql", query);
+      if (res?.data) {
+        const { id } = this.props.selectedWorkingGroup;
+        this.props.fetchActionPlans(id);
+        this.props.fetchCurrentWorkingGroup();
+        this.props.fetchOverdueActions();
       }
-    });
+    } catch (err) {
+      if (err.message.includes("422")) {
+        const { alerts } = parseErrors(
+          errorsConfig,
+          err.response.data.errors[0].extensions?.validation?.actions?.find(
+            (a) => a
+          )
+        );
+        this.setState({ alerts });
+      }
+      this.setState({ loading: false });
+    }
   };
 
   completeAction = async (id) => {
@@ -187,7 +177,7 @@ class ActionList extends Component {
           action_id: id,
         },
       });
-      console.log("ACTIONS", res);
+
       if (res?.data) {
         const { id } = this.props.selectedWorkingGroup;
         this.props.fetchActionPlans(id);
@@ -215,7 +205,7 @@ class ActionList extends Component {
           action_id: id,
         },
       });
-      console.log("UNCOMPLETE ACTIONS", res);
+
       if (res?.data) {
         const { id } = this.props.selectedWorkingGroup;
         this.props.fetchActionPlans(id);
@@ -262,44 +252,31 @@ class ActionList extends Component {
     }));
   }
 
-  deleteAction = (id) => {
+  deleteAction = async (id) => {
     const { t } = this.props;
-    Swal.fire({
-      title: t("Are you sure?"),
-      text: t("When you delete the action you can not restore it later."),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: t("Yes, remove it!"),
-      cancelButtonText: t("Cancel"),
-    }).then(async (result) => {
-      if (result.value) {
-        try {
-          const res = await Axios.post("/graphql", {
-            query: DELETE_ACTION,
-            variables: {
-              action_id: id,
-            },
-          });
-          if (res?.data) {
-            const { id } = this.props.selectedWorkingGroup;
-            this.props.fetchCurrentIndicatorGroupAction();
-            this.props.fetchActionPlans(id);
-            toast.success(t("The action has been deleted successfully"));
-            this.props.fetchOverdueActions();
-          }
-        } catch (err) {
-          if (err.message.includes("422")) {
-            const { alerts } = parseErrors(
-              errorsConfig,
-              err.response.data.errors[0].extensions?.validation
-            );
-            this.setState({ alerts });
-          }
-        }
+    try {
+      const res = await Axios.post("/graphql", {
+        query: DELETE_ACTION,
+        variables: {
+          action_id: id,
+        },
+      });
+      if (res?.data) {
+        const { id } = this.props.selectedWorkingGroup;
+        this.props.fetchCurrentIndicatorGroupAction();
+        this.props.fetchActionPlans(id);
+        toast.success(t("The action has been deleted successfully"));
+        this.props.fetchOverdueActions();
       }
-    });
+    } catch (err) {
+      if (err.message.includes("422")) {
+        const { alerts } = parseErrors(
+          errorsConfig,
+          err.response.data.errors[0].extensions?.validation
+        );
+        this.setState({ alerts });
+      }
+    }
   };
 
   calculatePageOfAction(actionId) {
@@ -405,13 +382,32 @@ class ActionList extends Component {
 
                     {(actionPermissions.delete ||
                       props.creator?.id === user.id) && (
-                      <Menu.Item
-                        key="3"
-                        onClick={() => this.deleteAction(props.id)}
-                        icon={<IconDelete />}
+                      <Popconfirm
+                        disabled={!actionPermissions.complete}
+                        overlayClassName="actions-popconfirm"
+                        title={
+                          <div>
+                            <h3>{t("Delete the action")}</h3>
+                            <p>
+                              {t(
+                                "When you delete the action you can not restore it later."
+                              )}
+                            </p>
+                          </div>
+                        }
+                        onConfirm={(e) => {
+                          e.stopPropagation();
+                          this.deleteAction(props.id);
+                        }}
+                        onCancel={(e) => e.stopPropagation()}
+                        okText={t("Confirm")}
+                        cancelText={t("Cancel")}
+                        icon={null}
                       >
-                        {t("Delete")}
-                      </Menu.Item>
+                        <Menu.Item key="delete" icon={<IconDelete />}>
+                          {t("Delete")}
+                        </Menu.Item>
+                      </Popconfirm>
                     )}
                   </Menu>
                 }

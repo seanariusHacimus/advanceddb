@@ -307,6 +307,7 @@ export default createGlobalStyle`
   .more-action-btn-table .ant-dropdown-menu-item {
     height: 40px;
     padding: 10px 12px;
+    background: inherit;
   }
 
   .custom-tooltip {

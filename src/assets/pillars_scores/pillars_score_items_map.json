@@ -1,0 +1,461 @@
+{
+  "Business Entry": {
+    "PILLAR 1": {
+      "INFORMATION AND PROCEDURAL STANDARDS": {
+        "Company Information Filing Requirements": {},
+        "Beneficial Ownership Filing Requirements": {},
+        "Availability of Simplified Registration": {},
+        "Risk-Based Assessment for Operating Business and Environmental Licenses": {}
+      },
+      "RESTRICTIONS ON REGISTERING A BUSINESS": {
+        "Domestic Firms": {},
+        "Foreign Firms": {}
+      }
+    },
+    "PILLAR 2": {
+      "DIGITAL SERVICES": {
+        "Business Start-Up Process": {},
+        "Storage of Company and Beneficial Ownership Information": {},
+        "Identity Verification": {},
+        "Exchange of Company Information": {},
+        "Unique Business Identification": {}
+      },
+      "INTEROPERABILITY OF SERVICES": {
+        "Business Start-Up (Includes gender and environment)": {},
+        "General and Sex-Disaggregated Statistics on Newly Registered Firms": {},
+        "Availability of General Company Information": {}
+      }
+    },
+    "PILLAR 3": {
+      "DOMESTIC FIRMS": {
+        "Total Time to Register a New Domestic Firm": {},
+        "Total Cost To Register a New Domestic Firm": {}
+      },
+      "FOREIGN FIRMS": {
+        "Total Time to Register a New Foreign Firm": {},
+        "Total Cost To Register a New Foreign Firm": {}
+      }
+    }
+  },
+  "Business Location": {
+    "PILLAR 1": {
+      "PROPERTY TRANSFER AND LAND ADMINISTRATION": {
+        "Property Transfer Standards": {},
+        "Land Dispute Mechanisms": {},
+        "Land Administration System": {}
+      },
+      "BUILDING, ZONING AND LAND USE": {
+        "Building Standards": {},
+        "Building Energy Standards": {},
+        "Zoning and Land Use Regulations": {}
+      },
+      "RESTRICTIONS ON OWNING AND LEASING PROPERTY": {
+        "Domestic Firms – Ownership": {},
+        "Domestic Firms – Leasehold": {},
+        "Foreign Firms – Ownership": {},
+        "Foreign Firms – Leasehold": {}
+      },
+      "ENVIRONMENTAL PERMITS": {
+        "Environmental Permits for Construction": {},
+        "Dispute Mechanisms for Construction-Related Environmental Permits": {}
+      }
+    },
+    "PILLAR 2": {
+      "AVAILABILITY AND RELIABILITY OF DIGITAL SERVICES": {
+        "Property Transfer – Digital Public Services": {},
+        "Property Transfer – Digital Land Management and Identification System": {},
+        "Property Transfer – Coverage of the Land Registry and Mapping Agency": {},
+        "Building Permits – Digital Public Services": {},
+        "Environmental Permits – Digital Public Services": {}
+      },
+      "INTEROPERABILITY OF SERVICES": {
+        "Interoperability of Services for Property Transfer": {},
+        "Interoperability of Services for Building Permits": {}
+      },
+      "TRANSPARENCY OF INFORMATION": {
+        "Immovable Property (includes gender)": {},
+        "Building, Zoning and Land Use": {},
+        "Environmental Permits": {}
+      }
+    },
+    "PILLAR 3": {
+      "PROPERTY TRANSFER AND LAND ADMINISTRATION": {
+        "Major Constraints on Access to Land": {},
+        "Time to Obtain a Property Transfer": {},
+        "Cost to Obtain a Property Transfer": {}
+      },
+      "CONSTRUCTION PERMITS": {
+        "Time to Obtain Construction-Related Permits": {},
+        "Time to Obtain a Building Permit": {},
+        "Cost to Obtain a Building Permit": {}
+      },
+      "ENVIRONMENTAL PERMIT": {
+        "Time to Obtain an Environmental Permit": {},
+        "Cost to Obtain an Environmental Permit": {}
+      }
+    }
+  },
+  "Utility Services": {
+    "PILLAR 1": {
+      "ELECTRICITY": {
+        "Regulatory Monitoring of Tariffs and Service Quality": {},
+        "Utility Infrastructure Sharing and Quality Assurance Mechanisms": {},
+        "Safety of Utility Connections": {},
+        "Environmental Sustainability": {}
+      },
+      "WATER": {
+        "Regulatory Monitoring of Tariffs and Service Quality": {},
+        "Utility Infrastructure Sharing and Quality Assurance Mechanisms": {},
+        "Safety of Utility Connections": {},
+        "Environmental Sustainability": {}
+      },
+      "INTERNET": {
+        "Regulatory Monitoring of Tariffs and Service Quality": {},
+        "Utility Infrastructure Sharing and Quality Assurance Mechanisms": {},
+        "Safety of Utility Connections": {},
+        "Environmental Sustainability": {}
+      }
+    },
+    "PILLAR 2": {
+      "ELECTRICITY": {
+        "Digital Services and Interoperability": {},
+        "Availability of Information and Transparency": {},
+        "Monitoring of Service Supply (includes gender and environment)": {},
+        "Enforcement of Safety Regulations and Consumer Protection Mechanisms": {}
+      },
+      "WATER": {
+        "Digital Services and Interoperability": {},
+        "Availability of Information and Transparency": {},
+        "Monitoring of Service Supply (includes gender and environment)": {},
+        "Enforcement of Safety Regulations and Consumer Protection Mechanisms": {}
+      },
+      "INTERNET": {
+        "Digital Services and Interoperability": {},
+        "Availability of Information and Transparency": {},
+        "Monitoring of Service Supply (includes gender and environment)": {},
+        "Enforcement of Safety Regulations and Consumer Protection Mechanisms": {}
+      }
+    },
+    "PILLAR 3": {
+      "ELECTRICITY": {
+        "Time to Obtain a Connection": {},
+        "Reliability of Supply": {}
+      },
+      "WATER": {
+        "Time to Obtain a Connection": {},
+        "Reliability of Supply": {}
+      },
+      "INTERNET": {
+        "Time to Obtain a Connection": {},
+        "Reliability of Supply": {}
+      }
+    }
+  },
+  "Labor": {
+    "PILLAR 1": {
+      "WORKERS’ CONDITIONS": {
+        "Labor Rights": {},
+        "Minimum Wage Attributes": {},
+        "Termination of Employment": {},
+        "Terms of Employment": {}
+      },
+      "EMPLOYMENT RESTRICTIONS AND COSTS": {
+        "Minimum Wage Rate": {},
+        "Termination of Employment": {}
+      }
+    },
+    "PILLAR 2": {
+      "SOCIAL PROTECTION": {
+        "Unemployment Insurance": {},
+        "Health Care Coverage": {},
+        "Retirement Pension": {}
+      },
+      "EMPLOYMENT SERVICES": {
+        "Employment Centers and Training": {},
+        "Labor Dispute Resolution Mechanisms": {},
+        "Labor Inspectorates": {}
+      }
+    },
+    "PILLAR 3": {
+      "EMPLOYMENT RESTRICTIONS AND COSTS": {
+        "Social Contribution": {},
+        "Obstacles to Hiring": {},
+        "Dismissal Time and Cost": {}
+      },
+      "EMPLOYMENT SERVICES": {
+        "On-the-Job Training": {},
+        "Prevalence and Operational Efficiency of Labor Disputes": {},
+        "Health and Safety Inspection": {}
+      }
+    }
+  },
+  "Financial Services": {
+    "PILLAR 1": {
+      "COMMERCIAL LENDING": {
+        "Customer Due Diligence (CDD) and Risk Factors": {},
+        "Record Keeping of Customer Information": {},
+        "Availability of Enhanced and Simplified CDD Measures": {}
+      },
+      "SECURED TRANSACTIONS": {
+        "Integrated Legal Framework for Secured Transactions": {},
+        "Types of Movable Assets, Debts, and Obligations That can be Secured": {},
+        "Priority/Enforcement of Security Interests": {}
+      },
+      "E-PAYMENTS": {
+        "Risk Management": {},
+        "Consumer Protection": {},
+        "Interoperability of Payment Systems and Promotion of Competition": {}
+      }
+    },
+    "PILLAR 2": {
+      "OPERATION OF CREDIT BUREAUS AND REGISTRIES": {
+        "Data Coverage": {},
+        "Types of Data Collected and Shared": {},
+        "Additional Services and Borrower's Access to Information": {}
+      },
+      "OPERATION OF COLLATERAL REGISTRIES": {
+        "Existence of a Centralized and Publicly Available Registry": {},
+        "Notice-Based Registry Updates": {},
+        "Autonomy of Secured Creditors to Access and Update the Registry": {}
+      }
+    },
+    "PILLAR 3": {
+      "LOANS": {
+        "Obtaining a Loan": {},
+        "Operational Efficiency of Security Interest and Credit Data Update": {}
+      },
+      "E-PAYMENTS": {
+        "Cost of e-Payments": {},
+        "Time to Receive e-Payments": {},
+        "Usage Level of e-Payments": {}
+      }
+    }
+  },
+  "International Trade": {
+    "PILLAR 1": {
+      "PRACTICES SUPPORTING INTERNATIONAL TRADE": {
+        "International Trade in Goods and Services": {},
+        "Digital and Sustainable Trade (includes gender and environment)": {},
+        "International Trade Cooperation": {}
+      },
+      "REGULATORY RESTRICTIONS ON INTERNATIONAL TRADE": {
+        "International Trade in Goods (includes gender)": {},
+        "International Trade In Services": {},
+        "Digital Trade": {}
+      }
+    },
+    "PILLAR 2": {
+      "DIGITAL AND PHYSICAL INFRASTRUCTURE": {
+        "Electronic Systems and Interoperability of Services": {},
+        "Transparency and Availability of Information": {},
+        "Trade Infrastructure": {}
+      },
+      "BORDER MANAGEMENT": {
+        "Risk Management": {},
+        "Coordinated Border Management": {},
+        "Trusted Trader Programs": {}
+      }
+    },
+    "PILLAR 3": {
+      "COMPLIANCE WITH EXPORT REQUIREMENTS": {
+        "Total Time to Comply with Export Requirements": {},
+        "Total Cost to Comply with Export Requirements": {}
+      },
+      "COMPLIANCE WITH IMPORT REQUIREMENTS": {
+        "Total Time to Comply with Import Requirements": {},
+        "Total Cost to Comply with Import Requirements": {}
+      },
+      "PARTICIPATION IN CROSS-BORDER DIGITAL TRADE": {
+        "Share of Trading Firms Exporting Digitally Ordered Goods": {}
+      },
+      "PERCEIVED MAJOR OBSTACLES: BUSINESS TRANSPORTATION, CUSTOMS AND TRADE REGULATIONS": {
+        "Share of Firms Identifying Customs and Trade Regulations as Major or Severe Constraints": {},
+        "Share of Firms Identifying Transportation as Major or Severe Constraints": {}
+      }
+    }
+  },
+  "Taxation": {
+    "PILLAR 1": {
+      "CLARITY AND TRANSPARENCY": {
+        "Clarity of Tax Regulations": {},
+        "Transparency of Changes in Tax Regulations": {}
+      },
+      "ADMINISTRATIVE PROCEDURES": {
+        "Simplified Tax Record Keeping and Reporting": {},
+        "General Tax Registration": {},
+        "VAT Registration": {},
+        "VAT Refund": {}
+      },
+      "ENVIRONMENTAL TAXES": {
+        "Existence of Environmental Fiscal Instruments": {}
+      },
+      "TRANSPARENCY": {
+        "Availability of Public Consultations": {},
+        "Transition Periods": {}
+      }
+    },
+    "PILLAR 2": {
+      "DIGITAL SERVICES FOR TAXPAYERS": {
+        "Online Service Taxpayer Portal": {},
+        "Electronic Filing of Taxes": {},
+        "Pre-Filled Tax Declarations": {},
+        "Electronic Payment of Taxes": {}
+      },
+      "DATA MANAGEMENT AND SYSTEM INTEGRATION IN TAX ADMINISTRATION": {
+        "Tax Registration": {},
+        "Taxpayer Database and Tax Identification Number (TIN)": {},
+        "Tax Deregistration": {},
+        "Data Exchange and Usage (includes gender)": {},
+        "Annual Performance and Gender Diversity in Tax Administration": {}
+      },
+      "TAX AUDITS AND RELATED DISPUTES": {
+        "Public Accountability": {},
+        "Tax Audits": {},
+        "Dispute of Tax Audit Results": {}
+      }
+    },
+    "PILLAR 3": {
+      "TIME AND FUNCTIONALITY OF PROCESSES": {
+        "Time to File and Pay Taxes": {},
+        "Use of Electronic Systems to File and Pay Taxes": {},
+        "Duration of a Generic Tax Audit": {},
+        "Duration of a Tax Dispute": {},
+        "Use of a VAT Refund": {}
+      },
+      "FINANCIAL BURDEN ON FIRMS": {
+        "Effective Tax Rate (ETR) for Profit Taxes": {},
+        "Effective Tax Rate (ETR) for Employment Taxes and Social Contributions": {}
+      }
+    }
+  },
+  "Dispute Resolution": {
+    "PILLAR 1": {
+      "COURT LITIGATION": {
+        "Procedural Certainty (includes environment)": {},
+        "Judicial Integrity (includes gender)": {}
+      },
+      "ALTERNATIVE DISPUTE RESOLUTION (ADR)": {
+        "Legal Safeguards in Arbitration": {},
+        "Legal Safeguards in Mediation": {}
+      }
+    },
+    "PILLAR 2": {
+      "COURT LITIGATION": {
+        "Organizational Structure of Courts": {},
+        "Digitalization of Court Processes": {},
+        "Transparency of Courts (includes gender)": {}
+      },
+      "ALTERNATIVE DISPUTE RESOLUTION (ADR)": {
+        "Public Services for Arbitration (includes gender)": {},
+        "Public Services for Mediation (includes gender)": {}
+      }
+    },
+    "PILLAR 3": {
+      "COURT LITIGATION": {
+        "Reliability of Courts": {},
+        "Operational Efficiency of Court Processes": {}
+      },
+      "ALTERNATIVE DISPUTE RESOLUTION (ADR)": {
+        "Reliability of Alternative Dispute Resolution (ADR)": {},
+        "Operational Efficiency of Arbitration Processes": {}
+      }
+    }
+  },
+  "Market Competition": {
+    "PILLAR 1": {
+      "COMPETITION": {
+        "Antitrust": {},
+        "Merger Control": {},
+        "State-Owned Enterprises Framework and Scope of Competition Law": {},
+        "Enforcement of Competition Regulations": {}
+      },
+      "INNOVATION AND TECHNOLOGY TRANSFER": {
+        "Strength of Intellectual Property Rights Protection": {},
+        "Licensing and Technology Transfer": {},
+        "Fair Access to Innovation (includes environment)": {},
+        "University-Industry Collaboration": {}
+      },
+      "BIDDING FOR PUBLIC CONTRACTS": {
+        "Access and Firm's Participation (includes gender)": {},
+        "Best Value for Money (includes gender and environment)": {},
+        "Fairness of the Procurement Process": {},
+        "Transparency of Key Procurement Documents": {}
+      }
+    },
+    "PILLAR 2": {
+      "COMPETITION AUTHORITY": {
+        "Institutional Framework": {},
+        "Advocacy and Transparency": {}
+      },
+      "INNOVATION IN FIRMS": {
+        "Institutional Framework to Support Innovation": {},
+        "Digitalization of Intellectual Property Services": {},
+        "Innovation Systems (includes gender)": {}
+      },
+      "E-PROCUREMENT": {
+        "Digitalization of Procurement Procedures (includes environment)": {},
+        "Transparency of Key Procurement Documents (includes gender)": {}
+      }
+    },
+    "PILLAR 3": {
+      "COMPETITION": {
+        "Simplified Merger Review": {},
+        "Market Dynamism and Competitive Behaviors": {}
+      },
+      "INNOVATION": {
+        "Proportion of Highly Innovative Firms": {},
+        "Use of International Quality Certifications": {}
+      },
+      "PUBLIC PROCUREMENT": {
+        "Time to Award Public Contracts": {},
+        "Time to Receive a Payment from a Government Contract": {},
+        "Firms' Perceptions on the Ease of Bidding": {},
+        "Gender Gap in Government Suppliers": {}
+      }
+    }
+  },
+  "Business Insolvency": {
+    "PILLAR 1": {
+      "LEGAL AND PROCEDURAL STANDARDS IN INSOLVENCY PROCEEDINGS": {
+        "Pre-Commencement and Commencement Standards in Liquidation and Reorganization": {},
+        "Post-Commencement Standards in Liquidation and Reorganization": {}
+      },
+      "DEBTOR'S ASSETS AND CREDITOR'S PARTICIPATION IN INSOLVENCY PROCEEDINGS": {
+        "Treatment and Protection of Debtor’s Assets during Liquidation and Reorganization (includes environment)": {},
+        "Creditor's Rights in Liquidation and Reorganization (includes environment)": {}
+      },
+      "SPECIALIZED INSOLVENCY PROCEEDINGS AND INTERNATIONAL INSOLVENCY": {
+        "Selection and Dismissal of the Insolvency Administrator": {},
+        "Specialized Insolvency Proceedings for Micro and Small Enterprises (MSEs)": {},
+        "Cross-Border Insolvency": {}
+      }
+    },
+    "PILLAR 2": {
+      "DIGITAL SERVICES (E-COURTS) IN INSOLVENCY PROCEEDINGS": {
+        "Electronic Services in Liquidation and Reorganization": {},
+        "Electronic Case Management Systems in Liquidation and Reorganization": {}
+      },
+      "INTEROPERABILITY IN INSOLVENCY PROCEEDINGS": {
+        "Digital Services Connectivity with External Systems in Liquidation and Reorganization": {},
+        "Interconnection Between e-Case Management System and e-Filing Systems in Liquidation and Reorganization": {}
+      },
+      "PUBLIC INFORMATION ON INSOLVENCY PROCEEDINGS AND REGISTRY OF INSOLVENCY PRACTITIONERS": {
+        "Public Information on the Number and Length of Liquidation and Reorganization, and Insolvency Judgements": {},
+        "Availability of a Public Registry of Insolvency Practitioners": {},
+        "Specialization of Courts with Jurisdiction on Reorganization and Liquidation Proceedings": {},
+        "Insolvency Administrator's Expertise in Practice": {}
+      }
+    },
+    "PILLAR 3": {
+      "LIQUIDATION PROCEEDINGS": {
+        "Time to Resolve a Liquidation Proceeding": {},
+        "Cost to Resolve a Liquidation Proceeding": {}
+      },
+      "REORGANIZATION PROCEEDINGS": {
+        "Time to Resolve a Reorganization Proceeding": {},
+        "Cost to Resolve a Reorganization Proceeding": {}
+      },
+      "PUBLIC OFFICIALS AND INSOLVENCY ADMINISTRATOR": {}
+    }
+  }
+}

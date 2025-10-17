@@ -17,6 +17,7 @@ import { refreshLocales } from "../store/Locale/actions";
 import "moment/locale/es";
 import "moment/locale/ru";
 import "moment/locale/fr";
+import { USER_ROLES } from "../constants/userRoles";
 
 // Route filtering logic
 const getVisibleRoutes = (userRole) => {
@@ -24,49 +25,16 @@ const getVisibleRoutes = (userRole) => {
     (item) => !HIDDEN_ROUTES.includes(item.key)
   );
 
-  if (userRole === "coordinator") {
+  if (userRole === USER_ROLES.COORDINATOR) {
     return visibleRoutes.filter(
       (item) => !item.admin && !HIDDEN_ROUTES.includes(item.key)
     );
-  } else if (userRole !== "superuser") {
+  } else if (userRole !== USER_ROLES.SUPERUSER) {
     return visibleRoutes.filter(
       (item) => !item.secret && !HIDDEN_ROUTES.includes(item.key)
     );
   }
   return visibleRoutes;
-};
-
-// Route rendering logic
-const renderRoute = (routeConfig) => {
-  if (routeConfig.redirectTo) {
-    return <Redirect key={routeConfig.key} to={routeConfig.redirectTo} />;
-  }
-
-  const routeProps = {
-    key: routeConfig.key,
-    path: routeConfig.path,
-    exact: routeConfig.exact,
-  };
-
-  if (routeConfig.component) {
-    return (
-      <Route
-        {...routeProps}
-        key={routeConfig.key}
-        component={routeConfig.component}
-      />
-    );
-  }
-  if (routeConfig.render) {
-    return (
-      <Route
-        {...routeProps}
-        key={routeConfig.key}
-        render={routeConfig.render}
-      />
-    );
-  }
-  return null;
 };
 
 function App(props) {
@@ -79,16 +47,32 @@ function App(props) {
     [auth?.account?.role]
   );
 
-  // Initialize locales on app start
   useEffect(() => {
     dispatch(refreshLocales());
   }, [dispatch]);
 
   useEffect(async () => {
-    if (process.env.NODE_ENV === "production") {
-      await Userback("A-UPsXeP9CLLn76dCRx4hcumpHP");
+    if (process.env.NODE_ENV !== "development") {
+      const userback = await Userback("A-UPsXeP9CLLn76dCRx4hcumpHP");
+      console.log("Userback initialized:", userback);
     }
   }, []);
+
+  const renderRoute = (rc) => {
+    if (rc.redirectTo) {
+      return <Redirect key={rc.key} to={rc.redirectTo} />;
+    }
+
+    const props = {
+      key: rc.key,
+      path: rc.path,
+      exact: rc.exact,
+    };
+
+    if (rc.component) return <Route {...props} component={rc.component} />;
+    if (rc.render) return <Route {...props} render={rc.render} />;
+    return null;
+  };
 
   return (
     <div id="app-container">

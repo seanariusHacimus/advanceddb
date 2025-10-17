@@ -107,7 +107,7 @@ class ActionPlan extends Component {
     this.setState({ isGanttActive: status });
   };
 
-  formModalhandler = () => {
+  formModalHandler = () => {
     this.props.fetchActionPlans(this.props.selectedWorkingGroup.id);
     this.setState((prevState) => ({ newAction: !prevState.newAction }));
   };
@@ -171,7 +171,7 @@ class ActionPlan extends Component {
             <ButtonPrimary
               style={{ marginLeft: isEmpty ? "auto" : "initial" }}
               className="small add-new-action"
-              onClick={this.formModalhandler}
+              onClick={this.formModalHandler}
             >
               <img src={iconAddSubaction} alt={t("add subaction")} />
               {t("New Action")}
@@ -234,7 +234,8 @@ class ActionPlan extends Component {
         {newAction && actionPermissions.create && (
           <Suspense fallback={<Spinner />}>
             <AddActionPlan
-              modalHandler={this.formModalhandler}
+              indicatorGroup={this.props.currentIndicator}
+              modalHandler={this.formModalHandler}
               fetchCurrentWorkingGroup={
                 this.props.fetchCurrentIndicatorGroupAction
               }
