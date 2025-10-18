@@ -384,20 +384,21 @@ class ActionList extends Component {
                       </Menu.Item>
                     )}
 
-                    {actionPermissions.update && (
-                      <Menu.Item
-                        key="2"
-                        onClick={() =>
-                          this.setState({
-                            selectedAction: props,
-                            reassignAction: true,
-                          })
-                        }
-                        icon={<IconReassign />}
-                      >
-                        {t("Re-assign")}
-                      </Menu.Item>
-                    )}
+                    {actionPermissions.update &&
+                      props.status !== "completed" && (
+                        <Menu.Item
+                          key="2"
+                          onClick={() => {
+                            this.setState({
+                              selectedAction: props,
+                              reassignAction: true,
+                            });
+                          }}
+                          icon={<IconReassign />}
+                        >
+                          {t("Re-assign")}
+                        </Menu.Item>
+                      )}
 
                     {(actionPermissions.delete ||
                       props.creator?.id === user.id) && (

@@ -47,6 +47,7 @@ const ActionNameSelection = ({
       id="action-title"
       options={options}
       tabIndex="1"
+      maxLength={280}
       autoFocus
       className={`custom-select dynamic-input grey ${value ? "has-value" : ""}`}
       style={{ width: "100%" }}
