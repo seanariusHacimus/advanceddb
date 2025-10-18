@@ -44,7 +44,6 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   }, [data]);
 
   const filteredAccounts = useMemo(() => {
-    console.log(query);
     if (query) {
       return allResponsibleTitles.filter((item) =>
         item.label.toLowerCase().includes(query.toLowerCase())
@@ -347,7 +346,6 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   );
 
   const handleSortAndFilter = async (data) => {
-    console.log(filters);
     let filter = {};
     for (let x in filters) {
       if (filters[x] !== null) {
@@ -362,8 +360,6 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
     } else {
       sort = { ...sort, [sorts.field]: sorts.order === "ascend" ? 1 : -1 };
     }
-
-    console.log(filter, sort);
   };
 
   useEffect(() => {

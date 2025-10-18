@@ -47,6 +47,9 @@ export const FETCH_ACTIONS = gql`
     updated_at
     start_at
     end_at
+    pillar_number
+    category
+    sub_category
     action_boundaries {
       start_at
       end_at

@@ -12,8 +12,8 @@ import {
   Button,
   ButtonPrimary,
   Flex,
-  Input,
   InputWrapper,
+  StyledActionPlan,
 } from "../../../styles";
 import { ReactComponent as IconCheck } from "../../../assets/list-icon.svg";
 import { fetchActionPlans } from "../../../store/Actions/actions";
@@ -466,7 +466,8 @@ class ActionPlanForm extends ActionPlanBase {
       );
     }
     return (
-      <div
+      <StyledActionPlan
+        id="add-action-plan"
         onKeyPress={(e) => {
           if (e.key === "Enter") {
             console.log("parent Entered");
@@ -583,7 +584,11 @@ class ActionPlanForm extends ActionPlanBase {
                   } ${errors.responsive_account_ids && "input-error"}`}
                   getPopupContainer={(node) => node.parentNode}
                   menuItemSelectedIcon={<IconCheck className="check-icon" />}
-                  dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
+                  dropdownStyle={{
+                    backgroundColor: "#535263",
+                    padding: 10,
+                    zIndex: 1090,
+                  }}
                   notFoundContent={null}
                   defaultActiveFirstOption={false}
                   tagRender={tagRender}
@@ -635,6 +640,8 @@ class ActionPlanForm extends ActionPlanBase {
                   className={`custom-select ${
                     pillar_number ? "has-value" : ""
                   } ${errors.pillar_number ? "input-error" : ""}`}
+                  getPopupContainer={(node) => node.parentNode}
+                  dropdownStyle={{ zIndex: 1090 }}
                 >
                   <Select.Option key={1} value={"I"}>
                     Pillar I
@@ -668,6 +675,8 @@ class ActionPlanForm extends ActionPlanBase {
                   className={`custom-select ${category ? "has-value" : ""} ${
                     errors.category ? "input-error" : ""
                   }`}
+                  getPopupContainer={(node) => node.parentNode}
+                  dropdownStyle={{ zIndex: 1090 }}
                 >
                   {categoriesList?.map((item) => (
                     <Select.Option key={item.value} value={item.value}>
@@ -704,7 +713,11 @@ class ActionPlanForm extends ActionPlanBase {
                   allowClear
                   multiple={false}
                   getPopupContainer={(node) => node.parentNode}
-                  dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
+                  dropdownStyle={{
+                    backgroundColor: "#535263",
+                    padding: 10,
+                    zIndex: 1090,
+                  }}
                   size="large"
                 >
                   {subCategoriesList?.map((item) => (
@@ -737,7 +750,7 @@ class ActionPlanForm extends ActionPlanBase {
             </ButtonPrimary>
           </Flex>
         </form>
-      </div>
+      </StyledActionPlan>
     );
   }
 }

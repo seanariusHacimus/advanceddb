@@ -82,7 +82,7 @@ export const fetchCurrentIndicatorGroupAction =
       .then(({ data }) => {
         const { nodes } = data.data.indicator_groups;
         const workingGroup = nodes[0];
-        console.log({ nodes, workingGroup, data });
+
         return dispatch(
           selectWorkingGroupAction({
             ...workingGroup,

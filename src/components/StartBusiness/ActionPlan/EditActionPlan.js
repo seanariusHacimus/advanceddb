@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
@@ -10,8 +9,8 @@ import {
   ButtonPrimary,
   Flex,
   InputWrapper,
-  Input,
   TitleH1,
+  StyledActionPlan,
 } from "../../../styles";
 import { ReactComponent as IconCheck } from "../../../assets/list-icon.svg";
 import { fetchActionPlans } from "../../../store/Actions/actions";
@@ -32,12 +31,23 @@ import {
 } from "./AddActionPlan";
 import { withLocale } from "../../../utils/locale";
 import FileUploadEdit from "./FileUploadEdit";
+import ActionNameSelection from "./ActionNameSelection";
+import { getCategoriesByPillar, getSubcategoriesByCategory } from "./util";
+
 class EditActionPlan extends ActionPlanBase {
   state = initialState;
 
   async componentDidMount() {
-    const { name, start_at, end_at, responsive_accounts, responsive_tags } =
-      this.props.selectedAction;
+    const {
+      name,
+      start_at,
+      end_at,
+      responsive_accounts,
+      responsive_tags,
+      pillar_number,
+      category,
+      sub_category,
+    } = this.props.selectedAction;
     const getTags = await getAllTags();
     const allAccounts = await getAllGroupAccounts(
       this.props.selectedWorkingGroup,
@@ -56,6 +66,16 @@ class EditActionPlan extends ActionPlanBase {
       ...responsive_tags.map(({ title }) => title),
     ];
 
+    // Load categories and subcategories based on existing pillar and category
+    const topicName =
+      this.props.selectedWorkingGroup?.title || "Business Entry";
+    const categoriesList = pillar_number
+      ? getCategoriesByPillar(topicName, pillar_number)
+      : [];
+    const subCategoriesList = category
+      ? getSubcategoriesByCategory(topicName, category)
+      : [];
+
     this.setState({
       name,
       start_at,
@@ -64,8 +84,82 @@ class EditActionPlan extends ActionPlanBase {
       allTags,
       responsive_account_ids,
       responsive_tags: [],
+      pillar_number,
+      category,
+      sub_category,
+      categoriesList,
+      subCategoriesList,
     });
   }
+
+  handleActionNameChange = (value) => {
+    this.setState((prev) => ({ ...prev, name: value }));
+  };
+
+  onSelectActionName = ({ pillar_number, category, sub_category }) => {
+    const topicName = this.props.indicatorGroup?.title || "Business Entry";
+    const categoriesList = getCategoriesByPillar(topicName, pillar_number);
+    const subCategoriesList = category
+      ? getSubcategoriesByCategory(topicName, category)
+      : [];
+
+    this.setState((prev) => ({
+      ...prev,
+      pillar_number,
+      category,
+      sub_category,
+      categoriesList,
+      subCategoriesList,
+    }));
+  };
+
+  onPillarChange = (pillar_number) => {
+    console.log("pillar_number", pillar_number);
+    this.setState(
+      {
+        pillar_number,
+        category: undefined,
+        sub_category: undefined,
+        categoriesList: [],
+        subCategoriesList: [],
+        errors: dissoc(
+          dissoc(dissoc(this.state.errors, "pillar_number"), "category"),
+          "sub_category"
+        ),
+      },
+      () => this.loadCategories(pillar_number)
+    );
+  };
+
+  onCategoryChange = (category) => {
+    this.setState(
+      {
+        category,
+        sub_category: undefined,
+        subCategoriesList: getSubcategoriesByCategory(
+          this.props.indicatorGroup?.title || "Business Entry",
+          category
+        ),
+        errors: dissoc(this.state.errors, "sub_category"),
+      },
+      () => this.loadSubCategories(category)
+    );
+  };
+
+  loadCategories = (pillar) => {
+    if (!pillar) return;
+
+    const topicName = this.props.indicatorGroup?.title || "Business Entry";
+    const list = getCategoriesByPillar(topicName, pillar);
+    this.setState({ categoriesList: list || [] });
+  };
+
+  loadSubCategories = async (category) => {
+    if (!category) return;
+    const topicName = this.props.indicatorGroup?.title || "Business Entry";
+    const list = getSubcategoriesByCategory(topicName, category);
+    this.setState({ subCategoriesList: list || [] });
+  };
 
   submitAction = async (e) => {
     e.preventDefault();
@@ -80,9 +174,13 @@ class EditActionPlan extends ActionPlanBase {
       start_at,
       responsive_tags,
       allAccounts,
+      pillar_number,
+      category,
+      sub_category,
     } = this.state;
 
-    const { id } = this.props.selectedAction;
+    const { id, indicator_group } = this.props.selectedAction;
+    console.log("indicator_group", indicator_group);
 
     const sortedTags = responsive_account_ids.reduce(
       (acc, i) => {
@@ -109,9 +207,19 @@ class EditActionPlan extends ActionPlanBase {
         ? sortedTags.responsive_account_ids
         : null,
       responsive_tags: allResponsiveTags.length ? allResponsiveTags : null,
+      pillar_number,
+      category,
+      sub_category,
     };
 
-    if (start_at && end_at && name) {
+    if (
+      start_at &&
+      end_at &&
+      name &&
+      pillar_number &&
+      category &&
+      sub_category
+    ) {
       try {
         const res = await Axios.post("/graphql", {
           query: UPDATE_ACTION,
@@ -138,7 +246,14 @@ class EditActionPlan extends ActionPlanBase {
       }
     } else {
       let errors = {};
-      ["start_at", "end_at", "name"].forEach((item) => {
+      [
+        "start_at",
+        "end_at",
+        "name",
+        "pillar_number",
+        "category",
+        "sub_category",
+      ].forEach((item) => {
         if (!this.state[item]) {
           errors = { ...errors, [item]: [t("Required field")] };
         }
@@ -166,6 +281,11 @@ class EditActionPlan extends ActionPlanBase {
       responsive_tags,
       allTags,
       tagSearch,
+      pillar_number,
+      category,
+      sub_category,
+      categoriesList = [],
+      subCategoriesList = [],
     } = this.state;
     const { selectedAction } = this.props;
     const { action_boundaries } = selectedAction;
@@ -176,6 +296,8 @@ class EditActionPlan extends ActionPlanBase {
     const endDate = moment(end_at);
     const startDate = moment(start_at);
     const { t } = this.props;
+    const topicName =
+      this.props.selectedWorkingGroup?.title || "Business Entry";
 
     function tagRender(props) {
       const { label, value, closable, onClose } = props;
@@ -195,13 +317,13 @@ class EditActionPlan extends ActionPlanBase {
     return (
       <Modal
         title={null}
-        visible={this.props.visible && !showDummyModal}
+        open={this.props.visible && !showDummyModal}
         onOk={this.props.modalHandler}
         onCancel={this.props.modalHandler}
         footer={null}
         zIndex={1080}
       >
-        <div
+        <StyledActionPlan
           ref={this.parentRef}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
@@ -211,27 +333,133 @@ class EditActionPlan extends ActionPlanBase {
           }}
         >
           <TitleH1>{t("Edit the action")}</TitleH1>
-          <form id="header" onSubmit={this.submitAction}>
+          <form id="edit-action-plan" onSubmit={this.submitAction}>
             <ErrorAlerts alerts={alerts} />
             <Row gutter={[22]}>
               <Col xs={24}>
                 <InputWrapper className="has-messages" align="flex-end">
-                  <Input
-                    type="text"
-                    tabIndex="1"
-                    name="name"
+                  <ActionNameSelection
+                    onChange={this.handleActionNameChange}
+                    onSelect={this.onSelectActionName}
                     value={name}
-                    autoComplete="off"
-                    id="edit-subaction-title"
-                    ref={(el) => (this.nameRef = el)}
-                    hasErrors={errors.name}
-                    className={`dynamic-input grey ${name ? "has-value" : ""}`}
-                    onChange={this.handleInput}
+                    topicName={topicName}
+                    placeholder="Action name*"
                   />
                   <label htmlFor="" onClick={() => this.nameRef.focus()}>
                     {t("Action name *")}
                   </label>
                   <InputErrors name={"name"} errors={errors} />
+                </InputWrapper>
+              </Col>
+              <Col xs={24} key="pillar_number">
+                <InputWrapper className="has-messages" align="flex-end">
+                  <Select
+                    // showSearch
+                    style={{ width: "100%" }}
+                    size="large"
+                    placeholder={t("Pillar number *")}
+                    value={pillar_number}
+                    allowClear
+                    onChange={this.onPillarChange}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    className={`custom-select ${
+                      pillar_number ? "has-value" : ""
+                    } ${errors.pillar_number ? "input-error" : ""}`}
+                    getPopupContainer={(node) => node.parentNode}
+                    dropdownStyle={{ zIndex: 1090 }}
+                  >
+                    <Select.Option key={1} value={"I"}>
+                      Pillar I
+                    </Select.Option>
+                    <Select.Option key={2} value={"II"}>
+                      Pillar II
+                    </Select.Option>
+                    <Select.Option key={3} value={"III"}>
+                      Pillar III
+                    </Select.Option>
+                  </Select>
+                  <InputErrors name={"pillar_number"} errors={errors} />
+                </InputWrapper>
+              </Col>
+
+              <Col xs={24} key="category">
+                <InputWrapper className="has-messages" align="flex-end">
+                  <Select
+                    showSearch
+                    style={{ width: "100%" }}
+                    size="large"
+                    placeholder={t("Category *")}
+                    value={category}
+                    onChange={this.onCategoryChange}
+                    disabled={!pillar_number}
+                    loading={!pillar_number}
+                    allowClear
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    className={`custom-select ${category ? "has-value" : ""} ${
+                      errors.category ? "input-error" : ""
+                    }`}
+                    getPopupContainer={(node) => node.parentNode}
+                    dropdownStyle={{ zIndex: 1090 }}
+                  >
+                    {categoriesList?.map((item) => (
+                      <Select.Option key={item.value} value={item.value}>
+                        {item.value}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                  <InputErrors name={"category"} errors={errors} />
+                </InputWrapper>
+              </Col>
+
+              <Col xs={24} key="sub_category">
+                <InputWrapper className="has-messages">
+                  <Select
+                    showSearch
+                    style={{ width: "100%" }}
+                    placeholder={t("Sub-category *")}
+                    value={sub_category}
+                    onChange={(val) =>
+                      this.setState({
+                        sub_category: val,
+                        errors: dissoc(this.state.errors, "sub_category"),
+                      })
+                    }
+                    disabled={!category}
+                    loading={!category}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    className={`custom-select  ${
+                      sub_category ? "has-value" : ""
+                    } ${errors.sub_category ? "input-error" : ""}`}
+                    optionFilterProp="children"
+                    allowClear
+                    multiple={false}
+                    getPopupContainer={(node) => node.parentNode}
+                    dropdownStyle={{
+                      backgroundColor: "#535263",
+                      padding: 10,
+                      zIndex: 1090,
+                    }}
+                    size="large"
+                  >
+                    {subCategoriesList?.map((item) => (
+                      <Select.Option key={item.value} value={item.value}>
+                        {item.value}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                  <InputErrors name={"sub_category"} errors={errors} />
                 </InputWrapper>
               </Col>
               <Col xs={24}>
@@ -334,7 +562,11 @@ class EditActionPlan extends ActionPlanBase {
                     } ${errors.responsive_account_ids && "input-error"}`}
                     getPopupContainer={(node) => node.parentNode}
                     menuItemSelectedIcon={<IconCheck className="check-icon" />}
-                    dropdownStyle={{ backgroundColor: "#535263", padding: 10 }}
+                    dropdownStyle={{
+                      backgroundColor: "#535263",
+                      padding: 10,
+                      zIndex: 1090,
+                    }}
                     // showAction={['click', 'focus']}
                     notFoundContent={null}
                     defaultActiveFirstOption={false}
@@ -360,9 +592,6 @@ class EditActionPlan extends ActionPlanBase {
                   >
                     {Object.values({ ...allAccounts, ...allTags }).map(
                       (acc) => {
-                        // console.log(acc);
-
-                        console.log(responsive_account_ids.includes(acc.id));
                         return (
                           <Select.Option
                             key={acc.id}
@@ -382,6 +611,7 @@ class EditActionPlan extends ActionPlanBase {
                   />
                 </InputWrapper>
               </Col>
+
               <Col span={24}>
                 <FileUploadEdit
                   id={selectedAction.id}
@@ -408,7 +638,7 @@ class EditActionPlan extends ActionPlanBase {
               </ButtonPrimary>
             </Flex>
           </form>
-        </div>
+        </StyledActionPlan>
       </Modal>
     );
   }

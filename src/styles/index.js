@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import iconUser from "../assets/startBusiness/user.svg";
 
+export { default as StyledActionPlan } from "./actionPlan";
 export { Input, InputWrapper } from "./inputs";
 export { default as StyledEditor } from "./editor";
 export { Title, TitleH1, TitleH3, Text } from "./typography";

@@ -38,7 +38,6 @@ const ActionNameSelection = ({
   };
 
   const handleChange = (data) => {
-    console.log("onChange", data);
     onChange(data);
   };
 
@@ -49,12 +48,14 @@ const ActionNameSelection = ({
       options={options}
       tabIndex="1"
       autoFocus
-      className={`custom-select dynamic-input grey ${name ? "has-value" : ""}`}
+      className={`custom-select dynamic-input grey ${value ? "has-value" : ""}`}
       style={{ width: "100%" }}
       onSelect={handleOnSelect}
       onSearch={onSearch}
       onChange={handleChange}
       placeholder={t(placeholder)}
+      getPopupContainer={(node) => node.parentNode}
+      dropdownStyle={{ zIndex: 1090 }}
     />
   );
 };

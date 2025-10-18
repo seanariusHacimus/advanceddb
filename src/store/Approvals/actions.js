@@ -25,7 +25,7 @@ export const fetchApprovalsActionNumber =
           group_id: leaderGroups,
         };
       }
-      console.log("filter", filter);
+
       return Axios.post(
         "/graphql",
         {
