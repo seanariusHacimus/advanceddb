@@ -112,7 +112,7 @@ export const columns = ({
     sortDirections: ["ascend", "descend", "ascend"],
   },
   {
-    title: t("Responsible"),
+    title: t("Assigned to"),
     dataIndex: "responsive_organizations",
     key: "responsive_organizations",
     className: "table-responsible",
@@ -372,7 +372,7 @@ export const subActionColumn = ({
     render: (val) => moment(val).format(t("DD MMM YYYY")),
   },
   {
-    title: t("Responsible"),
+    title: t("Assigned to"),
     dataIndex: "responsive_organizations",
     key: "responsive_organizations",
     className: "table-responsible",

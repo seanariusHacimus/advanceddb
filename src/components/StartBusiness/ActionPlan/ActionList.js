@@ -11,6 +11,7 @@ import { ReactComponent as IconChevronUp } from "../../../assets/startBusiness/c
 import { ActionTablePage } from "../../../styles/startBusiness";
 import { ReactComponent as IconDelete } from "../../../assets/reform/delete.svg";
 import { ReactComponent as IconEdit } from "../../../assets/reform/edit.svg";
+import { ReactComponent as IconReassign } from "../../../assets/startBusiness/add-user.svg";
 import { fetchCurrentIndicatorGroupAction } from "../../../store/SelectedIndicator/actions";
 import { ButtonPrimary, ButtonSecondary, TitleH3, Flex } from "../../../styles";
 import iconAddSubaction from "../../../assets/startBusiness/add.svg";
@@ -31,6 +32,7 @@ import { ButtonAlternative } from "../../../styles/buttons";
 
 const EditActionPlan = lazy(() => import("./EditActionPlan"));
 const AddSubAction = lazy(() => import("./AddSubAction"));
+const ReassignModal = lazy(() => import("./ReassignModal"));
 
 const errorsConfig = {
   action_id: {
@@ -52,6 +54,7 @@ class ActionList extends Component {
       selectedAction: {},
       parentAction: {},
       addSubAction: false,
+      reassignAction: false,
       isDragCanceled: true,
       isScrolled: false,
       currentPage: 1,
@@ -335,6 +338,7 @@ class ActionList extends Component {
       parentAction,
       selectedAction,
       addSubAction,
+      reassignAction,
       currentPage,
       expandedActions,
       alerts,
@@ -377,6 +381,21 @@ class ActionList extends Component {
                         icon={<IconEdit />}
                       >
                         {t("Edit")}
+                      </Menu.Item>
+                    )}
+
+                    {actionPermissions.update && (
+                      <Menu.Item
+                        key="2"
+                        onClick={() =>
+                          this.setState({
+                            selectedAction: props,
+                            reassignAction: true,
+                          })
+                        }
+                        icon={<IconReassign />}
+                      >
+                        {t("Re-assign")}
                       </Menu.Item>
                     )}
 
@@ -502,6 +521,9 @@ class ActionList extends Component {
                       fetchCurrentWorkingGroup={
                         this.props.fetchCurrentIndicatorGroupAction
                       }
+                      fetchActionPlans={fetchActions}
+                      fetchOverdueActions={this.props.fetchOverdueActions}
+                      selectedWorkingGroup={this.props.selectedWorkingGroup}
                     />
                     {actionPermissions.create && (
                       <div className="text-right sub-action-wrapper">
@@ -596,6 +618,21 @@ class ActionList extends Component {
                 fetchCurrentWorkingGroup={
                   this.props.fetchCurrentIndicatorGroupAction
                 }
+              />
+            </Suspense>
+          )}
+          {reassignAction && actionPermissions.update && (
+            <Suspense fallback={t("Loading...")}>
+              <ReassignModal
+                modalHandler={() => this.setState({ reassignAction: false })}
+                visible={reassignAction}
+                selectedAction={selectedAction}
+                fetchCurrentWorkingGroup={
+                  this.props.fetchCurrentIndicatorGroupAction
+                }
+                fetchActionPlans={this.props.fetchActions}
+                fetchOverdueActions={this.props.fetchOverdueActions}
+                selectedWorkingGroup={this.props.selectedWorkingGroup}
               />
             </Suspense>
           )}
