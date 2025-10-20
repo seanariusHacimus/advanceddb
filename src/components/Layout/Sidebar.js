@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Divider } from "antd";
 import { useSelector } from "react-redux";
@@ -9,6 +9,8 @@ import logo from "../../assets/logo.svg";
 import icons from "../../constants/icons";
 import { groupTitleToUrl } from "../../utils";
 import { useLocale } from "../../utils/locale";
+import appData from "../../../package.json";
+import { Typography } from "antd";
 
 const { Sider } = Layout;
 
@@ -169,6 +171,16 @@ function Sidebar(props) {
           </Menu.Item>
         )}
       </Menu>
+      <Typography
+        type="secondary"
+        style={{
+          marginTop: "auto",
+          fontSize: 12,
+          textAlign: "center",
+        }}
+      >
+        v{appData.version}
+      </Typography>
     </Sider>
   );
 }

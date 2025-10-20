@@ -1,10 +1,9 @@
-import React, { Component, Suspense, lazy } from "react";
+import { Component, Suspense, lazy } from "react";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Dropdown, Menu, message } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
-import Swal from "sweetalert2";
 import Axios from "../../utils/axios";
 import { StyledWorkingGroup } from "../../styles/workingGroup";
 import {
@@ -122,33 +121,6 @@ class WorkingGroupList extends Component {
     }
   };
 
-  deleteWorkingGroup = async (id) => {
-    const { t } = this.props;
-    Swal.fire({
-      text: t("This will disable the working group"),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: t("Yes, delete it"),
-      cancelButtonText: t("Cancel"),
-    }).then(async (result) => {
-      if (result.value) {
-        try {
-          this.setState({ loading: true });
-          await Axios.post("/graphql", {
-            query: DELETE_WORKING_GROUP,
-            variables: { id },
-          });
-        } catch (err) {
-          console.error("[Custom Catch Error]-->", err);
-        } finally {
-          this.props.fetchWorkingGroupsAction();
-        }
-      }
-    });
-  };
-
   render() {
     const { selectedItem, edit, newGroup } = this.state;
     const { role } = this.props.user;
@@ -179,13 +151,38 @@ class WorkingGroupList extends Component {
                       {t("Edit")}
                     </Menu.Item>
                     {props.removable && (
-                      <Menu.Item
-                        key="4"
-                        icon={<IconDelete className="has-icon" />}
-                        onClick={() => this.deleteWorkingGroup(props.id)}
+                      <Popconfirm
+                        overlayClassName="custom-popconfirm"
+                        icon={null}
+                        title={
+                          <div>
+                            <h3>{t("This will disable the working group")}</h3>
+                          </div>
+                        }
+                        onConfirm={async () => {
+                          try {
+                            this.setState({ loading: true });
+                            await Axios.post("/graphql", {
+                              query: DELETE_WORKING_GROUP,
+                              variables: { id: props.id },
+                            });
+                          } catch (err) {
+                            console.error("[Custom Catch Error]-->", err);
+                          } finally {
+                            this.props.fetchWorkingGroupsAction();
+                          }
+                        }}
+                        okText={t("Yes, delete it")}
+                        cancelText={t("Cancel")}
+                        okButtonProps={{ danger: true }}
                       >
-                        {t("Delete")}
-                      </Menu.Item>
+                        <Menu.Item
+                          key="4"
+                          icon={<IconDelete className="has-icon" />}
+                        >
+                          {t("Delete")}
+                        </Menu.Item>
+                      </Popconfirm>
                     )}
                   </Menu>
                 </>

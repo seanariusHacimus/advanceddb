@@ -1,30 +1,25 @@
-import React, { Component, lazy, Suspense, createRef } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-  Table, Dropdown, Menu, message, Popconfirm,
-} from 'antd';
-import { MoreOutlined } from '@ant-design/icons';
-import { MeetingMinutesPage } from '../../../styles/startBusiness';
-import {
-  TitleH3, Flex,
-} from '../../../styles';
-import { ReactComponent as IconDelete } from '../../../assets/reform/delete.svg';
-import { ReactComponent as IconEdit } from '../../../assets/reform/edit.svg';
-import { ReactComponent as IconChevronDown } from '../../../assets/startBusiness/chevron-down.svg';
-import { ReactComponent as IconChevronUp } from '../../../assets/startBusiness/chevron-up.svg';
-import iconAttachment from '../../../assets/startBusiness/attachment.svg';
-import AddMeetingMinutes, { errorsConfig } from './AddMeetingMinutes';
-import Axios from '../../../utils/axios';
-import { DELETE_MEETING, FETCH_MEETINGS } from '../../../graphql/meetings';
-import { columns } from './table';
-import MeetingMinutesEmpty from './MeetingsMinutesEmpty';
-import Print from '../../../components/UI/Printer';
+import { Component, lazy, Suspense, createRef } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Table, Dropdown, Menu, message, Popconfirm } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
+import { MeetingMinutesPage } from "../../../styles/startBusiness";
+import { TitleH3, Flex } from "../../../styles";
+import { ReactComponent as IconDelete } from "../../../assets/reform/delete.svg";
+import { ReactComponent as IconEdit } from "../../../assets/reform/edit.svg";
+import { ReactComponent as IconChevronDown } from "../../../assets/startBusiness/chevron-down.svg";
+import { ReactComponent as IconChevronUp } from "../../../assets/startBusiness/chevron-up.svg";
+import iconAttachment from "../../../assets/startBusiness/attachment.svg";
+import AddMeetingMinutes, { errorsConfig } from "./AddMeetingMinutes";
+import Axios from "../../../utils/axios";
+import { DELETE_MEETING, FETCH_MEETINGS } from "../../../graphql/meetings";
+import { columns } from "./table";
+import MeetingMinutesEmpty from "./MeetingsMinutesEmpty";
+import Print from "../../../components/UI/Printer";
 import { ErrorAlerts, parseErrors } from "../../../utils";
-import Swal from 'sweetalert2';
 import { withLocale } from "../../../utils/locale";
 
-const EditMeetingMinutes = lazy(() => import('./EditMeetingMinutes'));
+const EditMeetingMinutes = lazy(() => import("./EditMeetingMinutes"));
 
 class MeetingMinutes extends Component {
   state = {
@@ -32,18 +27,20 @@ class MeetingMinutes extends Component {
     data: [],
     editMeeting: false,
     printActive: false,
-    alerts: []
-  }
+    alerts: [],
+  };
 
-  defaultPageSize = 10
-  printRef = createRef()
+  defaultPageSize = 10;
+  printRef = createRef();
 
   async componentDidMount() {
     this.fetchMeetingMinutes();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.selectedWorkingGroup.id !== this.props.selectedWorkingGroup.id) {
+    if (
+      prevProps.selectedWorkingGroup.id !== this.props.selectedWorkingGroup.id
+    ) {
       this.fetchMeetingMinutes();
     }
   }
@@ -52,13 +49,13 @@ class MeetingMinutes extends Component {
     const { id } = this.props.selectedWorkingGroup;
     if (id) {
       try {
-        const res = await Axios.post('/graphql', {
+        const res = await Axios.post("/graphql", {
           query: FETCH_MEETINGS,
           variables: {
             filter: { group_id: id },
             order: {
-              key: 'created_at',
-              direction: 'desc',
+              key: "created_at",
+              direction: "desc",
             },
           },
         });
@@ -67,114 +64,126 @@ class MeetingMinutes extends Component {
           this.setState({ data: nodes, group_id: id });
         }
       } catch (err) {
-        console.error('[Custom Catch Error]-->', err);
+        console.error("[Custom Catch Error]-->", err);
       }
     }
-
-  }
+  };
 
   modalHandler = () => {
     this.setState((prevState) => ({ editMeeting: !prevState.editMeeting }));
-  }
+  };
 
-  removeMeeting = (id) => {
+  showMessage = (type = "error", content) => {
     const { t } = this.props;
-    Swal.fire({
-      title: t('Are you sure?'),
-      text: t('When you delete the meeting minute? You can not restore it later.'),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: t('Yes, remove it!'),
-      cancelButtonText: t('Cancel')
-    }).then(async (result) => {
-      if (result.value) {
-        this.setState({ alerts: [] })
-        try {
-          const res = await Axios.post('/graphql', {
-            query: DELETE_MEETING,
-            variables: {
-              meeting_minute_id: id,
-            },
-          });
-          if (res?.data) {
-            this.fetchMeetingMinutes();
-            this.showMessage('success', t('The meeting has been deleted successfully'));
-          }
-        } catch (err) {
-          if (err.message.includes('422')) {
-            const { alerts, errors } = parseErrors(errorsConfig, err.response.data.errors[0].extensions?.validation);
-            this.setState({ alerts, errors })
-          }
-        }
-      }
-    })
-  }
-
-  showMessage = (type = 'error', content) => {
-    const { t } = this.props;
-    content = content || t('Something went wrong');
+    content = content || t("Something went wrong");
     message[type]({
       content,
       duration: 10,
       style: {
         right: 30,
         bottom: 30,
-        position: 'fixed',
+        position: "fixed",
         fontSize: 16,
       },
     });
-  }
+  };
 
   beforePrint = () => {
     this.setState({ printActive: true });
-  }
+  };
 
   afterPrint = () => {
     this.setState({ printActive: false });
-  }
+  };
 
   render() {
     const { editMeeting, data, currentPage, printActive, alerts } = this.state;
-    const {
-      meetingMinutesPermissions, members = [], user,
-    } = this.props;
+    const { meetingMinutesPermissions, members = [], user } = this.props;
     const { t } = this.props;
 
     const moreActionsBtn = {
-      title: '',
-      dataIndex: '',
-      key: 'actions',
+      title: "",
+      dataIndex: "",
+      key: "actions",
       width: 30,
-      render: (item) => Object.values(meetingMinutesPermissions).some(v => v)
-        && (
+      render: (item) =>
+        Object.values(meetingMinutesPermissions).some((v) => v) && (
           <div onClick={(e) => e.stopPropagation()}>
             <Dropdown.Button
               className="more-action-btn"
-              trigger={['click']}
+              trigger={["click"]}
               getPopupContainer={(trigger) => trigger.parentNode}
-              overlay={(
+              overlay={
                 <>
                   <Menu className="more-action-btn-table">
                     {meetingMinutesPermissions.update && (
                       <Menu.Item
                         key="1"
-                        onClick={() => this.setState({ editMeeting: true, selectedItem: item })}
+                        onClick={() =>
+                          this.setState({
+                            editMeeting: true,
+                            selectedItem: item,
+                          })
+                        }
                         icon={<IconEdit />}
                       >
                         {t("Edit")}
                       </Menu.Item>
                     )}
-                    {(meetingMinutesPermissions.delete || item.creator?.id === user.id) && (
-                      <Menu.Item key="3" onClick={() => this.removeMeeting(item.id)}>
-                        <IconDelete />
-                        {t("Delete")}
-                      </Menu.Item>
+                    {(meetingMinutesPermissions.delete ||
+                      item.creator?.id === user.id) && (
+                      <Popconfirm
+                        overlayClassName="custom-popconfirm"
+                        icon={null}
+                        title={
+                          <div>
+                            <h3>{t("Are you sure?")}</h3>
+                            <p>
+                              {t(
+                                "When you delete the meeting minute? You can not restore it later."
+                              )}
+                            </p>
+                          </div>
+                        }
+                        onConfirm={async () => {
+                          this.setState({ alerts: [] });
+                          try {
+                            const res = await Axios.post("/graphql", {
+                              query: DELETE_MEETING,
+                              variables: {
+                                meeting_minute_id: item.id,
+                              },
+                            });
+                            if (res?.data) {
+                              this.fetchMeetingMinutes();
+                              this.showMessage(
+                                "success",
+                                t("The meeting has been deleted successfully")
+                              );
+                            }
+                          } catch (err) {
+                            if (err.message.includes("422")) {
+                              const { alerts, errors } = parseErrors(
+                                errorsConfig,
+                                err.response.data.errors[0].extensions
+                                  ?.validation
+                              );
+                              this.setState({ alerts, errors });
+                            }
+                          }
+                        }}
+                        okText={t("Yes, remove it!")}
+                        cancelText={t("Cancel")}
+                      >
+                        <Menu.Item key="3">
+                          <IconDelete />
+                          {t("Delete")}
+                        </Menu.Item>
+                      </Popconfirm>
                     )}
                   </Menu>
                 </>
-              )}
+              }
               icon={<MoreOutlined />}
             />
           </div>
@@ -194,7 +203,9 @@ class MeetingMinutes extends Component {
           >
             <Print
               ref={this.printRef.current}
-              style={{ marginLeft: meetingMinutesPermissions.create ? '10px' : 'auto' }}
+              style={{
+                marginLeft: meetingMinutesPermissions.create ? "10px" : "auto",
+              }}
               afterPrint={this.afterPrint}
               beforePrint={this.beforePrint}
               buttonStyle={{ padding: 10, height: 34 }}
@@ -203,43 +214,50 @@ class MeetingMinutes extends Component {
 
           <Table
             columns={[...columns({ currentPage, t }), moreActionsBtn]}
-            expandedRowKeys={printActive ? data.map(i => i.id) : ''}
+            expandedRowKeys={printActive ? data.map((i) => i.id) : ""}
             dataSource={data}
             pagination={{
               pageSize: printActive ? data.length : this.defaultPageSize,
               hideOnSinglePage: true,
-              position: ['bottomCenter'],
+              position: ["bottomCenter"],
               showLessItems: true,
-              size: 'small',
+              size: "small",
               current: currentPage,
-              onChange: (page) => this.setState({ currentPage: page, all: true }),
+              onChange: (page) =>
+                this.setState({ currentPage: page, all: true }),
             }}
             rowKey={(item) => item.id}
             onRow={(record) => ({
               onClick: (event) => {
                 const row = event.currentTarget;
-                row.classList.toggle('bg-white');
+                row.classList.toggle("bg-white");
               },
             })}
             expandable={{
               expandRowByClick: true,
-              expandIcon: ({ expanded, onExpand, record }) => (expanded
-                ? <IconChevronUp onClick={(e) => onExpand(record, e)} />
-                : <IconChevronDown onClick={(e) => onExpand(record, e)} />),
+              expandIcon: ({ expanded, onExpand, record }) =>
+                expanded ? (
+                  <IconChevronUp onClick={(e) => onExpand(record, e)} />
+                ) : (
+                  <IconChevronDown onClick={(e) => onExpand(record, e)} />
+                ),
               indentSize: 0,
               expandIconColumnIndex: 0,
               expandedRowRender: (item) =>
-                item.comment &&
-                (<div className="expanded-content">
-                  <TitleH3>{t("Description")}:</TitleH3>
-                  <p dangerouslySetInnerHTML={{ __html: item.comment }} />
-                  {item.attachments.length > 0 && (
-                    <Flex style={{ flexWrap: 'wrap' }}>
-                      <TitleH3>{t("Files")}:</TitleH3>
-                      {
-                        item.attachments.map((item) => (
+                item.comment && (
+                  <div className="expanded-content">
+                    <TitleH3>{t("Description")}:</TitleH3>
+                    <p dangerouslySetInnerHTML={{ __html: item.comment }} />
+                    {item.attachments.length > 0 && (
+                      <Flex style={{ flexWrap: "wrap" }}>
+                        <TitleH3>{t("Files")}:</TitleH3>
+                        {item.attachments.map((item) => (
                           <div className="icons-set" key={item.id}>
-                            <img src={iconAttachment} alt={t("has attachment")} className="attachment-icon" />
+                            <img
+                              src={iconAttachment}
+                              alt={t("has attachment")}
+                              className="attachment-icon"
+                            />
                             <a
                               href={item.file.url}
                               target="_blank"
@@ -249,29 +267,26 @@ class MeetingMinutes extends Component {
                               {item.filename}
                             </a>
                           </div>
-                        ))
-                      }
-                    </Flex>
-                  )}
-                </div>
+                        ))}
+                      </Flex>
+                    )}
+                  </div>
                 ),
             }}
           />
-          {
-            editMeeting && (
-              <Suspense fallback={t("Loading...")}>
-                <EditMeetingMinutes
-                  modalHandler={this.modalHandler}
-                  visible={this.state.editMeeting}
-                  fetchMeetings={this.fetchMeetingMinutes}
-                  showMessage={this.showMessage}
-                  selectedItem={this.state.selectedItem}
-                  members={members}
-                  user={user}
-                />
-              </Suspense>
-            )
-          }
+          {editMeeting && (
+            <Suspense fallback={t("Loading...")}>
+              <EditMeetingMinutes
+                modalHandler={this.modalHandler}
+                visible={this.state.editMeeting}
+                fetchMeetings={this.fetchMeetingMinutes}
+                showMessage={this.showMessage}
+                selectedItem={this.state.selectedItem}
+                members={members}
+                user={user}
+              />
+            </Suspense>
+          )}
         </MeetingMinutesPage>
       );
     }
@@ -297,4 +312,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocale(MeetingMinutes));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLocale(MeetingMinutes));

@@ -143,16 +143,16 @@ export default createGlobalStyle`
   .ant-menu:not(.ant-menu-horizontal):not(.side-bar-menu):not(.ant-menu-sub) li:hover a{
     color: #FCFDFF;
   }
-  .actions-popconfirm .ant-popover-inner {
+  .custom-popconfirm .ant-popover-inner {
     background-color: #535263;
     max-width: 400px;
     width: 100%;
     border-radius: 5px;
   }
-  .actions-popconfirm h3, .actions-popconfirm h3 {
+  .custom-popconfirm h3, .custom-popconfirm h3 {
     color: #FCFDFF;
   }
- .actions-popconfirm p {
+  .custom-popconfirm p {
     color: #B2B2BA;
   }
   .trigger-btn {
@@ -165,7 +165,7 @@ export default createGlobalStyle`
     align-items: center;
     justify-content: flex-end;
   }
-  .actions-popconfirm button {
+  .custom-popconfirm button {
     width: calc(50% - 5px);
     padding: 3px 20px; 
     margin-right: 5px;
@@ -173,7 +173,7 @@ export default createGlobalStyle`
     border-radius: 5px;
     height: auto;
   }
-  .actions-popconfirm .ant-btn {
+  .custom-popconfirm .ant-btn {
     background: #777685;
   }
   .ant-popover-message-title {
@@ -183,7 +183,7 @@ export default createGlobalStyle`
     left: 20%;
     border-color: #535263;
   }
-  .actions-popconfirm .ant-btn-primary {
+  .custom-popconfirm .ant-btn-primary {
     width: calc(50% - 5px);
     padding: 3px 20px; 
     margin-left: 5px;

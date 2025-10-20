@@ -1,4 +1,4 @@
-import React, {
+import {
   Suspense,
   lazy,
   useState,
@@ -9,7 +9,6 @@ import React, {
 import { withRouter, useHistory } from "react-router-dom";
 import { Tooltip, Table, Dropdown, Menu, Popconfirm, Tag, Input } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
-import Swal from "sweetalert2";
 import { useQueryParam, BooleanParam, StringParam } from "use-query-params";
 import { useSelector } from "react-redux";
 import scrollIntoView from "scroll-into-view";
@@ -69,6 +68,7 @@ import {
   RESEND_INVITATION,
 } from "../../graphql/invitation";
 import { useLocale } from "../../utils/locale";
+import { message } from "antd";
 
 const InvitationModal = lazy(() => import("./InvitationModal"));
 const UserRolesModal = lazy(() => import("./UserRoles"));
@@ -127,183 +127,187 @@ const useStatuses = (t) => ({
   },
 });
 
-const useAccountActions = (t) => ({
-  edit: {
-    action: async (account, history) =>
-      history && history.push(`/members/${account.id}`),
-    icon: <IconEdit />,
-    description: t("Edit this account"),
-    showInStatus: false,
-    admin: true,
-  },
-  deny: {
-    action: async (account) => {
-      try {
-        await Axios.post("/graphql", {
-          query: DENY_ACCOUNT_MUTATION,
-          variables: { id: account.id },
-        });
+const useAccountActions = (t, onSuccess) => {
+  const myAccount = useSelector((state) => state.auth.account);
 
-        toast.warn(`You have denied the access for ${account.email}`);
-      } catch (err) {
-        console.log(err);
-      }
+  const enableAccount = async (id) => {
+    await Axios.post("/graphql", {
+      query: UPDATE_MEMBER_ACCOUNT,
+      variables: { id, account: { disabled: false } },
+    });
+    toast.success(t("Member enabled"));
+    onSuccess && onSuccess();
+  };
+
+  const disableAccount = async (id) => {
+    await Axios.post("/graphql", {
+      query: UPDATE_MEMBER_ACCOUNT,
+      variables: { id, account: { disabled: true } },
+    });
+    toast.success(t("Member disabled"));
+    onSuccess && onSuccess();
+  };
+
+  const deleteAccount = async (id) => {
+    await Axios.post("/graphql", {
+      query: DELETE_ACCOUNT,
+      variables: { id },
+    });
+    toast.success(t("Account deleted"));
+    onSuccess && onSuccess();
+  };
+
+  const actions = {
+    edit: {
+      action: (account, history) =>
+        history && history.push(`/members/${account.id}`),
+      icon: <IconEdit />,
+      description: t("Edit this account"),
+      showInStatus: false,
+      admin: true,
     },
-    icon: <IconDeny />,
-    description: t(
-      "Deny request. The request will remain in a system, but requester won't be able to sign in"
-    ),
-    showInStatus: false,
-  },
-  approve: {
-    action: async (account) => {
-      try {
+
+    approve: {
+      action: async (account) => {
         await Axios.post("/graphql", {
           query: APPROVE_ACCOUNT_MUTATION,
           variables: { id: account.id },
         });
-        toast.success(
-          `You have successfully granted access to ${account.email}`
-        );
-      } catch (err) {
-        console.log(err);
-      }
+        toast.success(t("Access granted"));
+        onSuccess && onSuccess();
+      },
+      icon: <IconApprove />,
+      description: t("Approve request"),
+      showInStatus: false,
     },
-    icon: <IconApprove />,
-    description: t(
-      "Approve request will allow account to signin and work in it's corresponding working groups"
-    ),
-    showInStatus: false,
-  },
-  resend: {
-    action: async (account) => {
-      try {
+
+    deny: {
+      action: async (account) => {
+        await Axios.post("/graphql", {
+          query: DENY_ACCOUNT_MUTATION,
+          variables: { id: account.id },
+        });
+        toast.warn(t("Access denied"));
+        onSuccess && onSuccess();
+      },
+      icon: <IconDeny />,
+      description: t("Deny request"),
+      showInStatus: false,
+    },
+
+    resend: {
+      action: async (account) => {
         await Axios.post("/graphql", {
           query: RESEND_INVITATION,
           variables: { id: account.id },
         });
-      } catch (err) {
-        console.log(err);
-      }
+        toast.info(t("Invitation resent"));
+        onSuccess && onSuccess();
+      },
+      icon: <IconResend />,
+      description: "",
+      showInStatus: false,
     },
-    icon: <IconResend />,
-    description: "",
-    showInStatus: false,
-  },
-  cancel: {
-    action: async (account) => {
-      try {
+
+    cancel: {
+      action: async (account) => {
         await Axios.post("/graphql", {
           query: CANCEL_INVITE,
           variables: { id: account.id },
         });
-      } catch (err) {
-        console.log(err);
-      }
+        toast.info(t("Invitation cancelled"));
+        onSuccess && onSuccess();
+      },
+      icon: <IconCancel />,
+      description: "",
+      showInStatus: false,
     },
-    icon: <IconCancel />,
-    description: "",
-    showInStatus: false,
-  },
-  enable: {
-    action: async (account) => {
-      const result = await Swal.fire({
-        // title: 'Are you sure?',
-        text: t(
-          "Are you sure you want to enable the member? Once the account is enabled he/she wil be able to use the system."
-        ),
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: t("Yes, enable him!"),
-        cancelButtonText: t("Cancel"),
-      });
-      if (result.value) {
-        try {
-          await Axios.post("/graphql", {
-            query: UPDATE_MEMBER_ACCOUNT,
-            variables: { account: { disabled: false }, id: account.id },
-          });
-          return result;
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      return result;
-    },
-    icon: <IconCheck />,
-    description: t("Enable account"),
-    showInStatus: false,
-  },
 
-  disable: {
-    action: async (account) => {
-      const result = await Swal.fire({
-        // title: 'Are you sure?',
-        text: t(
-          "Are you sure you want to disable the member? Once the member is disabled he/she can not create another account."
-        ),
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: t("Yes, disable him"),
-        cancelButtonText: t("Cancel"),
-      });
-      if (result.value) {
-        try {
-          await Axios.post("/graphql", {
-            query: UPDATE_MEMBER_ACCOUNT,
-            variables: { account: { disabled: true }, id: account.id },
-          });
-          return result;
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      return result;
+    enable: {
+      action: enableAccount,
+      icon: <IconCheck />,
+      description: t("Enable account"),
+      showInStatus: false,
+      component: ({ account }) => (
+        <Popconfirm
+          overlayClassName="custom-popconfirm"
+          icon={null}
+          title={
+            <div>
+              <h3>{t("Are you sure you want to enable the member?")}</h3>
+              <p>
+                {t(
+                  "Once the account is enabled he/she will be able to use the system."
+                )}
+              </p>
+            </div>
+          }
+          onConfirm={() => enableAccount(account.id)}
+          okText={t("Yes, enable him!")}
+          cancelText={t("Cancel")}
+        >
+          <span className="clickable">{t("Enable")}</span>
+        </Popconfirm>
+      ),
     },
-    icon: <IconBlock />,
-    description: t("Disable account"),
-    showInStatus: false,
-  },
-  delete: {
-    action: async (account) => {
-      const result = await Swal.fire({
-        // title: 'Are you sure?',
-        text: t("Are you sure you want to delete this account?"),
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: t("Yes, delete"),
-        cancelButtonText: t("Cancel"),
-      });
-      if (result.value) {
-        try {
-          await Axios.post("/graphql", {
-            query: DELETE_ACCOUNT,
-            variables: { id: account.id },
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      }
+
+    disable: {
+      action: disableAccount,
+      icon: <IconBlock />,
+      description: t("Disable account"),
+      showInStatus: false,
+      component: ({ account }) => (
+        <Popconfirm
+          overlayClassName="custom-popconfirm"
+          icon={null}
+          title={
+            <div>
+              <h3>{t("Are you sure you want to disable the member?")}</h3>
+              <p>
+                {t(
+                  "Once the member is disabled he/she can not create another account."
+                )}
+              </p>
+            </div>
+          }
+          onConfirm={() => disableAccount(account.id)}
+          okText={t("Yes, disable him")}
+          cancelText={t("Cancel")}
+        >
+          <span className="clickable">{t("Disable")}</span>
+        </Popconfirm>
+      ),
     },
-    icon: <IconDelete />,
-    description: t("Delete account"),
-    showInStatus: false,
-  },
-  invite: {
-    action: async (account, history) => {
-      history.push("?show_invite_modal=1");
+
+    delete: {
+      action: deleteAccount,
+      icon: <IconDelete />,
+      description: t("Delete account"),
+      showInStatus: false,
+      component: ({ account }) => (
+        <Popconfirm
+          overlayClassName="custom-popconfirm"
+          icon={null}
+          title={t("Are you sure you want to delete this account?")}
+          onConfirm={() => deleteAccount(account.id)}
+          okText={t("Yes, delete")}
+          cancelText={t("Cancel")}
+        >
+          <span className="clickable">{t("Delete")}</span>
+        </Popconfirm>
+      ),
     },
-    icon: <IconAdd />,
-    description: t("Invite a user to use this dummy account"),
-    showInStatus: false,
-  },
-});
+
+    invite: {
+      action: (account, history) => history.push("?show_invite_modal=1"),
+      icon: <IconAdd />,
+      description: t("Invite a user to use this dummy account"),
+      showInStatus: false,
+    },
+  };
+
+  return actions;
+};
 
 export { searchMemberHandler };
 
@@ -374,7 +378,6 @@ const AccountsList = () => {
   const myAccount = useSelector((state) => state.auth.account);
   const [t] = useLocale();
   const statuses = useStatuses(t);
-  const accountActions = useAccountActions(t);
   const [showModal, setShowModal] = useQueryParam(
     "show_invite_modal",
     BooleanParam
@@ -447,6 +450,9 @@ const AccountsList = () => {
       }
     });
   };
+
+  const accountActions = useAccountActions(t, fetchMembers);
+
   useEffect(() => {
     if (scrollTo && filteredMembers.length !== 0) {
       const page = calculatePageOfMember(scrollTo);
@@ -494,32 +500,12 @@ const AccountsList = () => {
             {(hasRights || leaderOfTheGroup) &&
             ["active", "disabled"].includes(val) ? (
               isActive ? (
-                <Tag
-                  className={val}
-                  onClick={() =>
-                    accountActions.disable.action(account).then((data) => {
-                      if (data.isConfirmed) {
-                        fetchMembers();
-                      }
-                    })
-                  }
-                  style={{ marginLeft: "auto" }}
-                >
-                  {statuses[val].text}
+                <Tag className={val} style={{ marginLeft: "auto" }}>
+                  {accountActions.disable.component({ account })}
                 </Tag>
               ) : (
-                <Tag
-                  className={val}
-                  onClick={() =>
-                    accountActions.enable.action(account).then((data) => {
-                      if (data.isConfirmed) {
-                        fetchMembers();
-                      }
-                    })
-                  }
-                  style={{ marginLeft: "auto", pointerEvents: "all" }}
-                >
-                  {statuses[val].text}
+                <Tag className={val} style={{ marginLeft: "auto" }}>
+                  {accountActions.enable.component({ account })}
                 </Tag>
               )
             ) : (
@@ -527,8 +513,6 @@ const AccountsList = () => {
                 {statuses[val].text}
               </Tag>
             )}
-
-            {/* {hasRights && <RowMenu account={account} onSuccess={fetchMembers} />} */}
           </Flex>
         );
       },
@@ -597,8 +581,14 @@ const AccountsList = () => {
                 <span>{t("Approve")}</span>
               </ButtonPrimary>
               <Popconfirm
+                overlayClassName="custom-popconfirm"
                 icon={null}
-                title={t("Are you sure you want to deny this member?")}
+                icon={null}
+                title={
+                  <div>
+                    <h3>{t("Are you sure you want to deny this member?")}</h3>
+                  </div>
+                }
                 onConfirm={() =>
                   accountActions.deny.action(account).then(() => fetchMembers())
                 }

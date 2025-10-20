@@ -20,7 +20,10 @@ export default styled(Layout)`
 
   .sidebar .ant-layout-sider-children {
     overflow: auto;
-    padding-bottom: 80px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .sidebar .ant-layout-sider-children::-webkit-scrollbar {

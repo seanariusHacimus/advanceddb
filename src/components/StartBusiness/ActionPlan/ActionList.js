@@ -404,7 +404,7 @@ class ActionList extends Component {
                       props.creator?.id === user.id) && (
                       <Popconfirm
                         disabled={!actionPermissions.complete}
-                        overlayClassName="actions-popconfirm"
+                        overlayClassName="custom-popconfirm"
                         title={
                           <div>
                             <h3>{t("Delete the action")}</h3>

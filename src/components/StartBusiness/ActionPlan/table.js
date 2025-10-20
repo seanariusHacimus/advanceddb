@@ -189,7 +189,7 @@ export const columns = ({
 
       const actionApproval = (
         <Popconfirm
-          overlayClassName="actions-popconfirm"
+          overlayClassName="custom-popconfirm"
           // title={(
           //   <div>
           //     <h3>{t("Can you confirm this?")}</h3>
@@ -233,7 +233,7 @@ export const columns = ({
       ) : record.status === "completed" ? (
         <Popconfirm
           disabled={!actionPermissions.complete}
-          overlayClassName="actions-popconfirm"
+          overlayClassName="custom-popconfirm"
           // getPopupContainer={(el) => el.parentNode}
           onClick={(e) => e.stopPropagation()}
           title={
@@ -268,7 +268,7 @@ export const columns = ({
       ) : record.status === "on_review" ? (
         //   <Popconfirm
         //     disabled={!actionPermissions.complete}
-        //     overlayClassName="actions-popconfirm"
+        //     overlayClassName="custom-popconfirm"
         //     onClick={(e) => e.stopPropagation()}
         //     title={(
         //       <div>
@@ -296,7 +296,7 @@ export const columns = ({
         //   </Popconfirm>
         <Popconfirm
           disabled={!actionPermissions.complete}
-          overlayClassName="actions-popconfirm"
+          overlayClassName="custom-popconfirm"
           // getPopupContainer={(el) => el.parentNode}
           onClick={(e) => e.stopPropagation()}
           title={
@@ -412,7 +412,7 @@ export const subActionColumn = ({
 
       const actionApproval = (
         <Popconfirm
-          overlayClassName="actions-popconfirm"
+          overlayClassName="custom-popconfirm"
           // title={(
           //   <div>
           //     <h3>{t("Can you confirm this?")}</h3>
@@ -456,7 +456,7 @@ export const subActionColumn = ({
       ) : record.status === "completed" ? (
         <Popconfirm
           disabled={!actionPermissions.complete}
-          overlayClassName="actions-popconfirm"
+          overlayClassName="custom-popconfirm"
           onClick={(e) => e.stopPropagation()}
           title={
             <div>
@@ -490,7 +490,7 @@ export const subActionColumn = ({
       ) : record.status === "on_review" ? (
         // <Popconfirm
         //   disabled={!actionPermissions.complete}
-        //   overlayClassName="actions-popconfirm"
+        //   overlayClassName="custom-popconfirm"
         //   onClick={(e) => e.stopPropagation()}
         //   title={(
         //     <div>
@@ -518,7 +518,7 @@ export const subActionColumn = ({
         // </Popconfirm>
         <Popconfirm
           disabled={!actionPermissions.complete}
-          overlayClassName="actions-popconfirm"
+          overlayClassName="custom-popconfirm"
           onClick={(e) => e.stopPropagation()}
           title={
             <div>

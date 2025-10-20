@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Table, Dropdown, Menu } from "antd";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { MoreOutlined } from "@ant-design/icons";
-import Swal from "sweetalert2";
 import SearchComponent from "../../UI/Search";
 import { MembersPage } from "../../../styles/startBusiness";
 import { TitleH3, Flex } from "../../../styles";
@@ -27,6 +26,7 @@ import { groupTitleToUrl, parseErrors } from "../../../utils";
 import { columns } from "./table";
 import { withLocale } from "../../../utils/locale";
 import { toast } from "react-toastify";
+import { Popconfirm } from "antd";
 
 class Members extends Component {
   state = {
@@ -81,45 +81,6 @@ class Members extends Component {
     this.fetchMembers();
   }
 
-  removeMember = async (id) => {
-    const { t } = this.props;
-    Swal.fire({
-      // title: 'Are you sure?',
-      text: t("Are you sure you want to remove the member?"),
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: t("Yes, remove it!"),
-      cancelButtonText: t("Cancel"),
-    }).then(async (result) => {
-      if (result.value) {
-        try {
-          const { id: groupId } = this.state;
-          const res = await Axios.post("/graphql", {
-            query: REMOVE_MEMBERS_MUTATION,
-            variables: { members: [id], group_id: groupId },
-          });
-          if (res?.data) {
-            toast.success(t("The member has been removed successfully"));
-            this.setState({ alerts: [] });
-            this.fetchMembers();
-            this.props.fetchCurrentIndicatorGroupAction(
-              groupTitleToUrl(this.props.selectedWorkingGroup.title)
-            );
-          }
-        } catch (err) {
-          if (err.message.includes("422")) {
-            const errorsRaw =
-              err.response.data.errors[0].extensions?.validation;
-            const { alerts } = parseErrors(errorsConfig, errorsRaw);
-            this.setState({ alerts });
-          }
-        }
-      }
-    });
-  };
-
   render() {
     const { members, id, isSearchActive, selectedMembers, alerts } = this.state;
     const data = isSearchActive ? selectedMembers : members;
@@ -143,16 +104,59 @@ class Members extends Component {
             <Dropdown.Button
               className="more-action-btn"
               trigger={["click"]}
-              // getPopupContainer={(trigger) => trigger.parentNode}
               overlay={
                 <Menu className="more-action-btn-table">
-                  <Menu.Item
-                    key="delete"
-                    onClick={() => this.removeMember(account.id)}
-                    icon={<IconDelete />}
+                  <Popconfirm
+                    overlayClassName="custom-popconfirm"
+                    icon={null}
+                    title={
+                      <div>
+                        <h3>
+                          {t("Are you sure you want to remove the member?")}
+                        </h3>
+                      </div>
+                    }
+                    onConfirm={async () => {
+                      try {
+                        const { id: groupId } = this.state;
+                        const res = await Axios.post("/graphql", {
+                          query: REMOVE_MEMBERS_MUTATION,
+                          variables: {
+                            members: [account.id],
+                            group_id: groupId,
+                          },
+                        });
+                        if (res?.data) {
+                          toast.success(
+                            t("The member has been removed successfully")
+                          );
+                          this.setState({ alerts: [] });
+                          this.fetchMembers();
+                          this.props.fetchCurrentIndicatorGroupAction(
+                            groupTitleToUrl(
+                              this.props.selectedWorkingGroup.title
+                            )
+                          );
+                        }
+                      } catch (err) {
+                        if (err.message.includes("422")) {
+                          const errorsRaw =
+                            err.response.data.errors[0].extensions?.validation;
+                          const { alerts } = parseErrors(
+                            errorsConfig,
+                            errorsRaw
+                          );
+                          this.setState({ alerts });
+                        }
+                      }
+                    }}
+                    okText={t("Yes, remove it!")}
+                    cancelText={t("Cancel")}
                   >
-                    {t("Delete")}
-                  </Menu.Item>
+                    <Menu.Item key="delete" icon={<IconDelete />}>
+                      {t("Delete")}
+                    </Menu.Item>
+                  </Popconfirm>
                   <Menu.Item
                     key="edit"
                     onClick={() =>
