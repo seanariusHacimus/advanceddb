@@ -94,6 +94,11 @@ const WorkingGroupMenu = ({
     return defaultMenuItems.filter((item) => !item.hidden);
   }, [selectedWorkingGroup, workingGroupUrl, sidebar]);
 
+  const items = menuItems.map((item) => ({
+    key: item.key,
+    label: <Link to={item.link}>{item.label}</Link>,
+  }));
+
   return (
     <Menu
       style={styles.headerMenu}
@@ -101,13 +106,8 @@ const WorkingGroupMenu = ({
       mode="horizontal"
       className="custom-menu header"
       id="header-menu"
-    >
-      {menuItems.map((item) => (
-        <Menu.Item key={item.key}>
-          <Link to={item.link}>{item.label}</Link>
-        </Menu.Item>
-      ))}
-    </Menu>
+      items={items}
+    />
   );
 };
 
@@ -167,6 +167,11 @@ const ProfileMenu = ({ t }) => {
     return menuItems;
   }, [role, leaderGroups, t]);
 
+  const items = manageUsersItems.map((item) => ({
+    key: item.key,
+    label: <Link to={item.link}>{item.label}</Link>,
+  }));
+
   return (
     <Menu
       style={styles.headerMenu}
@@ -174,13 +179,8 @@ const ProfileMenu = ({ t }) => {
       mode="horizontal"
       className="custom-menu header"
       id="header-menu"
-    >
-      {manageUsersItems.map((item) => (
-        <Menu.Item key={item.key}>
-          <Link to={item.link}>{item.label}</Link>
-        </Menu.Item>
-      ))}
-    </Menu>
+      items={items}
+    />
   );
 };
 
@@ -191,6 +191,16 @@ const DashboardMenu = ({ workingGroupUrl, t }) => {
       key: "/dashboard/home",
       link: "/dashboard/home",
       label: t("Home"),
+    },
+    {
+      key: "/dashboard/methodology",
+      link: "/dashboard/methodology",
+      label: t("Methodology"),
+    },
+    {
+      key: "/dashboard/country-report",
+      link: "/dashboard/country-report",
+      label: t("Country Report"),
     },
     {
       key: "/dashboard/db-ranking-simulator",
@@ -214,6 +224,31 @@ const DashboardMenu = ({ workingGroupUrl, t }) => {
     return menuItems.filter((item) => !item.hidden);
   }, [menuItems]);
 
+  const items = [];
+
+  if (currentPath.includes(ROUTES.MESSAGING)) {
+    items.push({
+      key: `/working-group/${workingGroupUrl}`,
+      label: (
+        <Link
+          to="/home"
+          className="logo"
+          style={{ backgroundColor: "transparent" }}
+        >
+          <img src={logo} alt={t("AdvancedDB")} />
+        </Link>
+      ),
+    });
+  }
+
+  items.push(
+    ...visibleMenuItems.map((item) => ({
+      key: item.key,
+      label: <Link to={item.link}>{item.label}</Link>,
+      style: item.key === "/dashboard/home" ? { minWidth: 50 } : {},
+    }))
+  );
+
   return (
     <Menu
       style={styles.headerMenu}
@@ -221,28 +256,8 @@ const DashboardMenu = ({ workingGroupUrl, t }) => {
       mode="horizontal"
       className="custom-menu header"
       id="header-menu"
-    >
-      {currentPath.includes(ROUTES.MESSAGING) && (
-        <Menu.Item key={`/working-group/${workingGroupUrl}`}>
-          <Link
-            to="/home"
-            className="logo"
-            style={{ backgroundColor: "transparent" }}
-          >
-            <img src={logo} alt={t("AdvancedDB")} />
-          </Link>
-        </Menu.Item>
-      )}
-
-      {visibleMenuItems.map((item) => (
-        <Menu.Item
-          key={item.key}
-          style={item.key === "/dashboard/home" ? { minWidth: 50 } : {}}
-        >
-          <Link to={item.link}>{item.label}</Link>
-        </Menu.Item>
-      ))}
-    </Menu>
+      items={items}
+    />
   );
 };
 

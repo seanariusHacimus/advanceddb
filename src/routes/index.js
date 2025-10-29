@@ -17,6 +17,9 @@ import Organizations from "../components/Organizations";
 import Messaging from "../components/Messaging";
 import Audit from "../components/Audit";
 import Approvals from "../components/Approvals";
+import CountryReport from "../components/CountryReport";
+import TopicDetails from "../components/CountryReport/TopicDetails";
+import GeneralMethodology from "../components/GeneralMethodology";
 
 export const WORKING_GROUP_SETTINGS_PATH = "/working-group-settings";
 
@@ -151,6 +154,24 @@ export const ROUTES = [
       <WhatToReform {...props} key={props.match?.params?.title} />
     ),
   },
+  {
+    key: "CountryReport",
+    path: "/dashboard/country-report",
+    exact: true,
+    component: CountryReport,
+  },
+  {
+    key: "GeneralMethodology",
+    path: "/dashboard/methodology",
+    exact: true,
+    component: GeneralMethodology,
+  },
+  {
+    key: "TopicDetails",
+    path: "/dashboard/topic/:topic",
+    exact: true,
+    component: TopicDetails,
+  },
 
   // Default redirect (handled by consumer when mapping)
   { key: "defaultRedirect", redirectTo: "/dashboard/home" },
@@ -177,6 +198,8 @@ export const ROUTE_KEYS = {
   CompareCountries: "CompareCountries",
   HistoricalData: "HistoricalData",
   WhatToReform: "WhatToReform",
+  CountryReport: "CountryReport",
+  TopicDetails: "TopicDetails",
   defaultRedirect: "defaultRedirect",
 };
 

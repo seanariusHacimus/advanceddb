@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Popconfirm, Tooltip, Dropdown, Menu } from "antd";
+import { Button, Popconfirm, Tooltip, Dropdown, Menu, Typography } from "antd";
 import moment from "moment-timezone";
 import iconHashTag from "../../../assets/startBusiness/user-grey.svg";
 import iconAttachment from "../../../assets/startBusiness/attachment.svg";
-import PieChart from "./PieIndicator";
+import PieChart from "./components/PieIndicator";
 import { Avatar } from "../../../styles";
 import { indicatorStatus } from "../../../constants";
 import store from "../../../store";
@@ -14,7 +14,7 @@ const displayAttachments = (data) => {
     <Menu>
       {data.map((item, index) => {
         return (
-          <Menu.Item key={item.id}>
+          <Menu.Item key={item.id} className="action-attachment-item">
             <a href={item.file.download_url} target="_blank">
               {index + 1}. {item.filename}
             </a>
@@ -24,7 +24,11 @@ const displayAttachments = (data) => {
     </Menu>
   );
   return (
-    <Dropdown overlay={menu}>
+    <Dropdown
+      overlay={menu}
+      className="action-attachments"
+      getPopupContainer={(el) => el.parentNode}
+    >
       <div style={{ fontSize: 22 }}>
         <AiOutlinePaperClip
           size={20}
@@ -41,6 +45,7 @@ export const columns = ({
   uncompleteAction,
   actionPermissions,
   t,
+  onViewAction,
 }) => [
   {
     title: t("Action name"),
@@ -69,9 +74,14 @@ export const columns = ({
           {action.attachments.length
             ? displayAttachments(action.attachments)
             : null}
-          <span className="item-title">
-            {index + 1}. {val.slice(0, 50)}
-          </span>
+          <Typography.Text
+            className="item-title"
+            ellipsis={{ tooltip: true }}
+            style={{ cursor: onViewAction ? "pointer" : "default" }}
+            onClick={() => onViewAction && onViewAction(action)}
+          >
+            {index + 1}. {val}
+          </Typography.Text>
         </div>
       );
     },
@@ -342,6 +352,7 @@ export const subActionColumn = ({
   updateStatus,
   actionPermissions,
   t,
+  onViewAction,
 }) => [
   {
     title: t("Action name"),
@@ -351,7 +362,11 @@ export const subActionColumn = ({
     render: (val, data, index) => (
       <>
         {data.attachments.length ? displayAttachments(data.attachments) : null}
-        <span className="item-title">
+        <span
+          className="item-title"
+          style={{ cursor: onViewAction ? "pointer" : "default" }}
+          onClick={() => onViewAction && onViewAction(data)}
+        >
           {parentIndex + 1}.{index + 1}. {val}
         </span>
       </>

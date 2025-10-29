@@ -51,11 +51,15 @@ function App(props) {
     dispatch(refreshLocales());
   }, [dispatch]);
 
-  useEffect(async () => {
-    if (process.env.NODE_ENV !== "development") {
-      const userback = await Userback("A-UPsXeP9CLLn76dCRx4hcumpHP");
-      console.log("Userback initialized:", userback);
-    }
+  useEffect(() => {
+    const initializeUserback = async () => {
+      if (process.env.NODE_ENV !== "development") {
+        const userback = await Userback("A-UPsXeP9CLLn76dCRx4hcumpHP");
+        console.log("Userback initialized:", userback);
+      }
+    };
+
+    initializeUserback();
   }, []);
 
   const renderRoute = (rc) => {
@@ -64,13 +68,13 @@ function App(props) {
     }
 
     const props = {
-      key: rc.key,
       path: rc.path,
       exact: rc.exact,
     };
 
-    if (rc.component) return <Route {...props} component={rc.component} />;
-    if (rc.render) return <Route {...props} render={rc.render} />;
+    if (rc.component)
+      return <Route key={rc.key} {...props} component={rc.component} />;
+    if (rc.render) return <Route key={rc.key} {...props} render={rc.render} />;
     return null;
   };
 

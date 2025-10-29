@@ -1,7 +1,7 @@
 import React, { Component, Suspense, lazy } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Menu, Dropdown, Popconfirm, Button } from "antd";
+import { Table, Menu, Dropdown, Popconfirm } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import scrollIntoView from "scroll-into-view";
 
@@ -14,7 +14,7 @@ import { ReactComponent as IconEdit } from "../../../assets/reform/edit.svg";
 import { ReactComponent as IconReassign } from "../../../assets/startBusiness/add-user.svg";
 import { fetchCurrentIndicatorGroupAction } from "../../../store/SelectedIndicator/actions";
 import { ButtonPrimary, ButtonSecondary, TitleH3, Flex } from "../../../styles";
-import iconAddSubaction from "../../../assets/startBusiness/add.svg";
+import iconAddSubAction from "../../../assets/startBusiness/add.svg";
 import {
   DELETE_ACTION,
   COMPLETE_ACTION,
@@ -22,17 +22,17 @@ import {
 } from "../../../graphql/actions";
 import getQuery from "./queryGenerator";
 import { columns } from "./table";
-import SubActionTable from "./SubActionTable";
+import SubActionTable from "./SubActions/SubActionTable";
 import Axios from "../../../utils/axios";
 import { fetchActionPlans } from "../../../store/Actions/actions";
-import { ErrorAlerts, notEmptyErrorConfig, parseErrors } from "../../../utils";
+import { ErrorAlerts, parseErrors } from "../../../utils";
 import { withLocale } from "../../../utils/locale";
 import { toast } from "react-toastify";
-import { ButtonAlternative } from "../../../styles/buttons";
 
-const EditActionPlan = lazy(() => import("./EditActionPlan"));
-const AddSubAction = lazy(() => import("./AddSubAction"));
-const ReassignModal = lazy(() => import("./ReassignModal"));
+const EditAction = lazy(() => import("./CreateAction/EditAction"));
+const AddSubAction = lazy(() => import("./SubActions/AddSubAction"));
+const ReassignModal = lazy(() => import("./components/ReassignModal"));
+const ViewActionModal = lazy(() => import("./components/ViewActionModal"));
 
 const errorsConfig = {
   action_id: {
@@ -42,6 +42,7 @@ const errorsConfig = {
     },
   },
 };
+
 class ActionList extends Component {
   constructor(props) {
     super(props);
@@ -55,6 +56,8 @@ class ActionList extends Component {
       parentAction: {},
       addSubAction: false,
       reassignAction: false,
+      viewAction: false,
+      actionToView: {},
       isDragCanceled: true,
       isScrolled: false,
       currentPage: 1,
@@ -101,6 +104,17 @@ class ActionList extends Component {
   subActionFormModalhandler = () => {
     this.props.fetchActionPlans(this.props.selectedWorkingGroup.id);
     this.setState((prevState) => ({ addSubAction: !prevState.addSubAction }));
+  };
+
+  handleViewAction = (action) => {
+    this.setState({
+      viewAction: true,
+      actionToView: action,
+    });
+  };
+
+  handleCloseViewModal = () => {
+    this.setState({ viewAction: false, actionToView: {} });
   };
 
   cancelDraggedRow = () => {
@@ -339,6 +353,8 @@ class ActionList extends Component {
       selectedAction,
       addSubAction,
       reassignAction,
+      viewAction,
+      actionToView,
       currentPage,
       expandedActions,
       alerts,
@@ -349,6 +365,7 @@ class ActionList extends Component {
       members,
       actionPermissions,
       printActive,
+      selectedWorkingGroup,
       user,
     } = this.props;
     const { t } = this.props;
@@ -473,6 +490,7 @@ class ActionList extends Component {
                   uncompleteAction: this.uncompleteAction,
                   completeAction: this.completeAction,
                   t,
+                  onViewAction: this.handleViewAction,
                 },
                 this
               ),
@@ -538,7 +556,7 @@ class ActionList extends Component {
                             })
                           }
                         >
-                          <img src={iconAddSubaction} alt="add subaction" />
+                          <img src={iconAddSubAction} alt="add subaction" />
                           {t("Add subaction")}
                         </button>
                       </div>
@@ -557,7 +575,7 @@ class ActionList extends Component {
                           })
                         }
                       >
-                        <img src={iconAddSubaction} alt="add subaction" />{" "}
+                        <img src={iconAddSubAction} alt="add subaction" />{" "}
                         {t("Add subaction")}
                       </button>
                     </div>
@@ -600,10 +618,11 @@ class ActionList extends Component {
 
           {editAction && actionPermissions.update && (
             <Suspense fallback={t("Loading...")}>
-              <EditActionPlan
+              <EditAction
                 modalHandler={this.formModalhandler}
                 visible={editAction}
                 selectedAction={selectedAction}
+                selectedWorkingGroup={selectedWorkingGroup}
                 fetchCurrentWorkingGroup={
                   this.props.fetchCurrentIndicatorGroupAction
                 }
@@ -634,6 +653,15 @@ class ActionList extends Component {
                 fetchActionPlans={this.props.fetchActions}
                 fetchOverdueActions={this.props.fetchOverdueActions}
                 selectedWorkingGroup={this.props.selectedWorkingGroup}
+              />
+            </Suspense>
+          )}
+          {viewAction && (
+            <Suspense fallback={t("Loading...")}>
+              <ViewActionModal
+                visible={viewAction}
+                onClose={this.handleCloseViewModal}
+                action={actionToView}
               />
             </Suspense>
           )}

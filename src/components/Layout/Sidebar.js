@@ -46,6 +46,86 @@ function Sidebar(props) {
     [links]
   );
 
+  const menuItems = useMemo(() => {
+    const items = [
+      {
+        key: "/dashboard",
+        icon: <IconDashboard className="menu-icon" />,
+        label: <Link to="/dashboard">{t("Dashboard")}</Link>,
+      },
+    ];
+
+    // Add enabled working groups
+    enabledWorkingGroups.forEach((item) => {
+      const url = groupTitleToUrl(item.title);
+      const isMember = myGroups.includes(item.id);
+      if (item.sidebar_visible) {
+        items.push({
+          key: `/working-group/${url}`,
+          disabled: !item.sidebar_visible,
+          className: isMember ? "is-assigned-group" : undefined,
+          icon: item.removable ? (
+            item.icon ? (
+              <img src={item.icon.url} className="menu-icon" alt={item.title} />
+            ) : (
+              <IconCommon className="menu-icon" />
+            )
+          ) : (
+            icons[url] || <IconCommon className="menu-icon" />
+          ),
+          label: (
+            <>
+              <Link to={`/working-group/${url}`} key={`/working-group/${url}`}>
+                {t(item.title)}
+              </Link>
+              {isMember && <div className="more-icons" />}
+            </>
+          ),
+        });
+      }
+    });
+
+    // Add disabled working groups
+    disabledWorkingGroups.forEach((item) => {
+      const url = groupTitleToUrl(item.title);
+      if (!item.sidebar_visible) {
+        items.push({
+          key: `/working-group/${url}`,
+          disabled: !item.sidebar_visible,
+          icon: item.removable ? (
+            item.icon ? (
+              <img src={item.icon.url} className="menu-icon" alt={item.title} />
+            ) : (
+              <IconDashboard className="menu-icon" />
+            )
+          ) : (
+            icons[url]
+          ),
+          label: (
+            <Link to={`/working-group/${url}`} key={`/working-group/${url}`}>
+              {t(item.title)}
+            </Link>
+          ),
+        });
+      }
+    });
+
+    // Add settings menu item
+    if (["superuser", "coordinator"].includes(role)) {
+      items.push({
+        key: "/working-group-settings",
+        icon: <SettingOutlined className="menu-icon" />,
+        label: (
+          <Link to="/working-group-settings" style={{ fontSize: 14 }}>
+            {t("Working Group Settings")}
+          </Link>
+        ),
+      });
+    }
+
+    return items;
+  }, [enabledWorkingGroups, disabledWorkingGroups, myGroups, role, t]);
+
   return (
     <Sider
       breakpoint="lg"
@@ -179,7 +259,7 @@ function Sidebar(props) {
           textAlign: "center",
         }}
       >
-        v{appData.version}
+        {t("App version")}: v{appData.version}
       </Typography>
     </Sider>
   );

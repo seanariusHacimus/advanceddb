@@ -62,36 +62,7 @@ export default styled.div`
   .col-3 {
     padding-left: 15px;
   }
-  .overdue__item__date {
-    white-space: nowrap;
-    min-width: 60px;
-  }
-  .overdue__item__title {
-    margin: 0 5px;
-  }
-  .overdue__item__deadline {
-    font-size: 13px;
-  }
-  .overdue__item > d {
-    align-items: center;
-  }
-  .overdue__item__title {
-    display: flex;
-    align-items: center;
-  }
-  .overdue__item__deadline {
-    margin-left: auto;
-  }
-  .overdue__item__date {
-    font-size: 12px;
-    color: var(--danger);
-  }
-  .overdue__item__date b {
-    font-size: 16px;
-    color: var(--danger);
-  }
   .sub-title {
-    margin-bottom: 30px;
     text-align: center;
     text-transform: capitalize;
   }
@@ -224,12 +195,22 @@ export const ActionTablePage = styled.div`
   .icons-set {
     display: flex;
     align-items: center;
+    width: 100%;
   }
   .item-title {
     margin-left: 8px;
   }
   .attachment-icon {
     margin-left: 16px;
+  }
+  .action-attachment-item {
+    color: #000;
+    transition: none;
+
+    &:hover {
+      color: #fff;
+      transition: none;
+    }
   }
   .ant-btn {
     border-color: transparent;
@@ -878,27 +859,5 @@ export const StyledMembersTable = styled.div`
     td.ant-table-cell {
       text-align: center;
     }
-  }
-`;
-
-export const StyledOverdue = styled.div`
-  .overdue__item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 -10px;
-    padding: 12px 10px;
-  }
-  .sub-action {
-    background: #f3f6fd;
-  }
-  .ant-collapse-content {
-    overflow: visible;
-  }
-  .ant-collapse-borderless
-    > .ant-collapse-item
-    > .ant-collapse-content
-    > .ant-collapse-content-box {
-    padding-top: 0;
   }
 `;

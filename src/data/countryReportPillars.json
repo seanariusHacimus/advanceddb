@@ -1,0 +1,596 @@
+[
+  {
+    "Economy": "Bangladesh",
+    "Group": "",
+    "EconomyCode": "BGD",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Bangladesh.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 56.939998626708977 },
+      { "DataPointName": "Pillar 2", "Score": 41.639999389648438 },
+      { "DataPointName": "Pillar 3", "Score": 70.489997863769531 }
+    ]
+  },
+  {
+    "Economy": "Barbados",
+    "Group": "",
+    "EconomyCode": "BRB",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Barbados.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 58.770000457763672 },
+      { "DataPointName": "Pillar 2", "Score": 46.400001525878913 },
+      { "DataPointName": "Pillar 3", "Score": 66.550003051757813 }
+    ]
+  },
+  {
+    "Economy": "Bosnia and Herzegovina",
+    "Group": "",
+    "EconomyCode": "BIH",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Bosnia-and-Herzegovina.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 67.44000244140625 },
+      { "DataPointName": "Pillar 2", "Score": 37.810001373291023 },
+      { "DataPointName": "Pillar 3", "Score": 70.050003051757813 }
+    ]
+  },
+  {
+    "Economy": "Botswana",
+    "Group": "",
+    "EconomyCode": "BWA",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Botswana.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 65.959999084472656 },
+      { "DataPointName": "Pillar 2", "Score": 48.520000457763672 },
+      { "DataPointName": "Pillar 3", "Score": 67.7300033569336 }
+    ]
+  },
+  {
+    "Economy": "Bulgaria",
+    "Group": "",
+    "EconomyCode": "BGR",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Bulgaria.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 76.330001831054688 },
+      { "DataPointName": "Pillar 2", "Score": 64.029998779296875 },
+      { "DataPointName": "Pillar 3", "Score": 74.819999694824219 }
+    ]
+  },
+  {
+    "Economy": "Cambodia",
+    "Group": "",
+    "EconomyCode": "KHM",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Cambodia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 62.830001831054688 },
+      { "DataPointName": "Pillar 2", "Score": 39.139999389648438 },
+      { "DataPointName": "Pillar 3", "Score": 60.659999847412109 }
+    ]
+  },
+  {
+    "Economy": "Central African Republic",
+    "Group": "",
+    "EconomyCode": "CAF",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Central-African-Republic.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 60.9900016784668 },
+      { "DataPointName": "Pillar 2", "Score": 18.35000038146973 },
+      { "DataPointName": "Pillar 3", "Score": 40.360000610351563 }
+    ]
+  },
+  {
+    "Economy": "Chad",
+    "Group": "",
+    "EconomyCode": "TCD",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Chad.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 61.150001525878913 },
+      { "DataPointName": "Pillar 2", "Score": 23.510000228881839 },
+      { "DataPointName": "Pillar 3", "Score": 48.049999237060547 }
+    ]
+  },
+  {
+    "Economy": "Colombia",
+    "Group": "",
+    "EconomyCode": "COL",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Colombia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 76.5999984741211 },
+      { "DataPointName": "Pillar 2", "Score": 66.279998779296875 },
+      { "DataPointName": "Pillar 3", "Score": 66.379997253417969 }
+    ]
+  },
+  {
+    "Economy": "Costa Rica",
+    "Group": "",
+    "EconomyCode": "CRI",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Costa-Rica.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 71.339996337890625 },
+      { "DataPointName": "Pillar 2", "Score": 63.580001831054688 },
+      { "DataPointName": "Pillar 3", "Score": 53.659999847412109 }
+    ]
+  },
+  {
+    "Economy": "Côte d'Ivoire",
+    "Group": "",
+    "EconomyCode": "CIV",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/C%C3%B4te-d'Ivoire.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 68.0999984741211 },
+      { "DataPointName": "Pillar 2", "Score": 40.299999237060547 },
+      { "DataPointName": "Pillar 3", "Score": 50.299999237060547 }
+    ]
+  },
+  {
+    "Economy": "Croatia",
+    "Group": "",
+    "EconomyCode": "HRV",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Croatia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 73.529998779296875 },
+      { "DataPointName": "Pillar 2", "Score": 70.239997863769531 },
+      { "DataPointName": "Pillar 3", "Score": 68.30999755859375 }
+    ]
+  },
+  {
+    "Economy": "El Salvador",
+    "Group": "",
+    "EconomyCode": "SLV",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/El-Salvador.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 60.409999847412109 },
+      { "DataPointName": "Pillar 2", "Score": 45.360000610351563 },
+      { "DataPointName": "Pillar 3", "Score": 54.529998779296882 }
+    ]
+  },
+  {
+    "Economy": "Estonia",
+    "Group": "",
+    "EconomyCode": "EST",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Estonia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 72.889999389648438 },
+      { "DataPointName": "Pillar 2", "Score": 73.30999755859375 },
+      { "DataPointName": "Pillar 3", "Score": 80.279998779296875 }
+    ]
+  },
+  {
+    "Economy": "Gambia, The",
+    "Group": "",
+    "EconomyCode": "GMB",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Gambia,-The.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 53.340000152587891 },
+      { "DataPointName": "Pillar 2", "Score": 20.110000610351559 },
+      { "DataPointName": "Pillar 3", "Score": 48.439998626708977 }
+    ]
+  },
+  {
+    "Economy": "Georgia",
+    "Group": "",
+    "EconomyCode": "GEO",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Georgia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 77.739997863769531 },
+      { "DataPointName": "Pillar 2", "Score": 63.330001831054688 },
+      { "DataPointName": "Pillar 3", "Score": 84.75 }
+    ]
+  },
+  {
+    "Economy": "Ghana",
+    "Group": "",
+    "EconomyCode": "GHA",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Ghana.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 66.830001831054688 },
+      { "DataPointName": "Pillar 2", "Score": 47.669998168945313 },
+      { "DataPointName": "Pillar 3", "Score": 54.419998168945313 }
+    ]
+  },
+  {
+    "Economy": "Greece",
+    "Group": "",
+    "EconomyCode": "GRC",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Greece.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 75.6500015258789 },
+      { "DataPointName": "Pillar 2", "Score": 64.4000015258789 },
+      { "DataPointName": "Pillar 3", "Score": 58.979999542236328 }
+    ]
+  },
+  {
+    "Economy": "High income",
+    "Group": "",
+    "EconomyCode": "High income",
+    "PDF_URL": "",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 67.42 },
+      { "DataPointName": "Pillar 2", "Score": 52.79 },
+      { "DataPointName": "Pillar 3", "Score": 66.02 }
+    ]
+  },
+  {
+    "Economy": "Hong Kong SAR, China",
+    "Group": "",
+    "EconomyCode": "HKG",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Hong-Kong-SAR,-China.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 72.470001220703125 },
+      { "DataPointName": "Pillar 2", "Score": 62.639999389648438 },
+      { "DataPointName": "Pillar 3", "Score": 78.5199966430664 }
+    ]
+  },
+  {
+    "Economy": "Hungary",
+    "Group": "",
+    "EconomyCode": "HUN",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Hungary.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 78.339996337890625 },
+      { "DataPointName": "Pillar 2", "Score": 69.5 },
+      { "DataPointName": "Pillar 3", "Score": 70.680000305175781 }
+    ]
+  },
+  {
+    "Economy": "Indonesia",
+    "Group": "",
+    "EconomyCode": "IDN",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Indonesia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 63.930000305175781 },
+      { "DataPointName": "Pillar 2", "Score": 63.439998626708977 },
+      { "DataPointName": "Pillar 3", "Score": 61.310001373291023 }
+    ]
+  },
+  {
+    "Economy": "Iraq",
+    "Group": "",
+    "EconomyCode": "IRQ",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Iraq.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 49.279998779296882 },
+      { "DataPointName": "Pillar 2", "Score": 21.45000076293945 },
+      { "DataPointName": "Pillar 3", "Score": 46.790000915527337 }
+    ]
+  },
+  {
+    "Economy": "Kyrgyz Republic",
+    "Group": "",
+    "EconomyCode": "KGZ",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Kyrgyz-Republic.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 65.330001831054688 },
+      { "DataPointName": "Pillar 2", "Score": 41.229999542236328 },
+      { "DataPointName": "Pillar 3", "Score": 74.709999084472656 }
+    ]
+  },
+  {
+    "Economy": "Lesotho",
+    "Group": "",
+    "EconomyCode": "LSO",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Lesotho.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 54.869998931884773 },
+      { "DataPointName": "Pillar 2", "Score": 37.889999389648438 },
+      { "DataPointName": "Pillar 3", "Score": 66.05999755859375 }
+    ]
+  },
+  {
+    "Economy": "Low income",
+    "Group": "",
+    "EconomyCode": "Low income",
+    "PDF_URL": "",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 65.73 },
+      { "DataPointName": "Pillar 2", "Score": 50.27 },
+      { "DataPointName": "Pillar 3", "Score": 66.94 }
+    ]
+  },
+  {
+    "Economy": "Lower middle income",
+    "Group": "",
+    "EconomyCode": "Lower middle income",
+    "PDF_URL": "",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 62.35 },
+      { "DataPointName": "Pillar 2", "Score": 46.65 },
+      { "DataPointName": "Pillar 3", "Score": 62.04 }
+    ]
+  },
+  {
+    "Economy": "Madagascar",
+    "Group": "",
+    "EconomyCode": "MDG",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Madagascar.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 57.279998779296882 },
+      { "DataPointName": "Pillar 2", "Score": 31.639999389648441 },
+      { "DataPointName": "Pillar 3", "Score": 52.290000915527337 }
+    ]
+  },
+  {
+    "Economy": "Mauritius",
+    "Group": "",
+    "EconomyCode": "MUS",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Mauritius.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 64.569999694824219 },
+      { "DataPointName": "Pillar 2", "Score": 56.279998779296882 },
+      { "DataPointName": "Pillar 3", "Score": 69.790000915527344 }
+    ]
+  },
+  {
+    "Economy": "Mexico",
+    "Group": "",
+    "EconomyCode": "MEX",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Mexico.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 74.989997863769531 },
+      { "DataPointName": "Pillar 2", "Score": 57.25 },
+      { "DataPointName": "Pillar 3", "Score": 61.729999542236328 }
+    ]
+  },
+  {
+    "Economy": "Montenegro",
+    "Group": "",
+    "EconomyCode": "MNE",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Montenegro.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 72.540000915527344 },
+      { "DataPointName": "Pillar 2", "Score": 48.919998168945313 },
+      { "DataPointName": "Pillar 3", "Score": 71.029998779296875 }
+    ]
+  },
+  {
+    "Economy": "Morocco",
+    "Group": "",
+    "EconomyCode": "MAR",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Morocco.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 68.8499984741211 },
+      { "DataPointName": "Pillar 2", "Score": 58.659999847412109 },
+      { "DataPointName": "Pillar 3", "Score": 59.659999847412109 }
+    ]
+  },
+  {
+    "Economy": "Nepal",
+    "Group": "",
+    "EconomyCode": "NPL",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Nepal.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 59.299999237060547 },
+      { "DataPointName": "Pillar 2", "Score": 49.290000915527337 },
+      { "DataPointName": "Pillar 3", "Score": 72.209999084472656 }
+    ]
+  },
+  {
+    "Economy": "New Zealand",
+    "Group": "",
+    "EconomyCode": "NZL",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/New-Zealand.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 67.510002136230469 },
+      { "DataPointName": "Pillar 2", "Score": 68.910003662109375 },
+      { "DataPointName": "Pillar 3", "Score": 76.389999389648438 }
+    ]
+  },
+  {
+    "Economy": "North Macedonia",
+    "Group": "",
+    "EconomyCode": "MKD",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/North-Macedonia.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 69.959999084472656 },
+      { "DataPointName": "Pillar 2", "Score": 53.560001373291023 },
+      { "DataPointName": "Pillar 3", "Score": 75.80999755859375 }
+    ]
+  },
+  {
+    "Economy": "Pakistan",
+    "Group": "",
+    "EconomyCode": "PAK",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Pakistan.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 59.060001373291023 },
+      { "DataPointName": "Pillar 2", "Score": 44.970001220703132 },
+      { "DataPointName": "Pillar 3", "Score": 65.9000015258789 }
+    ]
+  },
+  {
+    "Economy": "Paraguay",
+    "Group": "",
+    "EconomyCode": "PRY",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Paraguay.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 60.889999389648438 },
+      { "DataPointName": "Pillar 2", "Score": 50.680000305175781 },
+      { "DataPointName": "Pillar 3", "Score": 60.599998474121087 }
+    ]
+  },
+  {
+    "Economy": "Peru",
+    "Group": "",
+    "EconomyCode": "PER",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Peru.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 69.610000610351563 },
+      { "DataPointName": "Pillar 2", "Score": 59.7599983215332 },
+      { "DataPointName": "Pillar 3", "Score": 56.200000762939453 }
+    ]
+  },
+  {
+    "Economy": "Philippines",
+    "Group": "",
+    "EconomyCode": "PHL",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Philippines.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 70.779998779296875 },
+      { "DataPointName": "Pillar 2", "Score": 50.799999237060547 },
+      { "DataPointName": "Pillar 3", "Score": 57.950000762939453 }
+    ]
+  },
+  {
+    "Economy": "Portugal",
+    "Group": "",
+    "EconomyCode": "PRT",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Portugal.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 78.160003662109375 },
+      { "DataPointName": "Pillar 2", "Score": 69.529998779296875 },
+      { "DataPointName": "Pillar 3", "Score": 70.800003051757813 }
+    ]
+  },
+  {
+    "Economy": "Romania",
+    "Group": "",
+    "EconomyCode": "ROM",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Romania.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 76.239997863769531 },
+      { "DataPointName": "Pillar 2", "Score": 63.189998626708977 },
+      { "DataPointName": "Pillar 3", "Score": 65.739997863769531 }
+    ]
+  },
+  {
+    "Economy": "Rwanda",
+    "Group": "",
+    "EconomyCode": "RWA",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Rwanda.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 70.430000305175781 },
+      { "DataPointName": "Pillar 2", "Score": 67.370002746582031 },
+      { "DataPointName": "Pillar 3", "Score": 81.30999755859375 }
+    ]
+  },
+  {
+    "Economy": "Samoa",
+    "Group": "",
+    "EconomyCode": "WSM",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Samoa.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 57.110000610351563 },
+      { "DataPointName": "Pillar 2", "Score": 40.040000915527337 },
+      { "DataPointName": "Pillar 3", "Score": 68.319999694824219 }
+    ]
+  },
+  {
+    "Economy": "Seychelles",
+    "Group": "",
+    "EconomyCode": "SYC",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Seychelles.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 58.830001831054688 },
+      { "DataPointName": "Pillar 2", "Score": 37.209999084472663 },
+      { "DataPointName": "Pillar 3", "Score": 63.569999694824219 }
+    ]
+  },
+  {
+    "Economy": "Sierra Leone",
+    "Group": "",
+    "EconomyCode": "SLE",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Sierra-Leone.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 54.049999237060547 },
+      { "DataPointName": "Pillar 2", "Score": 30.729999542236332 },
+      { "DataPointName": "Pillar 3", "Score": 52.5099983215332 }
+    ]
+  },
+  {
+    "Economy": "Singapore",
+    "Group": "",
+    "EconomyCode": "SGP",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Singapore.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 72.459999084472656 },
+      { "DataPointName": "Pillar 2", "Score": 70.4000015258789 },
+      { "DataPointName": "Pillar 3", "Score": 87.330001831054688 }
+    ]
+  },
+  {
+    "Economy": "Slovak Republic",
+    "Group": "",
+    "EconomyCode": "SVK",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Slovak-Republic.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 77.3499984741211 },
+      { "DataPointName": "Pillar 2", "Score": 68.169998168945313 },
+      { "DataPointName": "Pillar 3", "Score": 71.139999389648438 }
+    ]
+  },
+  {
+    "Economy": "Tanzania",
+    "Group": "",
+    "EconomyCode": "TZA",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Tanzania.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 65.069999694824219 },
+      { "DataPointName": "Pillar 2", "Score": 51.560001373291023 },
+      { "DataPointName": "Pillar 3", "Score": 62.150001525878913 }
+    ]
+  },
+  {
+    "Economy": "Timor-Leste",
+    "Group": "",
+    "EconomyCode": "TMP",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Timor-Leste.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 46.209999084472663 },
+      { "DataPointName": "Pillar 2", "Score": 23.79999923706055 },
+      { "DataPointName": "Pillar 3", "Score": 44.830001831054688 }
+    ]
+  },
+  {
+    "Economy": "Togo",
+    "Group": "",
+    "EconomyCode": "TGO",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Togo.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 69.029998779296875 },
+      { "DataPointName": "Pillar 2", "Score": 49.580001831054688 },
+      { "DataPointName": "Pillar 3", "Score": 64.360000610351563 }
+    ]
+  },
+  {
+    "Economy": "Upper middle income",
+    "Group": "",
+    "EconomyCode": "Upper middle income",
+    "PDF_URL": "",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 67.53 },
+      { "DataPointName": "Pillar 2", "Score": 50.62 },
+      { "DataPointName": "Pillar 3", "Score": 62.67 }
+    ]
+  },
+  {
+    "Economy": "Vanuatu",
+    "Group": "",
+    "EconomyCode": "VUT",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Vanuatu.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 50.479999542236328 },
+      { "DataPointName": "Pillar 2", "Score": 32.060001373291023 },
+      { "DataPointName": "Pillar 3", "Score": 43.939998626708977 }
+    ]
+  },
+  {
+    "Economy": "Viet Nam",
+    "Group": "",
+    "EconomyCode": "VNM",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/Viet-Nam.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 66.7699966430664 },
+      { "DataPointName": "Pillar 2", "Score": 53.409999847412109 },
+      { "DataPointName": "Pillar 3", "Score": 72.4800033569336 }
+    ]
+  },
+  {
+    "Economy": "West Bank and Gaza",
+    "Group": "",
+    "EconomyCode": "WBG",
+    "PDF_URL": "https://www.worldbank.org/content/dam/sites/b-ready/documents/pdf/West-Bank-and-Gaza.pdf",
+    "data": [
+      { "DataPointName": "Pillar 1", "Score": 47.470001220703132 },
+      { "DataPointName": "Pillar 2", "Score": 28.420000076293949 },
+      { "DataPointName": "Pillar 3", "Score": 52.75 }
+    ]
+  }
+]

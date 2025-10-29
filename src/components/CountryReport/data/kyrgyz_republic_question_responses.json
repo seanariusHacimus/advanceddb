@@ -1,0 +1,1226 @@
+{
+  "I.1.1.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require entrepreneurs to verify and to have the company name approved in order to register a new business?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.1.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation provide for clear, exhaustive, and specific rules for rejecting proposed company names? For example, if there are provisions in the legislation for rejecting a proposed company name if it is directly inconsistent with the activities described in the main objectives of the company.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.1.3": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require verifying the identity of the entrepreneurs willing to start a new business?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.1.4": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require registration of shareholders details?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.1.5": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require companies to file annual company returns and financial statements?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.2.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation require new companies to register beneficial ownership information?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.2.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require companies to register the following type of information about beneficial owners? - Address",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.2.3": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation specify a time limit for registering the required beneficial owner information in the case of a newly registered company?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.2.4": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation allow nominee shareholders and directors?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.2.5": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation require registering their status as nominee shareholders and directors with public authorities?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.2.6": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require verifying the identity of beneficial owners?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.3.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require registering changes to the company name at the business registry or another relevant agency?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.3.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require registering changes to the shareholders' details at the business registry or another relevant agency?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.3.3": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require registering changes in the articles of association at the business registry or another relevant agency?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.3.4": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation require registering changes to beneficial ownership information? For example, changes in the beneficial owner(s) name, identification number, address, etc.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.4.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation allow entrepreneurs to register a business by themselves using a simple standard registration form without the mandatory use of third-party intermediaries?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.4.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation allow all entrepreneurs and limited liability companies (for example, regardless of the business activity) to use simple standard registration forms without the mandatory use of third-party intermediaries?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.4.3": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation allow entrepreneurs to make updates to the company’s statutory information (for example, through online forms for updates) without the mandatory use of third-party intermediaries?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.4.4": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation allow all entrepreneurs and limited liability companies (for example, regardless of the business activity) to make company statutory information updates without the mandatory use of third-party intermediaries?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.5.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation provide for a risk-based approach for issuing business operating licenses? For example, less stringent licensing requirements should be applicable for low-risk activities while more stringent requirements should apply for higher risk activities.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.1.5.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation provide for a risk-based assessment for issuing environmental operating licenses? For example, less stringent licensing requirements should be applicable for low-risk activities while more stringent requirements should apply for higher risk activities.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.1.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation require a mandated paid-in minimum capital for domestic private limited liability companies?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.1.2": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Please indicate whether the legislation mandates any of the following general requirements for an entrepreneur who wants to register a limited liability company and start business operations. - Obtaining a general operating license",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.1.3": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation mandate specific requirements for domestic entrepreneurs from different sociodemographic groups (for example, age, ethnicity/race, gender, migration status, religious affiliation) that wish to undertake the following processes? - To open a bank account",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.1.4": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation limit full private domestic participation/equity ownership in any of the following sectors? For example, private participation is limited to 49% in the aviation industry, where 51% of participation should be public. - Agriculture and Forestry (e.g., crop growing industry, animal production industry, fertilizer industry, pesticides, agroindustry)",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.2.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does the legislation require a mandated paid-in minimum capital for foreign private limited liability companies?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.2.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation impose any of the following restrictions for foreign entrepreneurs? - Obligation to have a local partner. (e.g, a  foreign entrepreneurs can only open a company in the economy with a mandatory local partner).",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.2.2.3": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the legislation limit the full foreign ownership in the following sectors? For example, the Banking and insurance sector impose a maximum of 49% foreign ownership participation, where the remaining 51% should remain local. - Agriculture and Forestry (e.g., crop growing industry, animal production industry, fertilizer industry, pesticides, agroindustry)",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.1.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Please indicate whether or not the following features apply to the company information database at the business registry. - Covers all types of companies and establishments (e.g., covers all firms regardless of their business activity).",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.1.2": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the business registry store all company registration records in digital form?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.1.3": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Please indicate whether or not each of the following features applies to the beneficial ownership database. - Covers all types of companies and establishments (e.g., covers all firms regardless of their business activity).",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.2.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does an electronic and fully automated system to verify the uniqueness and compliance of company names exist?  For example, the entrepreneur can verify the company name online, with no need to do it in person at the business registry.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.2.2": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does an electronic system that covers the entire company registration process from submitting the application to receiving the company documents exist? For example, the entrepreneur can fully register a company online with no need to go to the business registry, or any other agency, in person to present or obtain hard copies of documents.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.2.3": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does a fully electronic system for businesses to update their statutory information exist? For example, bylaws, articles of incorporation, general company information, or any statute that prescribes the rules of the company’s operation and governance.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.2.4": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Does a fully electronic platform to register and update information on beneficial owners exist?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.2.5": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does an electronic payment option for all fees, such as business registry fees, related to company incorporation exist?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.3.2.6": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the business registry issue the certificate of company incorporation fully electronically? For example, no printed/hard copies need to be obtained and e-version is fully sufficient for operation.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.4.1.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Are changes to company information (for example, changes to company name or address) automatically updated for all relevant government agencies?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.4.2.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Does the business registry or another relevant authority assign a Unique Business Identification number (UBI) for all companies?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.4.2.2": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Do all relevant government agencies use the UBI?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.4.3.1": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Is an electronic signature or another electronic form of authentication identification available for online company registration?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.4.3.2": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Is there an electronic and fully automated process to verify the identity of entrepreneurs and beneficial owners?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.1.1": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Please indicate whether each of the following types of information is available online to the general public: - Regulatory information about environmental-related requirements for new businesses conducting activities with low or negligible environmental impact. Including, for example, the list of low-risk business activities that do not require special permits",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.1.2": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Do publicly funded programs to support small and medium limited liability companies exist in the measured economy? For example, entrepreneurship or business management skills training programs; mentorship programs; or entrepreneurship centers.",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.1.3": [
+    {
+      "economyResponse": "Skipped",
+      "respondents": [
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Is information on publicly funded programs to support small and medium limited liability companies publicly available online?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.1.4": [
+    {
+      "economyResponse": "Skipped",
+      "respondents": [
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Do publicly funded programs to support women-owned small and medium limited liability companies exist?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.1.5": [
+    {
+      "economyResponse": "Skipped",
+      "respondents": [
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Is information on publicly funded programs to support women-owned small and medium limited liability companies publicly available online?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.2.1": [
+    {
+      "economyResponse": "Yes",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "Yes"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Is electronic search available for all company records?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.2.2": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "No"
+        }
+      ],
+      "consensus": "full",
+      "hasDisagreement": false,
+      "questionText": "Please indicate whether or not it is possible to obtain the following corporate information on individual companies online from the database of the business registry. - Company's physical address",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.3.1": [
+    {
+      "economyResponse": "No",
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": "No"
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": "Yes"
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "Are statistics about limited liability companies newly registered in 2022 in the measured economy available online to the public?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.5.3.2": [
+    {
+      "economyResponse": "Skipped",
+      "respondents": [],
+      "consensus": "no-data",
+      "hasDisagreement": false,
+      "questionText": "Are the sex-disaggregated data available for the most recent calendar year (2022)?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.6.4.1": [
+    {
+      "economyResponse": 25,
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": 25
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": 25
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": 36
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "What is the total time to complete the entire company entry process for domestic firms (calendar days)?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.6.4.2": [
+    {
+      "economyResponse": 44900,
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": 60000
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": 15000
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": 44900
+        }
+      ],
+      "consensus": "split",
+      "hasDisagreement": true,
+      "questionText": "What is the total cost to complete the entire company entry process for a domestic firm (local currency)?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.7.4.1": [
+    {
+      "economyResponse": 25,
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": 25
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": 25
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": 36
+        }
+      ],
+      "consensus": "majority",
+      "hasDisagreement": true,
+      "questionText": "What is the total time to complete the entire company entry process for a foreign firm (calendar days)?",
+      "dataSource": "Expert consultations"
+    }
+  ],
+  "I.7.4.2": [
+    {
+      "economyResponse": 60000,
+      "respondents": [
+        {
+          "respondent": "Respondent#1",
+          "answer": 60000
+        },
+        {
+          "respondent": "Respondent#2",
+          "answer": 15000
+        },
+        {
+          "respondent": "Respondent#3",
+          "answer": 74900
+        }
+      ],
+      "consensus": "split",
+      "hasDisagreement": true,
+      "questionText": "What is the total cost to complete the entire company entry process for a foreign firm (local currency)?",
+      "dataSource": "Expert consultations"
+    }
+  ]
+}

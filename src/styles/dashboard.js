@@ -80,7 +80,6 @@ export default styled.div`
     border-radius: 8px;
     overflow: hidden;
     width: 100% !important;
-    max-width: 450px;
     min-width: 200px;
     min-height: 200px;
   }

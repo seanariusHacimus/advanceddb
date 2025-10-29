@@ -11,7 +11,7 @@ export const indicatorStatus = {
 
 export default {
   animationSpeed: 1500,
-  defaultCountry: { code: "AGO", name: "Angola", lang: "" },
+  defaultCountry: { code: "KGZ", name: "Kyrgyz Republic", lang: "" },
   defaultListSize: 4,
   doingBusiness: { score: 41.3, rank: 177 },
   rocketChatUrl: process.env.REACT_APP_ROCKET_BASE_URL,

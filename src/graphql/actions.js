@@ -116,6 +116,7 @@ export const FETCH_ACTIONS = gql`
     }
     attachments {
       id
+      filename
       deleted_at
       file {
         download_url
@@ -346,7 +347,14 @@ export const OVERDUE_ACTIONS = gql`
   fragment action on Action {
     id
     name
-
+    responsive_tags {
+      title
+    }
+    responsive_accounts {
+      id
+      first_name
+      last_name
+    }
     start_at
     end_at
     status

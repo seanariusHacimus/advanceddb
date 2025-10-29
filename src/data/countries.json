@@ -1,0 +1,1810 @@
+[
+  {
+    "id": "LCN",
+    "name": "Latin America & Caribbean ",
+    "type": "region",
+    "url": "latin-america-caribbean"
+  },
+  {
+    "id": "SAS",
+    "name": "South Asia",
+    "type": "region",
+    "url": "south-asia"
+  },
+  {
+    "id": "SSF",
+    "name": "Sub-Saharan Africa ",
+    "type": "region",
+    "url": "sub-saharan-africa"
+  },
+  {
+    "id": "ECS",
+    "name": "Europe & Central Asia",
+    "type": "region",
+    "url": "europe-central-asia"
+  },
+  {
+    "id": "MEA",
+    "name": "Middle East & North Africa",
+    "type": "region",
+    "url": "middle-east-north-africa"
+  },
+  {
+    "id": "EAS",
+    "name": "East Asia & Pacific",
+    "type": "region",
+    "url": "east-asia-pacific"
+  },
+  {
+    "id": "NAC",
+    "name": "North America",
+    "type": "region",
+    "url": "north-america"
+  },
+  {
+    "id": "ABW",
+    "name": "Aruba",
+    "type": "country",
+    "url": "aruba",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "AFG",
+    "name": "Afghanistan",
+    "type": "country",
+    "url": "afghanistan",
+    "region": "South Asia",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "AGO",
+    "name": "Angola",
+    "type": "country",
+    "url": "angola",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "ALB",
+    "name": "Albania",
+    "type": "country",
+    "url": "albania",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "AND",
+    "name": "Andorra",
+    "type": "country",
+    "url": "andorra",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ARE",
+    "name": "United Arab Emirates",
+    "type": "country",
+    "url": "united-arab-emirates",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ARG",
+    "name": "Argentina",
+    "type": "country",
+    "url": "argentina",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "ARM",
+    "name": "Armenia",
+    "type": "country",
+    "url": "armenia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "ASM",
+    "name": "American Samoa",
+    "type": "country",
+    "url": "american-samoa",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ATG",
+    "name": "Antigua and Barbuda",
+    "type": "country",
+    "url": "antigua-and-barbuda",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "AUS",
+    "name": "Australia",
+    "type": "country",
+    "url": "australia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "AUT",
+    "name": "Austria",
+    "type": "country",
+    "url": "austria",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "AZE",
+    "name": "Azerbaijan",
+    "type": "country",
+    "url": "azerbaijan",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "BDI",
+    "name": "Burundi",
+    "type": "country",
+    "url": "burundi",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "BEL",
+    "name": "Belgium",
+    "type": "country",
+    "url": "belgium",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BEN",
+    "name": "Benin",
+    "type": "country",
+    "url": "benin",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "BFA",
+    "name": "Burkina Faso",
+    "type": "country",
+    "url": "burkina-faso",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "BGD",
+    "name": "Bangladesh",
+    "type": "country",
+    "url": "bangladesh",
+    "region": "South Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "BGR",
+    "name": "Bulgaria",
+    "type": "country",
+    "url": "bulgaria",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BHR",
+    "name": "Bahrain",
+    "type": "country",
+    "url": "bahrain",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BHS",
+    "name": "Bahamas, The",
+    "type": "country",
+    "url": "bahamas-the",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BIH",
+    "name": "Bosnia and Herzegovina",
+    "type": "country",
+    "url": "bosnia-and-herzegovina",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "BLR",
+    "name": "Belarus",
+    "type": "country",
+    "url": "belarus",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "BLZ",
+    "name": "Belize",
+    "type": "country",
+    "url": "belize",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "BMU",
+    "name": "Bermuda",
+    "type": "country",
+    "url": "bermuda",
+    "region": "North America",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BOL",
+    "name": "Bolivia",
+    "type": "country",
+    "url": "bolivia",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "BRA",
+    "name": "Brazil",
+    "type": "country",
+    "url": "brazil",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "BRB",
+    "name": "Barbados",
+    "type": "country",
+    "url": "barbados",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BRN",
+    "name": "Brunei Darussalam",
+    "type": "country",
+    "url": "brunei-darussalam",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "BTN",
+    "name": "Bhutan",
+    "type": "country",
+    "url": "bhutan",
+    "region": "South Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "BWA",
+    "name": "Botswana",
+    "type": "country",
+    "url": "botswana",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "CAF",
+    "name": "Central African Republic",
+    "type": "country",
+    "url": "central-african-republic",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "CAN",
+    "name": "Canada",
+    "type": "country",
+    "url": "canada",
+    "region": "North America",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CHE",
+    "name": "Switzerland",
+    "type": "country",
+    "url": "switzerland",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CHI",
+    "name": "Channel Islands",
+    "type": "country",
+    "url": "channel-islands",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CHL",
+    "name": "Chile",
+    "type": "country",
+    "url": "chile",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CHN",
+    "name": "China",
+    "type": "country",
+    "url": "china",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "CIV",
+    "name": "Côte d’Ivoire",
+    "type": "country",
+    "url": "cote-d-ivoire",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "CMR",
+    "name": "Cameroon",
+    "type": "country",
+    "url": "cameroon",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "COD",
+    "name": "Congo, Dem. Rep.",
+    "type": "country",
+    "url": "congo-dem-rep",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "COG",
+    "name": "Congo, Rep.",
+    "type": "country",
+    "url": "congo-rep",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "COL",
+    "name": "Colombia",
+    "type": "country",
+    "url": "colombia",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "COM",
+    "name": "Comoros",
+    "type": "country",
+    "url": "comoros",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "CPV",
+    "name": "Cabo Verde",
+    "type": "country",
+    "url": "cabo-verde",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "CRI",
+    "name": "Costa Rica",
+    "type": "country",
+    "url": "costa-rica",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "CUB",
+    "name": "Cuba",
+    "type": "country",
+    "url": "cuba",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "CUW",
+    "name": "Curacao",
+    "type": "country",
+    "url": "curacao",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CYM",
+    "name": "Cayman Islands",
+    "type": "country",
+    "url": "cayman-islands",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CYP",
+    "name": "Cyprus",
+    "type": "country",
+    "url": "cyprus",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "CZE",
+    "name": "Czechia",
+    "type": "country",
+    "url": "czechia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "DEU",
+    "name": "Germany",
+    "type": "country",
+    "url": "germany",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "DJI",
+    "name": "Djibouti",
+    "type": "country",
+    "url": "djibouti",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "DMA",
+    "name": "Dominica",
+    "type": "country",
+    "url": "dominica",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "DNK",
+    "name": "Denmark",
+    "type": "country",
+    "url": "denmark",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "DOM",
+    "name": "Dominican Republic",
+    "type": "country",
+    "url": "dominican-republic",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "DZA",
+    "name": "Algeria",
+    "type": "country",
+    "url": "algeria",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "ECU",
+    "name": "Ecuador",
+    "type": "country",
+    "url": "ecuador",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "EGY",
+    "name": "Egypt, Arab Rep.",
+    "type": "country",
+    "url": "egypt-arab-rep",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "ERI",
+    "name": "Eritrea",
+    "type": "country",
+    "url": "eritrea",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "ESP",
+    "name": "Spain",
+    "type": "country",
+    "url": "spain",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "EST",
+    "name": "Estonia",
+    "type": "country",
+    "url": "estonia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ETH",
+    "name": "Ethiopia",
+    "type": "country",
+    "url": "ethiopia",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "FIN",
+    "name": "Finland",
+    "type": "country",
+    "url": "finland",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "FJI",
+    "name": "Fiji",
+    "type": "country",
+    "url": "fiji",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "FRA",
+    "name": "France",
+    "type": "country",
+    "url": "france",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "FRO",
+    "name": "Faroe Islands",
+    "type": "country",
+    "url": "faroe-islands",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "FSM",
+    "name": "Micronesia, Fed. Sts.",
+    "type": "country",
+    "url": "micronesia-fed-sts",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "GAB",
+    "name": "Gabon",
+    "type": "country",
+    "url": "gabon",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "GBR",
+    "name": "United Kingdom",
+    "type": "country",
+    "url": "united-kingdom",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "GEO",
+    "name": "Georgia",
+    "type": "country",
+    "url": "georgia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "GHA",
+    "name": "Ghana",
+    "type": "country",
+    "url": "ghana",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "GIB",
+    "name": "Gibraltar",
+    "type": "country",
+    "url": "gibraltar",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "GIN",
+    "name": "Guinea",
+    "type": "country",
+    "url": "guinea",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "GMB",
+    "name": "Gambia, The",
+    "type": "country",
+    "url": "gambia-the",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "GNB",
+    "name": "Guinea-Bissau",
+    "type": "country",
+    "url": "guinea-bissau",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "GNQ",
+    "name": "Equatorial Guinea",
+    "type": "country",
+    "url": "equatorial-guinea",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "GRC",
+    "name": "Greece",
+    "type": "country",
+    "url": "greece",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "GRD",
+    "name": "Grenada",
+    "type": "country",
+    "url": "grenada",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "GRL",
+    "name": "Greenland",
+    "type": "country",
+    "url": "greenland",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "GTM",
+    "name": "Guatemala",
+    "type": "country",
+    "url": "guatemala",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "GUM",
+    "name": "Guam",
+    "type": "country",
+    "url": "guam",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "GUY",
+    "name": "Guyana",
+    "type": "country",
+    "url": "guyana",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "HKG",
+    "name": "Hong Kong SAR, China",
+    "type": "country",
+    "url": "hong-kong-sar-china",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "HND",
+    "name": "Honduras",
+    "type": "country",
+    "url": "honduras",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "HRV",
+    "name": "Croatia",
+    "type": "country",
+    "url": "croatia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "HTI",
+    "name": "Haiti",
+    "type": "country",
+    "url": "haiti",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "HUN",
+    "name": "Hungary",
+    "type": "country",
+    "url": "hungary",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "IDN",
+    "name": "Indonesia",
+    "type": "country",
+    "url": "indonesia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "IMN",
+    "name": "Isle of Man",
+    "type": "country",
+    "url": "isle-of-man",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "IND",
+    "name": "India",
+    "type": "country",
+    "url": "india",
+    "region": "South Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "IRL",
+    "name": "Ireland",
+    "type": "country",
+    "url": "ireland",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "IRN",
+    "name": "Iran, Islamic Rep.",
+    "type": "country",
+    "url": "iran-islamic-rep",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "IRQ",
+    "name": "Iraq",
+    "type": "country",
+    "url": "iraq",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "ISL",
+    "name": "Iceland",
+    "type": "country",
+    "url": "iceland",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ISR",
+    "name": "Israel",
+    "type": "country",
+    "url": "israel",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ITA",
+    "name": "Italy",
+    "type": "country",
+    "url": "italy",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "JAM",
+    "name": "Jamaica",
+    "type": "country",
+    "url": "jamaica",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "JOR",
+    "name": "Jordan",
+    "type": "country",
+    "url": "jordan",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "JPN",
+    "name": "Japan",
+    "type": "country",
+    "url": "japan",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "KAZ",
+    "name": "Kazakhstan",
+    "type": "country",
+    "url": "kazakhstan",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "KEN",
+    "name": "Kenya",
+    "type": "country",
+    "url": "kenya",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "KGZ",
+    "name": "Kyrgyz Republic",
+    "type": "country",
+    "url": "kyrgyz-republic",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "KHM",
+    "name": "Cambodia",
+    "type": "country",
+    "url": "cambodia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "KIR",
+    "name": "Kiribati",
+    "type": "country",
+    "url": "kiribati",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "KNA",
+    "name": "St. Kitts and Nevis",
+    "type": "country",
+    "url": "st-kitts-and-nevis",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "KOR",
+    "name": "Korea, Rep.",
+    "type": "country",
+    "url": "korea-rep",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "KWT",
+    "name": "Kuwait",
+    "type": "country",
+    "url": "kuwait",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "LAO",
+    "name": "Lao PDR",
+    "type": "country",
+    "url": "lao-pdr",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "LBN",
+    "name": "Lebanon",
+    "type": "country",
+    "url": "lebanon",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "LBR",
+    "name": "Liberia",
+    "type": "country",
+    "url": "liberia",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "LBY",
+    "name": "Libya",
+    "type": "country",
+    "url": "libya",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "LCA",
+    "name": "St. Lucia",
+    "type": "country",
+    "url": "st-lucia",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "LIE",
+    "name": "Liechtenstein",
+    "type": "country",
+    "url": "liechtenstein",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "LKA",
+    "name": "Sri Lanka",
+    "type": "country",
+    "url": "sri-lanka",
+    "region": "South Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "LSO",
+    "name": "Lesotho",
+    "type": "country",
+    "url": "lesotho",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "LTU",
+    "name": "Lithuania",
+    "type": "country",
+    "url": "lithuania",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "LUX",
+    "name": "Luxembourg",
+    "type": "country",
+    "url": "luxembourg",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "LVA",
+    "name": "Latvia",
+    "type": "country",
+    "url": "latvia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "MAC",
+    "name": "Macao SAR, China",
+    "type": "country",
+    "url": "macao-sar-china",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "MAF",
+    "name": "St. Martin (French part)",
+    "type": "country",
+    "url": "st-martin-french-part",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "MAR",
+    "name": "Morocco",
+    "type": "country",
+    "url": "morocco",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "MCO",
+    "name": "Monaco",
+    "type": "country",
+    "url": "monaco",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "MDA",
+    "name": "Moldova",
+    "type": "country",
+    "url": "moldova",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MDG",
+    "name": "Madagascar",
+    "type": "country",
+    "url": "madagascar",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "MDV",
+    "name": "Maldives",
+    "type": "country",
+    "url": "maldives",
+    "region": "South Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MEX",
+    "name": "Mexico",
+    "type": "country",
+    "url": "mexico",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MHL",
+    "name": "Marshall Islands",
+    "type": "country",
+    "url": "marshall-islands",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MKD",
+    "name": "North Macedonia",
+    "type": "country",
+    "url": "north-macedonia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MLI",
+    "name": "Mali",
+    "type": "country",
+    "url": "mali",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "MLT",
+    "name": "Malta",
+    "type": "country",
+    "url": "malta",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "MMR",
+    "name": "Myanmar",
+    "type": "country",
+    "url": "myanmar",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "MNE",
+    "name": "Montenegro",
+    "type": "country",
+    "url": "montenegro",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MNG",
+    "name": "Mongolia",
+    "type": "country",
+    "url": "mongolia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MNP",
+    "name": "Northern Mariana Islands",
+    "type": "country",
+    "url": "northern-mariana-islands",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "MOZ",
+    "name": "Mozambique",
+    "type": "country",
+    "url": "mozambique",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "MRT",
+    "name": "Mauritania",
+    "type": "country",
+    "url": "mauritania",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "MUS",
+    "name": "Mauritius",
+    "type": "country",
+    "url": "mauritius",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "MWI",
+    "name": "Malawi",
+    "type": "country",
+    "url": "malawi",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "MYS",
+    "name": "Malaysia",
+    "type": "country",
+    "url": "malaysia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "NAM",
+    "name": "Namibia",
+    "type": "country",
+    "url": "namibia",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "NCL",
+    "name": "New Caledonia",
+    "type": "country",
+    "url": "new-caledonia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "NER",
+    "name": "Niger",
+    "type": "country",
+    "url": "niger",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "NGA",
+    "name": "Nigeria",
+    "type": "country",
+    "url": "nigeria",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "NIC",
+    "name": "Nicaragua",
+    "type": "country",
+    "url": "nicaragua",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "NLD",
+    "name": "Netherlands",
+    "type": "country",
+    "url": "netherlands",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "NOR",
+    "name": "Norway",
+    "type": "country",
+    "url": "norway",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "NPL",
+    "name": "Nepal",
+    "type": "country",
+    "url": "nepal",
+    "region": "South Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "NRU",
+    "name": "Nauru",
+    "type": "country",
+    "url": "nauru",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "NZL",
+    "name": "New Zealand",
+    "type": "country",
+    "url": "new-zealand",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "OMN",
+    "name": "Oman",
+    "type": "country",
+    "url": "oman",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "PAK",
+    "name": "Pakistan",
+    "type": "country",
+    "url": "pakistan",
+    "region": "South Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "PAN",
+    "name": "Panama",
+    "type": "country",
+    "url": "panama",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "PER",
+    "name": "Peru",
+    "type": "country",
+    "url": "peru",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "PHL",
+    "name": "Philippines",
+    "type": "country",
+    "url": "philippines",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "PLW",
+    "name": "Palau",
+    "type": "country",
+    "url": "palau",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "PNG",
+    "name": "Papua New Guinea",
+    "type": "country",
+    "url": "papua-new-guinea",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "POL",
+    "name": "Poland",
+    "type": "country",
+    "url": "poland",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "PRI",
+    "name": "Puerto Rico",
+    "type": "country",
+    "url": "puerto-rico",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "PRK",
+    "name": "Korea, Dem. People's Rep.",
+    "type": "country",
+    "url": "korea-dem-people-s-rep",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "PRT",
+    "name": "Portugal",
+    "type": "country",
+    "url": "portugal",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "PRY",
+    "name": "Paraguay",
+    "type": "country",
+    "url": "paraguay",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "WBG",
+    "name": "West Bank and Gaza",
+    "type": "country",
+    "url": "west-bank-and-gaza",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "PYF",
+    "name": "French Polynesia",
+    "type": "country",
+    "url": "french-polynesia",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "QAT",
+    "name": "Qatar",
+    "type": "country",
+    "url": "qatar",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "ROM",
+    "name": "Romania",
+    "type": "country",
+    "url": "romania",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "RUS",
+    "name": "Russian Federation",
+    "type": "country",
+    "url": "russian-federation",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "RWA",
+    "name": "Rwanda",
+    "type": "country",
+    "url": "rwanda",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "SAU",
+    "name": "Saudi Arabia",
+    "type": "country",
+    "url": "saudi-arabia",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SDN",
+    "name": "Sudan",
+    "type": "country",
+    "url": "sudan",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "SEN",
+    "name": "Senegal",
+    "type": "country",
+    "url": "senegal",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "SGP",
+    "name": "Singapore",
+    "type": "country",
+    "url": "singapore",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SLB",
+    "name": "Solomon Islands",
+    "type": "country",
+    "url": "solomon-islands",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "SLE",
+    "name": "Sierra Leone",
+    "type": "country",
+    "url": "sierra-leone",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "SLV",
+    "name": "El Salvador",
+    "type": "country",
+    "url": "el-salvador",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "SMR",
+    "name": "San Marino",
+    "type": "country",
+    "url": "san-marino",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SOM",
+    "name": "Somalia",
+    "type": "country",
+    "url": "somalia",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "SRB",
+    "name": "Serbia",
+    "type": "country",
+    "url": "serbia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "SSD",
+    "name": "South Sudan",
+    "type": "country",
+    "url": "south-sudan",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "STP",
+    "name": "Sao Tome and Principe",
+    "type": "country",
+    "url": "sao-tome-and-principe",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "SUR",
+    "name": "Suriname",
+    "type": "country",
+    "url": "suriname",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "SVK",
+    "name": "Slovak Republic",
+    "type": "country",
+    "url": "slovak-republic",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SVN",
+    "name": "Slovenia",
+    "type": "country",
+    "url": "slovenia",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SWE",
+    "name": "Sweden",
+    "type": "country",
+    "url": "sweden",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SWZ",
+    "name": "Eswatini",
+    "type": "country",
+    "url": "eswatini",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "SXM",
+    "name": "Sint Maarten (Dutch part)",
+    "type": "country",
+    "url": "sint-maarten-dutch-part",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SYC",
+    "name": "Seychelles",
+    "type": "country",
+    "url": "seychelles",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "SYR",
+    "name": "Syrian Arab Republic",
+    "type": "country",
+    "url": "syrian-arab-republic",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "TCA",
+    "name": "Turks and Caicos Islands",
+    "type": "country",
+    "url": "turks-and-caicos-islands",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "TCD",
+    "name": "Chad",
+    "type": "country",
+    "url": "chad",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "TGO",
+    "name": "Togo",
+    "type": "country",
+    "url": "togo",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "THA",
+    "name": "Thailand",
+    "type": "country",
+    "url": "thailand",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "TJK",
+    "name": "Tajikistan",
+    "type": "country",
+    "url": "tajikistan",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "TKM",
+    "name": "Turkmenistan",
+    "type": "country",
+    "url": "turkmenistan",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "TMP",
+    "name": "Timor-Leste",
+    "type": "country",
+    "url": "timor-leste",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "TON",
+    "name": "Tonga",
+    "type": "country",
+    "url": "tonga",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "TTO",
+    "name": "Trinidad and Tobago",
+    "type": "country",
+    "url": "trinidad-and-tobago",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "TUN",
+    "name": "Tunisia",
+    "type": "country",
+    "url": "tunisia",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "TUR",
+    "name": "Turkiye",
+    "type": "country",
+    "url": "turkiye",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "TUV",
+    "name": "Tuvalu",
+    "type": "country",
+    "url": "tuvalu",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "TZA",
+    "name": "Tanzania",
+    "type": "country",
+    "url": "tanzania",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "UGA",
+    "name": "Uganda",
+    "type": "country",
+    "url": "uganda",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "UKR",
+    "name": "Ukraine",
+    "type": "country",
+    "url": "ukraine",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "URY",
+    "name": "Uruguay",
+    "type": "country",
+    "url": "uruguay",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "USA",
+    "name": "United States",
+    "type": "country",
+    "url": "united-states",
+    "region": "North America",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "UZB",
+    "name": "Uzbekistan",
+    "type": "country",
+    "url": "uzbekistan",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "VCT",
+    "name": "St. Vincent and the Grenadines",
+    "type": "country",
+    "url": "st-vincent-and-the-grenadines",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "VEN",
+    "name": "Venezuela, RB",
+    "type": "country",
+    "url": "venezuela-rb",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "Not classified"
+  },
+  {
+    "id": "VGB",
+    "name": "British Virgin Islands",
+    "type": "country",
+    "url": "british-virgin-islands",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "VIR",
+    "name": "Virgin Islands (U.S.)",
+    "type": "country",
+    "url": "virgin-islands-u-s",
+    "region": "Latin America & Caribbean ",
+    "incomeLevel": "High income"
+  },
+  {
+    "id": "VNM",
+    "name": "Viet Nam",
+    "type": "country",
+    "url": "viet-nam",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "VUT",
+    "name": "Vanuatu",
+    "type": "country",
+    "url": "vanuatu",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "WSM",
+    "name": "Samoa",
+    "type": "country",
+    "url": "samoa",
+    "region": "East Asia & Pacific",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "XKX",
+    "name": "Kosovo",
+    "type": "country",
+    "url": "kosovo",
+    "region": "Europe & Central Asia",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "YEM",
+    "name": "Yemen, Rep.",
+    "type": "country",
+    "url": "yemen-rep",
+    "region": "Middle East & North Africa",
+    "incomeLevel": "Low income"
+  },
+  {
+    "id": "ZAF",
+    "name": "South Africa",
+    "type": "country",
+    "url": "south-africa",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Upper middle income"
+  },
+  {
+    "id": "ZMB",
+    "name": "Zambia",
+    "type": "country",
+    "url": "zambia",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "ZWE",
+    "name": "Zimbabwe",
+    "type": "country",
+    "url": "zimbabwe",
+    "region": "Sub-Saharan Africa ",
+    "incomeLevel": "Lower middle income"
+  },
+  {
+    "id": "HIC",
+    "name": "High income",
+    "type": "income",
+    "url": "high-income"
+  },
+  {
+    "id": "LIC",
+    "name": "Low income",
+    "type": "income",
+    "url": "low-income"
+  },
+  {
+    "id": "LMC",
+    "name": "Lower middle income",
+    "type": "income",
+    "url": "lower-middle-income"
+  },
+  {
+    "id": "UMC",
+    "name": "Upper middle income",
+    "type": "income",
+    "url": "upper-middle-income"
+  },
+  {
+    "id": "INX",
+    "name": "Not classified",
+    "type": "income",
+    "url": "not-classified"
+  }
+]
