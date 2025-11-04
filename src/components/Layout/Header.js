@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { useSelector } from "react-redux";
-import { colors } from "../../constants";
+import constants, { colors } from "../../constants";
 import logo from "../../assets/logo.svg";
 import Languages from "./Languages";
 import Notifications from "../Notifications/Notifications";
@@ -17,6 +17,8 @@ import iconApprovals from "../../assets/header/profile/approvals.svg";
 import iconAuditLog from "../../assets/header/profile/audit-log.svg";
 
 const { Header } = Layout;
+const CURRENT_COUNTRY_CODE = constants.defaultCountry.code;
+const CURRENT_COUNTRY_NAME = constants.defaultCountry.name;
 
 // Constants
 const MENU_CONFIG = {
@@ -68,6 +70,11 @@ const WorkingGroupMenu = ({
           key: `/working-group/${workingGroupUrl}/${MENU_CONFIG.WORKING_GROUP.METHODOLOGY}`,
           link: `/working-group/${workingGroupUrl}/${MENU_CONFIG.WORKING_GROUP.METHODOLOGY}`,
           label: t("Methodology"),
+        },
+        {
+          key: `/dashboard/topic/${workingGroupUrl}?country_code=${CURRENT_COUNTRY_CODE}`,
+          link: `/dashboard/topic/${workingGroupUrl}?country_code=${CURRENT_COUNTRY_CODE}`,
+          label: t("Country report"),
         },
         {
           key: `/working-group/${workingGroupUrl}/${MENU_CONFIG.WORKING_GROUP.HISTORICAL_DATA}`,
@@ -161,6 +168,14 @@ const ProfileMenu = ({ t }) => {
           approvalsCount >= 0 ? `(${approvalsCount})` : ""
         }`,
         icon: iconApprovals,
+      });
+    }
+
+    if (role === USER_ROLES.SUPERUSER) {
+      menuItems.push({
+        key: "/settings/general",
+        link: "/settings/general",
+        label: t("General Settings"),
       });
     }
 

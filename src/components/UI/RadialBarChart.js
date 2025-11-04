@@ -2,11 +2,21 @@ import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
+import constants from "../../constants";
+import { getChartColors } from "../../utils/settings";
 
-const colorCode = {
-  pillar_i: "#e35f20",
-  pillar_ii: "#f6871e",
-  pillar_iii: "#fcac18",
+// Get colors from settings/localStorage, fallback to defaults
+const getColorCode = () => {
+  try {
+    return getChartColors();
+  } catch (error) {
+    console.error("Error getting chart colors:", error);
+    return {
+      pillar_i: "#e35f20",
+      pillar_ii: "#f6871e",
+      pillar_iii: "#fcac18",
+    };
+  }
 };
 
 const pillarNumberMap = {
@@ -18,19 +28,21 @@ const pillarNumberMap = {
 const ChartContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 250px;
-  width: 250px;
+  height: ${(props) => props.chartSize || "250px"};
+  width: ${(props) => props.chartSize || "250px"};
   display: flex;
   align-items: center;
 `;
 
 const PillarLabelsContainer = styled.div`
   position: absolute;
-  top: 30px;
+  top: ${(props) =>
+    props.chartSize ? `${Math.max(30, props.chartSize / 8)}px` : "30px"};
   right: calc(50% + 6px);
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: ${(props) =>
+    props.chartSize ? `${Math.ceil(props.chartSize / 50)}px` : "3px"};
   z-index: 10;
   cursor: pointer;
 `;
@@ -38,30 +50,27 @@ const PillarLabelsContainer = styled.div`
 const PillarLabel = styled.button`
   font-size: 12px;
   font-weight: 500;
-  color: #252a32;
+  color: #000;
   cursor: pointer;
   transition: color 0.2s ease;
   background: transparent;
   border: none;
   text-align: left;
   padding: 0;
+  font-weight: 600;
   &:hover {
     color: #527bdd;
   }
-  ${(props) =>
-    props.selected &&
-    `
-    color: #527bdd;
-    font-weight: 600;
-  `}
 `;
 
 const SimpleRadialBarChart = ({
+  id = "radial-bar-chart",
   pillars,
   overallScore = 0,
   topicName,
   onPillarClick,
   selectedPillar,
+  chartSize = 250,
   showOverallScore = true,
 }) => {
   const history = useHistory();
@@ -75,17 +84,26 @@ const SimpleRadialBarChart = ({
       }
     } else {
       const pillarNumber = pillarNumberMap[pillarId] || pillarId;
+      const urlParams = new URLSearchParams(window.location.search);
+      const countryCode =
+        urlParams.get("country_code") || constants.defaultCountry.code;
+      const topicSlug = topicName.toLowerCase().replace(/\s+/g, "-");
       history.push(
-        `/dashboard/topic/${topicName
-          .toLowerCase()
-          .replace(/\s+/g, "-")}?active_pillar=${pillarNumber}`
+        `/dashboard/topic/${topicSlug}?country_code=${countryCode}&active_pillar=${pillarNumber}`
       );
     }
   };
 
+  // Get colors from settings
+  const colorCode = getColorCode();
+
   return (
-    <ChartContainer onClick={() => handlePillarClick("all")}>
-      <PillarLabelsContainer>
+    <ChartContainer
+      id={id}
+      onClick={() => handlePillarClick("all")}
+      chartSize={`${chartSize}px`}
+    >
+      <PillarLabelsContainer chartSize={chartSize}>
         {pillars.map((pillar) => (
           <PillarLabel
             key={pillar.id}
@@ -110,15 +128,15 @@ const SimpleRadialBarChart = ({
           .map((pillar) => {
             return {
               id: pillar.id,
-              fill: colorCode[pillar.id],
+              fill: colorCode[pillar.id] || colorCode.pillar_i,
               name: pillar.name,
               score: parseInt(pillar.score),
             };
           })
           .reverse()}
         endAngle={180}
-        height={250}
-        innerRadius={30}
+        height={chartSize}
+        innerRadius={Math.max(30, chartSize / 8)}
         layout="radial"
         margin={{
           bottom: 5,
@@ -130,7 +148,7 @@ const SimpleRadialBarChart = ({
         startAngle={450}
         syncMethod="index"
         label={{ position: "end", fill: "#333", fontSize: 10 }}
-        width={250}
+        width={chartSize}
       >
         <PolarAngleAxis
           type="number"
@@ -142,7 +160,7 @@ const SimpleRadialBarChart = ({
         />
         <RadialBar
           dataKey="score"
-          barSize={14}
+          barSize={Math.max(14, chartSize / 20)}
           onClick={(data) => handlePillarClick(data.id)}
           background={{
             fill: "transparent",

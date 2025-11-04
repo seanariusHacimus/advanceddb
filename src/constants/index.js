@@ -1,3 +1,5 @@
+import { getDefaultCountry } from "../utils/settings";
+
 export { default as colors } from "./colors";
 export { default as indicators } from "./indicators";
 
@@ -9,9 +11,22 @@ export const indicatorStatus = {
   on_review: "Under Review",
 };
 
+// Get default country from settings/localStorage, fallback to hardcoded default
+const getDefaultCountrySetting = () => {
+  try {
+    const country = getDefaultCountry();
+    return { ...country, lang: "" };
+  } catch (error) {
+    console.error("Error getting default country:", error);
+    return { code: "KGZ", name: "Kyrgyz Republic", lang: "" };
+  }
+};
+
 export default {
   animationSpeed: 1500,
-  defaultCountry: { code: "KGZ", name: "Kyrgyz Republic", lang: "" },
+  get defaultCountry() {
+    return getDefaultCountrySetting();
+  },
   defaultListSize: 4,
   doingBusiness: { score: 41.3, rank: 177 },
   rocketChatUrl: process.env.REACT_APP_ROCKET_BASE_URL,

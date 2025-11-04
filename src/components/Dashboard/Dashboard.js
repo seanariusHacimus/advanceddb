@@ -1,12 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Card, Progress } from "antd";
+import { Row, Col, Card, Progress, Empty } from "antd";
 import DashboardPage from "../../styles/dashboard";
 import { TitleH3, Flex } from "../../styles";
 import { ReactComponent as RightArrow } from "../../assets/dashboard/right-arrow.svg";
 import { ProgressBar, ChartTitle } from "../../styles/graph";
 import moment from "moment";
+import styled from "styled-components";
 
 import AreaChart from "./AreaChart";
 import DonutChart from "./DonutChart";
@@ -21,11 +22,22 @@ import { CountryReportPillars } from "../../data";
 import { RadialBarChart } from "../UI";
 import { noop } from "lodash";
 
-const CURRENT_COUNTRY_CODE = constants.defaultCountry.code;
-const CURRENT_COUNTRY_NAME = constants.defaultCountry.name;
-const CURRENT_COUNTRY_PILLARS = CountryReportPillars.find(
-  (pillar) => pillar.EconomyCode === CURRENT_COUNTRY_CODE
-);
+const NoDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  min-height: 200px;
+  color: #717a8f;
+  text-align: center;
+`;
+
+const NoDataMessage = styled.p`
+  margin-top: 16px;
+  font-size: 16px;
+  color: #717a8f;
+`;
 
 const chartData = (t) => [
   {
@@ -64,6 +76,15 @@ const Dashboard = () => {
   const history = useHistory();
   const [t] = useLocale();
 
+  // Get current country from settings
+  const currentCountryCode = constants.defaultCountry.code;
+  const currentCountryName = constants.defaultCountry.name;
+  const currentCountryPillars = useMemo(() => {
+    return CountryReportPillars.find(
+      (pillar) => pillar.EconomyCode === currentCountryCode
+    );
+  }, [currentCountryCode]);
+
   // Get indicators from Redux store
   const indicators = useSelector((state) => state.workingGroups.data);
   const [state, setState] = useState({
@@ -93,7 +114,23 @@ const Dashboard = () => {
     }
   }, [indicators]);
 
+  const redirectToReportPage = () => {
+    history.push(
+      `/dashboard/country-report?country_code=${currentCountryCode}`
+    );
+  };
+
   const { actions, period, workingGroups } = state;
+  const pillars = useMemo(() => {
+    if (!currentCountryPillars || !currentCountryPillars.data) {
+      return [];
+    }
+    return currentCountryPillars.data.map((pillar, index) => ({
+      id: `pillar_${index === 0 ? "i" : index === 1 ? "ii" : "iii"}`,
+      name: pillar.DataPointName,
+      score: pillar.Score,
+    }));
+  }, [currentCountryPillars]);
 
   let chart = chartData(t);
 
@@ -115,41 +152,56 @@ const Dashboard = () => {
         <Col className="col-left" xs={24} md={8} xl={8}>
           <div className="inner-block col-left">
             <TitleH3>
-              {t("How business ready is")} <b>{CURRENT_COUNTRY_NAME}</b>
+              {t("How business ready is")} <b>{currentCountryName}</b>
               {t("?")}
             </TitleH3>
             <Card
               style={{ marginTop: 16 }}
               className="info"
               bordered={false}
-              actions={[
-                <a
-                  target="_blank"
-                  className="content"
-                  rel="noopener noreferrer"
-                  href={CURRENT_COUNTRY_PILLARS.PDF_URL}
-                >
-                  <div className="text-capitalize">
-                    {t("See full country profile")} <RightArrow />
-                  </div>
-                  <div className="text-center">
-                    <small>{t("Source: World Bank")}</small>
-                  </div>
-                </a>,
-              ]}
+              actions={
+                currentCountryPillars?.PDF_URL
+                  ? [
+                      <a
+                        target="_blank"
+                        className="content"
+                        rel="noopener noreferrer"
+                        href={currentCountryPillars.PDF_URL}
+                        key="pdf-link"
+                      >
+                        <div className="text-capitalize">
+                          {t("See full country profile")} <RightArrow />
+                        </div>
+                        <div className="text-center">
+                          <small>{t("Source: World Bank")}</small>
+                        </div>
+                      </a>,
+                    ]
+                  : []
+              }
             >
-              <RadialBarChart
-                pillars={CURRENT_COUNTRY_PILLARS.data.map((pillar, index) => ({
-                  id: `pillar_${
-                    index === 0 ? "i" : index === 1 ? "ii" : "iii"
-                  }`,
-                  name: pillar.DataPointName,
-                  score: pillar.Score,
-                }))}
-                showOverallScore={false}
-                onPillarClick={noop}
-                topicName=""
-              />
+              {!currentCountryPillars ||
+              !currentCountryPillars.data ||
+              pillars.length === 0 ? (
+                <NoDataContainer>
+                  <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={
+                      <NoDataMessage>
+                        {t(`No data available for ${currentCountryName}`)}
+                      </NoDataMessage>
+                    }
+                  />
+                </NoDataContainer>
+              ) : (
+                <RadialBarChart
+                  id="dashboard-radial-bar-chart"
+                  pillars={pillars}
+                  showOverallScore={false}
+                  onPillarClick={redirectToReportPage}
+                  topicName=""
+                />
+              )}
             </Card>
           </div>
         </Col>
@@ -222,7 +274,7 @@ const Dashboard = () => {
                         <h5 className="progress-title">{t(item.title)}</h5>
                         <Progress
                           trailColor="#ECEEF4"
-                          strokeColor="#6B91EC"
+                          strokeColor="#1447e5"
                           strokeWidth={13}
                           percent={percent}
                           format={(percent) => percent + "%"}

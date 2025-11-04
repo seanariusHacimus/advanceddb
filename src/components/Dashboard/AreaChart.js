@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   AreaChart,
   Area,
@@ -41,10 +41,13 @@ const defaultData = (t) => [
 
 const MonthlyData = ({ data: propsData, total }) => {
   const [t] = useLocale();
-  let data = defaultData(t);
-  if (propsData && propsData.length) {
-    data = areaChartStatistics(propsData, total);
-  }
+
+  const data = useMemo(() => {
+    if (propsData && propsData.length) {
+      return areaChartStatistics(propsData, total);
+    }
+    return defaultData(t);
+  }, [propsData, total, t]);
 
   return (
     <div style={{ width: "100%", height: 300, maxWidth: 1000 }}>
@@ -58,19 +61,17 @@ const MonthlyData = ({ data: propsData, total }) => {
             bottom: 0,
           }}
         >
-          <defs>
-            <linearGradient id="custom-gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="-45.56%" stopColor="rgba(49, 57, 118, 0.08)" />
-              <stop offset="-45.55%" stopColor="rgba(82, 123, 221, 0.22)" />
-              <stop offset="100%" stopColor="rgba(82, 123, 221, 0.06)" />
-            </linearGradient>
-          </defs>
           <CartesianGrid
             stroke="#E9EBF2"
             strokeDasharray="1 0"
             horizontal={false}
           />
-          <XAxis dataKey="name" />
+          <XAxis
+            dataKey="name"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+          />
           <YAxis domain={[0, 100]} />
           <Tooltip
             formatter={(value, name, props) => [
@@ -80,14 +81,15 @@ const MonthlyData = ({ data: propsData, total }) => {
           />
           <Area
             animationDuration={constants.animationSpeed}
-            type="linear"
+            type="natural"
             activeDot={{ r: 7 }}
             strokeWidth={2}
             dot={{ r: 4 }}
             strokeLinecap="round"
             dataKey="value"
-            stroke="#527BDD"
-            fill="url(#custom-gradient)"
+            stroke="#527bdd"
+            fill="#8ec5ff"
+            fillOpacity={0.3}
           />
         </AreaChart>
       </ResponsiveContainer>

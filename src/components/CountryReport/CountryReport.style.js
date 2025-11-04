@@ -87,6 +87,12 @@ export const StyledCountryReport = styled.div`
     margin-bottom: 40px;
     margin-top: 20px;
   }
+  .topic-scores-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
   .section-title {
     font-weight: 700;

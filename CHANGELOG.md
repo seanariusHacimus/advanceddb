@@ -1,3 +1,62 @@
+#### 2.0.0 (2025-11-01)
+
+##### Chores
+
+*  bump up package.json file (062fb15f)
+
+##### New Features
+
+*  fix redirection with country_code param issue (32e3370b)
+*  fix CORS issue and fetch country report by country_code, fix urls (520e7ec9)
+*  add country report by default country (363bad14)
+*  update dashboard page (2997cb32)
+*  add reporting app and improve app functionalities 20h (#14) (b8249ba4)
+*  add description fields for all actions, subactions (0d3fe61b)
+*  add Action/Subaction view modal and refactor the files (18c75ebb)
+*  make action name selection unique (4589da78)
+*  add general methodology, update dashboard home page (976ce552)
+*  add pillar list for radialbarchart and add modal for indicator response data (b31ba2d2)
+*  update radialbar (cf91f46b)
+*  improve styling of the card (0815414c)
+*  update indicator data (20111eba)
+*  fix styling issues (c83f76a3)
+*  all the pillar functionalities are working (5549a815)
+*  add categories, subcategories and indicators. It is working (6a86682d)
+*  replace swal modals to customized antd popconfirms (9e58e3a8)
+*  add initial structure for the reporting app (03da28a5)
+
+##### Bug Fixes
+
+*  fix file upload issue and view files 1h (ce4e472f)
+*  some console log issues (f50ae9f2)
+*  versions issue (be6cf5b0)
+*  versions issue (9407b8c2)
+
+##### Other Changes
+
+* //github.com/AdvanceDB/advancedb-frontend into feat-report-app (ad3117a3)
+*  implement country report data with report app (bc98a994)
+*  implement country report data with report app (e94d912d)
+* //github.com/AdvanceDB/advancedb-frontend into feat-report-app (468b4848)
+*  lock file (05144b72)
+*  1h (881b0b5a)
+*  limit for action name (62999ad6)
+*  pnpm lock file (b5bd5464)
+*  yarn lock file (453b51c4)
+*  3h (#11) (78a0449a)
+*  gql schema (3f2a84a0)
+*  app build configs (45827a1e)
+*  lock file (fac7b662)
+*  lock file (8255dae8)
+
+##### Refactors
+
+*  improve view action details modal 1h (2d75c12d)
+
+##### Code Style Changes
+
+*  optimize the styling for action plans statistic page 2h (fefc72b3)
+
 #### 1.3.0 (2025-10-29)
 
 ##### New Features

@@ -17,14 +17,15 @@ import "firebase/messaging";
 
 // TODO move to json file
 const firebaseConfig = {
-  apiKey: "AIzaSyCcb9xDE2h2RL8EdNBZeoRFVr_UpIGkX3k",
-  authDomain: "advance-db.firebaseapp.com",
-  databaseURL: "https://advance-db.firebaseio.com",
-  projectId: "advance-db",
-  storageBucket: "advance-db.appspot.com",
-  messagingSenderId: "999381263393",
-  appId: "1:999381263393:web:41bdfd53b4ce9c5179ef60",
-  measurementId: "G-05J0E83MNF",
+  apiKey: "AIzaSyCyppsoRuJm1jgYFcVYyIpmkvghtYTf50o",
+  authDomain: "alpha-advance-db.firebaseapp.com",
+  databaseURL:
+    "https://alpha-advance-db-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "alpha-advance-db",
+  storageBucket: "alpha-advance-db.firebasestorage.app",
+  messagingSenderId: "514045603907",
+  appId: "1:514045603907:web:faa67df1fca7b32419e4f6",
+  measurementId: "G-ERG7449VRG",
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -33,15 +34,7 @@ let messaging = "";
 if (firebase.messaging.isSupported()) {
   messaging = firebase.messaging();
 } else {
-  messaging = {
-    apiKey: "AIzaSyCcb9xDE2h2RL8EdNBZeoRFVr_UpIGkX3k",
-    authDomain: "advance-db.firebaseapp.com",
-    databaseURL: "https://advance-db.firebaseio.com",
-    projectId: "advance-db",
-    storageBucket: "advance-db.appspot.com",
-    appId: "1:999381263393:web:41bdfd53b4ce9c5179ef60",
-    measurementId: "G-05J0E83MNF",
-  };
+  messaging = firebaseConfig;
 }
 
 const rootReducer = combineReducers({

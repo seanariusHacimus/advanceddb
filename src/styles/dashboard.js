@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
 export default styled.div`
+  #dashboard-radial-bar-chart {
+    svg:focus {
+      outline: none;
+    }
+  }
   box-shadow: none !important;
   margin-top: -35px !important;
 

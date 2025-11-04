@@ -1,1 +1,1 @@
-export { default } from "./CountryReport";
+export { default as CountryReport } from "./CountryReport";

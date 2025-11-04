@@ -115,6 +115,7 @@ const TopicDetails = ({ match, history, t }) => {
             expandedCategories={expandedCategories}
             expandedSubcategories={expandedSubcategories}
             onToggleCategory={toggleCategory}
+            topicName={topicDetails.name}
             onToggleSubcategory={toggleSubcategory}
             t={t}
           />

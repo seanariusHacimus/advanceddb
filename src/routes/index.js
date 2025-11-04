@@ -17,9 +17,10 @@ import Organizations from "../components/Organizations";
 import Messaging from "../components/Messaging";
 import Audit from "../components/Audit";
 import Approvals from "../components/Approvals";
-import CountryReport from "../components/CountryReport";
+import { CountryReport } from "../components/CountryReport";
 import TopicDetails from "../components/CountryReport/TopicDetails";
 import GeneralMethodology from "../components/GeneralMethodology";
+import Settings from "../components/Settings/Settings";
 
 export const WORKING_GROUP_SETTINGS_PATH = "/working-group-settings";
 
@@ -172,6 +173,14 @@ export const ROUTES = [
     exact: true,
     component: TopicDetails,
   },
+  {
+    key: "Settings",
+    path: "/settings/general",
+    exact: true,
+    admin: true,
+    secret: true,
+    component: Settings,
+  },
 
   // Default redirect (handled by consumer when mapping)
   { key: "defaultRedirect", redirectTo: "/dashboard/home" },
@@ -200,6 +209,7 @@ export const ROUTE_KEYS = {
   WhatToReform: "WhatToReform",
   CountryReport: "CountryReport",
   TopicDetails: "TopicDetails",
+  Settings: "Settings",
   defaultRedirect: "defaultRedirect",
 };
 

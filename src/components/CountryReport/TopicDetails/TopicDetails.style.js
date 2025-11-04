@@ -85,6 +85,10 @@ export const StyledTopicDetails = styled.div`
     & > div:first-of-type {
       flex: 1;
     }
+
+    .topic-description {
+      max-width: 800px;
+    }
   }
 
   .pillar-filter {

@@ -15,7 +15,6 @@ import {
   IndicatorHeader,
   IndicatorName,
   IndicatorScore,
-  IndicatorDetails,
   QuestionIcon,
 } from "./PillarDetails.style";
 import {
@@ -26,8 +25,8 @@ import {
 } from "@ant-design/icons";
 import { roundScore } from "../../utils";
 import QuestionResponseModal from "./QuestionResponseModal";
+import { useIndicatorExpertResponses } from "../../hooks/useIndicatorExpertResponses";
 import questionResponsesData from "../../data/kyrgyz_republic_question_responses.json";
-
 const { Panel } = Collapse;
 
 const STATUS_ICONS = {
@@ -35,7 +34,6 @@ const STATUS_ICONS = {
   no: <CloseOutlined style={{ color: "#ff2100", marginRight: "4px" }} />,
   partial: <MinusOutlined style={{ color: "#ff8c00", marginRight: "4px" }} />,
 };
-
 const PillarDetails = ({
   categories = [],
   selectedPillar,
@@ -45,24 +43,29 @@ const PillarDetails = ({
   onToggleCategory,
   onToggleSubcategory,
   onToggleIndicator,
+  countryName,
+  topicName,
   t,
 }) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const countryCode = urlParams.get("country_code");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedIndicatorId, setSelectedIndicatorId] = useState(null);
 
+  const { data: expertData, loading: expertLoading } =
+    useIndicatorExpertResponses(countryCode, selectedIndicatorId, topicName);
+
   const handleQuestionClick = (e, indicatorId) => {
     e.stopPropagation();
-    setSelectedIndicatorId(indicatorId);
-    setModalVisible(true);
-  };
 
+    if (questionResponsesData[indicatorId]) {
+      setSelectedIndicatorId(indicatorId);
+      setModalVisible(true);
+    }
+  };
   const handleCloseModal = () => {
     setModalVisible(false);
     setSelectedIndicatorId(null);
-  };
-
-  const getQuestionData = (indicatorId) => {
-    return questionResponsesData[indicatorId] || null;
   };
 
   return (
@@ -73,7 +76,6 @@ const PillarDetails = ({
           (key) => expandedCategories[key]
         )}
         onChange={(activeKeys) => {
-          // Handle category expansion/collapse
           Object.keys(expandedCategories).forEach((key) => {
             if (activeKeys.includes(key) !== expandedCategories[key]) {
               onToggleCategory(key);
@@ -123,7 +125,6 @@ const PillarDetails = ({
                   )}
                   className="subcategory-collapse"
                   onChange={(activeKeys) => {
-                    // Handle subcategory expansion/collapse
                     Object.keys(expandedSubcategories).forEach((key) => {
                       if (
                         key.startsWith(
@@ -142,6 +143,9 @@ const PillarDetails = ({
                 >
                   {category.subCategories.map((subCategory, subIndex) => {
                     const subCategoryKey = `subcategory-${category.pillarNumber}-${category.id}-${subCategory.id}-${subIndex}`;
+                    const subProgressPercent = subCategory.maxPoint
+                      ? (subCategory.obtainedPoint / subCategory.maxPoint) * 100
+                      : 0;
 
                     return (
                       <Panel
@@ -179,7 +183,6 @@ const PillarDetails = ({
                                 ) && expandedIndicators[key]
                             )}
                             onChange={(activeKeys) => {
-                              // Handle indicator expansion/collapse
                               Object.keys(expandedIndicators).forEach((key) => {
                                 if (
                                   key.startsWith(
@@ -267,8 +270,10 @@ const PillarDetails = ({
       <QuestionResponseModal
         visible={modalVisible}
         onClose={handleCloseModal}
-        data={selectedIndicatorId ? getQuestionData(selectedIndicatorId) : null}
+        loading={expertLoading}
         indicatorId={selectedIndicatorId || ""}
+        countryName={countryName}
+        data={selectedIndicatorId ? expertData : null}
       />
     </PillarContainer>
   );
@@ -302,6 +307,7 @@ PillarDetails.propTypes = {
       ),
     })
   ).isRequired,
+  topicName: PropTypes.string.isRequired,
   selectedPillar: PropTypes.string.isRequired,
   expandedCategories: PropTypes.object.isRequired,
   expandedSubcategories: PropTypes.object.isRequired,
@@ -309,6 +315,7 @@ PillarDetails.propTypes = {
   onToggleCategory: PropTypes.func.isRequired,
   onToggleSubcategory: PropTypes.func.isRequired,
   onToggleIndicator: PropTypes.func.isRequired,
+  countryName: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 };
 
