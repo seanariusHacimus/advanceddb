@@ -1,8 +1,9 @@
 import { Component, lazy, Suspense, createRef } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Dropdown, Menu, message, Popconfirm } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+import { message } from "antd";
+import { Popconfirm, Table, DropdownMenuWrapper, DropdownItem } from "../../UI/shadcn";
+import { MoreVertical } from "lucide-react";
 import { MeetingMinutesPage } from "../../../styles/startBusiness";
 import { TitleH3, Flex } from "../../../styles";
 import { ReactComponent as IconDelete } from "../../../assets/reform/delete.svg";
@@ -109,83 +110,80 @@ class MeetingMinutes extends Component {
       render: (item) =>
         Object.values(meetingMinutesPermissions).some((v) => v) && (
           <div onClick={(e) => e.stopPropagation()}>
-            <Dropdown.Button
-              className="more-action-btn"
-              trigger={["click"]}
-              getPopupContainer={(trigger) => trigger.parentNode}
-              overlay={
-                <>
-                  <Menu className="more-action-btn-table">
-                    {meetingMinutesPermissions.update && (
-                      <Menu.Item
-                        key="1"
-                        onClick={() =>
-                          this.setState({
-                            editMeeting: true,
-                            selectedItem: item,
-                          })
-                        }
-                        icon={<IconEdit />}
-                      >
-                        {t("Edit")}
-                      </Menu.Item>
-                    )}
-                    {(meetingMinutesPermissions.delete ||
-                      item.creator?.id === user.id) && (
-                      <Popconfirm
-                        overlayClassName="custom-popconfirm"
-                        icon={null}
-                        title={
-                          <div>
-                            <h3>{t("Are you sure?")}</h3>
-                            <p>
-                              {t(
-                                "When you delete the meeting minute? You can not restore it later."
-                              )}
-                            </p>
-                          </div>
-                        }
-                        onConfirm={async () => {
-                          this.setState({ alerts: [] });
-                          try {
-                            const res = await Axios.post("/graphql", {
-                              query: DELETE_MEETING,
-                              variables: {
-                                meeting_minute_id: item.id,
-                              },
-                            });
-                            if (res?.data) {
-                              this.fetchMeetingMinutes();
-                              this.showMessage(
-                                "success",
-                                t("The meeting has been deleted successfully")
-                              );
-                            }
-                          } catch (err) {
-                            if (err.message.includes("422")) {
-                              const { alerts, errors } = parseErrors(
-                                errorsConfig,
-                                err.response.data.errors[0].extensions
-                                  ?.validation
-                              );
-                              this.setState({ alerts, errors });
-                            }
-                          }
-                        }}
-                        okText={t("Yes, remove it!")}
-                        cancelText={t("Cancel")}
-                      >
-                        <Menu.Item key="3">
-                          <IconDelete />
-                          {t("Delete")}
-                        </Menu.Item>
-                      </Popconfirm>
-                    )}
-                  </Menu>
-                </>
-              }
-              icon={<MoreOutlined />}
-            />
+            <DropdownMenuWrapper
+              align="end"
+              trigger={<MoreVertical size={16} />}
+            >
+              {meetingMinutesPermissions.update && (
+                <DropdownItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.setState({
+                      editMeeting: true,
+                      selectedItem: item,
+                    });
+                  }}
+                >
+                  <IconEdit />
+                  {t("Edit")}
+                </DropdownItem>
+              )}
+              {(meetingMinutesPermissions.delete ||
+                item.creator?.id === user.id) && (
+                <Popconfirm
+                  overlayClassName="custom-popconfirm"
+                  icon={null}
+                  title={
+                    <div>
+                      <h3>{t("Are you sure?")}</h3>
+                      <p>
+                        {t(
+                          "When you delete the meeting minute? You can not restore it later."
+                        )}
+                      </p>
+                    </div>
+                  }
+                  onConfirm={async (e) => {
+                    e.stopPropagation();
+                    this.setState({ alerts: [] });
+                    try {
+                      const res = await Axios.post("/graphql", {
+                        query: DELETE_MEETING,
+                        variables: {
+                          meeting_minute_id: item.id,
+                        },
+                      });
+                      if (res?.data) {
+                        this.fetchMeetingMinutes();
+                        this.showMessage(
+                          "success",
+                          t("The meeting has been deleted successfully")
+                        );
+                      }
+                    } catch (err) {
+                      if (err.message.includes("422")) {
+                        const { alerts, errors } = parseErrors(
+                          errorsConfig,
+                          err.response.data.errors[0].extensions
+                            ?.validation
+                        );
+                        this.setState({ alerts, errors });
+                      }
+                    }
+                  }}
+                  okText={t("Yes, remove it!")}
+                  cancelText={t("Cancel")}
+                >
+                  <DropdownItem
+                    as="div"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <IconDelete />
+                    {t("Delete")}
+                  </DropdownItem>
+                </Popconfirm>
+              )}
+            </DropdownMenuWrapper>
           </div>
         ),
     };

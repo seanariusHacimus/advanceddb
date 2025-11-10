@@ -12,7 +12,24 @@ import { ReactComponent as IconMarketCompetition } from "../assets/header/indica
 import { ReactComponent as IconTaxation } from "../assets/header/indicatorIcons/taxation.svg";
 import { GROUP_NAMES } from "./groups";
 
-export default {
+// Export components (not JSX elements) for use as React components
+export const IconComponents = {
+  "/dashboard": IconDashboard,
+  [GROUP_NAMES.BUSINESS_ENTRY.id]: IconBusinessEntry,
+  [GROUP_NAMES.BUSINESS_LOCATION.id]: IconBusinessLocation,
+  [GROUP_NAMES.UTILITY_SERVICES.id]: IconElectricity,
+  [GROUP_NAMES.LABOR.id]: IconLabor,
+  [GROUP_NAMES.FINANCIAL_SERVICES.id]: IconFinancialServices,
+  [GROUP_NAMES.INTERNATIONAL_TRADE.id]: IconInternationalTrade,
+  [GROUP_NAMES.TAXATION.id]: IconTaxation,
+  [GROUP_NAMES.DISPUTE_RESOLUTION.id]: IconDisputeResolution,
+  [GROUP_NAMES.MARKET_COMPETITION.id]: IconMarketCompetition,
+  [GROUP_NAMES.BUSINESS_INSOLVENCY.id]: IconBusinessInsolvency,
+};
+
+// Keep the old format for backward compatibility with existing code
+// This exports JSX elements for places that still use them
+const iconsLegacy = {
   "/dashboard": <IconDashboard className="menu-icon" />,
   [GROUP_NAMES.BUSINESS_ENTRY.id]: <IconBusinessEntry className="menu-icon" />,
   [GROUP_NAMES.BUSINESS_LOCATION.id]: (
@@ -39,3 +56,5 @@ export default {
     <IconBusinessInsolvency className="menu-icon" />
   ),
 };
+
+export default iconsLegacy;

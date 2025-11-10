@@ -4,8 +4,9 @@ import { bindActionCreators } from "redux";
 import { Link, useHistory } from "react-router-dom";
 import camelcaseKeys from "camelcase-keys";
 import snakecase_keys from "snakecase-keys";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Select, Input as AntInput, Row, Col } from "antd";
+import { Row, Col } from "antd";
+import { Select, Input as ShInput, Textarea, Label, FormGroup, FormError, Button } from "../UI/shadcn";
+import { useToast } from "../UI/shadcn/toast";
 import { useQueryParam, StringParam } from "use-query-params";
 import {
   REQUEST_ACCESS_MUTATION,
@@ -176,6 +177,8 @@ const styles = {
 
 function RequestAccess(props) {
   const [t] = useLocale();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const [account, setAccount] = useState({
     email: "",
     phone: "",
@@ -195,7 +198,7 @@ function RequestAccess(props) {
   const [allGroups, setAllGroups] = useState([]);
   const [errorAlerts, setErrorAlerts] = useState([]);
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const {
     firstName,
     middleName,
@@ -281,6 +284,7 @@ function RequestAccess(props) {
     e.preventDefault();
     setErrorAlerts([]);
     setErrors({});
+    setIsLoading(true);
 
     const snakecase_account = snakecase_keys(account);
     const filteredAccount = Object.keys(snakecase_account).reduce(
@@ -306,6 +310,10 @@ function RequestAccess(props) {
       });
       const createdAccount = res?.data.data.register_account;
       if (res.status === 200) {
+        toast.success({
+          title: t("Success!"),
+          description: t("Registration request submitted successfully"),
+        });
         history.push(
           `/confirmation?account_id=${createdAccount.id}&${
             inviteToken ? `&invite_token=${inviteToken}` : ""
@@ -320,7 +328,18 @@ function RequestAccess(props) {
         );
         setErrorAlerts(alerts);
         setErrors(errors);
+        toast.error({
+          title: t("Registration Failed"),
+          description: alerts[0] || t("Please check your input"),
+        });
+      } else {
+        toast.error({
+          title: t("Error"),
+          description: t("An unexpected error occurred"),
+        });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   const firstNameRef = useRef(null);
@@ -369,105 +388,64 @@ function RequestAccess(props) {
               <ErrorAlerts alerts={errorAlerts} style={{ margin: 10 }} />
               <Row gutter={[0, 0]}>
                 <Col xs={24} sm={12}>
-                  <InputWrapper
-                    style={{ margin: "10px" }}
-                    className="has-messages"
-                    align="flex-end"
-                  >
-                    <Input
-                      disabled={fixedVals.first_name}
+                  <FormGroup style={{ margin: "10px" }}>
+                    <Label htmlFor="first_name">{t("First name")} *</Label>
+                    <ShInput
                       type="text"
+                      disabled={fixedVals.first_name}
                       name="first_name"
+                      id="first_name"
                       value={firstName}
-                      ref={firstNameRef}
-                      className={`dynamic-input ${
-                        firstName ? "has-value" : ""
-                      }`}
                       onChange={handleInput}
-                      hasErrors={errors.first_name}
+                      autoComplete="given-name"
                     />
-                    <label
-                      htmlFor=""
-                      onClick={() => firstNameRef.current.focus()}
-                    >
-                      {t("First name")}
-                    </label>
                     <InputErrors name={"first_name"} errors={errors} />
-                  </InputWrapper>
+                  </FormGroup>
                 </Col>
                 <Col xs={24} sm={12}>
-                  <InputWrapper
-                    style={{ margin: "10px" }}
-                    className="has-messages"
-                    align="flex-end"
-                  >
-                    <Input
+                  <FormGroup style={{ margin: "10px" }}>
+                    <Label htmlFor="last_name">{t("Last name")} *</Label>
+                    <ShInput
                       type="text"
                       disabled={fixedVals.last_name}
                       name="last_name"
+                      id="last_name"
                       value={lastName}
-                      ref={lastNameRef}
-                      className={`dynamic-input ${lastName ? "has-value" : ""}`}
                       onChange={handleInput}
-                      hasErrors={errors.last_name}
+                      autoComplete="family-name"
                     />
-                    <label
-                      htmlFor=""
-                      onClick={() => lastNameRef.current.focus()}
-                    >
-                      {t("Last name")}
-                    </label>
                     <InputErrors name={"last_name"} errors={errors} />
-                  </InputWrapper>
+                  </FormGroup>
                 </Col>
                 <Col xs={24} sm={12}>
-                  <InputWrapper
-                    style={{ margin: "10px" }}
-                    className="has-messages"
-                    align="flex-end"
-                  >
-                    <Input
+                  <FormGroup style={{ margin: "10px" }}>
+                    <Label htmlFor="middle_name">{t("Middle name(optional)")}</Label>
+                    <ShInput
                       type="text"
                       name="middle_name"
+                      id="middle_name"
                       disabled={fixedVals.middle_name}
                       value={middleName}
-                      ref={middleNameRef}
-                      className={`dynamic-input ${
-                        middleName ? "has-value" : ""
-                      }`}
                       onChange={handleInput}
-                      hasErrors={errors.middle_name}
+                      autoComplete="additional-name"
                     />
-                    <label
-                      htmlFor=""
-                      onClick={() => middleNameRef.current.focus()}
-                    >
-                      {t("Middle name(optional)")}
-                    </label>
                     <InputErrors name={"middle_name"} errors={errors} />
-                  </InputWrapper>
+                  </FormGroup>
                 </Col>
                 <Col xs={24} sm={12}>
-                  <InputWrapper
-                    style={{ margin: "10px" }}
-                    className="has-messages"
-                    align="flex-end"
-                  >
-                    <Input
+                  <FormGroup style={{ margin: "10px" }}>
+                    <Label htmlFor="prefix">{t("prefix(optional)")}</Label>
+                    <ShInput
                       type="text"
                       name="prefix"
+                      id="prefix"
                       disabled={fixedVals.prefix}
                       value={prefix}
-                      ref={prefixRef}
-                      className={`dynamic-input ${prefix ? "has-value" : ""}`}
                       onChange={handleInput}
-                      hasErrors={errors.prefix}
+                      autoComplete="honorific-suffix"
                     />
-                    <label htmlFor="" onClick={() => prefixRef.current.focus()}>
-                      {t("prefix(optional)")}
-                    </label>
                     <InputErrors name={"prefix"} errors={errors} />
-                  </InputWrapper>
+                  </FormGroup>
                 </Col>
                 {showGroupsSelect && (
                   <Col span={24}>
@@ -518,26 +496,19 @@ function RequestAccess(props) {
                   </Col>
                 )}
                 <Col xs={24} sm={12}>
-                  <InputWrapper
-                    style={{ margin: "10px" }}
-                    className="has-messages"
-                    align="flex-end"
-                  >
-                    <Input
+                  <FormGroup style={{ margin: "10px" }}>
+                    <Label htmlFor="phone">{t("Phone number")} *</Label>
+                    <ShInput
                       type="tel"
                       name="phone"
+                      id="phone"
                       disabled={fixedVals.phone}
                       value={phone}
-                      ref={phoneRef}
-                      className={`dynamic-input ${phone ? "has-value" : ""}`}
                       onChange={handleInput}
-                      hasErrors={errors.phone}
+                      autoComplete="tel"
                     />
-                    <label htmlFor="" onClick={() => phoneRef.current.focus()}>
-                      {t("Phone number")}
-                    </label>
                     <InputErrors name={"phone"} errors={errors} />
-                  </InputWrapper>
+                  </FormGroup>
                 </Col>
                 <Col xs={24} sm={12}>
                   <InputWrapper

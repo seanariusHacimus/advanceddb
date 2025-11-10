@@ -1,4 +1,5 @@
-import { Tag, Popconfirm } from "antd";
+import { Tag } from "antd";
+import { Popconfirm } from "../UI/shadcn";
 import iconUser from "../../assets/header/user.png";
 import icons from "../../constants/icons";
 import { ReactComponent as IconCommon } from "../../assets/header/indicatorIcons/common.svg";

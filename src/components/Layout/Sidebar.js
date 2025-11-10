@@ -1,18 +1,24 @@
 import { useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Layout, Menu, Divider } from "antd";
 import { useSelector } from "react-redux";
 import { ReactComponent as IconDashboard } from "../../assets/header/dashboard.svg";
 import { ReactComponent as IconCommon } from "../../assets/header/indicatorIcons/common.svg";
-import { SettingOutlined } from "@ant-design/icons";
+import { Settings } from "lucide-react";
 import logo from "../../assets/logo.svg";
-import icons from "../../constants/icons";
+import { IconComponents } from "../../constants/icons";
 import { groupTitleToUrl } from "../../utils";
 import { useLocale } from "../../utils/locale";
 import appData from "../../../package.json";
-import { Typography } from "antd";
-
-const { Sider } = Layout;
+import {
+  Sidebar as ShSidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarDivider,
+  SidebarNavItem,
+  SidebarNavLink,
+} from "../UI/shadcn/sidebar";
+import { ThemeToggle } from "../UI/ThemeToggle";
 
 function Sidebar(props) {
   const [t] = useLocale();
@@ -46,234 +52,130 @@ function Sidebar(props) {
     [links]
   );
 
-  const menuItems = useMemo(() => {
-    const items = [
-      {
-        key: "/dashboard",
-        icon: <IconDashboard className="menu-icon" />,
-        label: <Link to="/dashboard">{t("Dashboard")}</Link>,
-      },
-    ];
+  const currentPath = useMemo(() => {
+    return sidebar || `/${links[1]}`;
+  }, [sidebar, links]);
 
-    // Add enabled working groups
-    enabledWorkingGroups.forEach((item) => {
-      const url = groupTitleToUrl(item.title);
-      const isMember = myGroups.includes(item.id);
-      if (item.sidebar_visible) {
-        items.push({
-          key: `/working-group/${url}`,
-          disabled: !item.sidebar_visible,
-          className: isMember ? "is-assigned-group" : undefined,
-          icon: item.removable ? (
-            item.icon ? (
-              <img src={item.icon.url} className="menu-icon" alt={item.title} />
-            ) : (
-              <IconCommon className="menu-icon" />
-            )
-          ) : (
-            icons[url] || <IconCommon className="menu-icon" />
-          ),
-          label: (
-            <>
-              <Link to={`/working-group/${url}`} key={`/working-group/${url}`}>
-                {t(item.title)}
-              </Link>
-              {isMember && <div className="more-icons" />}
-            </>
-          ),
-        });
+  const isMessagingPage = window.location?.pathname?.includes("messaging");
+
+  if (isMessagingPage) {
+    return null;
+  }
+
+  const renderIcon = (item, url) => {
+    if (item.removable) {
+      if (item.icon) {
+        return <img src={item.icon.url} className="menu-icon" alt={item.title} />;
       }
-    });
-
-    // Add disabled working groups
-    disabledWorkingGroups.forEach((item) => {
-      const url = groupTitleToUrl(item.title);
-      if (!item.sidebar_visible) {
-        items.push({
-          key: `/working-group/${url}`,
-          disabled: !item.sidebar_visible,
-          icon: item.removable ? (
-            item.icon ? (
-              <img src={item.icon.url} className="menu-icon" alt={item.title} />
-            ) : (
-              <IconDashboard className="menu-icon" />
-            )
-          ) : (
-            icons[url]
-          ),
-          label: (
-            <Link to={`/working-group/${url}`} key={`/working-group/${url}`}>
-              {t(item.title)}
-            </Link>
-          ),
-        });
-      }
-    });
-
-    // Add settings menu item
-    if (["superuser", "coordinator"].includes(role)) {
-      items.push({
-        key: "/working-group-settings",
-        icon: <SettingOutlined className="menu-icon" />,
-        label: (
-          <Link to="/working-group-settings" style={{ fontSize: 14 }}>
-            {t("Working Group Settings")}
-          </Link>
-        ),
-      });
+      return <IconCommon className="menu-icon" />;
     }
-
-    return items;
-  }, [enabledWorkingGroups, disabledWorkingGroups, myGroups, role, t]);
+    
+    // Try to find icon component by URL
+    const IconComponent = IconComponents[url];
+    
+    // If component found and it's a valid React component
+    if (IconComponent && typeof IconComponent === 'function') {
+      // Check if this icon should have stroke class (for Utility Services and International Trade)
+      const hasStroke = url === "utility-services" || url === "international-trade";
+      return <IconComponent className={`menu-icon ${hasStroke ? "stroke" : ""}`} />;
+    }
+    
+    // Fallback to common icon
+    return <IconCommon className="menu-icon" />;
+  };
 
   return (
-    <Sider
-      breakpoint="lg"
-      collapsedWidth="0"
-      style={{
-        ...styles.sidebar,
-        display: window.location?.pathname?.includes("messaging")
-          ? "none"
-          : "block",
-      }}
-      zeroWidthTriggerStyle={{ width: "auto", minWidth: "auto" }}
-      theme="light"
-      className="sidebar"
-      collapsible={false}
-      width={256}
-    >
-      {/* ----- LOGO ------ */}
-      <Link to="/home" className="logo">
-        <img src={logo} alt={t("AdvancedDB")} />
-      </Link>
+    <ShSidebar className={isMessagingPage ? "collapsed" : ""}>
+      <SidebarHeader>
+        <Link to="/dashboard" style={{ display: "flex", alignItems: "center" }}>
+          <img src={logo} alt={t("AdvancedDB")} />
+        </Link>
+      </SidebarHeader>
 
-      {/* ----- SIDEBAR MENU --- */}
-      <Menu
-        theme="light"
-        className="side-bar-menu"
-        mode="inline"
-        selectedKeys={[sidebar, `/${links[1]}`]}
-      >
-        <Menu.Item
-          key="/dashboard"
-          icon={<IconDashboard className="menu-icon" />}
-        >
-          <Link to="/dashboard">{t("Dashboard")}</Link>
-        </Menu.Item>
+      <SidebarContent>
+        <SidebarNavItem>
+          <SidebarNavLink
+            to="/dashboard"
+            className={currentPath === "/dashboard" ? "active" : ""}
+          >
+            <IconDashboard className="menu-icon" />
+            <span>{t("Dashboard")}</span>
+          </SidebarNavLink>
+        </SidebarNavItem>
 
         {enabledWorkingGroups.map((item) => {
           const url = groupTitleToUrl(item.title);
+          const path = `/working-group/${url}`;
           const isMember = myGroups.includes(item.id);
+          const isActive = currentPath === path || sidebar === path;
+
           if (item.sidebar_visible) {
             return (
-              <Menu.Item
-                key={`/working-group/${url}`}
-                disabled={!item.sidebar_visible}
-                className={isMember && "is-assigned-group"}
-                icon={
-                  item.removable ? (
-                    item.icon ? (
-                      <img
-                        src={item.icon.url}
-                        className="menu-icon"
-                        alt={item.title}
-                      />
-                    ) : (
-                      <IconCommon className="menu-icon" />
-                    )
-                  ) : (
-                    icons[url] || <IconCommon className="menu-icon" />
-                  )
-                }
-              >
-                <Link
-                  to={`/working-group/${url}`}
-                  key={`/working-group/${url}`}
+              <SidebarNavItem key={path}>
+                <SidebarNavLink
+                  to={path}
+                  className={`${isActive ? "active" : ""} ${isMember ? "is-assigned" : ""}`}
                 >
-                  {t(item.title)}
-                </Link>
-                {isMember && <div className="more-icons" />}
-              </Menu.Item>
+                  {renderIcon(item, url)}
+                  <span>{t(item.title)}</span>
+                  {isMember && <div className="more-icons" />}
+                </SidebarNavLink>
+              </SidebarNavItem>
             );
           }
           return null;
         })}
 
-        {disabledWorkingGroups.length ? (
-          <Divider style={{ margin: "0 0 12 0" }} />
-        ) : null}
+        {disabledWorkingGroups.length > 0 && <SidebarDivider />}
 
         {disabledWorkingGroups.map((item) => {
           const url = groupTitleToUrl(item.title);
+          const path = `/working-group/${url}`;
+          const isActive = currentPath === path || sidebar === path;
+
           if (!item.sidebar_visible) {
             return (
-              <Menu.Item
-                key={`/working-group/${url}`}
-                disabled={!item.sidebar_visible}
-                icon={
-                  item.removable ? (
-                    item.icon ? (
-                      <img
-                        src={item.icon.url}
-                        className="menu-icon"
-                        alt={item.title}
-                      />
-                    ) : (
-                      <IconDashboard className="menu-icon" />
-                    )
-                  ) : (
-                    icons[url]
-                  )
-                }
-              >
-                <Link
-                  to={`/working-group/${url}`}
-                  key={`/working-group/${url}`}
+              <SidebarNavItem key={path}>
+                <SidebarNavLink
+                  to={path}
+                  className={`${isActive ? "active" : ""} disabled`}
                 >
-                  {t(item.title)}
-                </Link>
-              </Menu.Item>
+                  {renderIcon(item, url)}
+                  <span>{t(item.title)}</span>
+                </SidebarNavLink>
+              </SidebarNavItem>
             );
           }
           return null;
         })}
 
-        <Divider key="divider" style={{ margin: "0 0 12 0" }} />
-
         {["superuser", "coordinator"].includes(role) && (
-          <Menu.Item
-            key="/working-group-settings"
-            icon={<SettingOutlined className="menu-icon" />}
-          >
-            <Link to="/working-group-settings" exact style={{ fontSize: 14 }}>
-              {t("Working Group Settings")}
-            </Link>
-          </Menu.Item>
+          <>
+            <SidebarDivider />
+            <SidebarNavItem>
+              <SidebarNavLink
+                to="/working-group-settings"
+                className={currentPath === "/working-group-settings" ? "active" : ""}
+              >
+                <Settings className="menu-icon" size={20} />
+                <span>{t("Working Group Settings")}</span>
+              </SidebarNavLink>
+            </SidebarNavItem>
+          </>
         )}
-      </Menu>
-      <Typography
-        type="secondary"
-        style={{
-          marginTop: "auto",
-          fontSize: 12,
-          textAlign: "center",
-        }}
-      >
-        {t("App version")}: v{appData.version}
-      </Typography>
-    </Sider>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
+          <span>{t("Theme")}</span>
+          <ThemeToggle />
+        </div>
+        <div style={{ fontSize: '11px', opacity: 0.7 }}>
+          {t("App version")}: v{appData.version}
+        </div>
+      </SidebarFooter>
+    </ShSidebar>
   );
 }
-
-const styles = {
-  sidebar: {
-    maxHeight: "100vh",
-    height: "100",
-    minHeight: "100vh",
-    position: "sticky",
-    top: 0,
-    borderRight: "1px solid var(--border-grey)",
-  },
-};
 
 export default withRouter(Sidebar);

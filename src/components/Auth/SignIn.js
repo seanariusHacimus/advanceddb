@@ -4,15 +4,17 @@ import { bindActionCreators } from "redux";
 import { Link, useHistory } from "react-router-dom";
 import { Row, Col } from "antd";
 import Axios from "../../utils/axios";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { dissoc, ErrorAlerts, parseErrors } from "../../utils";
 import { signInSuccess } from "../../store/Auth/actions";
 import { SEND_PUSH_TOKEN, SIGN_IN_MUTATION } from "../../graphql/auth";
 // -------------- STYLES -----------
 import { SignInPage } from "../../styles/auth";
-import { ButtonPrimary, Flex, Input, InputWrapper, Title } from "../../styles";
+import { Flex, Title } from "../../styles";
 // -------------- ASSETS -----------
 import iconLogo from "../../assets/logo.svg";
+// -------------- SHADCN UI -----------
+import { Button, Input, Label, FormGroup, FormError, Checkbox } from "../UI/shadcn";
+import { useToast } from "../UI/shadcn/toast";
 
 import { messaging } from "../../store";
 import { useLocale } from "../../utils/locale";
@@ -62,6 +64,7 @@ const errorsConfig = {
 };
 
 function SignIn(props) {
+  const { toast } = useToast();
   const emailRef = useRef();
   const passwordRef = useRef();
   const messageRef = useRef();
@@ -69,9 +72,10 @@ function SignIn(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [errorAlerts, setErrorAlerts] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const [t] = useLocale();
 
@@ -80,6 +84,7 @@ function SignIn(props) {
       e.preventDefault();
       setErrorAlerts([]);
       setErrors({});
+      setIsLoading(true);
       Axios.post("/graphql", {
         query: SIGN_IN_MUTATION,
         variables: {
@@ -94,11 +99,21 @@ function SignIn(props) {
             messaging.onTokenRefresh(() => {
               refreshToken();
             });
+            
+            toast.success({
+              title: t("Welcome back!"),
+              description: t("You have successfully signed in."),
+            });
+            
             if (res.data.data.sign_in.account.request_password_change) {
               history.push("/settings/profile/security");
             }
           } else {
             setErrorAlerts([t("Email or password is wrong")]);
+            toast.error({
+              title: t("Sign In Failed"),
+              description: t("Email or password is wrong"),
+            });
           }
         })
         .catch((err) => {
@@ -109,10 +124,23 @@ function SignIn(props) {
             );
             setErrorAlerts(alerts);
             setErrors(errors);
+            
+            toast.error({
+              title: t("Sign In Failed"),
+              description: alerts[0] || t("Please check your credentials"),
+            });
+          } else {
+            toast.error({
+              title: t("Error"),
+              description: t("An unexpected error occurred"),
+            });
           }
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     },
-    [email, password, props]
+    [email, password, props, toast, t, history]
   );
 
   return (
@@ -129,13 +157,15 @@ function SignIn(props) {
             </Link>
             <Title margin="0 0 40px">{t("Log in to your account")}</Title>
             <form action="" autoComplete="off" onSubmit={submitForm}>
-              <div ref={messageRef} style={{ position: "relative" }}>
+              <div ref={messageRef} style={{ position: "relative", marginBottom: '16px' }}>
                 <ErrorAlerts alerts={errorAlerts} />
               </div>
               <input type="password" name="" hidden />
               <input type="password" name="" hidden />
               <input type="password" name="" hidden />
-              <InputWrapper className="has-messages" align="flex-end">
+              
+              <FormGroup>
+                <Label data-required="true">{t("Email address")}</Label>
                 <Input
                   required
                   type="email"
@@ -143,82 +173,62 @@ function SignIn(props) {
                   value={email}
                   ref={emailRef}
                   autoComplete="new-email"
-                  className={`dynamic-input ${email ? "has-value" : ""}`}
-                  hasErrors={errors.email?.length > 0}
+                  placeholder={t("Enter your email")}
+                  hasError={errors.email?.length > 0}
                   onChange={(e) => {
                     setErrors(dissoc(errors, "email"));
                     setEmail(e.target.value);
                   }}
                 />
-                <label htmlFor="" onClick={() => emailRef.current.focus()}>
-                  {t("Email address")}
-                </label>
                 {errors.email?.length > 0 && (
-                  <span className="input-msg error-msg">
-                    {errors.email?.join(", ")}
-                  </span>
+                  <FormError>{errors.email?.join(", ")}</FormError>
                 )}
-              </InputWrapper>
+              </FormGroup>
 
-              <InputWrapper className="has-messages" align="flex-end">
+              <FormGroup>
+                <Label data-required="true">{t("Password")}</Label>
                 <Input
                   required
-                  type={showPassword ? "password" : "text"}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   autoComplete="new-password"
                   value={password}
                   ref={passwordRef}
-                  className={`dynamic-input ${password ? "has-value" : ""}`}
-                  hasErrors={errors.password?.length > 0}
+                  placeholder={t("Enter your password")}
+                  hasError={errors.password?.length > 0}
+                  showPasswordToggle
+                  onTogglePassword={() => setShowPassword(!showPassword)}
                   onChange={(e) => {
                     setErrors(dissoc(errors, "password"));
                     setPassword(e.target.value);
                   }}
                 />
-                <label htmlFor="" onClick={() => passwordRef.current.focus()}>
-                  {t("Password")}
-                </label>
-                <span
-                  className="password-toggler"
-                  onClick={() => setShowPassword((visible) => !visible)}
-                  style={{ position: "absolute", right: 10, top: 15 }}
-                >
-                  {showPassword ? (
-                    <EyeTwoTone twoToneColor="#527bdd" />
-                  ) : (
-                    <EyeInvisibleOutlined />
-                  )}
-                </span>
                 {errors.password?.length > 0 && (
-                  <span className="input-msg error-msg">
-                    {errors.password?.join(", ")}
-                  </span>
+                  <FormError>{errors.password?.join(", ")}</FormError>
                 )}
-              </InputWrapper>
+              </FormGroup>
 
-              <Flex jc="space-between" margin="-4px 0 28px">
-                <div className="text-light">
-                  <input
-                    type="checkbox"
-                    value={"remember_me"}
-                    name="rememberMe"
-                    ref={checkRef}
-                    checked={remember}
-                    onChange={(e) => setRemember(e.target.checked)}
-                  />
-                  <span
-                    style={{ marginLeft: "5px" }}
-                    className="clickable"
-                    onClick={() => setRemember(!checkRef.current.checked)}
-                  >
-                    {t("Remember my entry")}
-                  </span>
-                </div>
-                <Link to="/forgot-password" className="link-light">
+              <Flex jc="space-between" margin="0 0 24px" style={{ alignItems: 'center' }}>
+                <Checkbox
+                  checked={remember}
+                  onCheckedChange={setRemember}
+                  label={t("Remember my entry")}
+                />
+                <Link to="/forgot-password" style={{ 
+                  color: 'hsl(var(--primary))', 
+                  fontSize: '14px',
+                  textDecoration: 'none'
+                }}>
                   {t("Forgot password?")}
                 </Link>
               </Flex>
-              <ButtonPrimary>{t("Sign In")}</ButtonPrimary>
+              <Button 
+                type="submit" 
+                style={{ width: '100%' }}
+                disabled={isLoading}
+              >
+                {isLoading ? t("Signing in...") : t("Sign In")}
+              </Button>
             </form>
             <h4 style={{ marginTop: 40 }}>
               <Link to="/request-access" width="auto" margin="30px 0 0">

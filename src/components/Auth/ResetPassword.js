@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Row, Col, Button } from "antd";
+import { Row, Col } from "antd";
 import {
   CANCEL_RESET_PASSWORD,
   FETCH_RESET_PASSWORD_INFO,
@@ -12,7 +11,9 @@ import {
 import Axios from "../../utils/axios";
 // -------------- STYLES -----------
 import { RequestAccessPage } from "../../styles/auth";
-import { ButtonPrimary, Flex, Input, InputWrapper, Title } from "../../styles";
+import { Flex, Title } from "../../styles";
+// -------------- SHADCN UI -----------
+import { Button, Input, Label, FormGroup, FormError } from "../UI/shadcn";
 // -------------- ASSETS -----------
 import { ReactComponent as IconLogin } from "../../assets/auth/login.svg";
 import iconLogo from "../../assets/logo.svg";
@@ -69,7 +70,8 @@ class SignIn extends Component {
     resetPasswordCanceled: false,
     alerts: [],
     errors: {},
-    showPassword: true,
+    showPassword: false,
+    isLoading: false,
   };
 
   async componentDidMount() {
@@ -121,7 +123,7 @@ class SignIn extends Component {
   submitForm = async (e) => {
     e.preventDefault();
     const { t } = this.props;
-    this.setState({ alerts: [], errors: {} });
+    this.setState({ alerts: [], errors: [], isLoading: true });
     const {
       password,
       confirm_password,
@@ -151,12 +153,14 @@ class SignIn extends Component {
         );
         this.setState({ alerts, errors });
       }
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
   render() {
     const { t } = this.props;
-    const { alerts, errors, password, confirm_password, showPassword } =
+    const { alerts, errors, password, confirm_password, showPassword, isLoading } =
       this.state;
     return (
       <RequestAccessPage>
@@ -173,104 +177,80 @@ class SignIn extends Component {
               </Flex>
               <Title margin="0 0 40px">{t("Create new password")}</Title>
               <form action="" autoComplete="off" onSubmit={this.submitForm}>
-                <ErrorAlerts alerts={alerts} />
+                <div style={{ marginBottom: '16px' }}>
+                  <ErrorAlerts alerts={alerts} />
+                </div>
                 <input type="email" name="" hidden />
                 <input type="password" name="" hidden />
                 <input type="password" name="" hidden />
                 <input type="password" name="" hidden />
                 <Row gutter={[7, 0]}>
                   <Col xs={24} sm={12}>
-                    <InputWrapper
-                      className="has-input-icon has-messages"
-                      align="flex-end"
-                      style={{ margin: "10px" }}
-                    >
+                    <FormGroup>
+                      <Label data-required="true">{t("Password")}</Label>
                       <Input
                         required
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={password}
                         ref={(el) => (this.passwordRef = el)}
                         autoComplete="new-password"
-                        className={`dynamic-input ${
-                          password ? "has-value" : ""
-                        }`}
-                        onChange={this.handleInput}
-                        hasErrors={errors.password}
-                      />
-                      <label
-                        htmlFor=""
-                        onClick={() => this.passwordRef.focus()}
-                      >
-                        {t("Password")}
-                      </label>
-                      <span
-                        className="password-toggler"
-                        onClick={() =>
+                        placeholder={t("Enter your password")}
+                        hasError={errors.password}
+                        showPasswordToggle
+                        onTogglePassword={() =>
                           this.setState((prevState) => ({
                             showPassword: !prevState.showPassword,
                           }))
                         }
-                        style={{ position: "absolute", right: 10, top: 15 }}
-                      >
-                        {showPassword ? (
-                          <EyeTwoTone twoToneColor="#527bdd" />
-                        ) : (
-                          <EyeInvisibleOutlined />
-                        )}
-                      </span>
-                      <InputErrors name={"password"} errors={errors} />
-                    </InputWrapper>
+                        onChange={this.handleInput}
+                      />
+                      {errors.password && (
+                        <FormError>{errors.password.join(", ")}</FormError>
+                      )}
+                    </FormGroup>
                   </Col>
                   <Col xs={24} sm={12}>
-                    <InputWrapper
-                      className="has-input-icon has-messages"
-                      align="flex-end"
-                      style={{ margin: "10px" }}
-                    >
+                    <FormGroup>
+                      <Label data-required="true">{t("Confirm Password")}</Label>
                       <Input
                         required
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="confirm_password"
                         value={confirm_password}
                         ref={(el) => (this.confirmPasswordRef = el)}
                         autoComplete="new-password"
-                        className={`dynamic-input ${
-                          confirm_password ? "has-value" : ""
-                        }`}
-                        onChange={this.handleInput}
-                        hasErrors={errors.confirm_password}
-                      />
-                      <label
-                        htmlFor=""
-                        onClick={() => this.confirmPasswordRef.focus()}
-                      >
-                        {t("Confirm Password")}
-                      </label>
-                      <span
-                        className="password-toggler"
-                        onClick={() =>
+                        placeholder={t("Confirm your password")}
+                        hasError={errors.confirm_password}
+                        showPasswordToggle
+                        onTogglePassword={() =>
                           this.setState((prevState) => ({
                             showPassword: !prevState.showPassword,
                           }))
                         }
-                        style={{ position: "absolute", right: 10, top: 15 }}
-                      >
-                        {showPassword ? (
-                          <EyeTwoTone twoToneColor="#527bdd" />
-                        ) : (
-                          <EyeInvisibleOutlined />
-                        )}
-                      </span>
-                      <InputErrors name={"confirm_password"} errors={errors} />
-                    </InputWrapper>
+                        onChange={this.handleInput}
+                      />
+                      {errors.confirm_password && (
+                        <FormError>{errors.confirm_password.join(", ")}</FormError>
+                      )}
+                    </FormGroup>
                   </Col>
                   <Col span={24}>
-                    <div style={{ margin: 10 }}>
-                      <ButtonPrimary>{t("Submit")}</ButtonPrimary>
+                    <div style={{ margin: '10px 0' }}>
+                      <Button 
+                        type="submit" 
+                        style={{ width: '100%' }}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? t("Submitting...") : t("Submit")}
+                      </Button>
                     </div>
-                    <div>
-                      <Button type="link" onClick={this.onCancel}>
+                    <div style={{ marginTop: '16px', textAlign: 'center' }}>
+                      <Button 
+                        variant="link" 
+                        type="button"
+                        onClick={this.onCancel}
+                      >
                         {t("Cancel password")}
                       </Button>
                     </div>

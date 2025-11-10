@@ -1,7 +1,8 @@
 import React, { Suspense, lazy, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown, Menu, Popconfirm, message } from "antd";
+import { Dropdown, Menu, message } from "antd";
+import { Popconfirm } from "../UI/shadcn";
 import { MoreOutlined } from "@ant-design/icons";
 import Axios from "../../utils/axios";
 import { StyledWorkingGroup } from "../../styles/workingGroup";

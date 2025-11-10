@@ -1,8 +1,9 @@
 import React, { Component, lazy, Suspense, createRef } from 'react';
 import { connect } from 'react-redux';
 import {
-  Table, Menu, Dropdown, Divider, Popconfirm, message,
+  Table, Menu, Dropdown, Divider, message,
 } from 'antd';
+import { Popconfirm } from '../UI/shadcn';
 import {MoreOutlined} from '@ant-design/icons';
 import Axios from '../../utils/axios';
 import {FETCH_REFORMS, DELETE_REFORM} from '../../graphql/reforms';

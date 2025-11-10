@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { withLocale } from "../../utils/locale";
-import { Form, Button, Select, Space, message, Alert, Switch } from "antd";
 import {
   getSettings,
   saveDefaultCountry,
@@ -21,39 +20,57 @@ import {
   ColorPreview,
   SettingsTitle,
 } from "./Settings.style";
-
-const { Option } = Select;
+import { 
+  Button, 
+  Select, 
+  Switch, 
+  Label, 
+  FormGroup,
+  AlertWithIcon,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent
+} from "../UI/shadcn";
+import { useToast } from "../UI/shadcn/toast";
 
 const Settings = ({ user, t }) => {
-  const [form] = Form.useForm();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  
+  // Form state
+  const [countryCode, setCountryCode] = useState('');
+  const [pillarIColor, setPillarIColor] = useState('');
+  const [pillarIIColor, setPillarIIColor] = useState('');
+  const [pillarIIIColor, setPillarIIIColor] = useState('');
+  const [showCountrySelect, setShowCountrySelect] = useState(true);
 
   useEffect(() => {
     const currentSettings = getSettings();
     setSettings(currentSettings);
-    form.setFieldsValue({
-      countryCode: currentSettings.defaultCountry?.code,
-      pillar_i_color: currentSettings.chartColors?.pillar_i,
-      pillar_ii_color: currentSettings.chartColors?.pillar_ii,
-      pillar_iii_color: currentSettings.chartColors?.pillar_iii,
-      showCountrySelect:
-        currentSettings.showCountrySelect !== undefined
-          ? currentSettings.showCountrySelect
-          : DEFAULT_SETTINGS.showCountrySelect,
-    });
-  }, [form]);
+    setCountryCode(currentSettings.defaultCountry?.code || '');
+    setPillarIColor(currentSettings.chartColors?.pillar_i || DEFAULT_SETTINGS.chartColors.pillar_i);
+    setPillarIIColor(currentSettings.chartColors?.pillar_ii || DEFAULT_SETTINGS.chartColors.pillar_ii);
+    setPillarIIIColor(currentSettings.chartColors?.pillar_iii || DEFAULT_SETTINGS.chartColors.pillar_iii);
+    setShowCountrySelect(
+      currentSettings.showCountrySelect !== undefined
+        ? currentSettings.showCountrySelect
+        : DEFAULT_SETTINGS.showCountrySelect
+    );
+  }, []);
 
   // Filter countries - only show actual countries, not regions
   const countryOptions = countries.filter(
     (country) => country.type === "country"
   );
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
       const selectedCountry = countryOptions.find(
-        (c) => c.id === values.countryCode
+        (c) => c.id === countryCode
       );
 
       // Save default country
@@ -63,23 +80,31 @@ const Settings = ({ user, t }) => {
 
       // Save chart colors
       saveChartColors({
-        pillar_i: values.pillar_i_color,
-        pillar_ii: values.pillar_ii_color,
-        pillar_iii: values.pillar_iii_color,
+        pillar_i: pillarIColor,
+        pillar_ii: pillarIIColor,
+        pillar_iii: pillarIIIColor,
       });
 
       // Save show country select setting
-      saveShowCountrySelect(values.showCountrySelect);
+      saveShowCountrySelect(showCountrySelect);
 
       const updatedSettings = getSettings();
       setSettings(updatedSettings);
 
-      message.success(t("Settings saved successfully"));
+      toast.success({
+        title: t("Success!"),
+        description: t("Settings saved successfully"),
+      });
 
       // Reload page to apply changes
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
-      message.error(t("Failed to save settings"));
+      toast.error({
+        title: t("Error"),
+        description: t("Failed to save settings"),
+      });
       console.error("Error saving settings:", error);
     } finally {
       setLoading(false);
@@ -91,16 +116,21 @@ const Settings = ({ user, t }) => {
       resetSettings();
       const defaultSettings = getSettings();
       setSettings(defaultSettings);
-      form.setFieldsValue({
-        countryCode: defaultSettings.defaultCountry?.code,
-        pillar_i_color: defaultSettings.chartColors?.pillar_i,
-        pillar_ii_color: defaultSettings.chartColors?.pillar_ii,
-        pillar_iii_color: defaultSettings.chartColors?.pillar_iii,
-        showCountrySelect: defaultSettings.showCountrySelect,
+      setCountryCode(defaultSettings.defaultCountry?.code || '');
+      setPillarIColor(defaultSettings.chartColors?.pillar_i || '');
+      setPillarIIColor(defaultSettings.chartColors?.pillar_ii || '');
+      setPillarIIIColor(defaultSettings.chartColors?.pillar_iii || '');
+      setShowCountrySelect(defaultSettings.showCountrySelect);
+      
+      toast.success({
+        title: t("Success!"),
+        description: t("Settings reset to default"),
       });
-      message.success(t("Settings reset to default"));
     } catch (error) {
-      message.error(t("Failed to reset settings"));
+      toast.error({
+        title: t("Error"),
+        description: t("Failed to reset settings"),
+      });
       console.error("Error resetting settings:", error);
     }
   };
@@ -109,11 +139,10 @@ const Settings = ({ user, t }) => {
   if (!user || user.role !== USER_ROLES.SUPERUSER) {
     return (
       <SettingsContainer>
-        <Alert
-          message={t("Access Denied")}
+        <AlertWithIcon
+          variant="destructive"
+          title={t("Access Denied")}
           description={t("You do not have permission to access this page.")}
-          type="error"
-          showIcon
         />
       </SettingsContainer>
     );
@@ -123,134 +152,117 @@ const Settings = ({ user, t }) => {
     <SettingsContainer>
       <SettingsTitle>{t("General Settings")}</SettingsTitle>
 
-      <Form form={form} layout="vertical" onFinish={handleSubmit}>
-        <StyledCard title={t("Default Country")}>
-          <Form.Item
-            name="countryCode"
-            label={t("Select Default Country")}
-            rules={[{ required: true, message: t("Please select a country") }]}
-          >
-            <Select
-              showSearch
-              placeholder={t("Select a country")}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-              style={{ maxWidth: 400 }}
-            >
-              {countryOptions.map((country) => (
-                <Option key={country.id} value={country.id}>
-                  {country.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </StyledCard>
+      <form onSubmit={handleSubmit}>
+        <Card style={{ marginBottom: '24px' }}>
+          <CardHeader>
+            <CardTitle>{t("Default Country")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <FormGroup>
+              <Label data-required="true">{t("Select Default Country")}</Label>
+              <Select
+                value={countryCode}
+                onValueChange={setCountryCode}
+                placeholder={t("Select a country")}
+              >
+                {countryOptions.map((country) => (
+                  <Select.Item key={country.id} value={country.id}>
+                    {country.name}
+                  </Select.Item>
+                ))}
+              </Select>
+            </FormGroup>
+          </CardContent>
+        </Card>
 
-        <StyledCard title={t("Display Options")}>
-          <Form.Item
-            name="showCountrySelect"
-            label={t("Show Country Select")}
-            valuePropName="checked"
-            tooltip={t(
-              "Enable or disable the country select dropdown on the Country Report page"
-            )}
-          >
-            <Switch />
-          </Form.Item>
-        </StyledCard>
-
-        <StyledCard title={t("Chart Colors")}>
-          <Form.Item
-            name="pillar_i_color"
-            label={t("Pillar I Color")}
-            rules={[
-              { required: true, message: t("Please enter a color") },
-              {
-                pattern: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-                message: t("Please enter a valid hex color"),
-              },
-            ]}
-          >
-            <ColorInputWrapper>
-              <ColorPreview color={form.getFieldValue("pillar_i_color")} />
-              <ColorInput
-                placeholder="#e35f20"
-                prefix="#"
-                maxLength={7}
-                onChange={(e) => {
-                  const value = e.target.value.startsWith("#")
-                    ? e.target.value
-                    : `#${e.target.value}`;
-                  form.setFieldValue("pillar_i_color", value);
-                }}
+        <Card style={{ marginBottom: '24px' }}>
+          <CardHeader>
+            <CardTitle>{t("Display Options")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <FormGroup>
+              <Switch
+                checked={showCountrySelect}
+                onCheckedChange={setShowCountrySelect}
+                label={t("Show Country Select")}
               />
-            </ColorInputWrapper>
-          </Form.Item>
+              <p style={{ fontSize: '12px', color: 'hsl(var(--muted-foreground))', marginTop: '4px', marginLeft: '44px' }}>
+                {t("Enable or disable the country select dropdown on the Country Report page")}
+              </p>
+            </FormGroup>
+          </CardContent>
+        </Card>
 
-          <Form.Item
-            name="pillar_ii_color"
-            label={t("Pillar II Color")}
-            rules={[
-              { required: true, message: t("Please enter a color") },
-              {
-                pattern: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-                message: t("Please enter a valid hex color"),
-              },
-            ]}
-          >
-            <ColorInputWrapper>
-              <ColorPreview color={form.getFieldValue("pillar_ii_color")} />
-              <ColorInput
-                placeholder="#f6871e"
-                prefix="#"
-                maxLength={7}
-                onChange={(e) => {
-                  const value = e.target.value.startsWith("#")
-                    ? e.target.value
-                    : `#${e.target.value}`;
-                  form.setFieldValue("pillar_ii_color", value);
-                }}
-              />
-            </ColorInputWrapper>
-          </Form.Item>
+        <Card style={{ marginBottom: '24px' }}>
+          <CardHeader>
+            <CardTitle>{t("Chart Colors")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <FormGroup>
+              <Label data-required="true">{t("Pillar I Color")}</Label>
+              <ColorInputWrapper>
+                <ColorPreview color={pillarIColor} />
+                <ColorInput
+                  placeholder="#e35f20"
+                  value={pillarIColor}
+                  maxLength={7}
+                  onChange={(e) => {
+                    const value = e.target.value.startsWith("#")
+                      ? e.target.value
+                      : `#${e.target.value}`;
+                    setPillarIColor(value);
+                  }}
+                />
+              </ColorInputWrapper>
+            </FormGroup>
 
-          <Form.Item
-            name="pillar_iii_color"
-            label={t("Pillar III Color")}
-            rules={[
-              { required: true, message: t("Please enter a color") },
-              {
-                pattern: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-                message: t("Please enter a valid hex color"),
-              },
-            ]}
-          >
-            <ColorInputWrapper>
-              <ColorPreview color={form.getFieldValue("pillar_iii_color")} />
-              <ColorInput
-                placeholder="#fcac18"
-                prefix="#"
-                maxLength={7}
-                onChange={(e) => {
-                  const value = e.target.value.startsWith("#")
-                    ? e.target.value
-                    : `#${e.target.value}`;
-                  form.setFieldValue("pillar_iii_color", value);
-                }}
-              />
-            </ColorInputWrapper>
-          </Form.Item>
-        </StyledCard>
+            <FormGroup>
+              <Label data-required="true">{t("Pillar II Color")}</Label>
+              <ColorInputWrapper>
+                <ColorPreview color={pillarIIColor} />
+                <ColorInput
+                  placeholder="#f6871e"
+                  value={pillarIIColor}
+                  maxLength={7}
+                  onChange={(e) => {
+                    const value = e.target.value.startsWith("#")
+                      ? e.target.value
+                      : `#${e.target.value}`;
+                    setPillarIIColor(value);
+                  }}
+                />
+              </ColorInputWrapper>
+            </FormGroup>
 
-        <Space>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            {t("Save Settings")}
+            <FormGroup>
+              <Label data-required="true">{t("Pillar III Color")}</Label>
+              <ColorInputWrapper>
+                <ColorPreview color={pillarIIIColor} />
+                <ColorInput
+                  placeholder="#fcac18"
+                  value={pillarIIIColor}
+                  maxLength={7}
+                  onChange={(e) => {
+                    const value = e.target.value.startsWith("#")
+                      ? e.target.value
+                      : `#${e.target.value}`;
+                    setPillarIIIColor(value);
+                  }}
+                />
+              </ColorInputWrapper>
+            </FormGroup>
+          </CardContent>
+        </Card>
+
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <Button type="submit" disabled={loading}>
+            {loading ? t("Saving...") : t("Save Settings")}
           </Button>
-          <Button onClick={handleReset}>{t("Reset to Default")}</Button>
-        </Space>
-      </Form>
+          <Button variant="outline" type="button" onClick={handleReset}>
+            {t("Reset to Default")}
+          </Button>
+        </div>
+      </form>
     </SettingsContainer>
   );
 };

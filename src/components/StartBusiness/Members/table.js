@@ -1,6 +1,6 @@
 import React from 'react';
 import iconUser from '../../../assets/startBusiness/user.svg';
-import { Avatar } from '../../../styles';
+import { Avatar, Badge } from '../../UI/shadcn';
 
 export const columns = (t) => [
   {
@@ -9,11 +9,15 @@ export const columns = (t) => [
     dataIndex: 'name',
     className: 'members-title',
     render: (val, props) => {
+      const initials = `${props.first_name?.substring(0, 1) || ''}${props.last_name?.substring(0, 1) || ''}`.toUpperCase();
       return (
         <div className="icons-set">
           <Avatar
-            img={props.photo?.url || iconUser}
-            margin="0px 10px 0px 0px"
+            src={props.photo?.url}
+            alt={`${props.first_name} ${props.last_name}`}
+            fallback={initials || '?'}
+            size="sm"
+            style={{ marginRight: '10px' }}
           />
           <span className="item-title">{`${props.first_name || ''} ${props.last_name || ''}`}</span>
         </div>
@@ -37,7 +41,7 @@ export const columns = (t) => [
     align: 'center',
     dataIndex: 'role',
     render: (val, props) => {
-      return <span className={props.role}>{val}</span>
+      return <Badge variant={props.role === 'leader' ? 'default' : 'secondary'}>{t(val)}</Badge>
     },
     sorter: (a, b) => {
       const x = a.role; const y = b.role;

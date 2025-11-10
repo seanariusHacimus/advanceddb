@@ -57,14 +57,16 @@ function LayoutComponent(props) {
     }
   }, [pathname]);
 
+  const isMessagingPage = pathname?.includes("messaging");
+
   return (
-    <Style style={{ minHeight: "100vh" }} hasSider id="main-content">
-      <Sidebar sidebar={sidebar} />
-      <Layout style={styles.wrapper}>
+    <div style={{ display: "flex", minHeight: "100vh", width: "100%" }} id="main-content">
+      {!isMessagingPage && <Sidebar sidebar={sidebar} />}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", marginLeft: isMessagingPage ? 0 : 256, width: isMessagingPage ? "100%" : "calc(100% - 256px)" }}>
         <Header />
         <MainContent children={props.children} />
-      </Layout>
-    </Style>
+      </div>
+    </div>
   );
 }
 

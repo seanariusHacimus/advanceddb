@@ -1,6 +1,5 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { Tabs } from 'antd';
 import { bindActionCreators } from 'redux';
 import StartBusinessPage from '../../styles/startBusiness';
 import ActionPlan from './ActionPlan/index';
@@ -8,8 +7,7 @@ import MeetingMinutes from './MeetingsMinutes';
 import Members from './Members';
 import { fetchCurrentIndicatorGroupAction, selectWorkingGroupAction } from '../../store/SelectedIndicator/actions';
 import { withLocale } from "../../utils/locale";
-
-const { TabPane } = Tabs;
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../UI/shadcn';
 const chartData = [
   {
     name: 'completed', title: 'Completed tasks', value: 40, color: '#527BDD',
@@ -29,7 +27,6 @@ class StartBusiness extends Component {
   state = {
     id: '',
     printActive: false,
-    activeKey: 'actions',
   }
 
   componentDidMount() {
@@ -38,7 +35,6 @@ class StartBusiness extends Component {
   }
 
   handleActiveKey = key => {
-    this.setState({ activeKey: key });
     this.props.history.push({ search: 'active_tab=' + key });
   }
 
@@ -50,32 +46,73 @@ class StartBusiness extends Component {
 
     return (
       <StartBusinessPage className="graph-with-box" ref={this.printRef}>
-        <Tabs
-          defaultActiveKey="1"
-          destroyInactiveTabPane
-          onChange={(key) => this.handleActiveKey(key)}
-          activeKey={activeKey}
-          tabBarExtraContent={{ right: user.role === 'participant' ? <div className="role-label">{t('Your role')}: <b>{t(selectedWorkingGroup.my_role)}</b></div> : <></> }}
+        {user.role === 'participant' && (
+          <div style={{ marginBottom: '16px', fontSize: '14px', color: 'hsl(var(--muted-foreground))' }}>
+            {t('Your role')}: <strong style={{ color: 'hsl(var(--foreground))' }}>{t(selectedWorkingGroup.my_role)}</strong>
+          </div>
+        )}
+        <Tabs 
+          defaultValue={activeKey}
+          value={activeKey}
+          onValueChange={(key) => this.handleActiveKey(key)}
         >
-          <TabPane tab={t("Action Plan")} key="actions">
+          <TabsList>
+            <TabsTrigger 
+              value="actions" 
+              data-state={activeKey === 'actions' ? 'active' : 'inactive'}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleActiveKey('actions');
+              }}
+            >
+              {t("Action Plan")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="meetings" 
+              data-state={activeKey === 'meetings' ? 'active' : 'inactive'}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleActiveKey('meetings');
+              }}
+            >
+              {t("Meeting Minutes")}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="members" 
+              data-state={activeKey === 'members' ? 'active' : 'inactive'}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.handleActiveKey('members');
+              }}
+            >
+              {t("Working Group Members")}
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="actions" data-state={activeKey === 'actions' ? 'active' : 'inactive'}>
             <ActionPlan
               actionPermissions={selectedWorkingGroup.permissions.action}
               chartData={chartData}
               currentIndicator={selectedWorkingGroup}
               fetchCurrentWorkingGroup={fetchCurrentIndicatorGroupAction}
             />
-          </TabPane>
-          <TabPane tab={t("Meeting Minutes")} key="meetings">
+          </TabsContent>
+          
+          <TabsContent value="meetings" data-state={activeKey === 'meetings' ? 'active' : 'inactive'}>
             <MeetingMinutes
               meetingMinutesPermissions={selectedWorkingGroup.permissions.meeting_minute}
               members={selectedWorkingGroup.members}
             />
-          </TabPane>
-          <TabPane tab={t("Working Group Members")} key="members">
+          </TabsContent>
+          
+          <TabsContent value="members" data-state={activeKey === 'members' ? 'active' : 'inactive'}>
             <Members
               membersPermissions={selectedWorkingGroup.permissions.member}
             />
-          </TabPane>
+          </TabsContent>
         </Tabs>
       </StartBusinessPage>
     );

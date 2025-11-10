@@ -1,8 +1,8 @@
 import React, { Component, Suspense, lazy } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Menu, Dropdown, Popconfirm } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+import { Table, Popconfirm, DropdownMenuWrapper, DropdownItem } from "../../UI/shadcn";
+import { MoreVertical } from "lucide-react";
 import scrollIntoView from "scroll-into-view";
 
 import { withRouter } from "react-router-dom";
@@ -379,77 +379,75 @@ class ActionList extends Component {
         return (
           Object.values(actionPermissions).some((v) => v) && (
             <div onClick={(e) => e.stopPropagation()}>
-              <Dropdown.Button
-                className="more-action-btn"
-                trigger={["click"]}
-                getPopupContainer={(trigger) => trigger.parentNode}
-                onClick={(e) => e.stopPropagation()}
-                overlay={
-                  <Menu className="more-action-btn-table">
-                    {actionPermissions.update && (
-                      <Menu.Item
-                        key="1"
-                        onClick={() =>
-                          this.setState({
-                            selectedAction: props,
-                            editAction: true,
-                          })
-                        }
-                        icon={<IconEdit />}
-                      >
-                        {t("Edit")}
-                      </Menu.Item>
-                    )}
+              <DropdownMenuWrapper
+                align="end"
+                trigger={<MoreVertical size={16} />}
+              >
+                {actionPermissions.update && (
+                  <DropdownItem
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      this.setState({
+                        selectedAction: props,
+                        editAction: true,
+                      });
+                    }}
+                  >
+                    <IconEdit />
+                    {t("Edit")}
+                  </DropdownItem>
+                )}
 
-                    {actionPermissions.update &&
-                      props.status !== "completed" && (
-                        <Menu.Item
-                          key="2"
-                          onClick={() => {
-                            this.setState({
-                              selectedAction: props,
-                              reassignAction: true,
-                            });
-                          }}
-                          icon={<IconReassign />}
-                        >
-                          {t("Re-assign")}
-                        </Menu.Item>
-                      )}
+                {actionPermissions.update &&
+                  props.status !== "completed" && (
+                    <DropdownItem
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.setState({
+                          selectedAction: props,
+                          reassignAction: true,
+                        });
+                      }}
+                    >
+                      <IconReassign />
+                      {t("Re-assign")}
+                    </DropdownItem>
+                  )}
 
-                    {(actionPermissions.delete ||
-                      props.creator?.id === user.id) && (
-                      <Popconfirm
-                        disabled={!actionPermissions.complete}
-                        overlayClassName="custom-popconfirm"
-                        title={
-                          <div>
-                            <h3>{t("Delete the action")}</h3>
-                            <p>
-                              {t(
-                                "When you delete the action you can not restore it later."
-                              )}
-                            </p>
-                          </div>
-                        }
-                        onConfirm={(e) => {
-                          e.stopPropagation();
-                          this.deleteAction(props.id);
-                        }}
-                        onCancel={(e) => e.stopPropagation()}
-                        okText={t("Confirm")}
-                        cancelText={t("Cancel")}
-                        icon={null}
-                      >
-                        <Menu.Item key="delete" icon={<IconDelete />}>
-                          {t("Delete")}
-                        </Menu.Item>
-                      </Popconfirm>
-                    )}
-                  </Menu>
-                }
-                icon={<MoreOutlined />}
-              />
+                {(actionPermissions.delete ||
+                  props.creator?.id === user.id) && (
+                  <Popconfirm
+                    disabled={!actionPermissions.complete}
+                    overlayClassName="custom-popconfirm"
+                    title={
+                      <div>
+                        <h3>{t("Delete the action")}</h3>
+                        <p>
+                          {t(
+                            "When you delete the action you can not restore it later."
+                          )}
+                        </p>
+                      </div>
+                    }
+                    onConfirm={(e) => {
+                      e.stopPropagation();
+                      this.deleteAction(props.id);
+                    }}
+                    onCancel={(e) => e.stopPropagation()}
+                    okText={t("Confirm")}
+                    cancelText={t("Cancel")}
+                    icon={null}
+                  >
+                    <DropdownItem
+                      as="div"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <IconDelete />
+                      {t("Delete")}
+                    </DropdownItem>
+                  </Popconfirm>
+                )}
+              </DropdownMenuWrapper>
             </div>
           )
         );
@@ -496,11 +494,8 @@ class ActionList extends Component {
               ),
               moreActionsBtn,
             ]}
-            scroll={{ x: true }}
             pagination={false}
-            className="custom-table"
             rowKey="id"
-            rowClassName="custom-table-row"
             expandable={{
               expandRowByClick: true,
               expandedRowClassName: () => "custom-table-expanded-row",

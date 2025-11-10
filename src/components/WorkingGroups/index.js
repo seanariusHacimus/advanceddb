@@ -3,7 +3,8 @@ import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Dropdown, Menu, message } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+import { Popconfirm } from "../UI/shadcn";
+import { MoreVertical } from "lucide-react";
 import Axios from "../../utils/axios";
 import { StyledWorkingGroup } from "../../styles/workingGroup";
 import {
@@ -187,7 +188,7 @@ class WorkingGroupList extends Component {
                   </Menu>
                 </>
               }
-              icon={<MoreOutlined />}
+              icon={<MoreVertical size={16} />}
             />
           </div>
         ) : null;

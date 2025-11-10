@@ -2,13 +2,16 @@ import React, { useCallback, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, useHistory } from "react-router-dom";
-import { Row, Col, Alert } from "antd";
+import { Row, Col } from "antd";
 import Axios from "../../utils/axios";
 import { signInSuccess } from "../../store/Auth/actions";
 import { REQUEST_PASSWORD_RESET } from "../../graphql/auth";
 // -------------- STYLES -----------
 import { SignInPage } from "../../styles/auth";
-import { ButtonPrimary, Input, InputWrapper, Title } from "../../styles";
+import { Title } from "../../styles";
+// -------------- SHADCN UI -----------
+import { Button, Input, Label, FormGroup, FormError } from "../UI/shadcn";
+import { useToast } from "../UI/shadcn/toast";
 // -------------- ASSETS -----------
 import iconLogo from "../../assets/logo.svg";
 import ellipse from "../../assets/auth/shapes/ellipse.svg";
@@ -49,10 +52,12 @@ const errorsConfig = {
 
 function ForgotPasswordForm(props) {
   const [t] = useLocale();
+  const { toast } = useToast();
   const emailRef = useRef();
   const [email, setEmail] = useState("");
   const [errorAlerts, setErrorAlerts] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const updateValues = useCallback(
     (name, value) => {
@@ -66,6 +71,7 @@ function ForgotPasswordForm(props) {
       e.preventDefault();
       setErrorAlerts([]);
       setErrors({});
+      setIsLoading(true);
       Axios.post("/graphql", {
         query: REQUEST_PASSWORD_RESET,
         variables: {
@@ -75,6 +81,10 @@ function ForgotPasswordForm(props) {
         .then((res) => {
           if (res?.data) {
             const id = res.data.data.init_password_reset.id;
+            toast.success({
+              title: t("Success!"),
+              description: t("Password reset instructions sent to your email"),
+            });
             history.push(`/confirmation?reset_id=${id}&show_success=1`);
           }
         })
@@ -86,10 +96,22 @@ function ForgotPasswordForm(props) {
             );
             setErrorAlerts(alerts);
             setErrors(errors);
+            toast.error({
+              title: t("Reset Failed"),
+              description: alerts[0] || t("Please check your email"),
+            });
+          } else {
+            toast.error({
+              title: t("Error"),
+              description: t("An unexpected error occurred"),
+            });
           }
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     },
-    [email, history]
+    [email, history, toast, t]
   );
 
   return (
@@ -106,26 +128,35 @@ function ForgotPasswordForm(props) {
             </Link>
             <Title margin="0 0 40px">{t("Reset your password")}</Title>
             <form action="" autoComplete="off" onSubmit={submitForm}>
-              <div style={{ position: "relative" }}>
+              <div style={{ position: "relative", marginBottom: '16px' }}>
                 <ErrorAlerts alerts={errorAlerts} />
               </div>
-              <InputWrapper className="has-messages" align="flex-end">
+              
+              <FormGroup>
+                <Label data-required="true">{t("Email address")}</Label>
                 <Input
+                  required
                   type="email"
                   name="email"
                   value={email}
                   ref={emailRef}
                   autoComplete="new-email"
-                  className={`dynamic-input ${email ? "has-value" : ""}`}
+                  placeholder={t("Enter your email")}
+                  hasError={errors.email?.length > 0}
                   onChange={(e) => updateValues("email", e.target.value)}
-                  hasErrors={errors.email?.length > 0}
                 />
-                <label htmlFor="" onClick={() => emailRef.current.focus()}>
-                  {t("Email address")}
-                </label>
-                <InputErrors name={"email"} errors={errors} />
-              </InputWrapper>
-              <ButtonPrimary>{t("Submit")}</ButtonPrimary>
+                {errors.email?.length > 0 && (
+                  <FormError>{errors.email?.join(", ")}</FormError>
+                )}
+              </FormGroup>
+              
+              <Button 
+                type="submit" 
+                style={{ width: '100%' }}
+                disabled={isLoading}
+              >
+                {isLoading ? t("Submitting...") : t("Submit")}
+              </Button>
             </form>
             <h4 style={{ marginTop: 40 }}>
               {t("Don’t have an account?")}{" "}

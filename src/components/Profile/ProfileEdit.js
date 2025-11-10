@@ -15,9 +15,6 @@ import {
   TitleH1,
   TitleH3,
   Flex,
-  ButtonPrimary,
-  Input,
-  InputWrapper,
 } from "../../styles";
 import { ProfileEditPage } from "../../styles/profile";
 import iconSave from "../../assets/profile/save.svg";
@@ -25,7 +22,16 @@ import iconUser from "../../assets/startBusiness/user.svg";
 import iconCamera from "../../assets/profile/camera.svg";
 import { pick } from "../../utils";
 import { withLocale } from "../../utils/locale";
-import { toast } from "react-toastify";
+import { useToast } from "../UI/shadcn/toast";
+import { Input, Label, FormGroup, Button } from "../UI/shadcn";
+
+// Wrapper to use hooks with class component
+const withToast = (Component) => {
+  return (props) => {
+    const toast = useToast();
+    return <Component {...props} toast={toast} />;
+  };
+};
 
 class UserProfile extends Component {
   state = {
@@ -130,7 +136,7 @@ class UserProfile extends Component {
       const res = await Axios.post("/graphql", formData);
       if (res?.data.data) {
         this.props.authUpdate({ account: res.data.data.update_my_account });
-        toast.success(t("Your profile has been updated successfully"));
+        this.props.toast.success(t("Your profile has been updated successfully"));
         this.props.history.push("/settings/profile");
       }
     } catch (err) {
@@ -156,13 +162,16 @@ class UserProfile extends Component {
       <ProfileEditPage id="profile-page">
         <Flex>
           <TitleH1>{t("Profile")}</TitleH1>
-          <div className="btn-group">
-            <Link to="/settings/profile" className="edit-btn transparent small">
-              {t("Cancel")}
+          <div className="btn-group" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <Link to="/settings/profile">
+              <Button variant="outline" size="sm">
+                {t("Cancel")}
+              </Button>
             </Link>
-            <ButtonPrimary className="small" onClick={this.handleSubmit}>
-              <img src={iconSave} alt={t("Profile")} /> {t("Save")}
-            </ButtonPrimary>
+            <Button size="sm" onClick={this.handleSubmit}>
+              <img src={iconSave} alt={t("Profile")} style={{ marginRight: '8px', width: '16px', height: '16px' }} /> 
+              {t("Save")}
+            </Button>
           </div>
         </Flex>
         <div className="profile-img">
@@ -190,90 +199,73 @@ class UserProfile extends Component {
 
         <Row gutter={[10, 0]}>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="first_name">{t("First name")} *</Label>
               <Input
                 required
                 type="text"
                 name="first_name"
+                id="first_name"
                 value={first_name}
-                ref={(el) => (this.first_nameRef = el)}
-                autoComplete="new-name"
-                id="new-name"
-                className={`dynamic-input ${first_name ? "has-value" : ""}`}
+                autoComplete="given-name"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.first_nameRef.focus()}>
-                {t("First name")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
 
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="last_name">{t("Last name")} *</Label>
               <Input
                 required
                 type="text"
                 name="last_name"
+                id="last_name"
                 value={last_name}
-                ref={(el) => (this.last_nameRef = el)}
-                autoComplete="new-name"
-                id="new-last-name"
-                className={`dynamic-input ${last_name ? "has-value" : ""}`}
+                autoComplete="family-name"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.last_nameRef.focus()}>
-                {t("Last name")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="middle_name">{t("Middle name")}</Label>
               <Input
-                // required
                 type="text"
                 name="middle_name"
+                id="middle_name"
                 value={middle_name}
-                ref={(el) => (this.middle_nameRef = el)}
-                autoComplete="new-name"
-                id="new-middle-name"
-                className={`dynamic-input ${middle_name ? "has-value" : ""}`}
+                autoComplete="additional-name"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.middle_nameRef.focus()}>
-                {t("Middle name")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="prefix">{t("Suffix")}</Label>
               <Input
-                // required
                 type="text"
                 name="prefix"
+                id="prefix"
                 value={prefix || ""}
-                ref={(el) => (this.prefixRef = el)}
-                autoComplete="new-name"
-                id="new-prefix"
-                className={`dynamic-input ${prefix ? "has-value" : ""}`}
+                autoComplete="honorific-suffix"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.prefixRef.focus()}>
-                {t("Suffix")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24}>
             <Divider style={{ borderColor: "var(--border-grey)" }} />
             <TitleH3 className="section-title">{t("Occupation data")}</TitleH3>
           </Col>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="organization">{t("Organization name")}</Label>
               <AutoComplete
                 options={organizations.map((item) => ({
                   value: item.title,
                 }))}
                 className="custom-select"
-                style={{ width: "100%", maxWidth: 420 }}
+                style={{ width: "100%" }}
                 filterOption={(inputValue, option) =>
                   option.value
                     .toUpperCase()
@@ -283,84 +275,61 @@ class UserProfile extends Component {
                   this.setState({ organization: value });
                 }}
               >
-                <InputWrapper margin="0">
-                  <Input
-                    type="text"
-                    name="organization"
-                    value={organization || ""}
-                    onChange={this.handleInput}
-                    ref={(ref) => (this.organizationRef = ref)}
-                    className={`dynamic-input ${
-                      organization ? "has-value" : ""
-                    }`}
-                  />
-                  <label
-                    htmlFor=""
-                    onClick={() => this.organizationRef.focus()}
-                  >
-                    {t("Organization name")}
-                  </label>
-                </InputWrapper>
+                <Input
+                  type="text"
+                  name="organization"
+                  id="organization"
+                  value={organization || ""}
+                  autoComplete="organization"
+                  onChange={this.handleInput}
+                />
               </AutoComplete>
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="job_position">{t("Position")}</Label>
               <Input
-                // required
                 type="text"
                 name="job_position"
+                id="job_position"
                 value={job_position || ""}
-                ref={(el) => (this.job_positionRef = el)}
-                autoComplete="new-name"
-                id="new-job-position"
-                className={`dynamic-input ${job_position ? "has-value" : ""}`}
+                autoComplete="organization-title"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.job_positionRef.focus()}>
-                {t("Position")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24}>
             <Divider style={{ borderColor: "var(--border-grey)" }} />
             <TitleH3 className="section-title">{t("Contact data")}</TitleH3>
           </Col>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="phone">{t("Phone")} *</Label>
               <Input
                 required
-                type="phone"
+                type="tel"
                 name="phone"
-                value={phone || ""}
-                ref={(el) => (this.phoneRef = el)}
-                autoComplete="new-name"
                 id="phone"
-                className={`dynamic-input ${phone ? "has-value" : ""}`}
+                value={phone || ""}
+                autoComplete="tel"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.phoneRef.focus()}>
-                {t("Phone")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24} md={12}>
-            <InputWrapper>
+            <FormGroup>
+              <Label htmlFor="email">{t("Email")} *</Label>
               <Input
                 required
                 type="email"
                 name="email"
-                value={email}
                 id="email"
-                ref={(el) => (this.emailRef = el)}
-                autoComplete="new-email"
-                className={`dynamic-input ${email ? "has-value" : ""}`}
+                value={email}
+                autoComplete="email"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.emailRef.focus()}>
-                {t("Email")}
-              </label>
-            </InputWrapper>
+            </FormGroup>
           </Col>
         </Row>
       </ProfileEditPage>
@@ -375,4 +344,4 @@ const mapDispatchToProps = (dispatch) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(withLocale(UserProfile)));
+)(withRouter(withLocale(withToast(UserProfile))));

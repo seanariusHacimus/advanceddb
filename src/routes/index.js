@@ -21,6 +21,7 @@ import { CountryReport } from "../components/CountryReport";
 import TopicDetails from "../components/CountryReport/TopicDetails";
 import GeneralMethodology from "../components/GeneralMethodology";
 import Settings from "../components/Settings/Settings";
+import ComponentShowcase from "../components/ComponentShowcase/ComponentShowcase";
 
 export const WORKING_GROUP_SETTINGS_PATH = "/working-group-settings";
 
@@ -181,6 +182,12 @@ export const ROUTES = [
     secret: true,
     component: Settings,
   },
+  {
+    key: "ComponentShowcase",
+    path: "/dashboard/components",
+    exact: true,
+    component: ComponentShowcase,
+  },
 
   // Default redirect (handled by consumer when mapping)
   { key: "defaultRedirect", redirectTo: "/dashboard/home" },
@@ -210,6 +217,7 @@ export const ROUTE_KEYS = {
   CountryReport: "CountryReport",
   TopicDetails: "TopicDetails",
   Settings: "Settings",
+  ComponentShowcase: "ComponentShowcase",
   defaultRedirect: "defaultRedirect",
 };
 

@@ -6,9 +6,10 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { Row, Col, Button, Popover, Typography } from "antd";
+import { Row, Col } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { Flex, TitleH3, ButtonPrimary } from "../../../styles";
+import { Flex, TitleH3 } from "../../../styles";
+import { Button } from "../../UI/shadcn";
 import {
   ActionStatuses,
   TaskProgress,
@@ -174,44 +175,25 @@ function ActionPlan({ currentIndicator, actionPermissions }) {
           </>
         )}
         {actionPermissions.create ? (
-          <ButtonPrimary
+          <Button
             style={{ marginLeft: isEmpty ? "auto" : "initial" }}
-            className="small add-new-action"
+            size="sm"
             onClick={formModalHandler}
           >
-            <img src={iconAddSubaction} alt={t("add subaction")} />
+            <img src={iconAddSubaction} alt={t("add subaction")} style={{ marginRight: '8px', width: '16px', height: '16px' }} />
             {t("New Action")}
-          </ButtonPrimary>
+          </Button>
         ) : (
-          <ButtonPrimary
+          <Button
             style={{ marginLeft: isEmpty ? "auto" : "initial" }}
-            className="small add-new-action"
+            size="sm"
+            variant="outline"
+            onClick={handleUserRoles}
           >
-            <img src={iconAddSubaction} alt={t("add subaction")} />
-            <Popover
-              title={null}
-              trigger="click"
-              overlayClassName="actions-popover"
-              content={
-                <div>
-                  <h3>{t("You are not allowed")}</h3>
-                  <div className="content">
-                    {t(`You are not authorized to complete this action`)}
-                  </div>
-                  <Typography.Text
-                    underline
-                    onClick={handleUserRoles}
-                    className="clickable"
-                  >
-                    {t("Learn more about roles")}
-                  </Typography.Text>
-                  {modalVisible && <UserRoles hideModal={handleUserRoles} />}
-                </div>
-              }
-            >
-              {t("New Action")}
-            </Popover>
-          </ButtonPrimary>
+            <img src={iconAddSubaction} alt={t("add subaction")} style={{ marginRight: '8px', width: '16px', height: '16px' }} />
+            {t("New Action")}
+            {modalVisible && <UserRoles hideModal={handleUserRoles} />}
+          </Button>
         )}
         {!isEmpty && (
           <>

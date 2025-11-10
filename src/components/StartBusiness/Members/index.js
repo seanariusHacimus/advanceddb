@@ -1,9 +1,9 @@
 import { Component } from "react";
-import { Table, Dropdown, Menu } from "antd";
+import { Table, DropdownMenuWrapper, DropdownItem, Popconfirm } from "../../UI/shadcn";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { MoreOutlined } from "@ant-design/icons";
+import { MoreVertical } from "lucide-react";
 import SearchComponent from "../../UI/Search";
 import { MembersPage } from "../../../styles/startBusiness";
 import { TitleH3, Flex } from "../../../styles";
@@ -26,7 +26,6 @@ import { groupTitleToUrl, parseErrors } from "../../../utils";
 import { columns } from "./table";
 import { withLocale } from "../../../utils/locale";
 import { toast } from "react-toastify";
-import { Popconfirm } from "antd";
 
 class Members extends Component {
   state = {
@@ -101,75 +100,76 @@ class Members extends Component {
         (account.id !== myAccountId ||
           ["coordinator", "superuser"].includes(role)) && (
           <div onClick={(e) => e.stopPropagation()}>
-            <Dropdown.Button
-              className="more-action-btn"
-              trigger={["click"]}
-              overlay={
-                <Menu className="more-action-btn-table">
-                  <Popconfirm
-                    overlayClassName="custom-popconfirm"
-                    icon={null}
-                    title={
-                      <div>
-                        <h3>
-                          {t("Are you sure you want to remove the member?")}
-                        </h3>
-                      </div>
+            <DropdownMenuWrapper
+              align="end"
+              trigger={<MoreVertical size={16} />}
+            >
+              <Popconfirm
+                overlayClassName="custom-popconfirm"
+                icon={null}
+                title={
+                  <div>
+                    <h3>
+                      {t("Are you sure you want to remove the member?")}
+                    </h3>
+                  </div>
+                }
+                onConfirm={async (e) => {
+                  e.stopPropagation();
+                  try {
+                    const { id: groupId } = this.state;
+                    const res = await Axios.post("/graphql", {
+                      query: REMOVE_MEMBERS_MUTATION,
+                      variables: {
+                        members: [account.id],
+                        group_id: groupId,
+                      },
+                    });
+                    if (res?.data) {
+                      toast.success(
+                        t("The member has been removed successfully")
+                      );
+                      this.setState({ alerts: [] });
+                      this.fetchMembers();
+                      this.props.fetchCurrentIndicatorGroupAction(
+                        groupTitleToUrl(
+                          this.props.selectedWorkingGroup.title
+                        )
+                      );
                     }
-                    onConfirm={async () => {
-                      try {
-                        const { id: groupId } = this.state;
-                        const res = await Axios.post("/graphql", {
-                          query: REMOVE_MEMBERS_MUTATION,
-                          variables: {
-                            members: [account.id],
-                            group_id: groupId,
-                          },
-                        });
-                        if (res?.data) {
-                          toast.success(
-                            t("The member has been removed successfully")
-                          );
-                          this.setState({ alerts: [] });
-                          this.fetchMembers();
-                          this.props.fetchCurrentIndicatorGroupAction(
-                            groupTitleToUrl(
-                              this.props.selectedWorkingGroup.title
-                            )
-                          );
-                        }
-                      } catch (err) {
-                        if (err.message.includes("422")) {
-                          const errorsRaw =
-                            err.response.data.errors[0].extensions?.validation;
-                          const { alerts } = parseErrors(
-                            errorsConfig,
-                            errorsRaw
-                          );
-                          this.setState({ alerts });
-                        }
-                      }
-                    }}
-                    okText={t("Yes, remove it!")}
-                    cancelText={t("Cancel")}
-                  >
-                    <Menu.Item key="delete" icon={<IconDelete />}>
-                      {t("Delete")}
-                    </Menu.Item>
-                  </Popconfirm>
-                  <Menu.Item
-                    key="edit"
-                    onClick={() =>
-                      this.props.history.push(`/members/${account.id}`)
+                  } catch (err) {
+                    if (err.message.includes("422")) {
+                      const errorsRaw =
+                        err.response.data.errors[0].extensions?.validation;
+                      const { alerts } = parseErrors(
+                        errorsConfig,
+                        errorsRaw
+                      );
+                      this.setState({ alerts });
                     }
-                    icon={<IconEdit />}
-                  >
-                    {t("Edit")}
-                  </Menu.Item>
-                </Menu>
-              }
-              icon={<MoreOutlined />}
-            />
+                  }
+                }}
+                okText={t("Yes, remove it!")}
+                cancelText={t("Cancel")}
+              >
+                <DropdownItem
+                  as="div"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <IconDelete />
+                  {t("Delete")}
+                </DropdownItem>
+              </Popconfirm>
+              <DropdownItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  this.props.history.push(`/members/${account.id}`);
+                }}
+              >
+                <IconEdit />
+                {t("Edit")}
+              </DropdownItem>
+            </DropdownMenuWrapper>
           </div>
         ),
     };
@@ -194,7 +194,6 @@ class Members extends Component {
             columns={[...columns(t), moreActionsBtn]}
             expandedRowKeys={printActive ? data.map((i) => i.id) : ""}
             dataSource={data}
-            scroll={{ x: true }}
             pagination={{
               pageSize: printActive ? data.length : 20,
               hideOnSinglePage: true,

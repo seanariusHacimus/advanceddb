@@ -1,13 +1,31 @@
 import React from "react";
-import { Button, Popconfirm, Tooltip, Dropdown, Menu, Typography } from "antd";
+import { Tooltip, Dropdown, Menu, Typography } from "antd";
+import { Popconfirm, Avatar, Badge } from "../../UI/shadcn";
 import moment from "moment-timezone";
 import iconHashTag from "../../../assets/startBusiness/user-grey.svg";
 import iconAttachment from "../../../assets/startBusiness/attachment.svg";
 import PieChart from "./components/PieIndicator";
-import { Avatar } from "../../../styles";
 import { indicatorStatus } from "../../../constants";
 import store from "../../../store";
 import { AiOutlinePaperClip } from "react-icons/ai";
+
+// Helper function to get badge variant based on status
+const getStatusVariant = (status) => {
+  switch (status) {
+    case 'completed':
+      return 'default'; // Blue
+    case 'ongoing_within_deadline':
+      return 'warning'; // Yellow
+    case 'ongoing_past_deadline':
+      return 'destructive'; // Red
+    case 'not_started':
+      return 'secondary'; // Gray
+    case 'on_review':
+      return 'outline'; // Outlined
+    default:
+      return 'secondary';
+  }
+};
 
 const displayAttachments = (data) => {
   const menu = (
@@ -136,15 +154,28 @@ export const columns = ({
           {responsive_tags.map((tag) => (
             <Tooltip title={tag.title} key={tag.title}>
               <Avatar
-                img={iconHashTag}
-                className="has-user"
-                style={{ border: "1px solid #FCFDFF" }}
+                fallback={tag.title?.substring(0, 1).toUpperCase() || '#'}
+                size="sm"
+                style={{ 
+                  marginRight: '4px', 
+                  border: "2px solid hsl(var(--muted))",
+                  background: 'hsl(var(--muted))'
+                }}
               />
             </Tooltip>
           ))}
           {responsive_accounts.map((acc) => (
             <Tooltip title={acc.first_name} key={acc.id}>
-              <Avatar img={acc?.photo?.url} className="has-user" />
+              <Avatar 
+                src={acc?.photo?.url} 
+                alt={acc.first_name}
+                fallback={acc.first_name?.substring(0, 2).toUpperCase()}
+                size="sm"
+                style={{ 
+                  marginRight: '4px',
+                  border: "2px solid hsl(var(--primary) / 0.2)"
+                }}
+              />
             </Tooltip>
           ))}
           {!responsive_tags.length && !responsive_accounts.length && "N/A"}
@@ -224,16 +255,15 @@ export const columns = ({
           cancelText={t("Reject")}
           icon={null}
         >
-          <Button
-            className={`${val} status-button`}
-            type="button"
-            shape="round"
+          <Badge 
+            variant={getStatusVariant(val)}
+            style={{ cursor: 'pointer', textTransform: 'capitalize' }}
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
             {t(indicatorStatus[val])}
-          </Button>
+          </Badge>
         </Popconfirm>
       );
 
@@ -267,13 +297,12 @@ export const columns = ({
           cancelText={t("Cancel")}
           icon={null}
         >
-          <Button
-            className={`${val} status-button`}
-            type="button"
-            shape="round"
+          <Badge 
+            variant={getStatusVariant(val)}
+            style={{ cursor: 'pointer', textTransform: 'capitalize' }}
           >
             {t(indicatorStatus[val])}
-          </Button>
+          </Badge>
         </Popconfirm>
       ) : record.status === "on_review" ? (
         //   <Popconfirm
@@ -294,14 +323,16 @@ export const columns = ({
         //     cancelText={t("Cancel")}
         //     icon={null}
         //   >
-        <Button
-          type="button"
-          shape="round"
-          disabled={record.is_pending}
-          className={`${val} status-button`}
+        <Badge 
+          variant={getStatusVariant(val)}
+          style={{ 
+            cursor: record.is_pending ? 'not-allowed' : 'pointer',
+            opacity: record.is_pending ? 0.5 : 1,
+            textTransform: 'capitalize'
+          }}
         >
           {t(indicatorStatus[val])}
-        </Button>
+        </Badge>
       ) : (
         //   </Popconfirm>
         <Popconfirm
@@ -334,13 +365,12 @@ export const columns = ({
           cancelText={t("Cancel")}
           icon={null}
         >
-          <Button
-            className={`${val} status-button`}
-            type="button"
-            shape="round"
+          <Badge 
+            variant={getStatusVariant(val)}
+            style={{ cursor: 'pointer', textTransform: 'capitalize' }}
           >
             {t(indicatorStatus[val])}
-          </Button>
+          </Badge>
         </Popconfirm>
       );
     },
@@ -400,12 +430,29 @@ export const subActionColumn = ({
         <div>
           {responsive_tags.map((tag) => (
             <Tooltip title={tag.title} key={tag.title}>
-              <Avatar img={iconHashTag} className="has-user" />
+              <Avatar
+                fallback={tag.title?.substring(0, 1).toUpperCase() || '#'}
+                size="sm"
+                style={{ 
+                  marginRight: '4px',
+                  border: "2px solid hsl(var(--muted))",
+                  background: 'hsl(var(--muted))'
+                }}
+              />
             </Tooltip>
           ))}
           {responsive_accounts.map((acc) => (
             <Tooltip title={acc.first_name} key={acc.id}>
-              <Avatar img={acc?.photo?.url} className="has-user" />
+              <Avatar 
+                src={acc?.photo?.url} 
+                alt={acc.first_name}
+                fallback={acc.first_name?.substring(0, 2).toUpperCase()}
+                size="sm"
+                style={{ 
+                  marginRight: '4px',
+                  border: "2px solid hsl(var(--primary) / 0.2)"
+                }}
+              />
             </Tooltip>
           ))}
           {!responsive_tags.length && !responsive_accounts.length && "N/A"}
@@ -452,16 +499,15 @@ export const subActionColumn = ({
           cancelText={t("Reject")}
           icon={null}
         >
-          <Button
-            className={`${val} status-button`}
-            type="button"
-            shape="round"
+          <Badge 
+            variant={getStatusVariant(val)}
+            style={{ cursor: 'pointer', textTransform: 'capitalize' }}
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
             {t(indicatorStatus[val])}
-          </Button>
+          </Badge>
         </Popconfirm>
       );
 
@@ -493,14 +539,16 @@ export const subActionColumn = ({
           cancelText={t("Cancel")}
           icon={null}
         >
-          <Button
-            className={`${val} status-button`}
-            type="button"
-            shape="round"
-            disabled={record.is_pending}
+          <Badge 
+            variant={getStatusVariant(val)}
+            style={{ 
+              cursor: record.is_pending ? 'not-allowed' : 'pointer',
+              opacity: record.is_pending ? 0.5 : 1,
+              textTransform: 'capitalize'
+            }}
           >
             {t(indicatorStatus[val])}
-          </Button>
+          </Badge>
         </Popconfirm>
       ) : record.status === "on_review" ? (
         // <Popconfirm
@@ -521,14 +569,16 @@ export const subActionColumn = ({
         //   cancelText={t("Cancel")}
         //   icon={null}
         // >
-        <Button
-          type="button"
-          shape="round"
-          disabled={record.is_pending}
-          className={`${val} status-button`}
+        <Badge 
+          variant={getStatusVariant(val)}
+          style={{ 
+            cursor: record.is_pending ? 'not-allowed' : 'pointer',
+            opacity: record.is_pending ? 0.5 : 1,
+            textTransform: 'capitalize'
+          }}
         >
           {t(indicatorStatus[val])}
-        </Button>
+        </Badge>
       ) : (
         // </Popconfirm>
         <Popconfirm
@@ -555,14 +605,16 @@ export const subActionColumn = ({
           cancelText={t("Cancel")}
           icon={null}
         >
-          <Button
-            type="button"
-            shape="round"
-            disabled={record.is_pending}
-            className={`${val} status-button`}
+          <Badge 
+            variant={getStatusVariant(val)}
+            style={{ 
+              cursor: record.is_pending ? 'not-allowed' : 'pointer',
+              opacity: record.is_pending ? 0.5 : 1,
+              textTransform: 'capitalize'
+            }}
           >
             {t(indicatorStatus[val])}
-          </Button>
+          </Badge>
         </Popconfirm>
       );
     },

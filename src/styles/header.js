@@ -222,11 +222,11 @@ export default styled(Layout)`
   }
 
   .ant-layout-header {
-    width: calc(100% - 265px);
+    width: 100%;
     padding-left: ${(props) =>
       window.location?.pathname?.includes("messaging")
         ? "0"
-        : "265px !important"};
+        : "40px"};
     outline: 1px solid #e9eaf1;
     z-index: 1040;
     padding-right: 180px;
@@ -263,8 +263,14 @@ export default styled(Layout)`
 
   #top-search-container {
     position: fixed;
-    width: calc(100% - 266px);
-    left: 266px;
+    width: ${(props) =>
+      window.location?.pathname?.includes("messaging")
+        ? "100%"
+        : "calc(100% - 256px)"};
+    left: ${(props) =>
+      window.location?.pathname?.includes("messaging")
+        ? "0"
+        : "256px"};
     top: 0;
     right: 0;
     height: 64px;

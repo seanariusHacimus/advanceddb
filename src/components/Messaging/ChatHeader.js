@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Popconfirm, Typography } from 'antd';
+import { Typography } from 'antd';
+import { Popconfirm } from '../UI/shadcn';
 import { StyledChatHeader } from '../../styles/messaging';
 import { Avatar, Flex } from '../../styles';
 import { DeleteOutlined, LogoutOutlined, InfoCircleOutlined } from '@ant-design/icons';

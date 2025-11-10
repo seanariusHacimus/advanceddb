@@ -7,8 +7,9 @@ import {
   useCallback,
 } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import { Tooltip, Table, Dropdown, Menu, Popconfirm, Tag, Input } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+import { Tooltip, Dropdown, Menu, Tag, Input } from "antd";
+import { Popconfirm, Table } from "../UI/shadcn";
+import { MoreVertical } from "lucide-react";
 import { useQueryParam, BooleanParam, StringParam } from "use-query-params";
 import { useSelector } from "react-redux";
 import scrollIntoView from "scroll-into-view";
@@ -362,7 +363,7 @@ function RowMenu(props) {
           })}
         </Menu>
       }
-      icon={<MoreOutlined />}
+      icon={<MoreVertical size={16} />}
     />
   );
 }

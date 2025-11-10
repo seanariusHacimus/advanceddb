@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Row, Col } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
@@ -14,15 +13,13 @@ import { InputErrors, parseErrors } from "../../utils";
 import {
   TitleH1,
   Flex,
-  ButtonPrimary,
-  Input,
-  InputWrapper,
 } from "../../styles";
 import { ProfileEditPage } from "../../styles/profile";
 import iconSave from "../../assets/profile/save.svg";
 import iconError from "../../assets/auth/error.svg";
 import { withLocale } from "../../utils/locale";
-import { toast } from "react-toastify";
+import { useToast } from "../UI/shadcn/toast";
+import { Input, Label, FormGroup, Button, FormError } from "../UI/shadcn";
 
 const errorsConfig = {
   old_password: {
@@ -45,6 +42,63 @@ const errorsConfig = {
       msg: "Password must be string",
     },
   },
+};
+
+// Wrapper to use hooks with class component
+const withToast = (Component) => {
+  return (props) => {
+    const toast = useToast();
+    return <Component {...props} toast={toast} />;
+  };
+};
+
+// Simple PasswordInput component
+const PasswordInput = ({ value, onChange, name, id, ...props }) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+  
+  return (
+    <div style={{ position: 'relative' }}>
+      <Input
+        type={showPassword ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        name={name}
+        id={id}
+        {...props}
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        style={{
+          position: 'absolute',
+          right: '12px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          color: 'hsl(var(--muted-foreground))',
+          padding: '4px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        {showPassword ? (
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+            <line x1="2" x2="22" y1="2" y2="22"/>
+          </svg>
+        )}
+      </button>
+    </div>
+  );
 };
 
 class PasswordEdit extends Component {
@@ -72,7 +126,7 @@ class PasswordEdit extends Component {
     try {
       const res = await Axios.post("/graphql", formData);
       if (res?.data.data) {
-        toast.success(t("Your password has been updated successfully."));
+        this.props.toast.success(t("Your password has been updated successfully."));
         this.props.signOutAction();
       }
     } catch (err) {
@@ -105,149 +159,74 @@ class PasswordEdit extends Component {
       <ProfileEditPage id="profile-page">
         <Flex>
           <TitleH1>{t("Set a new password")}</TitleH1>
-          <div className="btn-group">
-            <Link to="/settings/profile" className="edit-btn transparent small">
-              {t("Cancel")}
+          <div className="btn-group" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <Link to="/settings/profile">
+              <Button variant="outline" size="sm">
+                {t("Cancel")}
+              </Button>
             </Link>
-            <ButtonPrimary
-              className="small"
+            <Button 
+              size="sm"
               onClick={this.handleSubmit}
               disabled={
                 new_password?.length < 8 || new_password !== confirmPassword
               }
             >
-              <img src={iconSave} alt={t("Profile")} /> {t("Save")}
-            </ButtonPrimary>
+              <img src={iconSave} alt={t("Profile")} style={{ marginRight: '8px', width: '16px', height: '16px' }} /> 
+              {t("Save")}
+            </Button>
           </div>
         </Flex>
         <Row gutter={[10, 0]} style={{ margin: "20px 0 15px" }}>
           <Col span={24}>
-            <InputWrapper className="has-input-icon">
-              <Input
+            <FormGroup>
+              <Label htmlFor="old_password">{t("Current password")} *</Label>
+              <PasswordInput
                 required
-                type={oldPasswordType ? "password" : "text"}
                 name="old_password"
+                id="old_password"
                 value={old_password}
-                ref={(el) => (this.oldPasswordRef = el)}
-                autoComplete="new-password"
-                className={`dynamic-input ${
-                  errors?.old_password?.length ? "input-error" : ""
-                } ${old_password ? "has-value" : ""}`}
+                autoComplete="current-password"
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.oldPasswordRef.focus()}>
-                {t("Current password")}
-              </label>
-              <span
-                className="password-toggler"
-                onClick={() =>
-                  this.setState((prevState) => ({
-                    oldPasswordType: !prevState.oldPasswordType,
-                  }))
-                }
-              >
-                {oldPasswordType ? (
-                  <EyeTwoTone twoToneColor="#527bdd" />
-                ) : (
-                  <EyeInvisibleOutlined />
-                )}
-              </span>
               <InputErrors name={"old_password"} errors={errors} />
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24}>
-            <InputWrapper className="has-input-icon">
-              <Input
+            <FormGroup>
+              <Label htmlFor="new_password">{t("New password")} *</Label>
+              <PasswordInput
                 required
-                type={newPasswordType ? "password" : "text"}
                 name="new_password"
+                id="new_password"
                 value={new_password}
-                ref={(el) => (this.new_passwordRef = el)}
                 autoComplete="new-password"
-                className={`dynamic-input ${
-                  errors.new_password?.length ? "input-error" : ""
-                } ${new_password ? "has-value" : ""}`}
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.new_passwordRef.focus()}>
-                {t("New password")}
-              </label>
-              <span
-                className="password-toggler"
-                onClick={() =>
-                  this.setState((prevState) => ({
-                    newPasswordType: !prevState.newPasswordType,
-                  }))
-                }
-              >
-                {newPasswordType ? (
-                  <EyeTwoTone twoToneColor="#527bdd" />
-                ) : (
-                  <EyeInvisibleOutlined />
-                )}
-              </span>
               {new_password && new_password.length < 8 && (
-                <>
-                  <img
-                    src={iconError}
-                    alt={t("tick")}
-                    className="input-icon error"
-                  />
-                  <span className="input-msg">
-                    {t("At least 8 characters")}
-                  </span>
-                </>
+                <FormError>{t("At least 8 characters")}</FormError>
               )}
               <InputErrors name={"new_password"} errors={errors} />
-            </InputWrapper>
+            </FormGroup>
           </Col>
           <Col span={24}>
-            <InputWrapper className="has-input-icon">
-              <Input
+            <FormGroup>
+              <Label htmlFor="confirmPassword">{t("Confirm new password")} *</Label>
+              <PasswordInput
                 required
-                type={newPasswordType ? "password" : "text"}
                 name="confirmPassword"
+                id="confirmPassword"
                 value={confirmPassword}
-                ref={(el) => (this.confirmPasswordRef = el)}
                 autoComplete="new-password"
-                className={`dynamic-input ${
-                  errors.new_password?.length ? "input-error" : ""
-                } ${confirmPassword ? "has-value" : ""}`}
                 onChange={this.handleInput}
               />
-              <label htmlFor="" onClick={() => this.confirmPasswordRef.focus()}>
-                {t("Confirm new password")}
-              </label>
-              <span
-                className="password-toggler"
-                onClick={() =>
-                  this.setState((prevState) => ({
-                    newPasswordType: !prevState.newPasswordType,
-                  }))
-                }
-              >
-                {newPasswordType ? (
-                  <EyeTwoTone twoToneColor="#527bdd" />
-                ) : (
-                  <EyeInvisibleOutlined />
-                )}
-              </span>
               {confirmPassword &&
                 new_password &&
                 confirmPassword !== new_password && (
-                  <>
-                    <img
-                      src={iconError}
-                      alt={t("tick")}
-                      className="input-icon error"
-                    />
-                    <span className="input-msg">
-                      {t("Password does not match")}
-                    </span>
-                  </>
+                  <FormError>{t("Password does not match")}</FormError>
                 )}
               <InputErrors name={"new_password"} errors={errors} />
-            </InputWrapper>
+            </FormGroup>
           </Col>
         </Row>
       </ProfileEditPage>
@@ -262,4 +241,4 @@ const mapDispatchToProps = (dispatch) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(withLocale(PasswordEdit)));
+)(withRouter(withLocale(withToast(PasswordEdit))));

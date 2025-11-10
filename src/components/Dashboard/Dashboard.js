@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Card, Progress, Empty } from "antd";
+import { Row, Col, Empty } from "antd";
 import DashboardPage from "../../styles/dashboard";
 import { TitleH3, Flex } from "../../styles";
 import { ReactComponent as RightArrow } from "../../assets/dashboard/right-arrow.svg";
@@ -21,6 +21,9 @@ import { fetchStatistics } from "./utils";
 import { CountryReportPillars } from "../../data";
 import { RadialBarChart } from "../UI";
 import { noop } from "lodash";
+import { Card, CardContent, CardFooter } from "../UI/shadcn/card";
+import { Progress as ShProgress } from "../UI/shadcn/progress";
+import { Button as ShButton, Badge } from "../UI/shadcn";
 
 const NoDataContainer = styled.div`
   display: flex;
@@ -140,13 +143,26 @@ const Dashboard = () => {
 
   return (
     <DashboardPage ref={printRef} id="dashboard">
-      <Flex jc="flex-end" margin="0 0 10px">
-        <PrintDashboardToFile page="dashboard" />
-        <Print
-          ref={printRef.current}
-          orientation="portrait"
-          style={{ marginLeft: 10 }}
-        />
+      <Flex jc="space-between" align="center" margin="0 0 10px" style={{ flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <TitleH3 style={{ margin: 0 }}>{t("Dashboard")}</TitleH3>
+          <Badge variant="success" size="sm">shadcn/ui</Badge>
+        </div>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <ShButton 
+            variant="outline" 
+            size="sm"
+            onClick={() => history.push('/dashboard/components')}
+          >
+            🎨 Components
+          </ShButton>
+          <PrintDashboardToFile page="dashboard" />
+          <Print
+            ref={printRef.current}
+            orientation="portrait"
+            style={{ marginLeft: 10 }}
+          />
+        </div>
       </Flex>
       <Row style={{ marginBottom: 24 }}>
         <Col className="col-left" xs={24} md={8} xl={8}>
@@ -155,53 +171,49 @@ const Dashboard = () => {
               {t("How business ready is")} <b>{currentCountryName}</b>
               {t("?")}
             </TitleH3>
-            <Card
-              style={{ marginTop: 16 }}
-              className="info"
-              bordered={false}
-              actions={
-                currentCountryPillars?.PDF_URL
-                  ? [
-                      <a
-                        target="_blank"
-                        className="content"
-                        rel="noopener noreferrer"
-                        href={currentCountryPillars.PDF_URL}
-                        key="pdf-link"
-                      >
-                        <div className="text-capitalize">
-                          {t("See full country profile")} <RightArrow />
-                        </div>
-                        <div className="text-center">
-                          <small>{t("Source: World Bank")}</small>
-                        </div>
-                      </a>,
-                    ]
-                  : []
-              }
-            >
-              {!currentCountryPillars ||
-              !currentCountryPillars.data ||
-              pillars.length === 0 ? (
-                <NoDataContainer>
-                  <Empty
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description={
-                      <NoDataMessage>
-                        {t(`No data available for ${currentCountryName}`)}
-                      </NoDataMessage>
-                    }
+            <Card style={{ marginTop: 16 }} className="info">
+              <CardContent>
+                {!currentCountryPillars ||
+                !currentCountryPillars.data ||
+                pillars.length === 0 ? (
+                  <NoDataContainer>
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description={
+                        <NoDataMessage>
+                          {t(`No data available for ${currentCountryName}`)}
+                        </NoDataMessage>
+                      }
+                    />
+                  </NoDataContainer>
+                ) : (
+                  <RadialBarChart
+                    id="dashboard-radial-bar-chart"
+                    pillars={pillars}
+                    showOverallScore={false}
+                    onPillarClick={redirectToReportPage}
+                    topicName=""
                   />
-                </NoDataContainer>
-              ) : (
-                <RadialBarChart
-                  id="dashboard-radial-bar-chart"
-                  pillars={pillars}
-                  showOverallScore={false}
-                  onPillarClick={redirectToReportPage}
-                  topicName=""
-                />
-              )}
+                )}
+              </CardContent>
+              {currentCountryPillars?.PDF_URL ? (
+                <CardFooter>
+                  <a
+                    target="_blank"
+                    className="content"
+                    rel="noopener noreferrer"
+                    href={currentCountryPillars.PDF_URL}
+                    key="pdf-link"
+                  >
+                    <div className="text-capitalize">
+                      {t("See full country profile")} <RightArrow />
+                    </div>
+                    <div className="text-center">
+                      <small>{t("Source: World Bank")}</small>
+                    </div>
+                  </a>
+                </CardFooter>
+              ) : null}
             </Card>
           </div>
         </Col>
@@ -272,11 +284,11 @@ const Dashboard = () => {
                         key={index}
                       >
                         <h5 className="progress-title">{t(item.title)}</h5>
-                        <Progress
-                          trailColor="#ECEEF4"
-                          strokeColor="#1447e5"
-                          strokeWidth={13}
-                          percent={percent}
+                        <ShProgress
+                          trackColor="#ECEEF4"
+                          color="#1447e5"
+                          thickness={13}
+                          value={percent}
                           format={(percent) => percent + "%"}
                         />
                       </ProgressBar>

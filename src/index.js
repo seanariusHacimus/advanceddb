@@ -8,6 +8,8 @@ import "./styles/index.css";
 import GlobalStyle from "./styles/global";
 import moment from "moment-timezone";
 import Spinner from "./components/UI/Spinner";
+import { ThemeProvider } from "./components/UI/ThemeProvider";
+import { ToastProvider } from "./components/UI/shadcn/toast";
 
 // To switch to different time zone, just edit this line
 moment.tz.setDefault("EST");
@@ -18,9 +20,13 @@ const root = createRoot(container);
 root.render(
   <Provider store={store}>
     <PersistGate loading={<Spinner />} persistor={persistor}>
-      <App />
+      <ThemeProvider>
+        <ToastProvider>
+          <App />
+          <GlobalStyle />
+        </ToastProvider>
+      </ThemeProvider>
     </PersistGate>
-    <GlobalStyle />
   </Provider>
 );
 
