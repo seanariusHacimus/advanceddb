@@ -6,10 +6,9 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Button, ButtonGroup, ButtonGroupItem, PageHeader, PageHeaderTitle, PageHeaderActions } from "../../UI/shadcn";
 import { useSelector, useDispatch } from "react-redux";
-import { Flex, TitleH3 } from "../../../styles";
-import { Button } from "../../UI/shadcn";
+import { LayoutGrid, List, Plus } from "lucide-react";
 import {
   ActionStatuses,
   TaskProgress,
@@ -21,9 +20,6 @@ import Frappe from "./components/Frappe";
 import Axios from "../../../utils/axios";
 import { fetchActionPlans } from "../../../store/Actions/actions";
 import { getDonutChartData } from "../../../utils/statisticsCalculator";
-import iconAddSubaction from "../../../assets/startBusiness/add-primary.svg";
-import iconList2 from "../../../assets/startBusiness/list-2.svg";
-import iconGantt from "../../../assets/startBusiness/gantt.svg";
 import Spinner from "../../UI/Spinner";
 import { ActionPlanPage } from "../../../styles/startBusiness";
 import Print from "../../../components/UI/Printer";
@@ -39,7 +35,6 @@ function ActionPlan({ currentIndicator, actionPermissions }) {
   const [isGanttActive, setIsGanttActive] = useState(false);
   const [newAction, setNewAction] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [collapseActive, setCollapseActive] = useState(false);
   const [printActive, setPrintActive] = useState(false);
   const [overDueTasks, setOverDueTasks] = useState([]);
   const [printSortedData, setPrintSortedData] = useState([]);
@@ -150,69 +145,57 @@ function ActionPlan({ currentIndicator, actionPermissions }) {
 
   const controlSection = (
     <ActionPlanPage>
-      <Flex margin="30px 0 20px" className="action-btn-group">
-        <TitleH3>{t("Action plan")}</TitleH3>
-        {!isEmpty && (
-          <>
-            <Button
-              style={{ marginLeft: "auto" }}
-              onClick={() => setIsGanttActive(true)}
-              title={t("Gantt Chart")}
-              className={`small list-btn transparent ${
-                isGanttActive && "active"
-              }`}
-            >
-              <img src={iconGantt} alt={t("show ganttchart")} />
+      <PageHeader>
+        <PageHeaderTitle>{t("Action plan")}</PageHeaderTitle>
+        <PageHeaderActions>
+          {!isEmpty && (
+            <ButtonGroup>
+              <ButtonGroupItem
+                onClick={() => setIsGanttActive(true)}
+                className={isGanttActive ? "active" : ""}
+                title={t("Gantt Chart")}
+              >
+                <LayoutGrid />
+              </ButtonGroupItem>
+              <ButtonGroupItem
+                onClick={() => setIsGanttActive(false)}
+                className={!isGanttActive ? "active" : ""}
+                title={t("List View")}
+              >
+                <List />
+              </ButtonGroupItem>
+            </ButtonGroup>
+          )}
+          {actionPermissions.create ? (
+            <Button size="sm" onClick={formModalHandler}>
+              <Plus size={16} />
+              {t("New Action")}
             </Button>
-            <Button
-              onClick={() => setIsGanttActive(false)}
-              className={`small list-btn transparent ${
-                !isGanttActive && "active"
-              }`}
-            >
-              <img src={iconList2} alt={t("add subaction")} />
+          ) : (
+            <Button size="sm" variant="outline" onClick={handleUserRoles}>
+              <Plus size={16} />
+              {t("New Action")}
+              {modalVisible && <UserRoles hideModal={handleUserRoles} />}
             </Button>
-          </>
-        )}
-        {actionPermissions.create ? (
-          <Button
-            style={{ marginLeft: isEmpty ? "auto" : "initial" }}
-            size="sm"
-            onClick={formModalHandler}
-          >
-            <img src={iconAddSubaction} alt={t("add subaction")} style={{ marginRight: '8px', width: '16px', height: '16px' }} />
-            {t("New Action")}
-          </Button>
-        ) : (
-          <Button
-            style={{ marginLeft: isEmpty ? "auto" : "initial" }}
-            size="sm"
-            variant="outline"
-            onClick={handleUserRoles}
-          >
-            <img src={iconAddSubaction} alt={t("add subaction")} style={{ marginRight: '8px', width: '16px', height: '16px' }} />
-            {t("New Action")}
-            {modalVisible && <UserRoles hideModal={handleUserRoles} />}
-          </Button>
-        )}
-        {!isEmpty && (
-          <>
-            <Print
-              ref={isGanttActive ? ganttRef.current : actionListRef.current}
-              beforePrint={beforePrint}
-              afterPrint={afterPrint}
-              style={{ marginLeft: 10 }}
-              buttonStyle={{ padding: 10, height: 34 }}
-            />
+          )}
+          {!isEmpty && (
+            <>
+              <Print
+                ref={isGanttActive ? ganttRef.current : actionListRef.current}
+                beforePrint={beforePrint}
+                afterPrint={afterPrint}
+                buttonStyle={{ padding: 10, height: 34 }}
+              />
 
-            <PrintToFile
-              id={currentIndicator.id}
-              title={currentIndicator.title}
-              printSortedData={printSortedData}
-            />
-          </>
-        )}
-      </Flex>
+              <PrintToFile
+                id={currentIndicator.id}
+                title={currentIndicator.title}
+                printSortedData={printSortedData}
+              />
+            </>
+          )}
+        </PageHeaderActions>
+      </PageHeader>
       {newAction && actionPermissions.create && (
         <Suspense fallback={<Spinner />}>
           <CreateAction
@@ -229,15 +212,17 @@ function ActionPlan({ currentIndicator, actionPermissions }) {
   if (actions.length) {
     return (
       <div>
-        <Row className="action-statistics" gutter={[20, 20]}>
-          <ActionStatuses chartData={chartData} showLabels={false} />
-          <TaskProgress
-            actions={actions}
-            collapseActive={collapseActive}
-            onToggleCollapse={() =>
-              setCollapseActive((prevState) => !prevState)
-            }
-          />
+        <div 
+          className="action-statistics" 
+          style={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '16px',
+            marginBottom: '24px'
+          }}
+        >
+          <ActionStatuses chartData={chartData} />
+          <TaskProgress actions={actions} />
           <OverdueActions
             actions={overDueTasks}
             actionPermissions={actionPermissions}
@@ -246,7 +231,7 @@ function ActionPlan({ currentIndicator, actionPermissions }) {
             fetchCurrentWorkingGroup={fetchCurrentWorkingGroupCallback}
             selectedWorkingGroup={selectedWorkingGroup}
           />
-        </Row>
+        </div>
         {controlSection}
         {actions.length ? (
           isGanttActive ? (

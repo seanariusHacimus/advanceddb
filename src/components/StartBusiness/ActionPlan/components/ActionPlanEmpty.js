@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton, Row, Col } from "antd";
+import { Skeleton, Row, Col } from "../../../UI/shadcn";
 import { TitleH3 } from "../../../../styles";
 import { ChartTitle } from "../../../../styles/graph";
 import { ReactComponent as EmptyGraph } from "../../../../assets/startBusiness/empty-graph.svg";

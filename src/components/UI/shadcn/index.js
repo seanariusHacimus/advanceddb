@@ -2,7 +2,6 @@
 // This makes imports easier: import { Button, Input, Card } from './components/UI/shadcn';
 
 // Layout & Navigation
-export { Card, CardHeader, CardTitle, CardContent, CardFooter } from './card';
 export { 
   Sidebar, 
   SidebarHeader, 
@@ -13,8 +12,11 @@ export {
   SidebarNavLink 
 } from './sidebar';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
+export { Navigation, NavigationItem, NavigationSpacer } from './navigation';
 export { Separator } from './separator';
 export { Progress } from './progress';
+export { Row, Col, RowWithGutter } from './grid';
+export { Modal, ModalOverlay, ModalContainer, ModalContent, ModalHeader, ModalTitle, ModalCloseButton, ModalBody, ModalFooter } from './modal';
 export { 
   DropdownMenu, 
   DropdownTrigger, 
@@ -34,7 +36,8 @@ export { Switch } from './switch';
 export { Select } from './select';
 
 // UI Elements
-export { Button, IconButton, ButtonGroup } from './button';
+export { Button, IconButton } from './button';
+export { ButtonGroup, ButtonGroupItem, PageHeader, PageHeaderTitle, PageHeaderActions } from './button-group';
 export { Badge, DotBadge, BadgeGroup } from './badge';
 export { Avatar, AvatarContainer, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup } from './avatar';
 export { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
@@ -58,6 +61,33 @@ export {
   AlertDescription,
   AlertWithIcon 
 } from './alert';
+export { Empty } from './empty';
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, StatCard, StatCardContent } from './card';
+export { MiniProgressIndicator } from './mini-progress-indicator';
+export { 
+  PieChart, 
+  PieChartContainer, 
+  PieChartLegend, 
+  LegendItem, 
+  LegendLabel, 
+  LegendColor, 
+  LegendValue,
+  ProgressList,
+  ProgressListItem,
+  ProgressItem,
+  ProgressHeader,
+  ProgressTitle,
+  ProgressPercentage,
+  ProgressBarContainer,
+  ProgressBarFill,
+  TaskList,
+  TaskListItem,
+  TaskBadge,
+  TaskContent,
+  TaskTitle,
+  TaskMeta,
+  TaskAction
+} from './charts';
 export { ToastProvider, useToast } from './toast';
 export { 
   Dialog, 
@@ -82,4 +112,17 @@ export {
   TableHead, 
   TableCell 
 } from './table';
+export {
+  SubActionCard,
+  SubActionCardItem,
+  SubActionsContainer,
+  AddSubActionContainer,
+  DragHandle,
+  SubActionContent,
+  SubActionName,
+  SubActionDate,
+  SubActionResponsible,
+  SubActionStatus,
+  SubActionActions
+} from './sub-action-card';
 

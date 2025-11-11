@@ -4,9 +4,11 @@ import { Button } from "../../styles";
 import iconPrinter from "../../assets/simulation/printer.svg";
 import { useLocale } from "../../utils/locale";
 import { ButtonAlternative } from "../../styles/buttons";
+import { useTheme } from "./ThemeProvider";
 
 export default forwardRef((props, ref) => {
   const [t] = useLocale();
+  const { theme } = useTheme();
   const {
     beforePrint = () => console.log("Before Print"),
     afterPrint = () => console.log("After Print"),
@@ -22,7 +24,7 @@ export default forwardRef((props, ref) => {
         removeAfterPrint={true}
         pageStyle={`@page { size: A4 ${orientation} !important;}`}
         trigger={() => (
-          <ButtonAlternative size="small">
+          <ButtonAlternative size="small" theme={theme}>
             <img src={iconPrinter} alt="added btn" /> {t("Print")}
           </ButtonAlternative>
         )}

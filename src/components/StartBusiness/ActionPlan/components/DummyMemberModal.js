@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Result, Row, Col, Modal } from "antd";
+import { Row, Col, Modal } from "../../../UI/shadcn";
 import { ButtonPrimary, InputWrapper, Input, Button } from "../../../../styles";
+import styled from "styled-components";
 import { ReactComponent as IconInvitation } from "../../../../assets/invitation/invite.svg";
 import Axios from "../../../../utils/axios";
 import {
@@ -62,6 +63,26 @@ export default function DummyModal(props) {
 
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
+  
+  // Result component replacement
+  const ResultContainer = styled.div`
+    text-align: center;
+    padding: 24px 0;
+    
+    .result-icon {
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .result-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      margin-bottom: 24px;
+    }
+  `;
+  
   return (
     <Modal
       title={null}
@@ -69,11 +90,14 @@ export default function DummyModal(props) {
       onCancel={handleCancel}
       footer={null}
       zIndex={1059}
+      width={520}
     >
-      <Result
-        icon={<IconInvitation fill="#527BDD" width="50" />}
-        title={t("Create dummy account")}
-        extra={
+      <ResultContainer>
+        <div className="result-icon">
+          <IconInvitation fill="hsl(var(--primary))" width="50" />
+        </div>
+        <h2 className="result-title">{t("Create dummy account")}</h2>
+        <div>
           <form
             onSubmit={onSubmit}
             onKeyDown={(e) => {
@@ -127,8 +151,8 @@ export default function DummyModal(props) {
               </Col>
             </Row>
           </form>
-        }
-      />
+        </div>
+      </ResultContainer>
     </Modal>
   );
 }

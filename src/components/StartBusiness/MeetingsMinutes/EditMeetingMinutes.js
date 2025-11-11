@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Row, Col, Alert, Modal, DatePicker } from "antd";
+import { Row, Col, Alert, Modal } from "../../UI/shadcn";
+import { DatePicker } from "antd";
 import {
   TitleH1,
   Button,

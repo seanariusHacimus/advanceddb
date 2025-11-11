@@ -91,16 +91,21 @@ export const ButtonSecondary = styled(Button)`
 
 export const ButtonAlternative = styled(Button)`
   height: ${(props) => (props.size === "small" ? "34px" : "51px")};
-  background-color: #fff;
-  border: 1px solid #d6d9e4;
-  color: #828a9d;
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--muted-foreground));
   font-weight: 500;
   font-size: 14px;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: #f3f3f4;
-    border: 1px solid #8f96a5;
+    background-color: hsl(var(--accent));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--accent-foreground));
     transition: all 0.3s ease;
+  }
+
+  img {
+    filter: ${(props) => props.theme === 'dark' ? 'brightness(0.8) invert(1)' : 'none'};
   }
 `;

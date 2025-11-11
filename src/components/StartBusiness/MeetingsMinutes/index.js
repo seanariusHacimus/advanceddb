@@ -1,8 +1,8 @@
 import { Component, lazy, Suspense, createRef } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { message } from "antd";
 import { Popconfirm, Table, DropdownMenuWrapper, DropdownItem } from "../../UI/shadcn";
+import { toast } from "react-toastify";
 import { MoreVertical } from "lucide-react";
 import { MeetingMinutesPage } from "../../../styles/startBusiness";
 import { TitleH3, Flex } from "../../../styles";
@@ -77,16 +77,14 @@ class MeetingMinutes extends Component {
   showMessage = (type = "error", content) => {
     const { t } = this.props;
     content = content || t("Something went wrong");
-    message[type]({
-      content,
-      duration: 10,
-      style: {
-        right: 30,
-        bottom: 30,
-        position: "fixed",
-        fontSize: 16,
-      },
-    });
+    
+    if (type === "success") {
+      toast.success(content);
+    } else if (type === "warning") {
+      toast.warning(content);
+    } else {
+      toast.error(content);
+    }
   };
 
   beforePrint = () => {
@@ -176,6 +174,7 @@ class MeetingMinutes extends Component {
                 >
                   <DropdownItem
                     as="div"
+                    variant="destructive"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <IconDelete />

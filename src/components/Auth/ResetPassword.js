@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
-import { Row, Col } from "antd";
+import { Row, Col } from "../UI/shadcn";
 import {
   CANCEL_RESET_PASSWORD,
   FETCH_RESET_PASSWORD_INFO,

@@ -22,7 +22,7 @@ export default styled.div`
   }
   .inner-block {
     padding: 20px;
-    background: #fff;
+    background: hsl(var(--card));
     width: 100%;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
@@ -521,14 +521,14 @@ export const MeetingMinutesPage = styled.div`
   }
 
   tr.ant-table-expanded-row > td {
-    background-color: #fff;
+    background-color: hsl(var(--card));
     border: 1px solid var(--border-grey);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-top: none;
   }
   .bg-white > td {
-    background-color: #fff !important;
+    background-color: hsl(var(--card)) !important;
   }
   .bg-white > td:first-of-type {
     border-left: 1px solid var(--border-grey);
@@ -687,7 +687,7 @@ export const MembersPage = styled(MeetingMinutesPage)`
     border-top-right-radius: 5px;
   }
   .bg-dark.ant-table-expanded-row > td {
-    background-color: #fff;
+    background-color: hsl(var(--card));
     border: 1px solid var(--border-grey);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -714,7 +714,7 @@ export const MembersPage = styled(MeetingMinutesPage)`
 
   .bg-denied.ant-table-expanded-row > td {
     opacity: 0.3;
-    background-color: #fff;
+    background-color: hsl(var(--card));
     border: 1px solid var(--border-grey);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -828,7 +828,7 @@ export const StyledMembersAll = styled(MembersPage)`
     border-top-right-radius: 5px;
   }
   .bg-dark.ant-table-expanded-row > td {
-    background-color: #fff;
+    background-color: hsl(var(--card));
     border: 1px solid var(--border-grey);
     border-top-left-radius: 0;
     border-top-right-radius: 0;

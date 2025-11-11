@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import { Row, Col, Select, Modal, DatePicker, Tag } from "antd";
+import { Row, Col, Modal } from "../../../UI/shadcn";
+import { Select, DatePicker, Tag } from "antd";
 import Axios from "../../../../utils/axios";
 import { UPDATE_ACTION } from "../../../../graphql/actions";
 import {

@@ -1,5 +1,6 @@
 import React from "react";
 import { 
+  Col, 
   StatCard, 
   CardHeader, 
   CardTitle, 
@@ -20,14 +21,16 @@ const ActionStatuses = ({ chartData }) => {
   }));
 
   return (
-    <StatCard>
-      <CardHeader>
-        <CardTitle>{t("Overall progress of tasks")}</CardTitle>
-      </CardHeader>
-      <StatCardContent>
-        <PieChart data={pieData} size={180} />
-      </StatCardContent>
-    </StatCard>
+    <Col xs={24} md={8} lg={6}>
+      <StatCard>
+        <CardHeader>
+          <CardTitle>{t("Overall progress of tasks")}</CardTitle>
+        </CardHeader>
+        <StatCardContent>
+          <PieChart data={pieData} size={220} />
+        </StatCardContent>
+      </StatCard>
+    </Col>
   );
 };
 

@@ -9,13 +9,16 @@ export const TaskProgressContainer = styled.div`
     width: 4px;
   }
   &::-webkit-scrollbar-track {
-    background: #eee;
+    background: hsl(var(--muted) / 0.3);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(to right, #638fce82 20%, #ffeb3b00 10px);
+    background: hsl(var(--primary) / 0.5);
     border-radius: 3px;
-    border: 6px solid var(--blue);
+    
+    &:hover {
+      background: hsl(var(--primary) / 0.7);
+    }
   }
 `;
 
@@ -30,7 +33,8 @@ export const OverdueActionsContainer = styled(TaskProgressContainer)`
     margin-right: 24px;
   }
   .sub-action {
-    background: #f3f6fd;
+    background: hsl(var(--muted) / 0.2);
+    transition: background-color 0.3s ease;
   }
   .ant-collapse-content {
     overflow: visible;

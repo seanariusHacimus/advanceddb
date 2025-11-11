@@ -1,0 +1,106 @@
+/* Sub-action table styling for better visual hierarchy */
+
+/* Override sub-action table container */
+.custom-draggable-table {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow-x: visible !important;
+  overflow: visible !important;
+}
+
+.custom-draggable-table table {
+  background: transparent !important;
+}
+
+/* Hide table header in sub-actions */
+.custom-draggable-table thead {
+  display: none !important;
+}
+
+/* Sub-action rows */
+.sub-action-row {
+  background: transparent !important;
+  transition: all 0.15s ease;
+  position: relative;
+  border: none !important;
+}
+
+.sub-action-row:hover {
+  background: hsl(var(--accent)) !important;
+}
+
+.sub-action-row td {
+  background: transparent !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+  padding: 10px 16px !important;
+  transition: all 0.15s ease;
+}
+
+/* Hover effect - hide border by matching it to background */
+.sub-action-row:hover td {
+  background: hsl(var(--accent)) !important;
+  border-bottom: 1px solid transparent !important;
+}
+
+/* Last row - no border */
+.sub-action-row:last-child td {
+  border-bottom: none !important;
+}
+
+.sub-action-row:last-child:hover td {
+  border-bottom: none !important;
+}
+
+/* Drag cursor for movable rows */
+.sub-action-row[style*="cursor: move"] {
+  cursor: move !important;
+}
+
+/* Drag and drop indicators */
+.custom-draggable-table tr.drop-over-downward td {
+  border-bottom: 2px dashed hsl(var(--primary)) !important;
+}
+
+.custom-draggable-table tr.drop-over-upward td {
+  border-top: 2px dashed hsl(var(--primary)) !important;
+}
+
+/* Add subaction button wrapper */
+.sub-action-wrapper {
+  padding: 12px 16px;
+  text-align: right;
+  background: transparent;
+}
+
+.add-subaction-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  background: transparent;
+  color: hsl(var(--foreground));
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.add-subaction-btn:hover {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  border-color: hsl(var(--primary));
+}
+
+.add-subaction-btn img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) saturate(100%) invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.add-subaction-btn:hover img {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(98%) saturate(1500%) hue-rotate(197deg) brightness(95%) contrast(101%);
+}
+

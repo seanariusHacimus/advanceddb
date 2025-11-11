@@ -1,42 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
+  Col, 
   StatCard, 
   CardHeader, 
   CardTitle, 
   StatCardContent,
+  CardFooter,
+  Button,
   ProgressList,
   ProgressListItem
 } from "../../../UI/shadcn";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import PropTypes from "prop-types";
 import { useLocale } from "../../../../utils/locale";
 
+const INITIAL_ITEMS_TO_SHOW = 5;
+
 const TaskProgress = ({ actions }) => {
   const [t] = useLocale();
+  const [showAll, setShowAll] = useState(false);
+
+  const displayedActions = showAll ? actions : actions.slice(0, INITIAL_ITEMS_TO_SHOW);
+  const hasMore = actions.length > INITIAL_ITEMS_TO_SHOW;
 
   return (
-    <StatCard>
-        <CardHeader style={{ position: 'relative' }}>
+    <Col xs={24} md={8} lg={9}>
+      <StatCard>
+        <CardHeader>
           <CardTitle>{t("Task progress")}</CardTitle>
-          {actions.length > 4 && (
-            <div style={{ 
-              position: 'absolute', 
-              right: '20px', 
-              top: '50%', 
-              transform: 'translateY(-50%)',
-              color: 'hsl(var(--muted-foreground))',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              fontSize: '12px'
-            }}>
-              <ChevronsUpDown size={14} />
-            </div>
-          )}
         </CardHeader>
-        <StatCardContent style={{ maxHeight: '280px', overflowY: 'auto', position: 'relative' }}>
+        <StatCardContent>
           <ProgressList>
-            {actions.map((item) => {
+            {displayedActions.map((item) => {
               const { total, completed } = item.sub_action_stats || {};
               let percent = 0;
 
@@ -67,7 +62,30 @@ const TaskProgress = ({ actions }) => {
             })}
           </ProgressList>
         </StatCardContent>
+        {hasMore && (
+          <CardFooter>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAll(!showAll)}
+              style={{ width: '100%' }}
+            >
+              {showAll ? (
+                <>
+                  <ChevronUp size={16} />
+                  {t("Show less")}
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={16} />
+                  {t("Show all")} ({actions.length - INITIAL_ITEMS_TO_SHOW} {t("more")})
+                </>
+              )}
+            </Button>
+          </CardFooter>
+        )}
       </StatCard>
+    </Col>
   );
 };
 

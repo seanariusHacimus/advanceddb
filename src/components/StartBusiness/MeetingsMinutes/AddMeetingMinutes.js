@@ -1,17 +1,15 @@
 import React, { Component } from "react";
-import { Row, Col, Alert, DatePicker } from "antd";
+import { Row, Col, Alert, Button, PageHeader, PageHeaderTitle, PageHeaderActions } from "../../UI/shadcn";
+import { DatePicker } from "antd";
 import moment from "moment-timezone";
 import { ActionPlanPage } from "../../../styles/startBusiness";
 import {
-  TitleH3,
-  Button,
-  ButtonPrimary,
-  Flex,
   InputWrapper,
   Input,
+  Flex,
 } from "../../../styles";
+import { Plus } from "lucide-react";
 import iconUpload from "../../../assets/indicator/upload.svg";
-import iconAddSubaction from "../../../assets/startBusiness/add-primary.svg";
 import Editor from "../../UI/Editor/Editor.js";
 import Axios from "../../../utils/axios";
 import { CREATE_MEETING } from "../../../graphql/meetings";
@@ -164,19 +162,21 @@ class AddMeetingMinutes extends Component {
 
     return (
       <ActionPlanPage>
-        <Flex margin="0 0 20px" className="action-btn-group">
-          <TitleH3>{t("All meetings")}</TitleH3>
-          {meetingMinutesPermissions.create && (
-            <ButtonPrimary
-              className="small add-new-action"
-              onClick={() => this.setState({ newMeetingMinute: true })}
-            >
-              <img src={iconAddSubaction} alt={t("add subaction")} />{" "}
-              {t("New Meeting")}
-            </ButtonPrimary>
-          )}
-          {this.props.children}
-        </Flex>
+        <PageHeader>
+          <PageHeaderTitle>{t("All meetings")}</PageHeaderTitle>
+          <PageHeaderActions>
+            {this.props.children}
+            {meetingMinutesPermissions.create && (
+              <Button
+                size="sm"
+                onClick={() => this.setState({ newMeetingMinute: true })}
+              >
+                <Plus size={16} />
+                {t("New Meeting")}
+              </Button>
+            )}
+          </PageHeaderActions>
+        </PageHeader>
         {newMeetingMinute && meetingMinutesPermissions.create && (
           <form onSubmit={this.submitAction} id="header">
             <ErrorAlerts alerts={alerts} />
@@ -250,23 +250,23 @@ class AddMeetingMinutes extends Component {
             </Flex>
             <Flex className="btn-group">
               <Button
-                className="transparent small"
+                variant="outline"
                 type="button"
                 onClick={() => this.fileRef.click()}
               >
-                {" "}
-                <img src={iconUpload} alt={t("Upload")} /> {t("Attach file")}
+                <img src={iconUpload} alt={t("Upload")} style={{ marginRight: '8px' }} />
+                {t("Attach file")}
               </Button>
               <Button
-                className="transparent small cancel"
+                variant="outline"
                 type="button"
                 onClick={() => this.setState({ newMeetingMinute: false })}
               >
                 {t("Cancel")}
               </Button>
-              <ButtonPrimary className="small">
+              <Button type="submit">
                 {t("Save meeting minutes")}
-              </ButtonPrimary>
+              </Button>
             </Flex>
           </form>
         )}

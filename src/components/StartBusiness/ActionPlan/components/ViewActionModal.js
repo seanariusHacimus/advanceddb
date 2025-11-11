@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Typography, Tabs, Row, Col, Button } from "antd";
+import { Modal, Row, Col, Badge, PieChart } from "../../../UI/shadcn";
+import { Button as AntButton, Tabs } from "antd";
 import {
   CalendarOutlined,
   DownOutlined,
@@ -11,7 +12,6 @@ import {
 import moment from "moment-timezone";
 import { withLocale } from "../../../../utils/locale";
 import { indicatorStatus } from "../../../../constants";
-import DonutChart from "./DonutChart";
 import {
   ModalContainer,
   Section,
@@ -68,6 +68,17 @@ const ViewActionModal = ({
     return indicatorStatus[status] || status;
   };
 
+  const getStatusVariant = (status) => {
+    const statusMap = {
+      'not_started': 'secondary',
+      'in_progress': 'default',
+      'completed': 'success',
+      'overdue': 'destructive',
+      'on_hold': 'outline',
+    };
+    return statusMap[status] || 'default';
+  };
+
   const categoryInfo = [
     classification.pillar_number,
     classification.category,
@@ -77,6 +88,13 @@ const ViewActionModal = ({
     .join(" • ");
 
   const donutChartData = getDonutChartData(sub_action_stats);
+  
+  // Transform data for shadcn PieChart
+  const pieChartData = donutChartData.map(item => ({
+    label: t(item.title),
+    value: item.value || 0,
+    color: item.color
+  }));
 
   const tabItems = [
     {
@@ -92,7 +110,14 @@ const ViewActionModal = ({
           <Row gutter={[16, 16]}>
             {!isSubaction && (
               <Col xs={24} md={12}>
-                <DonutChart data={donutChartData} t={t} />
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  padding: '20px'
+                }}>
+                  <PieChart data={pieChartData} size={200} />
+                </div>
               </Col>
             )}
 
@@ -260,13 +285,9 @@ const ViewActionModal = ({
                     <span className="subaction-number">
                       #{subAction.number ?? index}
                     </span>
-                    <Button
-                      type="button"
-                      shape="round"
-                      className={`status-button ${subAction.status}`}
-                    >
+                    <Badge variant={getStatusVariant(subAction.status)}>
                       {getStatusLabel(subAction.status)}
-                    </Button>
+                    </Badge>
                   </div>
                   <DownOutlined className="expand-icon" />
                 </div>
@@ -315,13 +336,9 @@ const ViewActionModal = ({
             {categoryInfo && <div className="subtitle">{categoryInfo}</div>}
           </div>
           <div className="header-right">
-            <Button
-              type="button"
-              shape="round"
-              className={`status-button ${status}`}
-            >
+            <Badge variant={getStatusVariant(status)}>
               {getStatusLabel(status)}
-            </Button>
+            </Badge>
           </div>
         </div>
 

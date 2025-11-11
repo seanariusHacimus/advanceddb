@@ -1,10 +1,8 @@
 import { Link, withRouter } from "react-router-dom";
-import { Layout, Alert } from "antd";
+import { Alert } from "../UI/shadcn";
 import { useSelector } from "react-redux";
 import { colors } from "../../constants";
 import { useLocale } from "../../utils/locale";
-
-const { Content } = Layout;
 
 function MainContent(props) {
   const [t] = useLocale();
@@ -19,10 +17,10 @@ function MainContent(props) {
   const links = pathname.split("/");
 
   return (
-    <Content
+    <main
       style={{
         ...styles.content,
-        background: pathname.includes("/home") ? "#f5f8fc" : colors.background,
+        background: pathname.includes("/home") ? "hsl(var(--muted))" : "hsl(var(--background))",
       }}
     >
       {request_password_change &&
@@ -33,15 +31,13 @@ function MainContent(props) {
             to="/profile/security"
             style={{ display: "block", margin: "0 -20px" }}
           >
-            <Alert
-              message={t("Please change your password")}
-              type="warning"
-              style={{ marginBottom: 20 }}
-            />
+            <Alert variant="warning" style={{ marginBottom: 20 }}>
+              {t("Please change your password")}
+            </Alert>
           </Link>
         )}
       {props.children}
-    </Content>
+    </main>
   );
 }
 

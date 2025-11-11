@@ -1,10 +1,12 @@
 import React, { useState, Suspense, lazy } from "react";
 import moment from "moment-timezone";
 import { 
+  Col, 
   StatCard, 
   CardHeader, 
   CardTitle, 
   StatCardContent,
+  CardFooter,
   Button,
   TaskList,
   TaskListItem,
@@ -16,10 +18,12 @@ import {
   DropdownMenuWrapper,
   DropdownItem
 } from "../../../UI/shadcn";
-import { ChevronsUpDown, MoreVertical, UserPlus } from "lucide-react";
+import { ChevronDown, ChevronUp, MoreVertical, UserPlus } from "lucide-react";
 import { useLocale } from "../../../../utils/locale";
 
 const ReassignModal = lazy(() => import("../components/ReassignModal"));
+
+const INITIAL_ITEMS_TO_SHOW = 5;
 
 function OverdueActions({
   actions = [],
@@ -29,9 +33,13 @@ function OverdueActions({
   fetchCurrentWorkingGroup,
   selectedWorkingGroup,
 }) {
+  const [showAll, setShowAll] = useState(false);
   const [reassignAction, setReassignAction] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
   const [t] = useLocale();
+
+  const displayedActions = showAll ? actions : actions.slice(0, INITIAL_ITEMS_TO_SHOW);
+  const hasMore = actions.length > INITIAL_ITEMS_TO_SHOW;
 
   const getMenuItems = (item) => {
     const canReassign = actionPermissions.update && item.status !== "completed";
@@ -62,29 +70,14 @@ function OverdueActions({
   }
 
   return (
-    <>
+    <Col xs={24} md={8} lg={9}>
       <StatCard>
-        <CardHeader style={{ position: 'relative' }}>
+        <CardHeader>
           <CardTitle>{t("Overdue tasks")}</CardTitle>
-          {actions.length > 4 && (
-            <div style={{ 
-              position: 'absolute', 
-              right: '20px', 
-              top: '50%', 
-              transform: 'translateY(-50%)',
-              color: 'hsl(var(--muted-foreground))',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              fontSize: '12px'
-            }}>
-              <ChevronsUpDown size={14} />
-            </div>
-          )}
         </CardHeader>
-        <StatCardContent style={{ padding: 0, maxHeight: '280px', overflowY: 'auto' }}>
+        <StatCardContent style={{ padding: 0 }}>
           <TaskList>
-            {actions.map((item) => {
+            {displayedActions.map((item) => {
               const daysOverdue = getDaysOverdue(item.end_at);
               const menuItems = getMenuItems(item);
 
@@ -117,6 +110,28 @@ function OverdueActions({
             })}
           </TaskList>
         </StatCardContent>
+        {hasMore && (
+          <CardFooter>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowAll(!showAll)}
+              style={{ width: '100%' }}
+            >
+              {showAll ? (
+                <>
+                  <ChevronUp size={16} />
+                  {t("Show less")}
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={16} />
+                  {t("Show all")} ({actions.length - INITIAL_ITEMS_TO_SHOW} {t("more")})
+                </>
+              )}
+            </Button>
+          </CardFooter>
+        )}
       </StatCard>
 
       {reassignAction && (
@@ -135,7 +150,7 @@ function OverdueActions({
           />
         </Suspense>
       )}
-    </>
+    </Col>
   );
 }
 

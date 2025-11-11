@@ -1,13 +1,12 @@
 import React from "react";
-import { Tooltip, Dropdown, Menu, Typography } from "antd";
-import { Popconfirm, Avatar, Badge } from "../../UI/shadcn";
+import { Popconfirm, Avatar, Badge, Tooltip, DropdownMenuWrapper, DropdownItem, MiniProgressIndicator } from "../../UI/shadcn";
 import moment from "moment-timezone";
 import iconHashTag from "../../../assets/startBusiness/user-grey.svg";
 import iconAttachment from "../../../assets/startBusiness/attachment.svg";
-import PieChart from "./components/PieIndicator";
 import { indicatorStatus } from "../../../constants";
 import store from "../../../store";
 import { AiOutlinePaperClip } from "react-icons/ai";
+import styled from "styled-components";
 
 // Helper function to get badge variant based on status
 const getStatusVariant = (status) => {
@@ -27,34 +26,44 @@ const getStatusVariant = (status) => {
   }
 };
 
+// Styled truncated text
+const TruncatedText = styled.span`
+  display: inline-block;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  cursor: ${props => props.clickable ? 'pointer' : 'default'};
+`;
+
 const displayAttachments = (data) => {
-  const menu = (
-    <Menu>
-      {data.map((item, index) => {
-        return (
-          <Menu.Item key={item.id} className="action-attachment-item">
-            <a href={item.file.download_url} target="_blank">
-              {index + 1}. {item.filename}
-            </a>
-          </Menu.Item>
-        );
-      })}
-    </Menu>
-  );
   return (
-    <Dropdown
-      overlay={menu}
-      className="action-attachments"
-      getPopupContainer={(el) => el.parentNode}
+    <DropdownMenuWrapper
+      trigger={
+        <div style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}>
+          <AiOutlinePaperClip
+            size={20}
+            color="hsl(var(--primary))"
+            style={{ marginRight: -5, marginTop: 5 }}
+          />
+        </div>
+      }
+      align="start"
     >
-      <div style={{ fontSize: 22 }}>
-        <AiOutlinePaperClip
-          size={20}
-          color="#527BDD"
-          style={{ marginRight: -5, marginTop: 5 }}
-        />
-      </div>
-    </Dropdown>
+      {data.map((item, index) => (
+        <DropdownItem
+          key={item.id}
+          as="a"
+          href={item.file.download_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none' }}
+        >
+          {index + 1}. {item.filename}
+        </DropdownItem>
+      ))}
+    </DropdownMenuWrapper>
   );
 };
 
@@ -76,7 +85,7 @@ export const columns = ({
         <div className="icons-set">
           {action.status === "completed" ? (
             <a type="button" className="trigger-btn">
-              <PieChart
+              <MiniProgressIndicator
                 data={
                   action.sub_action_stats.total
                     ? action.sub_action_stats
@@ -86,20 +95,21 @@ export const columns = ({
             </a>
           ) : (
             <a type="button" className="trigger-btn">
-              <PieChart data={action.sub_action_stats} />
+              <MiniProgressIndicator data={action.sub_action_stats} />
             </a>
           )}
           {action.attachments.length
             ? displayAttachments(action.attachments)
             : null}
-          <Typography.Text
-            className="item-title"
-            ellipsis={{ tooltip: true }}
-            style={{ cursor: onViewAction ? "pointer" : "default" }}
-            onClick={() => onViewAction && onViewAction(action)}
-          >
-            {index + 1}. {val}
-          </Typography.Text>
+          <Tooltip content={val} side="top">
+            <TruncatedText
+              className="item-title"
+              clickable={!!onViewAction}
+              onClick={() => onViewAction && onViewAction(action)}
+            >
+              {index + 1}. {val}
+            </TruncatedText>
+          </Tooltip>
         </div>
       );
     },
@@ -152,20 +162,23 @@ export const columns = ({
       return (
         <div>
           {responsive_tags.map((tag) => (
-            <Tooltip title={tag.title} key={tag.title}>
+            <Tooltip title={`Tag: ${tag.title}`} key={tag.title}>
               <Avatar
                 fallback={tag.title?.substring(0, 1).toUpperCase() || '#'}
                 size="sm"
                 style={{ 
                   marginRight: '4px', 
-                  border: "2px solid hsl(var(--muted))",
-                  background: 'hsl(var(--muted))'
+                  border: "2px solid hsl(45 93% 47% / 0.3)",
+                  background: 'hsl(45 93% 47% / 0.15)',
+                  color: 'hsl(45 93% 30%)',
+                  fontWeight: '700',
+                  borderRadius: '4px'
                 }}
               />
             </Tooltip>
           ))}
           {responsive_accounts.map((acc) => (
-            <Tooltip title={acc.first_name} key={acc.id}>
+            <Tooltip title={`User: ${acc.first_name} ${acc.last_name || ''}`} key={acc.id}>
               <Avatar 
                 src={acc?.photo?.url} 
                 alt={acc.first_name}
@@ -173,7 +186,11 @@ export const columns = ({
                 size="sm"
                 style={{ 
                   marginRight: '4px',
-                  border: "2px solid hsl(var(--primary) / 0.2)"
+                  border: "2px solid hsl(var(--primary) / 0.3)",
+                  background: 'hsl(var(--primary) / 0.1)',
+                  color: 'hsl(var(--primary))',
+                  fontWeight: '600',
+                  borderRadius: '50%'
                 }}
               />
             </Tooltip>
@@ -429,20 +446,23 @@ export const subActionColumn = ({
       return (
         <div>
           {responsive_tags.map((tag) => (
-            <Tooltip title={tag.title} key={tag.title}>
+            <Tooltip title={`Tag: ${tag.title}`} key={tag.title}>
               <Avatar
                 fallback={tag.title?.substring(0, 1).toUpperCase() || '#'}
                 size="sm"
                 style={{ 
                   marginRight: '4px',
-                  border: "2px solid hsl(var(--muted))",
-                  background: 'hsl(var(--muted))'
+                  border: "2px solid hsl(45 93% 47% / 0.3)",
+                  background: 'hsl(45 93% 47% / 0.15)',
+                  color: 'hsl(45 93% 30%)',
+                  fontWeight: '700',
+                  borderRadius: '4px'
                 }}
               />
             </Tooltip>
           ))}
           {responsive_accounts.map((acc) => (
-            <Tooltip title={acc.first_name} key={acc.id}>
+            <Tooltip title={`User: ${acc.first_name} ${acc.last_name || ''}`} key={acc.id}>
               <Avatar 
                 src={acc?.photo?.url} 
                 alt={acc.first_name}
@@ -450,7 +470,11 @@ export const subActionColumn = ({
                 size="sm"
                 style={{ 
                   marginRight: '4px',
-                  border: "2px solid hsl(var(--primary) / 0.2)"
+                  border: "2px solid hsl(var(--primary) / 0.3)",
+                  background: 'hsl(var(--primary) / 0.1)',
+                  color: 'hsl(var(--primary))',
+                  fontWeight: '600',
+                  borderRadius: '50%'
                 }}
               />
             </Tooltip>

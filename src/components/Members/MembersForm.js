@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Modal, Select } from 'antd';
 import { WorkingGroup } from '../../styles/workingGroup';
-import { TitleH3, InputWrapper, Flex, Button, ButtonPrimary, } from '../../styles';
+import { InputWrapper, Flex } from '../../styles';
+import { Button, PageHeader, PageHeaderTitle, PageHeaderActions } from '../UI/shadcn';
+import { Plus } from 'lucide-react';
 import { ReactComponent as IconCheck } from '../../assets/list-icon.svg';
-import iconAddSubaction from '../../assets/startBusiness/add-primary.svg';
 import { FETCH_WORKING_GROUPS, ADD_MEMBERS_MUTATION } from '../../graphql/workingGroups';
 import Axios from '../../utils/axios';
 import {withLocale} from "../../utils/locale";
@@ -76,13 +77,15 @@ class AddMember extends Component {
     const {t} = this.props
     return (
       <WorkingGroup>
-        <Flex margin="-20px 0 20px" className="action-btn-group">
-          <TitleH3>{t("All members")}</TitleH3>
-          <ButtonPrimary padding="0 5px" className="small add-new-action" onClick={this.showModal}>
-            <img src={iconAddSubaction} alt={t("add subaction")} />
-            {t("New member")}
-          </ButtonPrimary>
-        </Flex>
+        <PageHeader style={{ marginTop: '-20px' }}>
+          <PageHeaderTitle>{t("All members")}</PageHeaderTitle>
+          <PageHeaderActions>
+            <Button size="sm" onClick={this.showModal}>
+              <Plus size={16} />
+              {t("New member")}
+            </Button>
+          </PageHeaderActions>
+        </PageHeader>
         <Modal
           title={null}
           visible={this.state.visible}
@@ -113,8 +116,8 @@ class AddMember extends Component {
               </Select>
             </InputWrapper>
             <Flex>
-              <Button type="reset" onClick={this.handleCancel} style={{ height: 51, marginRight: 12 }}>{t("Cancel")}</Button>
-              <ButtonPrimary>{t("Apply")}</ButtonPrimary>
+              <Button variant="outline" type="reset" onClick={this.handleCancel} style={{ marginRight: 12 }}>{t("Cancel")}</Button>
+              <Button type="submit">{t("Apply")}</Button>
             </Flex>
           </form>
         </Modal>

@@ -7,8 +7,9 @@ export const ModalContainer = styled.div`
     justify-content: space-between;
     margin-bottom: 0;
     padding-bottom: 8px;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid hsl(var(--border));
     gap: 12px;
+    transition: border-color 0.3s ease;
 
     .header-left {
       flex: 1;
@@ -17,13 +18,15 @@ export const ModalContainer = styled.div`
         margin: 0 0 8px 0;
         font-size: 24px;
         font-weight: 700;
-        color: #262626;
+        color: hsl(var(--foreground));
         line-height: 1.2;
+        transition: color 0.3s ease;
       }
 
       .subtitle {
         font-size: 14px;
-        color: #595959;
+        color: hsl(var(--muted-foreground));
+        transition: color 0.3s ease;
       }
     }
 
@@ -49,26 +52,30 @@ export const Section = styled.div`
     gap: 8px;
     font-size: 14px;
     font-weight: 600;
-    color: #262626;
+    color: hsl(var(--foreground));
     margin-bottom: 16px;
+    transition: color 0.3s ease;
 
     .section-icon {
-      color: #1890ff;
+      color: hsl(var(--primary));
+      transition: color 0.3s ease;
     }
   }
 
   .section-content {
-    background: #ffffff;
-    border: 1px solid #e8e8e8;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
     border-radius: 8px;
     padding: 16px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 `;
 
 export const InfoRow = styled.div`
   display: flex;
   padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  transition: border-color 0.3s ease;
 
   &:last-child {
     border-bottom: none;
@@ -76,14 +83,14 @@ export const InfoRow = styled.div`
 
   .info-label {
     font-size: 13px;
-    color: #8c8c8c;
+    color: hsl(var(--muted-foreground));
     width: 140px;
     flex-shrink: 0;
   }
 
   .info-value {
     font-size: 14px;
-    color: #262626;
+    color: hsl(var(--foreground));
     font-weight: 500;
     flex: 1;
   }
@@ -96,12 +103,13 @@ export const TagContainer = styled.div`
 `;
 
 export const TagBadge = styled.div`
-  background: #f5f5f5;
-  border: 1px solid #e8e8e8;
+  background: hsl(var(--muted) / 0.3);
+  border: 1px solid hsl(var(--border));
   border-radius: 16px;
   padding: 6px 12px;
   font-size: 13px;
-  color: #262626;
+  color: hsl(var(--foreground));
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 `;
 
 export const AttachmentRow = styled.div`
@@ -124,22 +132,24 @@ export const AttachmentRow = styled.div`
     .file-icon {
       width: 32px;
       height: 32px;
-      background: #f5f5f5;
+      background: hsl(var(--muted) / 0.3);
       border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #595959;
+      color: hsl(var(--muted-foreground));
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .file-name {
       font-size: 14px;
-      color: #262626;
+      color: hsl(var(--foreground));
       font-weight: 500;
       text-decoration: none;
+      transition: color 0.3s ease;
 
       &:hover {
-        color: #1890ff;
+        color: hsl(var(--primary));
       }
     }
   }
@@ -148,31 +158,32 @@ export const AttachmentRow = styled.div`
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #1890ff;
+    color: hsl(var(--primary));
     font-size: 13px;
     cursor: pointer;
     padding: 6px 12px;
     border-radius: 4px;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 
     &:hover {
-      background: #e6f7ff;
+      background: hsl(var(--accent));
+      color: hsl(var(--accent-foreground));
     }
   }
 `;
 
 export const SubActionListItem = styled.div`
-  background: #ffffff;
-  border: 1px solid #e8e8e8;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 
   &:hover {
-    border-color: #1890ff;
-    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+    border-color: hsl(var(--primary));
+    box-shadow: 0 2px 8px hsl(var(--primary) / 0.1);
   }
 
   .subaction-header {
@@ -184,8 +195,9 @@ export const SubActionListItem = styled.div`
     .subaction-number {
       font-size: 14px;
       font-weight: 600;
-      color: #262626;
+      color: hsl(var(--foreground));
       margin-right: 12px;
+      transition: color 0.3s ease;
     }
 
     .subaction-status {
@@ -193,15 +205,17 @@ export const SubActionListItem = styled.div`
     }
 
     .expand-icon {
-      color: #8c8c8c;
+      color: hsl(var(--muted-foreground));
       font-size: 14px;
+      transition: color 0.3s ease;
     }
   }
 
   .subaction-description {
     font-size: 14px;
-    color: #595959;
+    color: hsl(var(--muted-foreground));
     margin-bottom: 8px;
+    transition: color 0.3s ease;
   }
 
   .subaction-date {
@@ -209,6 +223,7 @@ export const SubActionListItem = styled.div`
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: #8c8c8c;
+    color: hsl(var(--muted-foreground));
+    transition: color 0.3s ease;
   }
 `;

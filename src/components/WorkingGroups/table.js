@@ -1,5 +1,4 @@
-import { Tag } from "antd";
-import { Popconfirm } from "../UI/shadcn";
+import { Popconfirm, Badge } from "../UI/shadcn";
 import iconUser from "../../assets/header/user.png";
 import icons from "../../constants/icons";
 import { ReactComponent as IconCommon } from "../../assets/header/indicatorIcons/common.svg";
@@ -71,12 +70,13 @@ export const columns = ({ t, ...props }) => [
           title={t("Are you sure to disable this working group?")}
           onConfirm={() => props.updateWorkingGroupStatus(data.id, false)}
         >
-          <Tag
+          <Badge
+            variant="success"
             className="clickable active"
-            style={{ padding: "4px 16px", width: "90%", maxWidth: 150 }}
+            style={{ padding: "4px 16px", width: "90%", maxWidth: 150, cursor: 'pointer' }}
           >
             {t("Active")}
-          </Tag>
+          </Badge>
         </Popconfirm>
       ) : (
         <Popconfirm
@@ -86,17 +86,19 @@ export const columns = ({ t, ...props }) => [
           onConfirm={() => props.updateWorkingGroupStatus(data.id, true)}
           cancelText={t("Cancel")}
         >
-          <Tag
+          <Badge
+            variant="secondary"
             className="clickable disabled not_started"
             style={{
               padding: "4px 16px",
               width: "90%",
               maxWidth: 150,
               pointerEvents: "all",
+              cursor: 'pointer'
             }}
           >
             {t("Disabled")}
-          </Tag>
+          </Badge>
         </Popconfirm>
       ),
   },

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Upload, Modal, Button, message } from "antd";
+import { Upload, Modal as AntModal, Button as AntButton } from "antd";
+import { toast } from "react-toastify";
 import { PlusOutlined, PaperClipOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocale } from "../../../../utils/locale";
@@ -103,7 +104,7 @@ function PicturesWall({
     } catch (err) {
       console.log(err);
       setError(t("The file could not be uploaded"));
-      message.error(t("The file could not be uploaded"));
+      toast.error(t("The file could not be uploaded"));
     }
   };
 
@@ -127,7 +128,7 @@ function PicturesWall({
     } catch (err) {
       console.log(err);
       setError(t("The file could not be uploaded"));
-      message.error(t("The file could not be uploaded"));
+      toast.error(t("The file could not be uploaded"));
     }
   };
 

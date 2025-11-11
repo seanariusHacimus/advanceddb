@@ -9,6 +9,12 @@ export const TableContainer = styled.div`
   border: 1px solid hsl(var(--border));
   background: hsl(var(--card));
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  
+  /* Remove border and scroll for nested tables */
+  &.custom-draggable-table {
+    border: none;
+    overflow: visible;
+  }
 `;
 
 // Table Element
@@ -33,13 +39,13 @@ export const TableHeader = styled.thead`
 export const TableBody = styled.tbody`
   tr {
     border-bottom: 1px solid hsl(var(--border));
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
     
     &:last-child {
       border-bottom: none;
     }
     
-    &:hover {
+    &:not(.sub-action-row):hover {
       background: hsl(var(--muted) / 0.5);
     }
     
@@ -62,7 +68,42 @@ export const TableFooter = styled.tfoot`
 `;
 
 // Table Row
-export const TableRow = styled.tr``;
+export const TableRow = styled.tr`
+  border-bottom: 1px solid hsl(var(--border));
+  transition: background-color 0.15s ease, border-color 0.3s ease;
+  
+  /* Regular row hover - exclude expanded rows */
+  &:not(.expanded-row):hover {
+    background: hsl(var(--muted) / 0.5);
+  }
+  
+  &.selected {
+    background: hsl(var(--accent));
+  }
+  
+  &.clickable {
+    cursor: pointer;
+  }
+  
+  /* Expanded row styling - no hover, different background */
+  &.expanded-row {
+    background: transparent;
+    
+    &:hover {
+      background: transparent;
+    }
+    
+    td {
+      padding: 16px 16px 16px 40px !important;
+      border-bottom: none;
+    }
+  }
+  
+  /* Parent row of expanded content - remove bottom border */
+  &.has-expanded-content {
+    border-bottom: none;
+  }
+`;
 
 // Table Head Cell
 export const TableHead = styled.th`
@@ -179,6 +220,7 @@ export function Table({
   className,
   expandedRowKeys: controlledExpandedRowKeys,
   onExpand,
+  showHeader = true,
   ...props
 }) {
   const [sortedInfo, setSortedInfo] = useState({});
@@ -297,19 +339,20 @@ export function Table({
   return (
     <TableContainer className={className} {...props}>
       <TableElement>
-        <TableHeader>
-          <TableRow>
-            {rowSelection && (
-              <TableHead style={{ width: '48px' }}>
-                <input
-                  type="checkbox"
-                  checked={selectedRowKeys.length === sortedData.length}
-                  onChange={(e) => handleSelectAll(e.target.checked)}
-                />
-              </TableHead>
-            )}
-            {expandable && <TableHead style={{ width: '48px' }}></TableHead>}
-            {columns.map((column, index) => {
+        {showHeader && (
+          <TableHeader>
+            <TableRow>
+              {rowSelection && (
+                <TableHead style={{ width: '48px' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedRowKeys.length === sortedData.length}
+                    onChange={(e) => handleSelectAll(e.target.checked)}
+                  />
+                </TableHead>
+              )}
+              {expandable && <TableHead style={{ width: '48px' }}></TableHead>}
+              {columns.map((column, index) => {
               const columnKey = column.key || column.dataIndex || index;
               const isSorted = sortedInfo.columnKey === columnKey;
               
@@ -325,30 +368,31 @@ export function Table({
                 </TableHead>
               );
             })}
-          </TableRow>
-        </TableHeader>
+            </TableRow>
+          </TableHeader>
+        )}
         <TableBody>
           {sortedData.map((record, recordIndex) => {
             const key = typeof rowKey === 'function' ? rowKey(record, recordIndex) : record[rowKey] || recordIndex;
             const isSelected = selectedRowKeys.includes(key);
             const isExpanded = expandedRowKeys.includes(key);
-            const rowProps = onRow?.(record, recordIndex) || {};
-            
-            // Handle expandRowByClick
-            const handleRowClick = (e) => {
-              if (expandable?.expandRowByClick && !e.target.closest('button, a, input, [role="button"]')) {
-                handleExpandRow(record, e);
-              }
-              rowProps.onClick?.(e);
-            };
+                  const rowProps = onRow?.(record, recordIndex) || {};
+                  
+                  // Handle expandRowByClick
+                  const handleRowClick = (e) => {
+                    if (expandable?.expandRowByClick && !e.target.closest('button, a, input, [role="button"]')) {
+                      handleExpandRow(record, e);
+                    }
+                    rowProps.onClick?.(e);
+                  };
 
-            return (
-              <React.Fragment key={key}>
-                <TableRow
-                  className={`${isSelected ? 'selected' : ''} ${rowProps.onClick || expandable?.expandRowByClick ? 'clickable' : ''}`}
-                  {...rowProps}
-                  onClick={handleRowClick}
-                >
+                  return (
+                    <React.Fragment key={key}>
+                      <TableRow
+                        className={`${isSelected ? 'selected' : ''} ${rowProps.onClick || expandable?.expandRowByClick ? 'clickable' : ''} ${isExpanded ? 'has-expanded-content' : ''}`}
+                        {...rowProps}
+                        onClick={handleRowClick}
+                      >
                   {rowSelection && (
                     <TableCell>
                       <input
@@ -398,19 +442,30 @@ export function Table({
                     );
                   })}
                 </TableRow>
-                {expandable && isExpanded && expandable.expandedRowRender && (
-                  <TableRow className={expandable.expandedRowClassName?.() || ''}>
-                    <TableCell 
-                      colSpan={columns.length + (rowSelection ? 1 : 0) + 1}
-                      style={{ 
-                        padding: expandable.indentSize !== undefined ? `12px ${expandable.indentSize}px` : '12px 16px',
-                        background: 'hsl(var(--muted) / 0.3)'
-                      }}
-                    >
-                      {expandable.expandedRowRender(record, recordIndex)}
-                    </TableCell>
-                  </TableRow>
-                )}
+                      {expandable && isExpanded && expandable.expandedRowRender && (
+                        <TableRow className={`expanded-row ${expandable.expandedRowClassName?.() || ''}`}>
+                          <TableCell 
+                            colSpan={columns.length + (rowSelection ? 1 : 0) + 1}
+                          >
+                            <div style={{
+                              position: 'relative',
+                              marginLeft: '24px',
+                              paddingLeft: '24px',
+                              borderLeft: '2px solid hsl(var(--primary) / 0.3)',
+                            }}>
+                              <div style={{
+                                background: 'hsl(var(--muted) / 0.15)',
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: 'var(--radius)',
+                                overflow: 'hidden',
+                                boxShadow: 'inset 0 1px 2px 0 rgb(0 0 0 / 0.05)'
+                              }}>
+                                {expandable.expandedRowRender(record, recordIndex)}
+                              </div>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      )}
               </React.Fragment>
             );
           })}

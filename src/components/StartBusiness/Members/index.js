@@ -154,6 +154,7 @@ class Members extends Component {
               >
                 <DropdownItem
                   as="div"
+                  variant="destructive"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <IconDelete />

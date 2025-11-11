@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Upload, Button } from "antd";
+import { Upload } from "antd";
+import { Button } from "../../../UI/shadcn";
 import { PaperClipOutlined } from "@ant-design/icons";
 import { useLocale } from "../../../../utils/locale";
 import Swal from "sweetalert2";

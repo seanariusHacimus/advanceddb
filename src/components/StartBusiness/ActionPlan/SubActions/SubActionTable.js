@@ -1,71 +1,107 @@
 import React, {
   useState,
   useCallback,
-  useRef,
   useEffect,
   Suspense,
   lazy,
 } from "react";
 import { useSelector } from "react-redux";
-import { Table, Dropdown, Menu } from "antd";
-import { DndProvider, useDrag, useDrop, createDndContext } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { 
+  SubActionsContainer, 
+  SubActionCardItem,
+  AddSubActionContainer,
+  DropdownMenuWrapper, 
+  DropdownItem,
+  Badge
+} from "../../../UI/shadcn";
+import { MoreVertical } from "lucide-react";
+import { useDrag, useDrop } from "react-dnd";
 import update from "immutability-helper";
-import { MoreOutlined } from "@ant-design/icons";
 import { ReactComponent as IconDelete } from "../../../../assets/reform/delete.svg";
 import { ReactComponent as IconEdit } from "../../../../assets/reform/edit.svg";
 import { ReactComponent as IconReassign } from "../../../../assets/startBusiness/add-user.svg";
-import { subActionColumn } from "../table";
 import { useLocale } from "../../../../utils/locale";
 
 const EditSubAction = lazy(() => import("./EditSubAction"));
 const ReassignModal = lazy(() => import("../components/ReassignModal"));
 const ViewActionModal = lazy(() => import("../components/ViewActionModal"));
-const RNDContext = createDndContext(HTML5Backend);
 
-const type = "DragableBodyRow";
+// Drag and drop type constant
+const SUBACTION_TYPE = "DragableSubAction";
 
-const DragableBodyRow = ({
-  index,
-  moveRow,
-  className,
-  style,
+// Helper function to get status variant
+const getStatusVariant = (status) => {
+  switch (status) {
+    case 'completed':
+      return 'default';
+    case 'ongoing_within_deadline':
+      return 'warning';
+    case 'ongoing_past_deadline':
+      return 'destructive';
+    case 'not_started':
+      return 'secondary';
+    case 'on_review':
+      return 'outline';
+    default:
+      return 'secondary';
+  }
+};
+
+// Draggable Sub-Action Card Component
+const DraggableSubActionCard = ({ 
+  subAction, 
+  index, 
+  moveRow, 
   onDragEnd,
-  ...restProps
+  parentIndex,
+  onViewAction,
+  renderStatus,
+  renderActions,
+  t 
 }) => {
-  const ref = React.useRef();
-  const [{ isOver, dropClassName }, drop] = useDrop({
-    accept: type,
-    collect: (monitor) => {
-      const { index: dragIndex } = monitor.getItem() || {};
-      if (dragIndex === index) {
-        return {};
-      }
-      return {
-        isOver: monitor.isOver(),
-        dropClassName:
-          dragIndex < index ? " drop-over-downward" : " drop-over-upward",
-      };
-    },
-    drop: (item) => {
-      moveRow(item.index, index);
-    },
-  });
-  const [, drag] = useDrag({
-    item: { type, index },
+  const dragItem = { type: "DragableSubAction", index };
+  
+  const [{ isDragging }, drag] = useDrag({
+    type: "DragableSubAction",
+    item: dragItem,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
+    end: onDragEnd,
   });
-  drop(drag(ref));
+
+  const [{ isOver, dropClassName }, drop] = useDrop({
+    accept: "DragableSubAction",
+    collect: (monitor) => {
+      const item = monitor.getItem();
+      if (!item || item.index === index) return {};
+      
+      return {
+        isOver: monitor.isOver(),
+        dropClassName: item.index < index ? 'drop-over-downward' : 'drop-over-upward',
+      };
+    },
+    drop: (item) => {
+      if (item && item.index !== undefined) {
+        moveRow(item.index, index);
+      }
+    },
+  });
+
   return (
-    <tr
-      ref={ref}
-      className={`${className}${isOver ? dropClassName : ""}`}
-      style={{ cursor: "move", ...style }}
-      {...restProps}
-      onDragEnd={onDragEnd}
-    />
+    <div ref={(node) => drag(drop(node))}>
+      <SubActionCardItem
+        subAction={subAction}
+        index={index}
+        parentIndex={parentIndex}
+        onViewAction={onViewAction}
+        isDragging={isDragging}
+        dropClassName={dropClassName}
+        status={renderStatus(subAction)}
+        actions={renderActions(subAction)}
+        t={t}
+      />
+    </div>
   );
 };
 
@@ -89,12 +125,6 @@ const DragSortingTable = (props) => {
   const [viewAction, setViewAction] = useState(false);
   const [actionToView, setActionToView] = useState({});
 
-  const components = {
-    body: {
-      row: DragableBodyRow,
-    },
-  };
-
   useEffect(() => {
     if (props.onDragCancel) {
       setData(props.data);
@@ -116,8 +146,6 @@ const DragSortingTable = (props) => {
     [data]
   );
 
-  const manager = useRef(RNDContext);
-
   const modalHandler = (name) => {
     setEditAction((visible) => !visible);
   };
@@ -136,93 +164,86 @@ const DragSortingTable = (props) => {
     setActionToView({});
   };
 
-  const moreActionsBtn = {
-    title: "",
-    dataIndex: "",
-    key: "actions",
-    // fixed: 'right',
-    className: "more-action-cell",
-    render: (val, currentAction) =>
-      Object.values(actionPermissions).some((v) => v) && (
-        <div onClick={(e) => e.stopPropagation()}>
-          <Dropdown.Button
-            className="more-action-btn"
-            trigger={["click"]}
-            overlay={
-              <Menu className="more-action-btn-table">
-                {actionPermissions.update && (
-                  <Menu.Item
-                    key="1"
-                    onClick={() => {
-                      setEditAction(true);
-                      setSelectedAction(currentAction);
-                    }}
-                    icon={<IconEdit />}
-                  >
-                    {t("Edit")}
-                  </Menu.Item>
-                )}
-                {actionPermissions.update && (
-                  <Menu.Item
-                    key="2"
-                    onClick={() => {
-                      setReassignAction(true);
-                      setSelectedAction(currentAction);
-                    }}
-                    icon={<IconReassign />}
-                  >
-                    {t("Re-assign")}
-                  </Menu.Item>
-                )}
-                {(actionPermissions.delete ||
-                  currentAction.creator?.id === id) && (
-                  <Menu.Item
-                    key="3"
-                    onClick={() => props.deleteAction(currentAction.id)}
-                    icon={<IconDelete />}
-                  >
-                    {t("Delete")}
-                  </Menu.Item>
-                )}
-              </Menu>
-            }
-            icon={<MoreOutlined />}
-          />
-        </div>
-      ),
+  const renderActions = (currentAction) => {
+    if (!Object.values(actionPermissions).some((v) => v)) return null;
+
+    return (
+      <div onClick={(e) => e.stopPropagation()}>
+        <DropdownMenuWrapper
+          align="end"
+          trigger={<MoreVertical size={16} />}
+        >
+          {actionPermissions.update && (
+            <DropdownItem
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditAction(true);
+                setSelectedAction(currentAction);
+              }}
+            >
+              <IconEdit />
+              {t("Edit")}
+            </DropdownItem>
+          )}
+          {actionPermissions.update && (
+            <DropdownItem
+              onClick={(e) => {
+                e.stopPropagation();
+                setReassignAction(true);
+                setSelectedAction(currentAction);
+              }}
+            >
+              <IconReassign />
+              {t("Re-assign")}
+            </DropdownItem>
+          )}
+          {(actionPermissions.delete || currentAction.creator?.id === id) && (
+            <DropdownItem
+              variant="destructive"
+              onClick={(e) => {
+                e.stopPropagation();
+                props.deleteAction(currentAction.id);
+              }}
+            >
+              <IconDelete />
+              {t("Delete")}
+            </DropdownItem>
+          )}
+        </DropdownMenuWrapper>
+      </div>
+    );
   };
 
-  const columns = [
-    { key: "icon", dataIndex: "icon", title: "=" },
-    ...subActionColumn({
-      actionPermissions,
-      parentIndex: props.parentIndex,
-      completeAction: props.completeAction,
-      updateStatus: props.updateStatus,
-      t,
-      onViewAction: handleViewAction,
-    }),
-    moreActionsBtn,
-  ];
+  const renderStatus = (subAction) => {
+    return (
+      <Badge variant={getStatusVariant(subAction.status)}>
+        {t(subAction.status)}
+      </Badge>
+    );
+  };
 
   return (
-    <DndProvider manager={manager.current.dragDropManager}>
-      <Table
-        columns={columns}
-        className="custom-draggable-table"
-        dataSource={data}
-        showHeader={false}
-        components={components}
-        pagination={{ hideOnSinglePage: true, defaultPageSize: 20 }}
-        rowKey="id"
-        onRow={(record, index) => ({
-          id: record.id,
-          index,
-          moveRow,
-          className: "sub-action-row",
-          onDragEnd: () => props.onDragEnd(data),
-        })}
-      />
+    <>
+      <SubActionsContainer>
+        {data.map((subAction, index) => (
+          <div 
+            key={subAction.id}
+            style={{ marginBottom: index < data.length - 1 ? '8px' : '0' }}
+          >
+            <DraggableSubActionCard
+              subAction={subAction}
+              index={index}
+              moveRow={moveRow}
+              onDragEnd={() => props.onDragEnd(data)}
+              parentIndex={props.parentIndex}
+              onViewAction={handleViewAction}
+              renderStatus={renderStatus}
+              renderActions={renderActions}
+              t={t}
+            />
+          </div>
+        ))}
+      </SubActionsContainer>
       {editAction && (
         <Suspense fallback={t("Loading...")}>
           <EditSubAction
@@ -258,7 +279,7 @@ const DragSortingTable = (props) => {
           />
         </Suspense>
       )}
-    </DndProvider>
+    </>
   );
 };
 

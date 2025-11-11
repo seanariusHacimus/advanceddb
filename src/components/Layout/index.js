@@ -1,6 +1,5 @@
 import { useMemo, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Layout } from "antd";
 import constants, { colors } from "../../constants";
 import Style from "../../styles/header";
 import useInterval from "@use-it/interval";
@@ -60,7 +59,7 @@ function LayoutComponent(props) {
   const isMessagingPage = pathname?.includes("messaging");
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", width: "100%" }} id="main-content">
+    <div style={{ display: "flex", minHeight: "100vh", width: "100%", background: "hsl(var(--background))" }} id="main-content">
       {!isMessagingPage && <Sidebar sidebar={sidebar} />}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", marginLeft: isMessagingPage ? 0 : 256, width: isMessagingPage ? "100%" : "calc(100% - 256px)" }}>
         <Header />
@@ -72,7 +71,7 @@ function LayoutComponent(props) {
 
 const styles = {
   wrapper: {
-    background: colors.background,
+    background: "hsl(var(--background))",
   },
 };
 

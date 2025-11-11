@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-
-import { message } from 'antd';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { useToast } from '../UI/shadcn/toast';
 import Axios from '../../utils/axios';
 import { UPDATE_WORKING_GROUP } from '../../graphql/workingGroups';
 import { fetchWorkingGroupsAction } from '../../store/WorkingGroups/actions';
@@ -13,6 +12,7 @@ const EditableArea = (props) => {
   const currentRef = useRef();
   const dispatch = useDispatch();
   const [t] = useLocale();
+  const { toast } = useToast();
   const [title, setTitle] = useState(props.title);
 
   const updateWorkingGroupTitle = useCallback(async () => {
@@ -31,15 +31,9 @@ const EditableArea = (props) => {
       console.log(res);
 
       if (res?.data) {
-        message.success({
-          content: 'Title has been updated successfully',
-          duration: 10,
-          style: {
-            right: 30,
-            bottom: 30,
-            position: 'fixed',
-            fontSize: 16,
-          },
+        toast.success({
+          title: t('Success'),
+          description: t('Title has been updated successfully'),
         });
         dispatch(fetchWorkingGroupsAction())
       }
@@ -51,18 +45,15 @@ const EditableArea = (props) => {
       if (extensions.validation) {
         const title = extensions.validation.group.title.includes('should not conflict') ? t('Group with this title is already exist') : extensions.validation.group.title
         console.log(title);
-        message.error({
-          content: title,
-          duration: 10,
-          style: {
-            right: 30,
-            bottom: 30,
-            position: 'fixed',
-            fontSize: 16,
-          },
+        toast.error({
+          title: t('Error'),
+          description: title,
         })
       } else {
-        message.error('Something went wrong');
+        toast.error({
+          title: t('Error'),
+          description: t('Something went wrong'),
+        });
       }
     }
   }, [title]);
@@ -78,8 +69,8 @@ const EditableArea = (props) => {
       {
         title !== props.title &&
         <div>
-          <CheckCircleOutlined className="check-icon success" onClick={updateWorkingGroupTitle} />
-          <CloseCircleOutlined className="check-icon error" onClick={() => setTitle(props.title)} />
+          <CheckCircle className="check-icon success" onClick={updateWorkingGroupTitle} style={{ cursor: 'pointer' }} />
+          <XCircle className="check-icon error" onClick={() => setTitle(props.title)} style={{ cursor: 'pointer' }} />
         </div>
       }
 

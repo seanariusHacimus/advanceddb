@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Modal, Select, Tag } from "antd";
+import { Modal, Row, Col } from "../../../UI/shadcn";
+import { Select, Tag } from "antd";
 import Axios from "../../../../utils/axios";
 import { UPDATE_ACTION } from "../../../../graphql/actions";
 import {

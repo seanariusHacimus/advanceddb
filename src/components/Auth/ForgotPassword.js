@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, useHistory } from "react-router-dom";
-import { Row, Col } from "antd";
+import { Row, Col } from "../UI/shadcn";
 import Axios from "../../utils/axios";
 import { signInSuccess } from "../../store/Auth/actions";
 import { REQUEST_PASSWORD_RESET } from "../../graphql/auth";

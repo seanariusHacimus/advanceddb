@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Empty } from "antd";
+import { Row, Col, Empty } from "../UI/shadcn";
 import DashboardPage from "../../styles/dashboard";
 import { TitleH3, Flex } from "../../styles";
 import { ReactComponent as RightArrow } from "../../assets/dashboard/right-arrow.svg";

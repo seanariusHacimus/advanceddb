@@ -4,6 +4,9 @@ import { bindActionCreators } from "redux";
 import { Table, Popconfirm, DropdownMenuWrapper, DropdownItem } from "../../UI/shadcn";
 import { MoreVertical } from "lucide-react";
 import scrollIntoView from "scroll-into-view";
+import "../../UI/shadcn/table-subaction.css";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { withRouter } from "react-router-dom";
 import { ReactComponent as IconChevronDown } from "../../../assets/startBusiness/chevron-down.svg";
@@ -437,15 +440,16 @@ class ActionList extends Component {
                     okText={t("Confirm")}
                     cancelText={t("Cancel")}
                     icon={null}
-                  >
-                    <DropdownItem
-                      as="div"
-                      onClick={(e) => e.stopPropagation()}
                     >
-                      <IconDelete />
-                      {t("Delete")}
-                    </DropdownItem>
-                  </Popconfirm>
+                      <DropdownItem
+                        as="div"
+                        variant="destructive"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <IconDelete />
+                        {t("Delete")}
+                      </DropdownItem>
+                    </Popconfirm>
                 )}
               </DropdownMenuWrapper>
             </div>
@@ -454,8 +458,8 @@ class ActionList extends Component {
       },
     };
     return (
-      <ActionTablePage ref={this.props.printRef}>
-        <div className="inner-block">
+      <DndProvider backend={HTML5Backend}>
+        <ActionTablePage ref={this.props.printRef}>
           <ErrorAlerts alerts={alerts} />
           <Table
             expandedRowKeys={
@@ -512,9 +516,9 @@ class ActionList extends Component {
                 );
               },
               indentSize: 0,
-              expandedRowRender: (item, index) =>
-                item.sub_actions.length ? (
-                  <>
+              expandedRowRender: (item, index) => (
+                <>
+                  {item.sub_actions.length > 0 && (
                     <SubActionTable
                       key={item.id}
                       onDragEnd={this.onDragEnd}
@@ -539,26 +543,8 @@ class ActionList extends Component {
                       fetchOverdueActions={this.props.fetchOverdueActions}
                       selectedWorkingGroup={this.props.selectedWorkingGroup}
                     />
-                    {actionPermissions.create && (
-                      <div className="text-right sub-action-wrapper">
-                        <button
-                          type="button"
-                          className="add-subaction-btn"
-                          onClick={() =>
-                            this.setState({
-                              addSubAction: true,
-                              parentAction: item,
-                            })
-                          }
-                        >
-                          <img src={iconAddSubAction} alt="add subaction" />
-                          {t("Add subaction")}
-                        </button>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  actionPermissions.create && (
+                  )}
+                  {actionPermissions.create && (
                     <div className="text-right sub-action-wrapper">
                       <button
                         type="button"
@@ -570,12 +556,13 @@ class ActionList extends Component {
                           })
                         }
                       >
-                        <img src={iconAddSubAction} alt="add subaction" />{" "}
+                        <img src={iconAddSubAction} alt="add subaction" />
                         {t("Add subaction")}
                       </button>
                     </div>
-                  )
-                ),
+                  )}
+                </>
+              ),
             }}
           />
           {actions.length > this.defaultPageSize && (
@@ -660,8 +647,8 @@ class ActionList extends Component {
               />
             </Suspense>
           )}
-        </div>
-      </ActionTablePage>
+        </ActionTablePage>
+      </DndProvider>
     );
   }
 }

@@ -12,9 +12,11 @@ import StyledPrint from "../../styles/print";
 import { unionBy } from "lodash";
 import iconDownload from "../../assets/dashboard/download.svg";
 import { ButtonAlternative, ButtonPrimary } from "../../styles/buttons";
+import { useTheme } from "./ThemeProvider";
 
 const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
   const [t] = useLocale();
+  const { theme } = useTheme();
   const parentRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const [filters, setFilters] = useState({});
@@ -368,7 +370,7 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
 
   return (
     <StyledPrint ref={parentRef} style={{ marginLeft: 10, ...style }}>
-      <ButtonAlternative onClick={handleModal} size="small">
+      <ButtonAlternative onClick={handleModal} size="small" theme={theme}>
         <img src={iconDownload} alt="download" style={{ marginRight: 8 }} />
         {t("Download actions")}
       </ButtonAlternative>

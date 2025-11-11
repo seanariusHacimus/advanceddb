@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useRef, } from 'react';
 import { StyledMessagingNotifications } from '../../styles/header';
-import { MailOutlined } from '@ant-design/icons';
-import { Badge } from 'antd';
+import { Mail } from 'lucide-react';
+import { Badge } from '../UI/shadcn';
 import { useHistory } from 'react-router-dom';
 import socket, { socketLogin } from '../../utils/socket';
 import { rocketAxios } from '../../utils/axios';
@@ -74,9 +74,29 @@ const MessagingNotifications = (props) => {
 
   return (
     <StyledMessagingNotifications ref={parentRef} onClick={() => history.push('/dashboard/messaging')} className="clickable">
-      <Badge count={count} size="small" style={{ fontSize: 8 }}>
-        <MailOutlined style={{ fontSize: '18px', color: 'var(--title)' }} />
-      </Badge>
+      <div style={{ position: 'relative', display: 'inline-block' }}>
+        <Mail style={{ fontSize: '18px', width: '18px', height: '18px', color: 'hsl(var(--foreground))' }} />
+        {count > 0 && (
+          <Badge 
+            variant="destructive" 
+            style={{ 
+              position: 'absolute', 
+              top: '-8px', 
+              right: '-8px',
+              minWidth: '16px',
+              height: '16px',
+              padding: '0 4px',
+              fontSize: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '8px'
+            }}
+          >
+            {count}
+          </Badge>
+        )}
+      </div>
     </StyledMessagingNotifications>
   );
 };

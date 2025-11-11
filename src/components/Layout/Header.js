@@ -1,12 +1,10 @@
 import { useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Navigation } from "../UI/shadcn";
 import { useSelector } from "react-redux";
 import constants, { colors } from "../../constants";
 import logo from "../../assets/logo.svg";
-import Languages from "./Languages";
-import Notifications from "../Notifications/Notifications";
-import ProfilePopover from "../Profile/ProfilePopover";
+import TaskBar from "./TaskBar";
 import { groupTitleToUrl } from "../../utils";
 import { useLocale } from "../../utils/locale";
 import { WORKING_GROUP_SETTINGS_PATH } from "../../routes";
@@ -16,7 +14,6 @@ import iconUserManagement from "../../assets/header/profile/user-management.svg"
 import iconApprovals from "../../assets/header/profile/approvals.svg";
 import iconAuditLog from "../../assets/header/profile/audit-log.svg";
 
-const { Header } = Layout;
 const CURRENT_COUNTRY_CODE = constants.defaultCountry.code;
 const CURRENT_COUNTRY_NAME = constants.defaultCountry.name;
 
@@ -107,7 +104,7 @@ const WorkingGroupMenu = ({
   }));
 
   return (
-    <Menu
+    <Navigation
       style={styles.headerMenu}
       selectedKeys={[window.location.pathname]}
       mode="horizontal"
@@ -188,7 +185,7 @@ const ProfileMenu = ({ t }) => {
   }));
 
   return (
-    <Menu
+    <Navigation
       style={styles.headerMenu}
       selectedKeys={[window.location.pathname]}
       mode="horizontal"
@@ -265,7 +262,7 @@ const DashboardMenu = ({ workingGroupUrl, t }) => {
   );
 
   return (
-    <Menu
+    <Navigation
       style={styles.headerMenu}
       selectedKeys={[currentPath]}
       mode="horizontal"
@@ -290,6 +287,7 @@ function HeaderRC(props) {
   }));
 
   const links = props.location.pathname.split("/");
+  const isMessagingPage = props.location.pathname?.includes("messaging");
 
   // Extract working group title from URL when selectedWorkingGroup is empty
   const getWorkingGroupTitle = () => {
@@ -347,17 +345,17 @@ function HeaderRC(props) {
     }
   };
 
-  return (
-    <Header className="site-layout-sub-header-background" style={styles.header}>
-      {renderMenu()}
+  const headerStyles = {
+    ...styles.header,
+    left: isMessagingPage ? 0 : 256,
+    width: isMessagingPage ? "100%" : "calc(100% - 256px)",
+  };
 
-      {/* ------- User Profile ------ */}
-      <div id="task-bar">
-        <Languages />
-        <Notifications />
-        <ProfilePopover />
-      </div>
-    </Header>
+  return (
+    <header className="site-layout-sub-header-background" style={headerStyles}>
+      {renderMenu()}
+      <TaskBar />
+    </header>
   );
 }
 
@@ -365,17 +363,25 @@ const styles = {
   header: {
     position: "fixed",
     top: 0,
-    left: 0,
-    width: "100%",
-    height: 64, // Fixed typo: was "hight"
-    background: colors.background,
+    left: 256,
+    width: "calc(100% - 256px)",
+    height: 64,
+    background: "hsl(var(--background))",
+    borderBottom: "1px solid hsl(var(--border))",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    zIndex: 1100,
+    padding: 0,
   },
   headerMenu: {
-    padding: "0 40px",
-    background: colors.background,
+    padding: "0 24px",
+    background: "hsl(var(--background))",
+    flex: 1,
+    height: "100%",
   },
   wrapper: {
-    background: colors.background,
+    background: "hsl(var(--background))",
   },
 };
 

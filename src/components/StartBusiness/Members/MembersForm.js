@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Modal, Select, Alert } from 'antd';
+import { Modal, Alert, Button, PageHeader, PageHeaderTitle, PageHeaderActions } from '../../UI/shadcn';
+import { Select } from 'antd';
 import { WorkingGroup } from '../../../styles/workingGroup';
 import {
-  TitleH3, InputWrapper, Flex, Button, ButtonPrimary,
+  InputWrapper,
+  Flex,
 } from '../../../styles';
+import { Plus } from 'lucide-react';
 import { ReactComponent as IconCheck } from '../../../assets/list-icon.svg';
-import iconAddSubaction from '../../../assets/startBusiness/add-primary.svg';
 import { ADD_MEMBERS_MUTATION } from '../../../graphql/workingGroups';
 import { FETCH_ALL_MEMBERS } from '../../../graphql/members';
 import Axios from '../../../utils/axios';
@@ -126,21 +128,21 @@ class AddMember extends Component {
     return (
       <WorkingGroup>
         {!visible && <ErrorAlerts style={{ marginBottom: 20 }} alerts={[...alerts, ...externalAlerts]} />}
-        <Flex margin="0 0 20px 0" className="action-btn-group">
-          <TitleH3>{t("All members")}</TitleH3>
-          {this.props.children}
-          {
-            membersPermissions.create
-            && (
-              <ButtonPrimary padding="0 5px" className="small add-new-action" onClick={this.showModal}>
-                <img src={iconAddSubaction} alt={t("add subaction")} />
-                {' '}
-                {t("Add member")}
-              </ButtonPrimary>
-            )
-          }
-
-        </Flex>
+        <PageHeader>
+          <PageHeaderTitle>{t("All members")}</PageHeaderTitle>
+          <PageHeaderActions>
+            {this.props.children}
+            {
+              membersPermissions.create
+              && (
+                <Button size="sm" onClick={this.showModal}>
+                  <Plus size={16} />
+                  {t("Add member")}
+                </Button>
+              )
+            }
+          </PageHeaderActions>
+        </PageHeader>
         <Modal
           title={null}
           visible={visible && membersPermissions.create}
@@ -180,8 +182,8 @@ class AddMember extends Component {
             <InputErrors name={'members'} errors={errors} />
           </InputWrapper>
           <Flex>
-            <Button type="reset" onClick={this.handleCancel} style={{ height: 51, marginRight: 12 }}>{t("Cancel")}</Button>
-            <ButtonPrimary onClick={this.addMembers}>{t("Apply")}</ButtonPrimary>
+            <Button variant="outline" onClick={this.handleCancel} style={{ marginRight: 12 }}>{t("Cancel")}</Button>
+            <Button onClick={this.addMembers}>{t("Apply")}</Button>
           </Flex>
         </Modal>
       </WorkingGroup>
