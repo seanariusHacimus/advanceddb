@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { X } from 'lucide-react';
-import { Button } from './button';
 
-// Modal Overlay
-export const ModalOverlay = styled.div`
+const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  z-index: ${props => props.zIndex || 1050};
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-  animation: fadeIn 0.2s ease;
+  z-index: 1000;
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(4px);
+  display: ${props => props.$open ? 'flex' : 'none'};
+  align-items: center;
+  justify-content: center;
+  animation: ${props => props.$open ? 'fadeIn' : 'fadeOut'} 0.2s ease;
   
   @keyframes fadeIn {
     from {
@@ -20,35 +21,29 @@ export const ModalOverlay = styled.div`
       opacity: 1;
     }
   }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 `;
 
-// Modal Container
-export const ModalContainer = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: ${props => props.zIndex || 1050};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  pointer-events: none;
-`;
-
-// Modal Content
-export const ModalContent = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: ${props => props.width ? `${props.width}px` : '520px'};
-  max-height: 90vh;
+const ModalContent = styled.div`
   background: hsl(var(--card));
-  border-radius: var(--radius);
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius));
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+  width: 90%;
+  max-width: ${props => props.$width || '500px'};
+  max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  pointer-events: auto;
-  animation: slideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  transition: background-color 0.3s ease;
+  animation: ${props => props.$open ? 'slideIn' : 'slideOut'} 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   @keyframes slideIn {
     from {
@@ -60,35 +55,43 @@ export const ModalContent = styled.div`
       transform: scale(1) translateY(0);
     }
   }
+  
+  @keyframes slideOut {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95) translateY(-10px);
+    }
+  }
 `;
 
-// Modal Header
-export const ModalHeader = styled.div`
+const ModalHeader = styled.div`
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid hsl(var(--border));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${props => props.padding || '24px 24px 16px'};
-  border-bottom: 1px solid hsl(var(--border));
-  transition: border-color 0.3s ease;
+  flex-shrink: 0;
 `;
 
-// Modal Title
-export const ModalTitle = styled.h2`
+const ModalTitle = styled.h2`
   font-size: 18px;
   font-weight: 600;
   color: hsl(var(--foreground));
   margin: 0;
-  transition: color 0.3s ease;
+  line-height: 1.4;
 `;
 
-// Modal Close Button
-export const ModalCloseButton = styled.button`
+const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) - 2px);
   border: none;
   background: transparent;
   color: hsl(var(--muted-foreground));
@@ -97,12 +100,11 @@ export const ModalCloseButton = styled.button`
   
   &:hover {
     background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    color: hsl(var(--foreground));
   }
   
-  &:focus-visible {
-    outline: 2px solid hsl(var(--ring));
-    outline-offset: 2px;
+  &:active {
+    transform: scale(0.95);
   }
   
   svg {
@@ -111,137 +113,97 @@ export const ModalCloseButton = styled.button`
   }
 `;
 
-// Modal Body
-export const ModalBody = styled.div`
-  flex: 1;
+const ModalBody = styled.div`
+  padding: 24px;
   overflow-y: auto;
-  padding: ${props => props.padding || '24px'};
-  color: hsl(var(--foreground));
-  transition: color 0.3s ease;
+  flex: 1;
   
-  /* Custom scrollbar */
   &::-webkit-scrollbar {
     width: 8px;
   }
   
   &::-webkit-scrollbar-track {
-    background: hsl(var(--muted) / 0.3);
-    border-radius: 4px;
+    background: transparent;
   }
   
   &::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground) / 0.3);
     border-radius: 4px;
-    
-    &:hover {
-      background: hsl(var(--muted-foreground) / 0.5);
-    }
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
   }
 `;
 
-// Modal Footer
-export const ModalFooter = styled.div`
+const ModalFooter = styled.div`
+  padding: 16px 24px;
+  border-top: 1px solid hsl(var(--border));
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  padding: ${props => props.padding || '16px 24px 24px'};
-  border-top: 1px solid hsl(var(--border));
-  transition: border-color 0.3s ease;
+  flex-shrink: 0;
 `;
 
-// Modal Component
-export function Modal({
-  open,
-  visible, // Ant Design compatibility
-  onCancel,
-  onOk,
-  title,
-  children,
+export function Modal({ 
+  open, 
+  onClose, 
+  title, 
+  children, 
   footer,
   width,
-  zIndex = 1050,
   closable = true,
   maskClosable = true,
-  styles = {},
-  ...props
+  className,
+  ...props 
 }) {
-  const isOpen = open || visible;
-
-  React.useEffect(() => {
-    if (isOpen) {
-      // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
-      
-      // Handle escape key
-      const handleEscape = (e) => {
-        if (e.key === 'Escape' && onCancel) {
-          onCancel(e);
-        }
-      };
-      
-      document.addEventListener('keydown', handleEscape);
-      
-      return () => {
-        document.body.style.overflow = '';
-        document.removeEventListener('keydown', handleEscape);
-      };
-    }
-  }, [isOpen, onCancel]);
-
-  if (!isOpen) return null;
-
   const handleOverlayClick = (e) => {
-    if (maskClosable && e.target === e.currentTarget && onCancel) {
-      onCancel(e);
+    if (maskClosable && e.target === e.currentTarget) {
+      onClose?.();
     }
   };
 
-  // Apply custom styles from Ant Design styles prop
-  const contentStyle = styles?.content || {};
-  const bodyPadding = contentStyle.padding;
+  React.useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  if (!open) return null;
 
   return (
-    <>
-      <ModalOverlay zIndex={zIndex} onClick={handleOverlayClick} />
-      <ModalContainer zIndex={zIndex + 1} onClick={handleOverlayClick}>
-        <ModalContent width={width} style={contentStyle} {...props}>
-          {title && (
-            <ModalHeader>
-              <ModalTitle>{title}</ModalTitle>
-              {closable && (
-                <ModalCloseButton onClick={onCancel}>
-                  <X />
-                </ModalCloseButton>
-              )}
-            </ModalHeader>
-          )}
-          
-          <ModalBody padding={bodyPadding}>
-            {children}
-          </ModalBody>
-          
-          {footer !== null && (
-            <ModalFooter>
-              {footer !== undefined ? (
-                footer
-              ) : (
-                <>
-                  <Button variant="outline" onClick={onCancel}>
-                    Cancel
-                  </Button>
-                  <Button onClick={onOk}>
-                    OK
-                  </Button>
-                </>
-              )}
-            </ModalFooter>
-          )}
-        </ModalContent>
-      </ModalContainer>
-    </>
+    <Overlay $open={open} onClick={handleOverlayClick}>
+      <ModalContent $open={open} $width={width} className={className} {...props}>
+        {(title || closable) && (
+          <ModalHeader>
+            {title && <ModalTitle>{title}</ModalTitle>}
+            {closable && (
+              <CloseButton onClick={onClose} aria-label="Close">
+                <X />
+              </CloseButton>
+            )}
+          </ModalHeader>
+        )}
+        <ModalBody>{children}</ModalBody>
+        {footer && <ModalFooter>{footer}</ModalFooter>}
+      </ModalContent>
+    </Overlay>
   );
 }
 
-export default Modal;
+// Export individual components for flexibility
+export const ModalOverlay = Overlay;
+export const ModalContainer = ModalContent;
+// ModalContent is exported via ModalContainer above (same component, different name for compatibility)
+export { ModalHeader, ModalTitle, ModalBody, ModalFooter };
+export const ModalCloseButton = CloseButton;
 
+// Default export
+export default Modal;

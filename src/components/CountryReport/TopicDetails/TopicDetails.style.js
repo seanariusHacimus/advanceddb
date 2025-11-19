@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const StyledTopicDetails = styled.div`
-  padding: 40px 20px;
-  background-color: #f8f9fa;
+  padding: 40px 48px;
   min-height: 100vh;
   margin: 0 auto;
+  max-width: 1400px;
 
   .header-section {
-    margin-bottom: 30px;
+    margin-bottom: 32px;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -18,31 +18,30 @@ export const StyledTopicDetails = styled.div`
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: #fff;
-    border: 1px solid #e2e4ed;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
     border-radius: 8px;
-    color: #527bdd;
+    color: hsl(var(--primary));
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
-      background: #f3f4f9;
-      border-color: #527bdd;
+      background: hsl(var(--accent));
+      border-color: hsl(var(--primary));
     }
   }
 
   .main-title {
-    color: #527bdd;
+    color: hsl(var(--primary));
     font-size: 32px;
     font-weight: 700;
     margin: 0;
-    font-family: "Montserrat", sans-serif;
     line-height: 1.2;
   }
 
   .subtitle {
-    color: #717a8f;
+    color: hsl(var(--muted-foreground));
     font-size: 16px;
     font-weight: 400;
     margin: 0;
@@ -50,20 +49,19 @@ export const StyledTopicDetails = styled.div`
   }
 
   .topic-section {
-    background: #fff;
+    background: hsl(var(--card));
     border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e2e4ed;
+    padding: 32px;
+    margin-bottom: 24px;
+    border: 1px solid hsl(var(--border));
+    transition: all 0.2s ease;
   }
 
   .topic-title {
-    color: #527bdd;
-    font-size: 28px;
+    color: hsl(var(--foreground));
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
-    font-family: "Montserrat", sans-serif;
   }
 
   .chart-section {
@@ -71,15 +69,16 @@ export const StyledTopicDetails = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    padding: 20px;
+    margin-bottom: 24px;
+    padding: 24px;
     gap: 24px;
-    background: #f8f9fa;
+    background: hsl(var(--muted) / 0.3);
     border-radius: 12px;
-    border: 1px solid #e2e4ed;
+    border: 1px solid hsl(var(--border));
 
     p {
-      margin-top: 20px;
+      margin-top: 16px;
+      color: hsl(var(--muted-foreground));
     }
 
     & > div:first-of-type {
@@ -94,8 +93,8 @@ export const StyledTopicDetails = styled.div`
   .pillar-filter {
     display: flex;
     gap: 0;
-    margin-bottom: 30px;
-    background: #f3f4f9;
+    margin-bottom: 24px;
+    background: hsl(var(--muted) / 0.5);
     border-radius: 8px;
     padding: 4px;
   }
@@ -107,26 +106,26 @@ export const StyledTopicDetails = styled.div`
     font-weight: 500;
     font-size: 14px;
     transition: all 0.2s ease;
-    color: #717a8f;
+    color: hsl(var(--muted-foreground));
 
     &.active {
-      background: #717a8f;
-      color: #fff;
+      background: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
     }
 
     &:hover:not(.active) {
-      background: #e5e7ef;
-      color: #252a32;
+      background: hsl(var(--accent));
+      color: hsl(var(--foreground));
     }
   }
 
   .category-section {
-    background: #fff;
+    background: hsl(var(--card));
     border-radius: 12px;
-    padding: 25px;
+    padding: 24px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e2e4ed;
+    border: 1px solid hsl(var(--border));
+    transition: all 0.2s ease;
   }
 
   .category-header {
@@ -137,11 +136,11 @@ export const StyledTopicDetails = styled.div`
   }
 
   .category-title {
-    color: #0d0c21;
-    font-size: 18px;
+    color: hsl(var(--foreground));
+    font-size: 16px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
   }
 
   .category-score {
@@ -151,7 +150,7 @@ export const StyledTopicDetails = styled.div`
   }
 
   .score-text {
-    color: #252a32;
+    color: hsl(var(--foreground));
     font-size: 16px;
     font-weight: 600;
   }
@@ -161,16 +160,16 @@ export const StyledTopicDetails = styled.div`
   }
 
   .subcategory-item {
-    background: #f8f9fa;
+    background: hsl(var(--muted) / 0.3);
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 15px;
-    border: 1px solid #e2e4ed;
+    margin-bottom: 12px;
+    border: 1px solid hsl(var(--border));
     transition: all 0.2s ease;
 
     &:hover {
-      background: #f3f4f9;
-      border-color: #527bdd;
+      background: hsl(var(--muted) / 0.5);
+      border-color: hsl(var(--primary));
     }
   }
 
@@ -183,8 +182,8 @@ export const StyledTopicDetails = styled.div`
   }
 
   .subcategory-title {
-    color: #252a32;
-    font-size: 16px;
+    color: hsl(var(--foreground));
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 8px;
   }
@@ -196,7 +195,7 @@ export const StyledTopicDetails = styled.div`
   }
 
   .subcategory-score-text {
-    color: #252a32;
+    color: hsl(var(--foreground));
     font-size: 14px;
     font-weight: 600;
   }
@@ -206,7 +205,7 @@ export const StyledTopicDetails = styled.div`
   }
 
   .expand-icon {
-    color: #717a8f;
+    color: hsl(var(--muted-foreground));
     font-size: 16px;
     transition: transform 0.2s ease;
   }
@@ -214,7 +213,7 @@ export const StyledTopicDetails = styled.div`
   .indicators-list {
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1px solid #e2e4ed;
+    border-top: 1px solid hsl(var(--border));
   }
 
   .indicator-item {
@@ -222,7 +221,7 @@ export const StyledTopicDetails = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
 
     &:last-child {
       border-bottom: none;
@@ -230,13 +229,13 @@ export const StyledTopicDetails = styled.div`
   }
 
   .indicator-name {
-    color: #252a32;
+    color: hsl(var(--foreground));
     font-size: 14px;
     font-weight: 500;
   }
 
   .indicator-score {
-    color: #527bdd;
+    color: hsl(var(--primary));
     font-size: 14px;
     font-weight: 600;
   }

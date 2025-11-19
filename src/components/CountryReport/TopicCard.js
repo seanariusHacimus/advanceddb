@@ -3,13 +3,12 @@ import styled from "styled-components";
 import RadialBarChart from "../UI/RadialBarChart";
 
 const TopicCardContainer = styled.div`
-  background: #fff;
+  background: hsl(var(--card));
   border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e4ed;
+  padding: 20px;
+  border: 1px solid hsl(var(--border));
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,18 +17,16 @@ const TopicCardContainer = styled.div`
   justify-content: space-between;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    border-color: #527bdd;
+    transform: translateY(-2px);
+    border-color: hsl(var(--primary));
   }
 `;
 
 const TopicTitle = styled.h3`
-  color: #527bdd;
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  font-family: "Montserrat", sans-serif;
+  color: hsl(var(--primary));
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
   line-height: 1.3;
 `;
 
@@ -38,6 +35,7 @@ const ChartContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 const TopicCard = ({

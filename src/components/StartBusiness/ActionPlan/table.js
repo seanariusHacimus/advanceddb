@@ -172,7 +172,7 @@ export const columns = ({
                   background: 'hsl(45 93% 47% / 0.15)',
                   color: 'hsl(45 93% 30%)',
                   fontWeight: '700',
-                  borderRadius: '4px'
+                  borderRadius: '50%'
                 }}
               />
             </Tooltip>
@@ -456,7 +456,7 @@ export const subActionColumn = ({
                   background: 'hsl(45 93% 47% / 0.15)',
                   color: 'hsl(45 93% 30%)',
                   fontWeight: '700',
-                  borderRadius: '4px'
+                  borderRadius: '50%'
                 }}
               />
             </Tooltip>

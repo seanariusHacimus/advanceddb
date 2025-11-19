@@ -71,30 +71,40 @@ export const fetchCurrentIndicatorGroupAction =
           }
         })
       : getState().selectedWorkingGroup;
+    
+    if (!currentIndicator?.id) {
+      console.warn('No current indicator found for:', title);
+      return Promise.resolve();
+    }
+    
     return Axios.post(
       "/graphql",
       {
         query: FETCH_WORKING_GROUPS,
-        variables: { filter: { id: currentIndicator?.id } },
+        variables: { filter: { id: currentIndicator.id } },
       },
       { hideSpinner }
     )
       .then(({ data }) => {
-        const { nodes } = data.data.indicator_groups;
-        const workingGroup = nodes[0];
+        if (data?.data?.indicator_groups?.nodes?.[0]) {
+          const workingGroup = data.data.indicator_groups.nodes[0];
 
-        return dispatch(
-          selectWorkingGroupAction({
-            ...workingGroup,
-            permissions: calculatePermissions(
-              workingGroup,
-              getState().auth.account
-            ),
-          })
-        );
+          return dispatch(
+            selectWorkingGroupAction({
+              ...workingGroup,
+              permissions: calculatePermissions(
+                workingGroup,
+                getState().auth.account
+              ),
+            })
+          );
+        } else {
+          console.warn('No working group data received');
+          return null;
+        }
       })
       .catch((err) => {
-        console.log(err);
-        return err;
+        console.error('Failed to fetch working group:', err.message);
+        return null;
       });
   };

@@ -1,7 +1,7 @@
 import React, { Component, Suspense, lazy } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Table, Popconfirm, DropdownMenuWrapper, DropdownItem } from "../../UI/shadcn";
+import { Table, Popconfirm, DropdownMenuWrapper, DropdownItem, Button } from "../../UI/shadcn";
 import { MoreVertical } from "lucide-react";
 import scrollIntoView from "scroll-into-view";
 import "../../UI/shadcn/table-subaction.css";
@@ -567,10 +567,10 @@ class ActionList extends Component {
           />
           {actions.length > this.defaultPageSize && (
             <div className="text-center" style={{ marginTop: 25 }}>
-              <ButtonSecondary
-                className="transparent small"
-                style={{ width: "auto", margin: "auto", fontWeight: "400" }}
-                type="text"
+              <Button
+                variant="outline"
+                size="default"
+                style={{ minWidth: '120px' }}
                 onClick={() =>
                   this.setState((prevState) => ({
                     collapseActive: !prevState.collapseActive,
@@ -578,7 +578,7 @@ class ActionList extends Component {
                 }
               >
                 {collapseActive ? t("Show Less") : t("Show all")}
-              </ButtonSecondary>
+              </Button>
             </div>
           )}
           {onDragEndActive && (

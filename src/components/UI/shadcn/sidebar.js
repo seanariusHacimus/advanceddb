@@ -117,8 +117,12 @@ export const SidebarNavLink = styled(Link)`
     color: hsl(var(--accent-foreground));
     
     .menu-icon {
-      fill: hsl(var(--accent-foreground));
+      stroke: hsl(var(--accent-foreground));
       color: hsl(var(--accent-foreground));
+      
+      svg {
+        stroke: hsl(var(--accent-foreground));
+      }
     }
   }
 
@@ -128,21 +132,16 @@ export const SidebarNavLink = styled(Link)`
     font-weight: 500;
 
     .menu-icon {
-      fill: hsl(var(--primary-foreground));
+      stroke: hsl(var(--primary-foreground));
       color: hsl(var(--primary-foreground));
-    }
-
-    svg {
-      fill: hsl(var(--primary-foreground));
-      color: hsl(var(--primary-foreground));
+      
+      svg {
+        stroke: hsl(var(--primary-foreground));
+      }
     }
 
     img.menu-icon {
       opacity: 1;
-    }
-    
-    &.stroke .menu-icon {
-      stroke: hsl(var(--primary-foreground));
     }
   }
 
@@ -157,8 +156,12 @@ export const SidebarNavLink = styled(Link)`
     border-radius: calc(var(--radius) - 2px);
 
     .menu-icon {
-      fill: hsl(var(--foreground));
+      stroke: hsl(var(--foreground));
       color: hsl(var(--foreground));
+      
+      svg {
+        stroke: hsl(var(--foreground));
+      }
     }
 
     &:hover {
@@ -170,8 +173,12 @@ export const SidebarNavLink = styled(Link)`
       color: hsl(var(--primary-foreground));
 
       .menu-icon {
-        fill: hsl(var(--primary-foreground));
+        stroke: hsl(var(--primary-foreground));
         color: hsl(var(--primary-foreground));
+        
+        svg {
+          stroke: hsl(var(--primary-foreground));
+        }
       }
     }
   }
@@ -181,23 +188,27 @@ export const SidebarNavLink = styled(Link)`
     height: 20px;
     min-width: 20px;
     flex-shrink: 0;
-    fill: hsl(var(--muted-foreground));
+    stroke: hsl(var(--muted-foreground));
     color: hsl(var(--muted-foreground));
+    fill: none;
     transition: all 0.2s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    /* For Lucide icons - they use stroke */
+    svg {
+      stroke: hsl(var(--muted-foreground));
+      fill: none;
+      width: 20px;
+      height: 20px;
+    }
 
     &.anticon {
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-    }
-
-    &.stroke {
-      stroke: hsl(var(--muted-foreground));
-      fill: none;
     }
   }
 
@@ -207,6 +218,7 @@ export const SidebarNavLink = styled(Link)`
     min-width: 20px;
     object-fit: contain;
     display: block;
+    stroke: none;
   }
 
   svg.menu-icon {
@@ -214,10 +226,8 @@ export const SidebarNavLink = styled(Link)`
     height: 20px;
     min-width: 20px;
     display: block;
-  }
-
-  .active .menu-icon.stroke {
-    stroke: hsl(var(--primary-foreground));
+    stroke: hsl(var(--muted-foreground));
+    fill: none;
   }
 
   .more-icons {

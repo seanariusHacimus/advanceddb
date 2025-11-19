@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Table, List } from 'antd';
+import { Table, List } from 'antd'; // Using Ant components for data display
 import { StyledWorkingGroup } from '../../styles/workingGroup';
 import { Flex, TitleH1, ButtonPrimary } from '../../styles';
 import { fetchOrganizations } from '../../graphql/organizations';

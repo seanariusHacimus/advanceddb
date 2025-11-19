@@ -1,6 +1,6 @@
 import React from 'react';
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Alert } from "antd";
+import { ArrowDown, ArrowUp } from 'lucide-react';
+import { Alert } from "../components/UI/shadcn";
 import { useLocale } from "./locale";
 
 function sprintf() {
@@ -79,15 +79,15 @@ function isUserAllowed(myAccount) {
 function rankDiff(initial, current, type) {
   console.log(initial, current);
   if (type === 'score') {
-    const color = initial === current ? '#717A8F' : initial > current ? 'red' : 'green';
-    const icon = initial === current ? null : initial > current ? <ArrowDownOutlined /> : <ArrowUpOutlined />;
+    const color = initial === current ? 'hsl(var(--muted-foreground))' : initial > current ? 'hsl(var(--destructive))' : 'hsl(var(--chart-2))';
+    const icon = initial === current ? null : initial > current ? <ArrowDown size={16} /> : <ArrowUp size={16} />;
     const calculate = current - initial;
     const value = calculate ? (Math.sign(calculate) > 0 ? '+' + calculate.toFixed(1) : calculate.toFixed(1)) : null;
 
     return { value, icon, color }
   } else {
-    const color = initial === current ? '#717A8F' : initial > current ? 'green' : 'red';
-    const icon = initial === current ? null : initial > current ? <ArrowUpOutlined /> : <ArrowDownOutlined />;
+    const color = initial === current ? 'hsl(var(--muted-foreground))' : initial > current ? 'hsl(var(--chart-2))' : 'hsl(var(--destructive))';
+    const icon = initial === current ? null : initial > current ? <ArrowUp size={16} /> : <ArrowDown size={16} />;
     const calculate = initial - current;
     const value = calculate ? (Math.sign(calculate) > 0 ? '+' + calculate.toFixed(1) : calculate.toFixed(1)) : null;
 

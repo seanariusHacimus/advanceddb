@@ -1,170 +1,157 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from 'lucide-react';
 
-// First, declare the styled components without using them in variants
-export const AlertIcon = styled.div`
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-  
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
-export const AlertContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-export const AlertTitle = styled.h5`
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-  transition: color 0.3s ease;
-`;
-
-export const AlertDescription = styled.div`
-  font-size: 14px;
-  line-height: 1.5;
-  opacity: 0.9;
-  transition: color 0.3s ease;
-`;
-
-// Now define variants that reference the components
 const alertVariants = {
-  default: css`
-    background: hsl(var(--background));
-    border-color: hsl(var(--border));
-    color: hsl(var(--foreground));
-  `,
-  destructive: css`
-    background: hsl(var(--destructive) / 0.1);
-    border-color: hsl(var(--destructive) / 0.5);
-    color: hsl(var(--destructive));
-    
-    ${AlertTitle}, ${AlertDescription} {
-      color: hsl(var(--destructive));
-    }
+  info: css`
+    background: hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary) / 0.3);
+    color: hsl(var(--primary));
   `,
   success: css`
     background: hsl(var(--chart-2) / 0.1);
-    border-color: hsl(var(--chart-2) / 0.5);
-    color: hsl(var(--chart-2));
-    
-    ${AlertTitle}, ${AlertDescription} {
-      color: hsl(var(--chart-2));
-    }
+    border-color: hsl(var(--chart-2) / 0.3);
+    color: hsl(142 76% 36%);
   `,
   warning: css`
     background: hsl(var(--chart-4) / 0.1);
-    border-color: hsl(var(--chart-4) / 0.5);
-    color: hsl(var(--chart-4));
-    
-    ${AlertTitle}, ${AlertDescription} {
-      color: hsl(var(--chart-4));
-    }
+    border-color: hsl(var(--chart-4) / 0.3);
+    color: hsl(43 96% 40%);
   `,
-  info: css`
-    background: hsl(var(--primary) / 0.1);
-    border-color: hsl(var(--primary) / 0.5);
-    color: hsl(var(--primary));
-    
-    ${AlertTitle}, ${AlertDescription} {
-      color: hsl(var(--primary));
-    }
+  error: css`
+    background: hsl(var(--destructive) / 0.1);
+    border-color: hsl(var(--destructive) / 0.3);
+    color: hsl(var(--destructive));
   `,
 };
 
-// Main Alert component using the variants
-export const Alert = styled.div`
-  position: relative;
-  width: 100%;
-  border-radius: var(--radius);
-  border: 1px solid;
-  padding: 16px;
+const AlertContainer = styled.div`
   display: flex;
+  align-items: flex-start;
   gap: 12px;
-  transition: all 0.3s ease;
+  padding: 12px 16px;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: all 0.2s ease;
   
-  ${(props) => alertVariants[props.variant || 'default']}
+  ${props => alertVariants[props.$type || 'info']}
+  
+  ${props => props.$closable && `
+    padding-right: 40px;
+    position: relative;
+  `}
 `;
 
-// Icon components
-const InfoIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="16" x2="12" y2="12" />
-    <line x1="12" y1="8" x2="12.01" y2="8" />
-  </svg>
-);
-
-const CheckCircleIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-    <polyline points="22 4 12 14.01 9 11.01" />
-  </svg>
-);
-
-const AlertTriangleIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-    <line x1="12" y1="9" x2="12" y2="13" />
-    <line x1="12" y1="17" x2="12.01" y2="17" />
-  </svg>
-);
-
-const XCircleIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="12" cy="12" r="10" />
-    <line x1="15" y1="9" x2="9" y2="15" />
-    <line x1="9" y1="9" x2="15" y2="15" />
-  </svg>
-);
-
-// Helper component with predefined icons
-export function AlertWithIcon({ variant = 'default', title, description, children, icon }) {
-  const getIcon = () => {
-    if (icon) return icon;
-    
-    switch (variant) {
-      case 'success':
-        return <CheckCircleIcon />;
-      case 'warning':
-        return <AlertTriangleIcon />;
-      case 'destructive':
-        return <XCircleIcon />;
-      case 'info':
-        return <InfoIcon />;
-      default:
-        return <InfoIcon />;
-    }
-  };
+const IconWrapper = styled.div`
+  flex-shrink: 0;
+  margin-top: 2px;
   
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const Content = styled.div`
+  flex: 1;
+`;
+
+const Message = styled.div`
+  font-weight: 600;
+  margin-bottom: ${props => props.$hasDescription ? '4px' : '0'};
+`;
+
+const Description = styled.div`
+  opacity: 0.9;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: calc(var(--radius) - 4px);
+  border: none;
+  background: transparent;
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.15s ease;
+  
+  &:hover {
+    opacity: 1;
+    background: currentColor;
+    color: hsl(var(--background));
+  }
+  
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+`;
+
+const icons = {
+  info: Info,
+  success: CheckCircle,
+  warning: AlertTriangle,
+  error: AlertCircle,
+};
+
+export function Alert({
+  type = 'info',
+  message,
+  description,
+  closable = false,
+  onClose,
+  showIcon = true,
+  icon,
+  className,
+  style,
+  children,
+}) {
+  const [visible, setVisible] = React.useState(true);
+
+  const handleClose = () => {
+    setVisible(false);
+    onClose?.();
+  };
+
+  if (!visible) return null;
+
+  const IconComponent = icon || icons[type];
+  const content = children || description;
+
   return (
-    <Alert variant={variant}>
-      <AlertIcon>{getIcon()}</AlertIcon>
-      <AlertContent>
-        {title && <AlertTitle>{title}</AlertTitle>}
-        {description && <AlertDescription>{description}</AlertDescription>}
-        {children}
-      </AlertContent>
-    </Alert>
+    <AlertContainer $type={type} $closable={closable} className={className} style={style}>
+      {showIcon && IconComponent && (
+        <IconWrapper>
+          <IconComponent />
+        </IconWrapper>
+      )}
+      <Content>
+        {message && <Message $hasDescription={!!content}>{message}</Message>}
+        {content && <Description>{content}</Description>}
+      </Content>
+      {closable && (
+        <CloseButton onClick={handleClose} aria-label="Close">
+          <X />
+        </CloseButton>
+      )}
+    </AlertContainer>
   );
 }
 
-// Export both Alert and AlertWithIcon
-Alert.Icon = AlertIcon;
-Alert.Content = AlertContent;
-Alert.Title = AlertTitle;
-Alert.Description = AlertDescription;
-Alert.WithIcon = AlertWithIcon;
+// Export styled components for flexibility
+export const AlertIcon = IconWrapper;
+export const AlertContent = Content;
+export const AlertTitle = Message;
+export const AlertDescription = Description;
+export const AlertWithIcon = Alert; // Alias
 
+export default Alert;

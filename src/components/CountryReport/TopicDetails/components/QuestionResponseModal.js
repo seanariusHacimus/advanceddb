@@ -1,6 +1,6 @@
-import { Modal, Typography, Tabs, Spin } from "antd";
+import { Modal, Typography, Tabs, Spin } from "antd"; // Using Ant components for modal
 import PropTypes from "prop-types";
-import { QuestionOutlined } from "@ant-design/icons";
+import { HelpCircle } from "lucide-react";
 import {
   ModalContent,
   QuestionContainer,
@@ -120,7 +120,7 @@ const QuestionResponseModal = ({
     <Modal
       title={
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <QuestionOutlined style={{ color: "#527bdd" }} />
+          <HelpCircle style={{ color: "hsl(var(--primary))" }} size={16} />
           <span>
             Questions and Responses for {indicatorId} in {countryName}
           </span>

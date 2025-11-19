@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Upload } from "antd";
 import { Button } from "../../../UI/shadcn";
-import { PaperClipOutlined } from "@ant-design/icons";
+import { Paperclip } from "lucide-react";
 import { useLocale } from "../../../../utils/locale";
 import Swal from "sweetalert2";
 import { ButtonPrimary } from "../../../../styles";
@@ -62,8 +62,9 @@ function FileUpload({
       disabled={isDisabled}
     >
       {t("Upload")}
-      <PaperClipOutlined
-        style={{ marginLeft: 5, fontSize: 20, verticalAlign: "middle" }}
+      <Paperclip
+        size={20}
+        style={{ marginLeft: 5, verticalAlign: "middle" }}
       />
     </ButtonPrimary>
   );

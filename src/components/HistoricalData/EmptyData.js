@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import { Row, Col } from "../UI/shadcn"; // Using shadcn grid
 import BarChart from "./BarChart";
 import { TitleH1, TitleH3 } from "../../styles";
 import CountryPage from "../../styles/compareCountries";

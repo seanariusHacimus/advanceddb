@@ -7,9 +7,10 @@ const FilterContainer = styled.div`
   display: flex;
   gap: 0;
   margin-bottom: 30px;
-  background: #f3f4f9;
+  background: hsl(var(--muted) / 0.5);
   border-radius: 8px;
   padding: 4px;
+  transition: background-color 0.3s ease;
 `;
 
 const FilterItem = styled.div`
@@ -19,16 +20,16 @@ const FilterItem = styled.div`
   font-weight: 500;
   font-size: 14px;
   transition: all 0.2s ease;
-  color: #717a8f;
+  color: hsl(var(--muted-foreground));
 
   &.active {
-    background: #717a8f;
-    color: #fff;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
   }
 
   &:hover:not(.active) {
-    background: #e5e7ef;
-    color: #252a32;
+    background: hsl(var(--accent));
+    color: hsl(var(--foreground));
   }
 `;
 

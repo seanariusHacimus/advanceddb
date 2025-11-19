@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Typography } from 'antd';
+import { Typography } from 'antd'; // Using Ant Typography for now
 import { Popconfirm } from '../UI/shadcn';
 import { StyledChatHeader } from '../../styles/messaging';
 import { Avatar, Flex } from '../../styles';
-import { DeleteOutlined, LogoutOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Trash2, LogOut, Info } from 'lucide-react';
 import AvatarInitials from '../UI/AvatarInitials';
 import { useLocale } from "../../utils/locale";
 import groupImage from '../../assets/messaging/group.svg';
@@ -67,25 +67,25 @@ export default function ChatHeader(props) {
                   info.roles?.includes('owner') ?
                     <Popconfirm placement="topLeft" title={t('Are you sure?')} overlayStyle={{ width: 300 }} onConfirm={removeRoom} okText="Yes" cancelText="No">
                       <div className="danger clickable">
-                        <DeleteOutlined /> {t("Delete")}
+                        <Trash2 size={16} /> {t("Delete")}
                       </div>
                     </Popconfirm>
 
                     :
                     <div onClick={leaveRoom} className="clickable">
-                      <LogoutOutlined /> {t("Leave")}
+                      <LogOut size={16} /> {t("Leave")}
                     </div>
                 }
 
                 <div onClick={() => setShowGroupInfo(true)} className="clickable">
-                  <InfoCircleOutlined /> {t("Info")}
+                  <Info size={16} /> {t("Info")}
                 </div>
               </Flex>
             )
             :
             <Popconfirm placement="topLeft" title={t('Are you sure?')} overlayStyle={{ marginLeft: 'auto' }} onConfirm={deleteConversationRoom} okText={t("Yes")} cancelText={t("No")}>
               <div className="danger clickable" style={{ marginLeft: 'auto' }}>
-                <DeleteOutlined /> {t("Delete")}
+                <Trash2 size={16} /> {t("Delete")}
               </div>
             </Popconfirm>
         }

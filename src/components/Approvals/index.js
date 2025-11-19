@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Table, Button } from "antd";
+import { Table, Button } from "antd"; // Using Ant components for approvals table
 import { useLocale } from "../../utils/locale";
 import Axios from "../../utils/axios";
 import {

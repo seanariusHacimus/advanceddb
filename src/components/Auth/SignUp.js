@@ -4,9 +4,10 @@ import { bindActionCreators } from "redux";
 import { Link, useHistory } from "react-router-dom";
 import camelcaseKeys from "camelcase-keys";
 import snakecase_keys from "snakecase-keys";
-import { Row, Col } from "antd";
+import { Row, Col } from "../UI/shadcn"; // Using shadcn grid
 import { Select, Input as ShInput, Textarea, Label, FormGroup, FormError, Button } from "../UI/shadcn";
 import { useToast } from "../UI/shadcn/toast";
+import { EyeOff, Eye } from "lucide-react";
 import { useQueryParam, StringParam } from "use-query-params";
 import {
   REQUEST_ACCESS_MUTATION,
@@ -589,7 +590,7 @@ function RequestAccess(props) {
                           {showPassword ? (
                             <EyeTwoTone twoToneColor="#527bdd" />
                           ) : (
-                            <EyeInvisibleOutlined />
+                            <EyeOff size={16} />
                           )}
                         </span>
                         <InputErrors name={"password"} errors={errors} />
@@ -625,7 +626,7 @@ function RequestAccess(props) {
                           {showPassword ? (
                             <EyeTwoTone twoToneColor="#527bdd" />
                           ) : (
-                            <EyeInvisibleOutlined />
+                            <EyeOff size={16} />
                           )}
                         </span>
                         <InputErrors

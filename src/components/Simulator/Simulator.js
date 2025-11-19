@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
-import { Row, Col, Progress, Divider, Input, Tooltip } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Tooltip } from "../UI/shadcn";
+import { Progress, Divider, Input } from 'antd'; // Keep for now - complex interactions
+import { Info } from 'lucide-react';
 import BarChart from './BarChart';
 import simulatorDataWithDefinitions from '../../constants/simulators_with_definition';
 import simulatorRank from '../../constants/simulators_rank';
@@ -239,7 +240,7 @@ class Simulator extends Component {
                                   color="#535263"
                                   title={item.description}
                                 >
-                                  <InfoCircleOutlined style={{ marginLeft: 5 }} />
+                                  <Info style={{ marginLeft: 5 }} size={16} />
                                 </Tooltip> */}
                               </div>
                               <span>{parseInt(item.value)}</span>
@@ -256,7 +257,7 @@ class Simulator extends Component {
                                   color="#535263"
                                   title={item.description}
                                 >
-                                  <InfoCircleOutlined style={{ marginLeft: 5 }} />
+                                  <Info style={{ marginLeft: 5 }} size={16} />
                                 </Tooltip> */}
                               </div>
                               <span>{parseFloat(item.value).toFixed(1)}</span>
@@ -273,7 +274,7 @@ class Simulator extends Component {
                                   color="#535263"
                                   title={item.description}
                                 >
-                                  <InfoCircleOutlined style={{ marginLeft: 5 }} />
+                                  <Info style={{ marginLeft: 5 }} size={16} />
                                 </Tooltip>
                               </div>
                               <span>

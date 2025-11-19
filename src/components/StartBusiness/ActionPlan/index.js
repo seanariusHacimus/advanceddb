@@ -16,7 +16,7 @@ import {
 } from "./ActionPlanStatistics";
 import ActionList from "./ActionList";
 import ActionPlanEmpty from "./components/ActionPlanEmpty";
-import Frappe from "./components/Frappe";
+import CustomGantt from "./components/CustomGantt";
 import Axios from "../../../utils/axios";
 import { fetchActionPlans } from "../../../store/Actions/actions";
 import { getDonutChartData } from "../../../utils/statisticsCalculator";
@@ -235,7 +235,7 @@ function ActionPlan({ currentIndicator, actionPermissions }) {
         {controlSection}
         {actions.length ? (
           isGanttActive ? (
-            <Frappe data={actions} printRef={ganttRef} />
+            <CustomGantt data={actions} printRef={ganttRef} />
           ) : (
             <ActionList
               printRef={actionListRef}

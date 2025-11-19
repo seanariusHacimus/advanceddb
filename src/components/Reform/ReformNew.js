@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Modal, DatePicker, Select, Alert } from "antd";
+import { Modal, DatePicker, Select, Alert } from "antd"; // Using Ant components for complex forms
 import Editor from "../UI/Editor/Editor.js";
 import { Flex, Button, ButtonPrimary, Input, InputWrapper } from "../../styles";
 import { EditPage } from "../../styles/reform";

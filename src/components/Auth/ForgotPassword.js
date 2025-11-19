@@ -12,6 +12,7 @@ import { Title } from "../../styles";
 // -------------- SHADCN UI -----------
 import { Button, Input, Label, FormGroup, FormError } from "../UI/shadcn";
 import { useToast } from "../UI/shadcn/toast";
+import { ThemeToggle } from "../UI/ThemeToggle";
 // -------------- ASSETS -----------
 import iconLogo from "../../assets/logo.svg";
 import ellipse from "../../assets/auth/shapes/ellipse.svg";
@@ -116,6 +117,27 @@ function ForgotPasswordForm(props) {
 
   return (
     <SignInPage>
+      {/* Theme Toggle - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '24px',
+        right: '24px',
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '8px 12px',
+        background: 'hsl(var(--card))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: 'calc(var(--radius) - 2px)',
+        boxShadow: '0 2px 8px hsl(var(--foreground) / 0.08)',
+      }}>
+        <span style={{ fontSize: '13px', fontWeight: 500, color: 'hsl(var(--muted-foreground))' }}>
+          {t("Theme")}
+        </span>
+        <ThemeToggle />
+      </div>
+
       <Row style={{ flex: 1 }}>
         <Col xs={24} lg={8}>
           <div className="inner-container">
@@ -126,7 +148,17 @@ function ForgotPasswordForm(props) {
                 style={{ width: 150 }}
               />
             </Link>
-            <Title margin="0 0 40px">{t("Reset your password")}</Title>
+            <Title 
+              margin="0 0 40px"
+              style={{ 
+                color: 'hsl(var(--foreground))', 
+                fontSize: '28px',
+                fontWeight: 700,
+                lineHeight: 1.2,
+              }}
+            >
+              {t("Reset your password")}
+            </Title>
             <form action="" autoComplete="off" onSubmit={submitForm}>
               <div style={{ position: "relative", marginBottom: '16px' }}>
                 <ErrorAlerts alerts={errorAlerts} />
@@ -204,7 +236,7 @@ function ForgotPasswordForm(props) {
 
 const styles = {
   backgroundImage: {
-    background: colors.primary,
+    background: "hsl(var(--primary))",
     backgroundSize: "cover",
     flexGrow: 1,
     alignItems: "center",
@@ -212,20 +244,23 @@ const styles = {
     display: "flex",
     position: "relative",
     overflow: "hidden",
+    transition: "background 0.3s ease",
   },
   textWrapper: {
     width: "100%",
     maxWidth: 450,
     padding: "80px 20px",
-    color: "#fff",
+    color: "hsl(var(--primary-foreground))",
     margin: "auto",
     zIndex: 2,
+    transition: "color 0.3s ease",
   },
   title: {
     fontSize: 53,
     lineHeight: 1.1,
-    color: "#fff",
+    color: "hsl(var(--primary-foreground))",
     fontWeight: "700",
+    transition: "color 0.3s ease",
   },
   subTitle: {
     fontSize: 16,
@@ -233,31 +268,43 @@ const styles = {
     fontWeight: "500",
     marginTop: 21,
     textAlign: "center",
+    color: "hsl(var(--primary-foreground))",
+    transition: "color 0.3s ease",
   },
   cubic: {
     position: "absolute",
     top: 0,
     right: 0,
+    opacity: 0.3,
+    transition: "opacity 0.3s ease",
   },
   ellipse: {
     position: "absolute",
     right: 0,
     bottom: "10%",
+    opacity: 0.3,
+    transition: "opacity 0.3s ease",
   },
   ellipse2: {
     position: "absolute",
     left: 0,
     transform: "translateX(-50%)",
+    opacity: 0.3,
+    transition: "opacity 0.3s ease",
   },
   rectangle: {
     position: "absolute",
     top: -7,
     left: "10%",
+    opacity: 0.3,
+    transition: "opacity 0.3s ease",
   },
   rectangle2: {
     position: "absolute",
     bottom: -40,
     left: 0,
+    opacity: 0.3,
+    transition: "opacity 0.3s ease",
   },
 };
 

@@ -152,6 +152,18 @@ const ToastContext = createContext(null);
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
+  const removeToast = useCallback((id) => {
+    setToasts((prev) =>
+      prev.map((toast) =>
+        toast.id === id ? { ...toast, removing: true } : toast
+      )
+    );
+    
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    }, 300);
+  }, []);
+
   const addToast = useCallback(({ title, description, variant = 'default', duration = 5000 }) => {
     const id = Date.now().toString();
     
@@ -164,19 +176,7 @@ export function ToastProvider({ children }) {
     }
     
     return id;
-  }, []);
-
-  const removeToast = useCallback((id) => {
-    setToasts((prev) =>
-      prev.map((toast) =>
-        toast.id === id ? { ...toast, removing: true } : toast
-      )
-    );
-    
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, 300);
-  }, []);
+  }, [removeToast]);
 
   const toast = useCallback(
     (options) => {

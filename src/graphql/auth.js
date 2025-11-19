@@ -70,9 +70,6 @@ export const SIGN_IN_MUTATION = gql`
         role
         status
         type
-        photo {
-          url
-        }
         notification_settings {
           action_created {
             push

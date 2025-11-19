@@ -1,7 +1,8 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Modal, Menu, Row, Col, Switch } from "antd";
+import { Row, Col } from "../UI/shadcn";
+import { Modal, Menu, Switch } from "antd"; // Using Ant components for settings
 import { Link } from "react-router-dom";
 import { fetchWorkingGroupsAction } from "../../store/WorkingGroups/actions";
 // ------- ASSETS & STYLING ---------

@@ -2,16 +2,21 @@ import * as types from './actionTypes';
 import Axios from '../../utils/axios';
 import { FETCH_WORKING_GROUPS } from '../../graphql/workingGroups';
 
-export const fetchWorkingGroupsAction = () => dispatch => {
-  return Axios.post('/graphql', {query: FETCH_WORKING_GROUPS})
+export const fetchWorkingGroupsAction = (config = {}) => dispatch => {
+  return Axios.post('/graphql', {query: FETCH_WORKING_GROUPS}, config)
     .then(res => {
-      if (res?.data) {
+      if (res?.data?.data?.indicator_groups?.nodes) {
         const payload = res.data.data.indicator_groups.nodes;
         return dispatch(fetchWorkingGroupSuccess(payload));
+      } else {
+        console.warn('No working groups data received');
+        return dispatch(fetchWorkingGroupSuccess([]));
       }
     })
     .catch(err => {
-      console.log(err);
+      console.error('Failed to fetch working groups:', err.message);
+      // Dispatch empty array on error to prevent app crash
+      return dispatch(fetchWorkingGroupSuccess([]));
     })
 
 };

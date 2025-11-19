@@ -5,52 +5,56 @@ import styled from "styled-components";
 
 const LegendContainer = styled.div`
   margin-top: 20px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border: 1px solid #e2e4ed;
+  padding: 24px 32px;
+  background: hsl(var(--card));
+  border-radius: 12px;
+  border: 1px solid hsl(var(--border));
+  transition: all 0.2s ease;
 `;
 
 const LegendTitle = styled.div`
   font-size: 14px;
   font-weight: 600;
-  color: #252a32;
-  margin-bottom: 12px;
+  color: hsl(var(--foreground));
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 `;
 
 const LegendItems = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
 `;
 
 const LegendItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 `;
 
 const LegendColor = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 50%;
+  border: 2px solid hsl(var(--border));
 
   &.pillar-1 {
-    background-color: #527bdd;
+    background-color: hsl(221 83% 53%);
   }
 
   &.pillar-2 {
-    background-color: #52c41a;
+    background-color: hsl(142 76% 36%);
   }
 
   &.pillar-3 {
-    background-color: #fa8c16;
+    background-color: hsl(25 95% 53%);
   }
 `;
 
 const LegendText = styled.span`
-  font-size: 13px;
-  color: #666;
+  font-size: 14px;
+  color: hsl(var(--muted-foreground));
   font-weight: 500;
 `;
 

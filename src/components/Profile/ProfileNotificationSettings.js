@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip, Col, Divider, Row, Switch } from "antd";
+import { Row, Col, Tooltip } from "../UI/shadcn";
+import { Switch, Divider } from "antd"; // Keep Switch and Divider for now
 import { Link, useHistory } from "react-router-dom";
 // -------- ASSETS & STYLES ------------
 import { ButtonPrimary, Flex, TitleH1 } from "../../styles";

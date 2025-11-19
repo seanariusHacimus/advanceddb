@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { message } from 'antd';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { message } from '../../utils/message';
 import { updateOrganizations } from '../../graphql/organizations';
 import {useLocale} from "../../utils/locale";
 
@@ -48,8 +48,8 @@ const EditableArea = (props) => {
       {
         (title.trim().length > 0 && title !== props.title) &&
         <div>
-          <CheckCircleOutlined className="check-icon success" onClick={updateOrganizationTitle} />
-          <CloseCircleOutlined className="check-icon error" onClick={() => setTitle(props.title)} />
+          <CheckCircle className="check-icon success" onClick={updateOrganizationTitle} size={18} />
+          <XCircle className="check-icon error" onClick={() => setTitle(props.title)} size={18} />
         </div>
       }
 

@@ -1,4 +1,4 @@
-import { Modal, Table } from "antd";
+import { Modal, Table } from "antd"; // Using Ant components for complex table
 import { USER_PERMISSIONS } from "../../constants/userRoles";
 import { StyledMembersTable } from "../../styles/startBusiness";
 import { roleColumns } from "./table";

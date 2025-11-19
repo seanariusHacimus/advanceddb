@@ -60,7 +60,7 @@
     "node": "22.x",
     "npm": "10.x"
   },
-  "proxy": "https://api.alpha.advance-db.com/api/graphql",
+  "proxy": "https://api.alpha.advance-db.com/api",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

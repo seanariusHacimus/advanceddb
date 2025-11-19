@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { Row, Col, AutoComplete, Divider } from "antd";
+import { Row, Col } from "../UI/shadcn";
+import { AutoComplete, Divider } from "antd"; // Keep AutoComplete for now - complex component
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";

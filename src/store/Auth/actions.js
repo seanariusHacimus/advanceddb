@@ -80,13 +80,18 @@ export const refreshMyAccount = (data) => (dispatch) => {
     { hideSpinner: data?.hideSpinner }
   )
     .then((res) => {
-      if (res?.data) {
+      if (res?.data?.data?.my_account) {
         const payload = res.data.data.my_account;
         return dispatch(refreshMyAccountSuccess(payload));
+      } else {
+        console.warn('No account data received during refresh');
+        return null;
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error('Failed to refresh account (non-critical):', err.message);
+      // Don't throw - app can continue with cached account data
+      return null;
     });
 };
 

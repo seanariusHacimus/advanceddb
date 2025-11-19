@@ -8,33 +8,57 @@ import PillarDetails from "./components/PillarDetails";
 import { useAccordionState } from "./hooks/useAccordionState";
 import { usePillarSelection } from "./hooks/usePillarSelection";
 import PropTypes from "prop-types";
-import { Collapse, Spin, Alert, Button } from "antd";
+import { 
+  Accordion, 
+  AccordionItem, 
+  AccordionTrigger, 
+  AccordionContent,
+  Button,
+  Alert,
+  Skeleton
+} from "../../UI/shadcn";
 import { useTopicData } from "../hooks/useTopicData";
 import constants from "../../../constants";
 import { getCountryNameFromCode } from "../utils";
 import { TOPIC_DESCRIPTIONS } from "../constants";
 import styled from "styled-components";
+import { Loader2 } from "lucide-react";
 
-const { Panel } = Collapse;
 const DEFAULT_COUNTRY_CODE = constants.defaultCountry.code;
 
 const DescriptionText = styled.p`
   margin: 0;
   line-height: 1.6;
-  color: #252a32;
+  color: hsl(var(--foreground));
+  transition: color 0.3s ease;
 `;
 
-const MoreButton = styled(Button)`
-  margin-top: 12px;
-  color: #527bdd;
-  border-color: #527bdd;
-  padding: 4px 16px;
-  font-weight: 500;
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+`;
 
-  &:hover {
-    background: #f3f4f9;
-    border-color: #527bdd;
-    color: #527bdd;
+const LoadingText = styled.p`
+  color: hsl(var(--muted-foreground));
+  font-size: 16px;
+  margin: 0;
+`;
+
+const SpinnerIcon = styled(Loader2)`
+  animation: spin 1s linear infinite;
+  color: hsl(var(--primary));
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 
@@ -224,10 +248,10 @@ const TopicDetails = ({ match = null, history }) => {
     return (
       <StyledTopicDetails>
         <TopicHeader onBackClick={handleBackClick} t={t} />
-        <div style={{ textAlign: "center", padding: "50px" }}>
-          <Spin size="large" />
-          <p style={{ marginTop: "20px" }}>{t("Loading topic data...")}</p>
-        </div>
+        <LoadingContainer>
+          <SpinnerIcon size={48} />
+          <LoadingText>{t("Loading topic data...")}</LoadingText>
+        </LoadingContainer>
       </StyledTopicDetails>
     );
   }
@@ -236,13 +260,10 @@ const TopicDetails = ({ match = null, history }) => {
     return (
       <StyledTopicDetails>
         <TopicHeader onBackClick={handleBackClick} t={t} />
-        <Alert
-          message={t("Error")}
-          description={error}
-          type="error"
-          showIcon
-          style={{ margin: "20px" }}
-        />
+        <Alert variant="destructive" style={{ margin: "20px" }}>
+          <strong>{t("Error")}</strong>
+          <p style={{ margin: '8px 0 0 0' }}>{error}</p>
+        </Alert>
       </StyledTopicDetails>
     );
   }
@@ -271,21 +292,28 @@ const TopicDetails = ({ match = null, history }) => {
       <div className="topic-section">
         <div className="chart-section">
           <div className="topic-description">
-            <Collapse defaultActiveKey={["1"]} accordion bordered={false}>
-              <Panel header={t("Topic Description")} key="1">
-                <DescriptionText
-                  dangerouslySetInnerHTML={{ __html: displayedDescription }}
-                />
-                {shouldShowMoreButton && (
-                  <MoreButton
-                    type="default"
-                    onClick={() => setShowFullDescription(!showFullDescription)}
-                  >
-                    {showFullDescription ? t("Show Less") : t("Show More")}
-                  </MoreButton>
-                )}
-              </Panel>
-            </Collapse>
+            <Accordion type="single" defaultValue="description" collapsible>
+              <AccordionItem value="description">
+                <AccordionTrigger>
+                  {t("Topic Description")}
+                </AccordionTrigger>
+                <AccordionContent>
+                  <DescriptionText
+                    dangerouslySetInnerHTML={{ __html: displayedDescription }}
+                  />
+                  {shouldShowMoreButton && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowFullDescription(!showFullDescription)}
+                      style={{ marginTop: '12px' }}
+                    >
+                      {showFullDescription ? t("Show Less") : t("Show More")}
+                    </Button>
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
           <RadialBarChart
             pillars={topicDetails.pillars}

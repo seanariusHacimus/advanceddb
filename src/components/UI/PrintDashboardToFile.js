@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, message, Table, Space, Checkbox, Input } from "antd";
+import { Table, Space, Checkbox, Input } from "antd";
+import { Button } from "../UI/shadcn";
+import { message } from "../../utils/message";
 import Axios from "../../utils/axios";
 import { unionBy } from "lodash";
 import Modal from "antd/lib/modal/Modal";
 import moment from "moment";
-import { FileExcelOutlined, FilePdfOutlined } from "@ant-design/icons";
+import { FileSpreadsheet, FileText } from "lucide-react";
 
 import {
   FETCH_ACTIONS_AND_SUB_ACTIONS,
@@ -429,13 +431,13 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
             type="primary"
             onClick={() => exportToPdf({ title, data: printData })}
           >
-            <FilePdfOutlined /> {t("Download PDF")}
+            <FileText size={16} /> {t("Download PDF")}
           </Button>
           <Button
             type="primary"
             onClick={() => exportToExel({ title, data: printData })}
           >
-            <FileExcelOutlined /> {t("Download Excel")}
+            <FileSpreadsheet size={16} /> {t("Download Excel")}
           </Button>
         </Space>
         <Table

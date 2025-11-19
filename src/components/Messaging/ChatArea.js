@@ -3,8 +3,8 @@ import axios from 'axios';
 import useInterval from '@use-it/interval';
 import { StyledChatArea } from '../../styles/messaging';
 import { Avatar } from '../../styles';
-import { Input, Progress, message as antMessage } from 'antd';
-import { CloudDownloadOutlined, SendOutlined, PaperClipOutlined, FileImageOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Input, Progress, message as antMessage } from 'antd'; // Using Ant components for messaging
+import { Download, Send, Paperclip, Image, Trash2 } from 'lucide-react';
 import Loader from '../UI/SpinnerLocal';
 import { CommunicationsContext } from './index';
 import imgSelectUser from '../../assets/messaging/select-user.svg';
@@ -262,7 +262,7 @@ export default function MembersList(props) {
             <div className={`conversation scrollable-area ${loading ? 'loading' : ''}`}>
               {progress > 0 ?
                 <div className="upload-progress">
-                  <FileImageOutlined size={60} color="#eee" />
+                  <Image size={60} color="hsl(var(--muted-foreground))" />
                   <div className="meta-info">
                     <p>{currentFile?.name?.slice(0, 110) || 'N/A'} - <b>{fileSize >= 1 ? `${Math.round(fileSize)} MB` : `${Math.round(fileSize * 1000)} kb`}</b></p>
                     <Progress percent={progress} status="active" />
@@ -295,7 +295,7 @@ export default function MembersList(props) {
                           <div>
                             <div>
                               <span>{item.attachments[0].title}</span>
-                              <a href={process.env.REACT_APP_ROCKET_BASE_URL + item.attachments[0].title_link + '?download'} download style={{ marginLeft: 10 }}><CloudDownloadOutlined /></a>
+                              <a href={process.env.REACT_APP_ROCKET_BASE_URL + item.attachments[0].title_link + '?download'} download style={{ marginLeft: 10 }}><Download size={18} /></a>
                             </div>
                             {
                               item.attachments[0].image_preview ?
@@ -308,14 +308,14 @@ export default function MembersList(props) {
                                 />
                                 :
                                 <a href={process.env.REACT_APP_ROCKET_BASE_URL + item.attachments[0].title_link + '?download'} download>
-                                  <PaperClipOutlined style={{ fontSize: 20, color: '#333' }} />
+                                  <Paperclip size={20} style={{ color: 'hsl(var(--foreground))' }} />
                                 </a>
 
                             }
                             <p>{item.attachments[0].description}</p>
                           </div>
                           {
-                            (myAccount.id === item.u.username) && <button className="delete-button" onClick={() => deleteMessage(item._id)}><DeleteOutlined /></button>
+                            (myAccount.id === item.u.username) && <button className="delete-button" onClick={() => deleteMessage(item._id)}><Trash2 size={16} /></button>
                           }
                         </div>
                       </div>
@@ -344,7 +344,7 @@ export default function MembersList(props) {
                         </div>
                       </div>
                       {
-                        (myAccount.id === item.u.username) && <button className="delete-button" onClick={() => deleteMessage(item._id)}><DeleteOutlined /></button>
+                        (myAccount.id === item.u.username) && <button className="delete-button" onClick={() => deleteMessage(item._id)}><Trash2 size={16} /></button>
                       }
                     </div>
                   )
@@ -383,7 +383,7 @@ export default function MembersList(props) {
               ref={attachmentRef}
               onChange={uploadFile}
             />
-            <button onClick={() => attachmentRef.current.click()} className="attachment-button"><PaperClipOutlined /></button>
+            <button onClick={() => attachmentRef.current.click()} className="attachment-button"><Paperclip size={20} /></button>
           </>
           :
           <div className="empty-user">

@@ -38,7 +38,7 @@ export const fetchApprovalsActionNumber =
         { hideSpinner: true }
       )
         .then((res) => {
-          if (res?.data) {
+          if (res?.data?.data) {
             const { actions = { total: 0 }, sub_actions = { total: 0 } } =
               res.data.data;
 
@@ -50,14 +50,19 @@ export const fetchApprovalsActionNumber =
             );
             return actions.total + sub_actions.total;
           }
+          console.warn('No approvals data received');
+          dispatch(fetchNumberOfApprovals({ count: 0 }));
           return 0;
         })
         .catch((err) => {
-          console.error("[Custom Catch Error]-->", err);
-          throw err;
+          console.error("Failed to fetch approvals (non-critical):", err.message);
+          // Don't throw - just set count to 0
+          dispatch(fetchNumberOfApprovals({ count: 0 }));
+          return 0;
         });
     } catch (err) {
-      console.error("[Custom Catch Error]-->", err);
-      return Promise.reject(err);
+      console.error("Approvals fetch error (non-critical):", err.message);
+      dispatch(fetchNumberOfApprovals({ count: 0 }));
+      return Promise.resolve(0);
     }
   };

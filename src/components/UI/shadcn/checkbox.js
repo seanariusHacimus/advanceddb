@@ -96,10 +96,12 @@ export function Checkbox({
   id, 
   checked, 
   defaultChecked,
-  onChange, 
+  onChange,
+  onCheckedChange, // Support shadcn-style API
   disabled, 
   label, 
   children,
+  className,
   ...props 
 }) {
   const [internalChecked, setInternalChecked] = React.useState(defaultChecked || false);
@@ -107,14 +109,19 @@ export function Checkbox({
   const isChecked = checked !== undefined ? checked : internalChecked;
   
   const handleChange = (e) => {
+    const newChecked = e.target.checked;
+    
     if (checked === undefined) {
-      setInternalChecked(e.target.checked);
+      setInternalChecked(newChecked);
     }
-    onChange?.(e.target.checked, e);
+    
+    // Support both onChange (React standard) and onCheckedChange (shadcn/Radix style)
+    onChange?.(e);
+    onCheckedChange?.(newChecked);
   };
   
   return (
-    <CheckboxContainer data-disabled={disabled} htmlFor={id}>
+    <CheckboxContainer data-disabled={disabled} htmlFor={id} className={className}>
       <CheckboxInput
         id={id}
         checked={isChecked}

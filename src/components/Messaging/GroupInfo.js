@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, lazy, Suspense } from 'react';
-import { Collapse, Button, message } from 'antd';
+import { Collapse, Button, message } from 'antd'; // Using Ant components for messaging
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { StyledProfileInfo, StyledChatHeader } from '../../styles/messaging';
@@ -8,7 +8,7 @@ import { Avatar } from '../../styles';
 import { CommunicationsContext } from './index';
 import groupImage from '../../assets/messaging/group.svg';
 import AvatarInitials from '../UI/AvatarInitials';
-import { DeleteOutlined, UserAddOutlined, LogoutOutlined, LeftOutlined } from '@ant-design/icons';
+import { Trash2, UserPlus, LogOut, ChevronLeft } from 'lucide-react';
 import { groupTitleToUrl, roleNames } from '../../utils';
 import Loader from '../UI/SpinnerLocal';
 import { rocketAxios } from "../../utils/axios";
@@ -131,7 +131,7 @@ export default function MembersList(props) {
     <StyledProfileInfo>
       <StyledChatHeader>
         <div id="chat-header">
-          <Button type="text" onClick={props.hideGroup} icon={<LeftOutlined />} size={'large'}>
+          <Button type="text" onClick={props.hideGroup} icon={<ChevronLeft size={20} />} size={'large'}>
             Back
           </Button>
         </div>
@@ -145,7 +145,7 @@ export default function MembersList(props) {
             {
               selectedUser.roles?.includes('owner') &&
               <div onClick={() => setShowMemberModal(true)}>
-                <Button type="primary" shape="circle" icon={<UserAddOutlined />} size={'large'} />
+                <Button type="primary" shape="circle" icon={<UserPlus size={20} />} size={'large'} />
                 <div>{t("Add")}</div>
               </div>
             }
@@ -153,12 +153,12 @@ export default function MembersList(props) {
             {
               selectedUser.roles?.includes('owner') ?
                 <div>
-                  <Button type="primary" shape="circle" onClick={removeRoom} icon={<DeleteOutlined />} size={'large'} />
+                  <Button type="primary" shape="circle" onClick={removeRoom} icon={<Trash2 size={20} />} size={'large'} />
                   <div>{t("Delete")}</div>
                 </div>
                 :
                 <div>
-                  <Button type="primary" shape="circle" onClick={leaveRoom} icon={<LogoutOutlined />} size={'large'} />
+                  <Button type="primary" shape="circle" onClick={leaveRoom} icon={<LogOut size={20} />} size={'large'} />
                   <div>{t("Leave")}</div>
                 </div>
             }
@@ -207,7 +207,7 @@ export default function MembersList(props) {
                       className="group-members__item__remove"
                       disabled={item.username === myAccount.id}
                       onClick={() => removeMember(item._id)}
-                      icon={<DeleteOutlined />}
+                      icon={<Trash2 size={16} />}
                     >
                       {t("Remove")}
                     </Button>

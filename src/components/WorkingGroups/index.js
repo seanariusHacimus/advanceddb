@@ -2,9 +2,10 @@ import { Component, Suspense, lazy } from "react";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Dropdown, Menu, message } from "antd";
-import { Popconfirm } from "../UI/shadcn";
+import { Popconfirm, DropdownMenuWrapper, DropdownItem } from "../UI/shadcn";
 import { MoreVertical } from "lucide-react";
+import { useToast } from "../UI/shadcn/toast";
+import { Dropdown, Menu } from "antd";
 import Axios from "../../utils/axios";
 import { StyledWorkingGroup } from "../../styles/workingGroup";
 import {
@@ -68,7 +69,7 @@ class WorkingGroupList extends Component {
   };
 
   updateWorkingGroupTitle = async (id, title) => {
-    const { t } = this.props;
+    const { t, toast } = this.props;
     const query = {
       query: UPDATE_WORKING_GROUP,
       variables: {
@@ -84,40 +85,32 @@ class WorkingGroupList extends Component {
       console.log(res);
       if (res?.data) {
         if (res?.data) {
-          return message.success({
-            content: t("Title has been updated successfully"),
-            duration: 10,
-            style: {
-              right: 30,
-              bottom: 30,
-              position: "fixed",
-              fontSize: 16,
-            },
+          toast?.success({
+            title: t("Success"),
+            description: t("Title has been updated successfully"),
           });
+          return true;
         }
       }
     } catch (err) {
       // TODO parse errors
       const { extensions = "" } = err.response?.data?.errors[0];
       if (extensions.validation) {
-        const title = extensions.validation.group.title.includes(
+        const errorTitle = extensions.validation.group.title.includes(
           "should not conflict"
         )
           ? t("Group with this title is already exist")
           : extensions.validation.group.title;
-        console.log(title);
-        message.error({
-          content: title,
-          duration: 10,
-          style: {
-            right: 30,
-            bottom: 30,
-            position: "fixed",
-            fontSize: 16,
-          },
+        console.log(errorTitle);
+        toast?.error({
+          title: t("Error"),
+          description: errorTitle,
         });
       } else {
-        message.error("Something went wrong");
+        toast?.error({
+          title: t("Error"),
+          description: t("Something went wrong"),
+        });
       }
     }
   };
@@ -250,6 +243,14 @@ class WorkingGroupList extends Component {
   }
 }
 
+// HOC to inject toast
+function withToast(Component) {
+  return function WrappedComponent(props) {
+    const { toast } = useToast();
+    return <Component {...props} toast={toast} />;
+  };
+}
+
 const mapStateToProps = (state) => ({
   workingGroups: state.workingGroups.data,
   user: state.auth.account,
@@ -260,4 +261,4 @@ const mapDispatchToProps = (dispatch) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(withLocale(WorkingGroupList)));
+)(withRouter(withLocale(withToast(WorkingGroupList))));

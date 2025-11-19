@@ -1,9 +1,7 @@
 import { useMemo } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ReactComponent as IconDashboard } from "../../assets/header/dashboard.svg";
-import { ReactComponent as IconCommon } from "../../assets/header/indicatorIcons/common.svg";
-import { Settings } from "lucide-react";
+import { Settings, LayoutDashboard, HelpCircle } from "lucide-react";
 import logo from "../../assets/logo.svg";
 import { IconComponents } from "../../constants/icons";
 import { groupTitleToUrl } from "../../utils";
@@ -24,10 +22,10 @@ function Sidebar(props) {
   const [t] = useLocale();
 
   const {
-    user: { role, leader_groups, member_groups },
+    user: { role, leader_groups = [], member_groups = [] },
     indicators = [],
   } = useSelector((state) => ({
-    user: state.auth.account,
+    user: state.auth.account || {},
     indicators: state.workingGroups.data,
   }));
 
@@ -44,7 +42,9 @@ function Sidebar(props) {
   );
 
   const myGroups = useMemo(() => {
-    return [...leader_groups, ...member_groups].map((item) => item.id);
+    const leaderGroupsArray = Array.isArray(leader_groups) ? leader_groups : [];
+    const memberGroupsArray = Array.isArray(member_groups) ? member_groups : [];
+    return [...leaderGroupsArray, ...memberGroupsArray].map((item) => item.id);
   }, [leader_groups, member_groups]);
 
   const sidebar = useMemo(
@@ -67,21 +67,19 @@ function Sidebar(props) {
       if (item.icon) {
         return <img src={item.icon.url} className="menu-icon" alt={item.title} />;
       }
-      return <IconCommon className="menu-icon" />;
+      return <HelpCircle className="menu-icon" size={20} />;
     }
     
     // Try to find icon component by URL
     const IconComponent = IconComponents[url];
     
-    // If component found and it's a valid React component
-    if (IconComponent && typeof IconComponent === 'function') {
-      // Check if this icon should have stroke class (for Utility Services and International Trade)
-      const hasStroke = url === "utility-services" || url === "international-trade";
-      return <IconComponent className={`menu-icon ${hasStroke ? "stroke" : ""}`} />;
+    // If component found, render it (React components can be objects or functions)
+    if (IconComponent) {
+      return <IconComponent className="menu-icon" size={20} />;
     }
     
-    // Fallback to common icon
-    return <IconCommon className="menu-icon" />;
+    // Fallback to question mark icon
+    return <HelpCircle className="menu-icon" size={20} />;
   };
 
   return (
@@ -98,7 +96,7 @@ function Sidebar(props) {
             to="/dashboard"
             className={currentPath === "/dashboard" ? "active" : ""}
           >
-            <IconDashboard className="menu-icon" />
+            <LayoutDashboard className="menu-icon" size={20} />
             <span>{t("Dashboard")}</span>
           </SidebarNavLink>
         </SidebarNavItem>

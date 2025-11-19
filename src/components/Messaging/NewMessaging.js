@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect, useContext, useRef, Suspense } from 'react';
 import { StyledChatArea, StyledChatHeader } from '../../styles/messaging';
 import { Avatar } from '../../styles';
-import { Input, Progress } from 'antd';
-import { SendOutlined, PaperClipOutlined, FileImageOutlined, DeleteOutlined, MoreOutlined, LogoutOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Input, Progress } from 'antd'; // Using Ant components for complex messaging features
+import { Send, Paperclip, Image, Trash2, MoreVertical, LogOut, Info } from 'lucide-react';
 import { CommunicationsContext } from './index';
 import { useSelector } from 'react-redux';
 import AvatarInitials from '../UI/AvatarInitials';
@@ -118,7 +118,7 @@ export default function MembersList(props) {
       <div className={`conversation scrollable-area ${loading ? 'loading' : ''}`}>
         {progress > 0 ?
           <div className="upload-progress">
-            <FileImageOutlined size={60} color="#eee" />
+            <Image size={60} color="hsl(var(--muted-foreground))" />
             <div className="meta-info">
               <p>{currentFile?.name?.slice(0, 110) || 'N/A'} - <b>{fileSize >= 1 ? `${Math.round(fileSize)} MB` : `${Math.round(fileSize * 1000)} kb`}</b></p>
               <Progress percent={progress} status="active" />
@@ -140,7 +140,7 @@ export default function MembersList(props) {
           sentMessage(e.currentTarget.value);
         }}
       />
-      <button onClick={() => sentMessage(message)} className="send-button"><SendOutlined /> </button>
+      <button onClick={() => sentMessage(message)} className="send-button"><Send size={20} /> </button>
       <input
         hidden
         type="file"
@@ -148,7 +148,7 @@ export default function MembersList(props) {
         ref={attachmentRef}
         onChange={uploadFile}
       />
-      <button onClick={() => attachmentRef.current.click()} className="attachment-button"><PaperClipOutlined /></button>
+      <button onClick={() => attachmentRef.current.click()} className="attachment-button"><Paperclip size={20} /></button>
     </StyledChatArea>
   )
 }

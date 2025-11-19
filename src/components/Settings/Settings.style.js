@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Card, Input } from "antd";
+import { Card, Input } from "antd"; // Using Ant components for settings
 
 export const SettingsContainer = styled.div`
   padding: 40px 20px;

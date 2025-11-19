@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Modal, Row, Col, Badge, PieChart } from "../../../UI/shadcn";
 import { Button as AntButton, Tabs } from "antd";
 import {
-  CalendarOutlined,
-  DownOutlined,
-  DownloadOutlined,
-  DashboardOutlined,
-  UnorderedListOutlined,
-  FileTextOutlined,
-} from "@ant-design/icons";
+  Calendar,
+  ChevronDown,
+  Download,
+  LayoutDashboard,
+  List,
+  FileText,
+} from "lucide-react";
 import moment from "moment-timezone";
 import { withLocale } from "../../../../utils/locale";
 import { indicatorStatus } from "../../../../constants";
@@ -101,7 +101,7 @@ const ViewActionModal = ({
       key: "overview",
       label: (
         <span>
-          <DashboardOutlined style={{ marginRight: 6 }} />
+          <LayoutDashboard style={{ marginRight: 6 }} size={16} />
           {t("Overview")}
         </span>
       ),
@@ -125,7 +125,7 @@ const ViewActionModal = ({
               <Section>
                 <div className="section-content">
                   <div className="section-title">
-                    <CalendarOutlined className="section-icon" />
+                    <Calendar className="section-icon" size={16} />
                     <span>{t("Project Timeline")}</span>
                   </div>
                   <InfoRow>
@@ -192,7 +192,7 @@ const ViewActionModal = ({
                       <AttachmentRow key={attachment.id}>
                         <div className="attachment-info">
                           <div className="file-icon">
-                            <FileTextOutlined />
+                            <FileText size={16} />
                           </div>
                           <a
                             href={attachment.file.download_url}
@@ -210,7 +210,7 @@ const ViewActionModal = ({
                             window.open(attachment.file.download_url, "_blank");
                           }}
                         >
-                          <DownloadOutlined />
+                          <Download size={16} />
                           {t("Download")}
                         </div>
                       </AttachmentRow>
@@ -269,7 +269,7 @@ const ViewActionModal = ({
       isHidden: isSubaction,
       label: (
         <span>
-          <UnorderedListOutlined style={{ marginRight: 6 }} />
+          <List style={{ marginRight: 6 }} size={16} />
           {t("Sub-Actions")} ({sub_actions.length})
         </span>
       ),
@@ -289,11 +289,11 @@ const ViewActionModal = ({
                       {getStatusLabel(subAction.status)}
                     </Badge>
                   </div>
-                  <DownOutlined className="expand-icon" />
+                  <ChevronDown className="expand-icon" size={16} />
                 </div>
                 <div className="subaction-description">{subAction.name}</div>
                 <div className="subaction-date">
-                  <CalendarOutlined />
+                  <Calendar size={14} />
                   {moment(subAction.start_at).format("MMM D")} -{" "}
                   {moment(subAction.end_at).format("MMM D, YYYY")}
                 </div>

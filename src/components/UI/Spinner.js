@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin } from 'antd';
+import { Spin } from 'antd'; // Using Ant Spin for global spinner
 import { useLocale } from "../../utils/locale";
 
 export default function Spinner(props) {

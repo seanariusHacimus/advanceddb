@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Modal, Select, Alert } from "antd";
+import { Modal, Select, Alert } from "antd"; // Using Ant components for forms
 import { WorkingGroup } from "../../styles/workingGroup";
 import { Input, InputWrapper, Flex, Button, ButtonPrimary } from "../../styles";
 import { UPDATE_WORKING_GROUP } from "../../graphql/workingGroups";

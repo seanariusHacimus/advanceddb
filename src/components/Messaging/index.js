@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState, useMemo, useRef, } from 'react';
 import { StyledCommunications } from '../../styles/messaging';
 import Axios, { rocketAxios } from '../../utils/axios';
-import { Row, Col, } from 'antd';
+import { Row, Col } from '../UI/shadcn'; // Using shadcn grid
 import ChatArea from './ChatArea';
 import MembersList from './MembersList';
 import { indexBy } from '../../utils';

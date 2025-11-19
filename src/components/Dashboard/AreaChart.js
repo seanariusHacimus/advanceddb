@@ -11,6 +11,7 @@ import {
 import constants from "../../constants";
 import { areaChartStatistics } from "../../utils/statisticsCalculator";
 import { useLocale } from "../../utils/locale";
+import { useTheme } from "../UI/ThemeProvider";
 
 const defaultData = (t) => [
   {
@@ -39,8 +40,42 @@ const defaultData = (t) => [
   },
 ];
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{
+        background: 'hsl(var(--card))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: 'var(--radius)',
+        padding: '12px 16px',
+        boxShadow: '0 4px 12px hsl(var(--foreground) / 0.1)',
+      }}>
+        <p style={{ 
+          margin: 0, 
+          fontSize: '13px', 
+          fontWeight: '600',
+          color: 'hsl(var(--foreground))',
+          marginBottom: '4px'
+        }}>
+          {label}
+        </p>
+        <p style={{ 
+          margin: 0, 
+          fontSize: '14px', 
+          fontWeight: '700',
+          color: 'hsl(var(--primary))'
+        }}>
+          {payload[0].value}% completed
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
 const MonthlyData = ({ data: propsData, total }) => {
   const [t] = useLocale();
+  const { theme } = useTheme();
 
   const data = useMemo(() => {
     if (propsData && propsData.length) {
@@ -49,8 +84,14 @@ const MonthlyData = ({ data: propsData, total }) => {
     return defaultData(t);
   }, [propsData, total, t]);
 
+  const isDark = theme === 'dark';
+  const gridColor = isDark ? 'hsl(217.2 32.6% 17.5%)' : 'hsl(214.3 31.8% 91.4%)';
+  const axisColor = isDark ? 'hsl(215 20.2% 65.1%)' : 'hsl(215.4 16.3% 46.9%)';
+  const areaStroke = isDark ? 'hsl(217 91% 60%)' : 'hsl(221 83% 53%)';
+  const areaFill = isDark ? 'hsl(217 91% 60%)' : 'hsl(221 83% 53%)';
+
   return (
-    <div style={{ width: "100%", height: 300, maxWidth: 1000 }}>
+    <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <AreaChart
           data={data}
@@ -61,35 +102,54 @@ const MonthlyData = ({ data: propsData, total }) => {
             bottom: 0,
           }}
         >
+          <defs>
+            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={areaFill} stopOpacity={0.3}/>
+              <stop offset="95%" stopColor={areaFill} stopOpacity={0.05}/>
+            </linearGradient>
+          </defs>
           <CartesianGrid
-            stroke="#E9EBF2"
-            strokeDasharray="1 0"
-            horizontal={false}
+            stroke={gridColor}
+            strokeDasharray="3 3"
+            vertical={false}
+            opacity={0.5}
           />
           <XAxis
             dataKey="name"
             tickLine={false}
             axisLine={false}
-            tickMargin={8}
+            tickMargin={12}
+            tick={{ fill: axisColor, fontSize: 12 }}
           />
-          <YAxis domain={[0, 100]} />
-          <Tooltip
-            formatter={(value, name, props) => [
-              props.payload.value + "%",
-              "Completed",
-            ]}
+          <YAxis 
+            domain={[0, 100]} 
+            tickLine={false}
+            axisLine={false}
+            tickMargin={12}
+            tick={{ fill: axisColor, fontSize: 12 }}
+            tickFormatter={(value) => `${value}%`}
           />
+          <Tooltip content={<CustomTooltip />} />
           <Area
             animationDuration={constants.animationSpeed}
-            type="natural"
-            activeDot={{ r: 7 }}
-            strokeWidth={2}
-            dot={{ r: 4 }}
+            type="monotone"
+            activeDot={{ 
+              r: 6, 
+              fill: areaStroke,
+              stroke: 'hsl(var(--card))',
+              strokeWidth: 2
+            }}
+            strokeWidth={2.5}
+            dot={{ 
+              r: 4, 
+              fill: areaStroke,
+              stroke: 'hsl(var(--card))',
+              strokeWidth: 2
+            }}
             strokeLinecap="round"
             dataKey="value"
-            stroke="#527bdd"
-            fill="#8ec5ff"
-            fillOpacity={0.3}
+            stroke={areaStroke}
+            fill="url(#colorValue)"
           />
         </AreaChart>
       </ResponsiveContainer>

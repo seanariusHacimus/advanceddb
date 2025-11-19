@@ -2,7 +2,7 @@ import React, { ReactDOM } from "react";
 import { FrappeGantt } from "frappe-gantt-react-extended-v2";
 import { StyledGantt } from "../../../../styles/graph";
 import { Flex } from "../../../../styles";
-import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
+import { ZoomIn, ZoomOut } from "lucide-react";
 import { withLocale } from "../../../../utils/locale";
 
 const tasks = [
@@ -144,29 +144,37 @@ class GanttChart extends React.Component {
         ref={this.props.printRef}
         clientWidth={document.body.clientWidth}
       >
-        <Flex className="gantt-control">
-          <div className="zoom-wrapper">
-            <span>{(zoom * 100).toFixed(1)}%</span>
-            <button onClick={() => this.zoomHandler("out")}>
-              <ZoomOutOutlined />
-            </button>
-            <button onClick={() => this.zoomHandler("in")}>
-              <ZoomInOutlined />{" "}
-            </button>
-          </div>
+        <div className="gantt-control">
           <select
             className="gantt-select"
             name="viewMode"
             value={viewMode}
             onChange={(e) => this.setState({ viewMode: e.target.value })}
           >
-            {/* <option value="Half Day">Half Day</option>
-            <option value="Quarter Day">Quarter Day</option> */}
             <option value="Day">{t("Day")}</option>
             <option value="Week">{t("Week")}</option>
             <option value="Month">{t("Month")}</option>
           </select>
-        </Flex>
+          <div className="zoom-wrapper">
+            <button 
+              onClick={() => this.zoomHandler("out")}
+              title={t("Zoom out")}
+              aria-label={t("Zoom out")}
+              disabled={zoom <= 0.4}
+            >
+              <ZoomOut size={14} />
+            </button>
+            <span>{(zoom * 100).toFixed(0)}%</span>
+            <button 
+              onClick={() => this.zoomHandler("in")}
+              title={t("Zoom in")}
+              aria-label={t("Zoom in")}
+              disabled={zoom >= 3}
+            >
+              <ZoomIn size={14} />
+            </button>
+          </div>
+        </div>
         <FrappeGantt
           tasks={this.state.data}
           ref={(el) => (this.ganttChartRef = el)}

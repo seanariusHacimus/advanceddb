@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { AutoComplete } from "antd";
+import { AutoComplete } from "antd"; // Keep for now - complex component
 import { noop } from "lodash";
 import { useLocale } from "../../../../utils/locale";
 import { getIndicatorByTopicName } from "../util";

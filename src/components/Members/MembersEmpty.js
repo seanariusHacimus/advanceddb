@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Skeleton, Row, Col } from 'antd';
+import { Row, Col, Skeleton } from "../UI/shadcn";
+import { Table } from 'antd'; // Using Ant Table
 import { MeetingMinutesEmpty } from '../../styles/startBusiness';
 import { TitleH3 } from '../../styles';
 import { ReactComponent as IconArrow } from '../../assets/startBusiness/arrow.svg';

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { ArrowLeft } from "lucide-react";
 import { withLocale } from "../../../../utils/locale";
 import PropTypes from "prop-types";
 
@@ -16,17 +16,17 @@ const BackButton = styled.div`
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #fff;
-  border: 1px solid #e2e4ed;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
   border-radius: 8px;
-  color: #527bdd;
+  color: hsl(var(--primary));
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background: #f3f4f9;
-    border-color: #527bdd;
+    background: hsl(var(--accent));
+    border-color: hsl(var(--primary));
   }
 `;
 
@@ -35,20 +35,21 @@ const TitleContainer = styled.div`
 `;
 
 const MainTitle = styled.h1`
-  color: #527bdd;
+  color: hsl(var(--primary));
   font-size: 32px;
   font-weight: 700;
   margin: 0;
-  font-family: "Montserrat", sans-serif;
   line-height: 1.2;
+  transition: color 0.3s ease;
 `;
 
 const Subtitle = styled.p`
-  color: #717a8f;
+  color: hsl(var(--muted-foreground));
   font-size: 16px;
   font-weight: 400;
   margin: 0;
   line-height: 1.4;
+  transition: color 0.3s ease;
 `;
 
 const TopicHeader = ({
@@ -61,7 +62,7 @@ const TopicHeader = ({
   return (
     <HeaderContainer>
       <BackButton onClick={onBackClick}>
-        <ArrowLeftOutlined />
+        <ArrowLeft size={18} />
         {t("Back to Topics")}
       </BackButton>
       <TitleContainer>

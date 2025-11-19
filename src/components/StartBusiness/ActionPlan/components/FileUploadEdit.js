@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Upload, Modal as AntModal, Button as AntButton } from "antd";
 import { toast } from "react-toastify";
-import { PlusOutlined, PaperClipOutlined } from "@ant-design/icons";
+import { Plus, Paperclip } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocale } from "../../../../utils/locale";
 import Swal from "sweetalert2";
@@ -141,8 +141,9 @@ function PicturesWall({
       disabled={isDisabled}
     >
       {t("Upload")}
-      <PaperClipOutlined
-        style={{ marginLeft: 5, fontSize: 20, verticalAlign: "middle" }}
+      <Paperclip
+        size={20}
+        style={{ marginLeft: 5, verticalAlign: "middle" }}
       />
     </ButtonPrimary>
   );

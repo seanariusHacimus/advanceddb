@@ -1,6 +1,6 @@
 import React, { PureComponent, createRef } from "react";
-import { Row, Col, Select, Tooltip, Button } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import { Row, Col, Select, Tooltip, Button } from "antd"; // Using Ant components for now
+import { Info } from "lucide-react";
 import { connect } from "react-redux";
 import BarChart from "./BarChart";
 import { TitleH1, TitleH3, Flex } from "../../styles";
@@ -309,7 +309,7 @@ class Compare extends PureComponent {
                         color="#535263"
                         title={item[0].description}
                       >
-                        <InfoCircleOutlined style={{ marginLeft: 5 }} />
+                        <Info style={{ marginLeft: 5 }} size={16} />
                       </Tooltip>
                     )}
                   </TitleH3>

@@ -5,7 +5,6 @@ import { Row, Col, Empty } from "../UI/shadcn";
 import DashboardPage from "../../styles/dashboard";
 import { TitleH3, Flex } from "../../styles";
 import { ReactComponent as RightArrow } from "../../assets/dashboard/right-arrow.svg";
-import { ProgressBar, ChartTitle } from "../../styles/graph";
 import moment from "moment";
 import styled from "styled-components";
 
@@ -21,9 +20,10 @@ import { fetchStatistics } from "./utils";
 import { CountryReportPillars } from "../../data";
 import { RadialBarChart } from "../UI";
 import { noop } from "lodash";
-import { Card, CardContent, CardFooter } from "../UI/shadcn/card";
+import { Card } from "../UI/shadcn/card";
 import { Progress as ShProgress } from "../UI/shadcn/progress";
 import { Button as ShButton, Badge } from "../UI/shadcn";
+import { ThemeToggle } from "../UI/ThemeToggle";
 
 const NoDataContainer = styled.div`
   display: flex;
@@ -32,14 +32,166 @@ const NoDataContainer = styled.div`
   justify-content: center;
   padding: 40px 20px;
   min-height: 200px;
-  color: #717a8f;
   text-align: center;
 `;
 
 const NoDataMessage = styled.p`
   margin-top: 16px;
+  font-size: 14px;
+  color: hsl(var(--muted-foreground));
+  transition: color 0.3s ease;
+`;
+
+const DashboardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  padding: 0 48px;
+  
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    gap: 20px;
+  }
+`;
+
+const DashboardCard = styled(Card)`
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: hsl(var(--border) / 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 24px;
+  }
+`;
+
+const CardTitle = styled.h3`
   font-size: 16px;
-  color: #717a8f;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+`;
+
+const CardDescription = styled.p`
+  font-size: 13px;
+  color: hsl(var(--muted-foreground));
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+`;
+
+const ProgressItem = styled.div`
+  padding: 16px 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  &:not(:last-child) {
+    border-bottom: 1px solid hsl(var(--border) / 0.1);
+  }
+`;
+
+const ProgressLabel = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  margin-bottom: 12px;
+`;
+
+const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+`;
+
+const StatItem = styled.div`
+  padding: 16px;
+  background: hsl(var(--muted) / 0.3);
+  border-radius: 8px;
+`;
+
+const StatLabel = styled.div`
+  font-size: 12px;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+`;
+
+const StatValue = styled.div`
+  font-size: 24px;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+`;
+
+const StatIcon = styled.span`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: ${props => props.color};
+  display: inline-block;
+  margin-right: 4px;
+`;
+
+const ChartContainer = styled.div`
+  margin-top: 24px;
+`;
+
+const SimpleLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: hsl(var(--primary));
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: 24px;
+  transition: opacity 0.2s ease;
+  
+  &:hover {
+    opacity: 0.7;
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+const GridCol4 = styled.div`
+  grid-column: span 4;
+  
+  @media (max-width: 768px) {
+    grid-column: span 12;
+  }
+`;
+
+const GridCol6 = styled.div`
+  grid-column: span 6;
+  
+  @media (max-width: 768px) {
+    grid-column: span 12;
+  }
+`;
+
+const GridCol8 = styled.div`
+  grid-column: span 8;
+  
+  @media (max-width: 768px) {
+    grid-column: span 12;
+  }
 `;
 
 const chartData = (t) => [
@@ -143,163 +295,127 @@ const Dashboard = () => {
 
   return (
     <DashboardPage ref={printRef} id="dashboard">
-      <Flex jc="space-between" align="center" margin="0 0 10px" style={{ flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <TitleH3 style={{ margin: 0 }}>{t("Dashboard")}</TitleH3>
-          <Badge variant="success" size="sm">shadcn/ui</Badge>
-        </div>
+      {/* Header */}
+      <Flex jc="space-between" align="center" margin="0 0 32px" style={{ flexWrap: 'wrap', gap: '16px', padding: '0 48px' }}>
+        <TitleH3 style={{ margin: 0, color: 'hsl(var(--foreground))', fontSize: '24px', fontWeight: '600', letterSpacing: '-0.02em' }}>
+          {t("Dashboard")}
+        </TitleH3>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <ShButton 
-            variant="outline" 
-            size="sm"
-            onClick={() => history.push('/dashboard/components')}
-          >
-            🎨 Components
+          <ThemeToggle />
+          <ShButton variant="outline" size="sm" onClick={() => history.push('/dashboard/components')}>
+            Components
           </ShButton>
           <PrintDashboardToFile page="dashboard" />
-          <Print
-            ref={printRef.current}
-            orientation="portrait"
-            style={{ marginLeft: 10 }}
-          />
+          <Print ref={printRef.current} orientation="portrait" />
         </div>
       </Flex>
-      <Row style={{ marginBottom: 24 }}>
-        <Col className="col-left" xs={24} md={8} xl={8}>
-          <div className="inner-block col-left">
-            <TitleH3>
-              {t("How business ready is")} <b>{currentCountryName}</b>
-              {t("?")}
-            </TitleH3>
-            <Card style={{ marginTop: 16 }} className="info">
-              <CardContent>
-                {!currentCountryPillars ||
-                !currentCountryPillars.data ||
-                pillars.length === 0 ? (
-                  <NoDataContainer>
-                    <Empty
-                      image={Empty.PRESENTED_IMAGE_SIMPLE}
-                      description={
-                        <NoDataMessage>
-                          {t(`No data available for ${currentCountryName}`)}
-                        </NoDataMessage>
-                      }
-                    />
-                  </NoDataContainer>
-                ) : (
-                  <RadialBarChart
-                    id="dashboard-radial-bar-chart"
-                    pillars={pillars}
-                    showOverallScore={false}
-                    onPillarClick={redirectToReportPage}
-                    topicName=""
-                  />
-                )}
-              </CardContent>
-              {currentCountryPillars?.PDF_URL ? (
-                <CardFooter>
-                  <a
-                    target="_blank"
-                    className="content"
-                    rel="noopener noreferrer"
-                    href={currentCountryPillars.PDF_URL}
-                    key="pdf-link"
-                  >
-                    <div className="text-capitalize">
-                      {t("See full country profile")} <RightArrow />
-                    </div>
-                    <div className="text-center">
-                      <small>{t("Source: World Bank")}</small>
-                    </div>
-                  </a>
-                </CardFooter>
-              ) : null}
-            </Card>
-          </div>
-        </Col>
-        <Col className="col-right" xs={24} md={16} xl={16}>
-          <div className="inner-block col-right">
-            <TitleH3
-              className="chart-title text-capitalize"
-              margin="auto 0 20px"
-            >
-              {t("Monthly progress")}
-            </TitleH3>
-            <AreaChart data={period} total={actions.total} />
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="col-left" xs={24} md={12}>
-          <div className="inner-block col-left">
-            <TitleH3 margin="auto 0 20px" className="text-capitalize">
-              {t("Overall progress of tasks")} -{" "}
-              {moment().format(t("DD MMM YYYY"))}
-            </TitleH3>
-            <Row>
-              <Col xs={24} md={12} className="has-right-divider">
+      
+      {/* Main Grid */}
+      <DashboardGrid>
+        {/* Business Ready Card */}
+        <GridCol4>
+          <DashboardCard>
+            <CardTitle>{currentCountryName}</CardTitle>
+            <CardDescription>{t("Business readiness")}</CardDescription>
+            {!currentCountryPillars || !currentCountryPillars.data || pillars.length === 0 ? (
+              <NoDataContainer>
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  description={<NoDataMessage>{t(`No data available`)}</NoDataMessage>}
+                />
+              </NoDataContainer>
+            ) : (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                <RadialBarChart
+                  id="dashboard-radial-bar-chart"
+                  pillars={pillars}
+                  showOverallScore={false}
+                  onPillarClick={redirectToReportPage}
+                  topicName=""
+                />
+              </div>
+            )}
+            {currentCountryPillars?.PDF_URL && (
+              <SimpleLink target="_blank" rel="noopener noreferrer" href={currentCountryPillars.PDF_URL}>
+                {t("View full profile")} <RightArrow />
+              </SimpleLink>
+            )}
+          </DashboardCard>
+        </GridCol4>
+
+        {/* Monthly Progress Card */}
+        <GridCol8>
+          <DashboardCard>
+            <CardTitle>{t("Monthly progress")}</CardTitle>
+            <CardDescription>{t("Task completion over time")}</CardDescription>
+            <ChartContainer>
+              <AreaChart data={period} total={actions.total} />
+            </ChartContainer>
+          </DashboardCard>
+        </GridCol8>
+
+        {/* Overall Progress Card */}
+        <GridCol6>
+          <DashboardCard>
+            <CardTitle>{t("Overall progress")}</CardTitle>
+            <CardDescription>{moment().format(t("DD MMM YYYY"))}</CardDescription>
+            <ChartContainer>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                 <DonutChart data={chart} />
-              </Col>
-              <Col xs={24} md={12} className="has-left-divider">
                 <BarChart data={chart} />
-              </Col>
-              <Col span={24} className="pt-30" />
-              {chart.map((item, index) => (
-                <Col span={12} key={index}>
-                  <ChartTitle>
-                    <h3>
-                      <span
-                        className="label"
-                        style={{ backgroundColor: item.color }}
-                      />
+              </div>
+              <StatsGrid>
+                {chart.map((item, index) => (
+                  <StatItem key={index}>
+                    <StatLabel>
+                      <StatIcon color={item.color} />
                       {t(item.title)}
-                    </h3>
-                    <div className="number">{item.value || 0}%</div>
-                  </ChartTitle>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </Col>
-        <Col className="col-right" xs={24} md={12}>
-          <div className="inner-block col-right">
-            <TitleH3 margin="auto 0 20px">
-              {t("Working Group Progress")}
-            </TitleH3>
-            {workingGroups.length > 0
-              ? workingGroups.map((item, index) => {
+                    </StatLabel>
+                    <StatValue>{item.value || 0}%</StatValue>
+                  </StatItem>
+                ))}
+              </StatsGrid>
+            </ChartContainer>
+          </DashboardCard>
+        </GridCol6>
+
+        {/* Working Groups Card */}
+        <GridCol6>
+          <DashboardCard>
+            <CardTitle>{t("Working Groups")}</CardTitle>
+            <CardDescription>{t("Progress by group")}</CardDescription>
+            <div style={{ marginTop: '24px' }}>
+              {workingGroups.length > 0 ? (
+                workingGroups.map((item, index) => {
                   const { total = 0, completed = 0 } = item?.action_stats;
-                  const percent = total
-                    ? Number(
-                        parseFloat((completed / total) * 100, 10).toFixed(1)
-                      )
-                    : 0;
+                  const percent = total ? Number(parseFloat((completed / total) * 100, 10).toFixed(1)) : 0;
                   const title = item.title.replace(/\s/g, "-").toLowerCase();
 
                   if (item.visible) {
                     return (
-                      <ProgressBar
-                        className="progress"
-                        onClick={() => history.push(`/working-group/${title}`)}
-                        key={index}
-                      >
-                        <h5 className="progress-title">{t(item.title)}</h5>
+                      <ProgressItem key={index} onClick={() => history.push(`/working-group/${title}`)}>
+                        <ProgressLabel>{t(item.title)}</ProgressLabel>
                         <ShProgress
-                          trackColor="#ECEEF4"
-                          color="#1447e5"
-                          thickness={13}
+                          trackColor="hsl(var(--muted) / 0.3)"
+                          color="hsl(var(--primary))"
+                          thickness={8}
                           value={percent}
                           format={(percent) => percent + "%"}
                         />
-                      </ProgressBar>
+                      </ProgressItem>
                     );
                   }
                   return null;
                 })
-              : null}
-          </div>
-        </Col>
-      </Row>
+              ) : (
+                <NoDataContainer>
+                  <NoDataMessage>{t("No working groups")}</NoDataMessage>
+                </NoDataContainer>
+              )}
+            </div>
+          </DashboardCard>
+        </GridCol6>
+      </DashboardGrid>
     </DashboardPage>
   );
 };

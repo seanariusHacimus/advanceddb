@@ -35,13 +35,17 @@ export const WorkingGroup = styled.div`
 
 export const StyledWorkingGroup = styled(MembersPage)`
   .ant-table-tbody {
-    background-color: var(--background);
+    background-color: hsl(var(--card));
+    transition: background-color 0.2s ease;
   }
   .custom-dragable-table tr {
-    background-color: var(--background) !important;
+    background-color: hsl(var(--card)) !important;
+    transition: background-color 0.2s ease;
   }
   .custom-dragable-table td {
     width: 10%;
+    color: hsl(var(--foreground));
+    transition: color 0.3s ease;
   } 
   .custom-dragable-table .title {
     width: 60%;
@@ -51,14 +55,14 @@ export const StyledWorkingGroup = styled(MembersPage)`
     max-width: 100px;
   } 
   .row-dragging td {
-    border-bottom: 1px solid var(--blue);
+    border-bottom: 1px solid hsl(var(--primary));
   }
   .icons-set {
     display: flex;
     align-items: center;
   }
   .organization-list .icons-set {
-    border-bottom: 1px solid var(--border-grey);
+    border-bottom: 1px solid hsl(var(--border));
     padding: 8px 16px;
     padding-left: 0;
   }
@@ -73,8 +77,8 @@ export const StyledWorkingGroup = styled(MembersPage)`
     vertical-align: text-bottom;
   }
   .row-dragging {
-    background: #fafafa;
-    border: 1px solid #ccc;
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
   }
   .row-dragging td {
     padding: 16px;
@@ -88,22 +92,24 @@ export const StyledWorkingGroup = styled(MembersPage)`
     align-items: center;
   }
   .editable-input {
-    background: var(--background);
+    background: hsl(var(--card));
+    color: hsl(var(--foreground));
     padding: 3px 6px;
     border: none;
     border: 1px solid transparent;
+    transition: all 0.2s ease;
   }
   .editable-input:focus, .editable-input:hover {
-    background-color: #fff;
-    border: 1px dashed var(--blue);
+    background-color: hsl(var(--accent));
+    border: 1px dashed hsl(var(--primary));
     outline: none;
   }
   .check-icon.error {
-    color: #f4364c;
+    color: hsl(var(--destructive));
   }
   .check-icon {
     margin-left: 7px;
     font-size: 20px;
-    color: #4CAF50;
+    color: hsl(142 76% 36%);
   }
 `;

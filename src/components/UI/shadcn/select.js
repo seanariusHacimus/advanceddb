@@ -1,87 +1,113 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { ChevronDown, X, Check } from 'lucide-react';
 
-export const SelectContainer = styled.div`
+const SelectContainer = styled.div`
   position: relative;
   width: 100%;
 `;
 
-export const SelectTrigger = styled.button`
+const SelectTrigger = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 40px;
-  border-radius: var(--radius);
-  border: 1px solid hsl(var(--input));
-  background: hsl(var(--background));
   padding: 8px 12px;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) - 2px);
   font-size: 14px;
   color: hsl(var(--foreground));
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  min-height: 40px;
+  text-align: left;
   
-  &:hover:not(:disabled) {
-    border-color: hsl(var(--ring) / 0.5);
+  &:hover {
+    border-color: hsl(var(--ring));
   }
   
   &:focus {
     outline: none;
     border-color: hsl(var(--ring));
-    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
   }
   
   &:disabled {
-    cursor: not-allowed;
     opacity: 0.5;
+    cursor: not-allowed;
   }
   
-  &[data-placeholder="true"] {
-    color: hsl(var(--muted-foreground));
-  }
+  ${props => props.$error && `
+    border-color: hsl(var(--destructive));
+    
+    &:focus {
+      border-color: hsl(var(--destructive));
+      box-shadow: 0 0 0 3px hsl(var(--destructive) / 0.1);
+    }
+  `}
+`;
+
+const SelectValue = styled.span`
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: ${props => props.$placeholder ? 'hsl(var(--muted-foreground))' : 'hsl(var(--foreground))'};
+`;
+
+const SelectIcon = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  color: hsl(var(--muted-foreground));
   
   svg {
     width: 16px;
     height: 16px;
-    color: hsl(var(--muted-foreground));
     transition: transform 0.2s ease;
-  }
-  
-  &[data-state="open"] svg {
-    transform: rotate(180deg);
+    transform: ${props => props.$open ? 'rotate(180deg)' : 'rotate(0)'};
   }
 `;
 
-export const SelectContent = styled.div`
+const ClearButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background: transparent;
+  border: none;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  border-radius: 2px;
+  
+  &:hover {
+    background: hsl(var(--accent));
+    color: hsl(var(--foreground));
+  }
+  
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+`;
+
+const Dropdown = styled.div`
   position: absolute;
-  z-index: 50;
-  width: 100%;
-  margin-top: 4px;
-  border-radius: var(--radius);
-  border: 1px solid hsl(var(--border));
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 1100;
   background: hsl(var(--popover));
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) - 2px);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   max-height: 300px;
   overflow-y: auto;
+  padding: 4px;
+  display: ${props => props.$open ? 'block' : 'none'};
   animation: slideDown 0.2s ease;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
-    border-radius: 3px;
-  }
-  
-  &::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.5);
-  }
   
   @keyframes slideDown {
     from {
@@ -93,153 +119,209 @@ export const SelectContent = styled.div`
       transform: translateY(0);
     }
   }
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
 `;
 
-export const SelectItem = styled.div`
-  position: relative;
+const Option = styled.div`
   display: flex;
   align-items: center;
-  padding: 8px 12px 8px 32px;
-  font-size: 14px;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: calc(var(--radius) - 4px);
   cursor: pointer;
-  user-select: none;
+  font-size: 14px;
+  color: hsl(var(--foreground));
   transition: all 0.15s ease;
-  color: hsl(var(--popover-foreground));
   
   &:hover {
     background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
   }
   
-  &:focus {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
-    outline: none;
-  }
-  
-  &[data-selected="true"] {
-    background: hsl(var(--accent));
+  ${props => props.$selected && `
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
     font-weight: 500;
-    
-    &::before {
-      content: "✓";
-      position: absolute;
-      left: 8px;
-      font-size: 14px;
-    }
-  }
+  `}
   
-  &[data-disabled="true"] {
+  ${props => props.$disabled && `
     opacity: 0.5;
+    cursor: not-allowed;
     pointer-events: none;
-  }
+  `}
 `;
 
-export const SelectSeparator = styled.div`
-  height: 1px;
-  margin: 4px 0;
-  background: hsl(var(--border));
-  transition: background-color 0.3s ease;
+const CheckIcon = styled(Check)`
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 `;
 
-export const SelectLabel = styled.div`
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  color: hsl(var(--muted-foreground));
-  transition: color 0.3s ease;
-`;
-
-// Chevron Down Icon
-const ChevronDownIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="6 9 12 15 18 9"></polyline>
-  </svg>
-);
-
-// Select component with state management
-export function Select({ value, onValueChange, placeholder = "Select an option", disabled, children }) {
+export function Select({
+  value,
+  onChange,
+  options = [],
+  placeholder = 'Select...',
+  disabled = false,
+  allowClear = false,
+  showSearch = false,
+  mode, // 'multiple' for multi-select
+  className,
+  style,
+  error,
+  ...props
+}) {
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value);
+  const [searchTerm, setSearchTerm] = useState('');
   const containerRef = useRef(null);
+  const searchInputRef = useRef(null);
 
-  // Close dropdown when clicking outside
+  const isMultiple = mode === 'multiple';
+  const selectedValues = isMultiple ? (Array.isArray(value) ? value : []) : value;
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setOpen(false);
+        setSearchTerm('');
       }
     };
 
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [open]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-  // Update selected value when prop changes
   useEffect(() => {
-    setSelectedValue(value);
-  }, [value]);
-
-  const handleSelect = (newValue) => {
-    setSelectedValue(newValue);
-    onValueChange?.(newValue);
-    setOpen(false);
-  };
-
-  // Get display text for selected value
-  const getDisplayText = () => {
-    if (!selectedValue) return placeholder;
-    
-    // Find the selected item's label
-    const items = React.Children.toArray(children);
-    for (const child of items) {
-      if (React.isValidElement(child) && child.props.value === selectedValue) {
-        return child.props.children;
-      }
+    if (open && showSearch && searchInputRef.current) {
+      searchInputRef.current.focus();
     }
-    return selectedValue;
+  }, [open, showSearch]);
+
+  const handleSelect = (optionValue) => {
+    if (isMultiple) {
+      const newValue = selectedValues.includes(optionValue)
+        ? selectedValues.filter(v => v !== optionValue)
+        : [...selectedValues, optionValue];
+      onChange?.(newValue);
+    } else {
+      onChange?.(optionValue);
+      setOpen(false);
+      setSearchTerm('');
+    }
   };
+
+  const handleClear = (e) => {
+    e.stopPropagation();
+    onChange?.(isMultiple ? [] : undefined);
+  };
+
+  const getDisplayValue = () => {
+    if (isMultiple) {
+      if (selectedValues.length === 0) return null;
+      const labels = selectedValues
+        .map(v => options.find(opt => opt.value === v)?.label || v)
+        .join(', ');
+      return labels;
+    }
+    
+    const selectedOption = options.find(opt => opt.value === value);
+    return selectedOption?.label || value;
+  };
+
+  const filteredOptions = showSearch && searchTerm
+    ? options.filter(opt => 
+        opt.label?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        opt.value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : options;
+
+  const displayValue = getDisplayValue();
 
   return (
-    <SelectContainer ref={containerRef}>
+    <SelectContainer ref={containerRef} className={className} style={style}>
       <SelectTrigger
+        type="button"
         onClick={() => !disabled && setOpen(!open)}
         disabled={disabled}
-        data-state={open ? 'open' : 'closed'}
-        data-placeholder={!selectedValue}
+        $error={error}
+        {...props}
       >
-        <span>{getDisplayText()}</span>
-        <ChevronDownIcon />
-      </SelectTrigger>
-      {open && (
-        <SelectContent>
-          {React.Children.map(children, (child) =>
-            React.isValidElement(child)
-              ? React.cloneElement(child, {
-                  selected: child.props.value === selectedValue,
-                  onClick: () => handleSelect(child.props.value),
-                })
-              : child
+        <SelectValue $placeholder={!displayValue}>
+          {displayValue || placeholder}
+        </SelectValue>
+        <SelectIcon $open={open}>
+          {allowClear && displayValue && !disabled && (
+            <ClearButton onClick={handleClear} type="button">
+              <X />
+            </ClearButton>
           )}
-        </SelectContent>
-      )}
+          <ChevronDown />
+        </SelectIcon>
+      </SelectTrigger>
+
+      <Dropdown $open={open}>
+        {showSearch && (
+          <input
+            ref={searchInputRef}
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search..."
+            style={{
+              width: '100%',
+              padding: '8px 12px',
+              marginBottom: '4px',
+              border: '1px solid hsl(var(--border))',
+              borderRadius: 'calc(var(--radius) - 4px)',
+              background: 'hsl(var(--background))',
+              color: 'hsl(var(--foreground))',
+              fontSize: '14px',
+              outline: 'none',
+            }}
+          />
+        )}
+        
+        {filteredOptions.length === 0 ? (
+          <div style={{ padding: '16px', textAlign: 'center', color: 'hsl(var(--muted-foreground))', fontSize: '14px' }}>
+            No options found
+          </div>
+        ) : (
+          filteredOptions.map((option) => {
+            const isSelected = isMultiple 
+              ? selectedValues.includes(option.value)
+              : value === option.value;
+            
+            return (
+              <Option
+                key={option.value}
+                onClick={() => !option.disabled && handleSelect(option.value)}
+                $selected={isSelected}
+                $disabled={option.disabled}
+              >
+                <span>{option.label || option.value}</span>
+                {isSelected && <CheckIcon />}
+              </Option>
+            );
+          })
+        )}
+      </Dropdown>
     </SelectContainer>
   );
 }
 
-// SelectItem component with selection state
-Select.Item = ({ value, children, disabled, selected, onClick }) => (
-  <SelectItem
-    data-selected={selected}
-    data-disabled={disabled}
-    onClick={!disabled ? onClick : undefined}
-  >
-    {children}
-  </SelectItem>
-);
-
-Select.Label = SelectLabel;
-Select.Separator = SelectSeparator;
-
+export default Select;

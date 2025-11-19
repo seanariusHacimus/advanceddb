@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Divider } from "antd";
+import { Separator as Divider } from "../UI/shadcn"; // Using shadcn Separator
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { MY_ACCOUNT_QUERY } from "../../graphql/profile";

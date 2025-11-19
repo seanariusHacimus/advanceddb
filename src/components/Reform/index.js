@@ -4,7 +4,7 @@ import {
   Table, Menu, Dropdown, Divider, message,
 } from 'antd';
 import { Popconfirm } from '../UI/shadcn';
-import {MoreOutlined} from '@ant-design/icons';
+import { MoreVertical } from 'lucide-react';
 import Axios from '../../utils/axios';
 import {FETCH_REFORMS, DELETE_REFORM} from '../../graphql/reforms';
 import {
@@ -186,7 +186,7 @@ class Reform extends Component {
                 </Menu>
               </>
             )}
-            icon={<MoreOutlined />}
+            icon={<MoreVertical size={16} />}
           />
         </div>
       ),

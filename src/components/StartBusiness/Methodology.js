@@ -1,16 +1,29 @@
 import React, { PureComponent, lazy, Suspense } from "react";
-import { ButtonPrimary, Button, Flex } from "../../styles";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import Axios from "../../utils/axios";
 import {
   UPDATE_WORKING_GROUP,
   FETCH_WORKING_GROUPS_BY_ID,
 } from "../../graphql/workingGroups";
-import iconEdit from "../../assets/startBusiness/edit.svg";
 import { groupTitleToUrl } from "../../utils";
 import { withLocale } from "../../utils/locale";
+import { Button } from "../UI/shadcn";
+import { Edit, Save } from "lucide-react";
 
 const Editor = lazy(() => import("../UI/Editor/Editor.js"));
+
+const MethodologyContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+`;
 
 class Methodology extends PureComponent {
   state = { edit: false };
@@ -71,52 +84,48 @@ class Methodology extends PureComponent {
     const { methodology, edit } = this.state;
     const { selectedWorkingGroup } = this.props;
     return (
-      <div className="has-box-shadow editor">
-        {selectedWorkingGroup.permissions.methodology.update && (
-          <Flex>
-            <Button
-              style={{
-                width: "auto",
-                padding: "5px 10px",
-                marginLeft: "auto",
-                marginBottom: 30,
-              }}
-              onClick={() =>
-                this.setState((prevState) => ({ edit: !prevState.edit }))
-              }
-              className="print-btn transparent"
-            >
-              <img src={iconEdit} alt="added btn" /> {t("Edit")}
-            </Button>
-          </Flex>
-        )}
+      <MethodologyContainer>
+        <div className="has-box-shadow editor">
+          {selectedWorkingGroup.permissions.methodology.update && (
+            <ButtonContainer>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  this.setState((prevState) => ({ edit: !prevState.edit }))
+                }
+              >
+                <Edit size={16} style={{ marginRight: '8px' }} />
+                {edit ? t("Cancel") : t("Edit")}
+              </Button>
+            </ButtonContainer>
+          )}
 
-        {edit && (
-          <Suspense fallback={t("Loading...")}>
-            <Editor
-              height={500}
-              onChange={this.inputHandler}
-              value={methodology || this.props.selectedWorkingGroup.methodology}
-            />
-            <ButtonPrimary
-              className="small"
-              onClick={this.submitReform}
-              style={{ maxWidth: 250, margin: "30px auto" }}
-            >
-              {t("Save")}
-            </ButtonPrimary>
-          </Suspense>
-        )}
-        {!edit && (
-          <div
-            className="editor-content"
-            dangerouslySetInnerHTML={{
-              __html:
-                methodology || this.props.selectedWorkingGroup.methodology,
-            }}
-          ></div>
-        )}
-      </div>
+          {edit && (
+            <Suspense fallback={t("Loading...")}>
+              <Editor
+                height={500}
+                onChange={this.inputHandler}
+                value={methodology || this.props.selectedWorkingGroup.methodology}
+              />
+              <ButtonContainer style={{ marginTop: '24px' }}>
+                <Button onClick={this.submitReform}>
+                  <Save size={16} style={{ marginRight: '8px' }} />
+                  {t("Save")}
+                </Button>
+              </ButtonContainer>
+            </Suspense>
+          )}
+          {!edit && (
+            <div
+              className="editor-content"
+              dangerouslySetInnerHTML={{
+                __html:
+                  methodology || this.props.selectedWorkingGroup.methodology,
+              }}
+            ></div>
+          )}
+        </div>
+      </MethodologyContainer>
     );
   }
 }

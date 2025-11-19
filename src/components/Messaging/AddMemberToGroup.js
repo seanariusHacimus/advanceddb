@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect, useContext, useMemo, } from 'react';
-import { Modal, Collapse, Button, Input, } from 'antd';
+import { Modal, Collapse, Button, Input } from 'antd'; // Using Ant components for messaging
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { StyledProfileInfo } from '../../styles/messaging';
@@ -10,7 +10,7 @@ import { CommunicationsContext } from './index';
 import { useLocale } from "../../utils/locale";
 import { fetchWorkingGroups } from '../../graphql/workingGroups';
 import { indexBy, roleNames, groupTitleToUrl, } from '../../utils';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { Plus, Search } from 'lucide-react';
 
 const memberSchema = { role: '', member_groups: [], leader_groups: [], img: '' }
 
@@ -116,11 +116,10 @@ function CreateGroupConversation(props) {
           </div>
           <Button
             onClick={handleSearch}
-            type="link"
-            style={{ marginLeft: 7 }}
-            icon={<SearchOutlined />}
-            shape="round"
             type="primary"
+            style={{ marginLeft: 7 }}
+            icon={<Search size={16} />}
+            shape="round"
           />
         </Flex>
         <ul className="group-members" style={{ height: '100%', maxHeight: 300, overflow: 'auto' }}>
@@ -165,7 +164,7 @@ function CreateGroupConversation(props) {
                     onClick={() => addToGroup(item._id)}
                     shape="round"
                     type="primary"
-                    icon={<PlusOutlined />}
+                    icon={<Plus size={16} />}
                   >
                     {t('Add')}
                   </Button>

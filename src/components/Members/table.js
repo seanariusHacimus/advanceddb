@@ -1,9 +1,9 @@
 import React from 'react';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import { CheckCircle, XCircle } from 'lucide-react';
 import iconActions from '../../assets/startBusiness/actions.svg';
 import { Flex, Avatar } from '../../styles';
 import { Link } from 'react-router-dom';
-import { Tooltip } from "antd";
+import { Tooltip } from "../UI/shadcn"; // Using shadcn Tooltip
 
 export const columns = (t) => [
   {
@@ -81,7 +81,7 @@ export const columns = (t) => [
 
 const roleRender = (val) => {
   if (typeof (val) === 'boolean') {
-    return val ? <CheckCircleFilled style={{ color: "#8BC34A" }} /> : <CloseCircleFilled style={{ color: "#E91E63" }} />
+    return val ? <CheckCircle style={{ color: "hsl(var(--chart-2))", fill: "hsl(var(--chart-2))" }} size={18} /> : <XCircle style={{ color: "hsl(var(--destructive))", fill: "hsl(var(--destructive))" }} size={18} />
   } else if (typeof (val) === 'object') {
     return (
       <Tooltip title={val.tooltip}

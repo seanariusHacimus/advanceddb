@@ -6,7 +6,7 @@ import TopicCard from "./TopicCard";
 import Legend from "../UI/Legend";
 import CountrySelect from "./CountrySelect";
 import constants from "../../constants";
-import { Empty } from "antd";
+import { Empty } from "../UI/shadcn"; // Using shadcn Empty component
 import { CountryReportPillars } from "../../data";
 import styled from "styled-components";
 import { getCountryNameFromCode } from "./utils";
@@ -22,16 +22,16 @@ const NoDataContainer = styled.div`
   padding: 60px 20px;
   min-height: 300px;
   text-align: center;
-  background: #fff;
+  background: hsl(var(--card));
   border-radius: 12px;
-  border: 1px solid #e2e4ed;
+  border: 1px solid hsl(var(--border));
   margin-top: 20px;
 `;
 
 const NoDataMessage = styled.p`
   margin-top: 16px;
   font-size: 16px;
-  color: #717a8f;
+  color: hsl(var(--muted-foreground));
 `;
 
 const CountryReport = ({ history, t }) => {

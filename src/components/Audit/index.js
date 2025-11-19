@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FETCH_AUDIT_LOGS } from '../../graphql/audit';
 import Axios from '../../utils/axios';
-import { Table, Modal, Select, Dropdown, Button, Checkbox } from 'antd';
+import { Table, Modal, Select, Dropdown, Button, Checkbox } from 'antd'; // Using Ant components for audit table
 import { useLocale } from '../../utils/locale';
 import defaultUserImage from '../../assets/startBusiness/user.svg';
 import StyledAudit from '../../styles/audit';
-import { ArrowRightOutlined, InboxOutlined, SettingOutlined } from '@ant-design/icons';
+import { ArrowRight, Inbox, Settings } from 'lucide-react';
 
 export default function Audit() {
   const [data, setData] = useState([{
@@ -174,7 +174,7 @@ export default function Audit() {
       <h1>{t("Audit logs")}</h1>
 
       <div className="filter-wrapper">
-        <Button className="more-actions"><SettingOutlined /></Button>
+        <Button className="more-actions"><Settings size={18} /></Button>
         <Checkbox.Group value={selectedFilters} onChange={handleSelectedFilters}>
           {
             filters.map(item => {
@@ -227,7 +227,7 @@ export default function Audit() {
                   <li key={index}>
                     {item.name}:
                     <span className="deleted">{JSON.stringify(item.oldValue) || " "}</span>
-                    <ArrowRightOutlined className={`arrow ${item.currentValue ? 'arrow-added' : 'arrow-deleted'}`} />
+                    <ArrowRight className={`arrow ${item.currentValue ? 'arrow-added' : 'arrow-deleted'}`} size={16} />
                     <span className="added">{JSON.stringify(item.currentValue) || " "}</span>
                   </li>
                 )
@@ -236,7 +236,7 @@ export default function Audit() {
             })
               :
               <div className="text-center" style={{ marginLeft: -40, marginTop: 12 }}>
-                <InboxOutlined size={50} style={{ fontSize: 50 }} />
+                <Inbox size={50} />
                 <h3>{t("No changes")}</h3>
               </div>
           }

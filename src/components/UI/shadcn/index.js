@@ -15,8 +15,11 @@ export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
 export { Navigation, NavigationItem, NavigationSpacer } from './navigation';
 export { Separator } from './separator';
 export { Progress } from './progress';
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './accordion';
 export { Row, Col, RowWithGutter } from './grid';
-export { Modal, ModalOverlay, ModalContainer, ModalContent, ModalHeader, ModalTitle, ModalCloseButton, ModalBody, ModalFooter } from './modal';
+export { Modal, ModalOverlay, ModalContainer, ModalHeader, ModalTitle, ModalCloseButton, ModalBody, ModalFooter } from './modal';
+// Re-export ModalContainer as ModalContent for compatibility
+export { ModalContainer as ModalContent } from './modal';
 export { 
   DropdownMenu, 
   DropdownTrigger, 
@@ -112,6 +115,14 @@ export {
   TableHead, 
   TableCell 
 } from './table';
+
+// Additional migrated components (already exported above, kept for clarity)
+// export { Modal } - already exported on line 20
+// export { Select } - already exported on line 37
+// export { Alert } - already exported on lines 57-64
+export { DatePicker } from './datepicker';
+export { Spin } from './spin';
+// Divider - use Separator instead (already exported on line 16)
 export {
   SubActionCard,
   SubActionCardItem,

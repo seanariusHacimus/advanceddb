@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Select } from "antd";
+import { Select } from "antd"; // Using Ant Select for now - has complex features
 import { useHistory } from "react-router-dom";
 import { withLocale } from "../../utils/locale";
 import { CountryReportPillars } from "../../data";

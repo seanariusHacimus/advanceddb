@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Button, message, Dropdown, Menu, Table, Tooltip } from "antd";
+import { Dropdown, Menu, Table, Tooltip } from "antd";
+import { Button } from "../UI/shadcn";
+import { message } from "../../utils/message";
 import Axios from "../../utils/axios";
 import {
   FETCH_ACTIONS_FOR_PRINT,
@@ -12,7 +14,7 @@ import {
   printAllActionsPdf,
 } from "../../utils/printer";
 import { useLocale } from "../../utils/locale";
-import { FileExcelFilled, FilePdfFilled } from "@ant-design/icons";
+import { FileSpreadsheet, FileText, Download } from "lucide-react";
 import Modal from "antd/lib/modal/Modal";
 import moment from "moment";
 import { columns } from "../StartBusiness/ActionPlan/table";
@@ -324,7 +326,7 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
             page ? handlePrintAll({ isPdf: true }) : handlePrint(true)
           }
         >
-          <FilePdfFilled /> {t("Download PDF")}
+          <FileText size={16} /> {t("Download PDF")}
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -332,7 +334,7 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
           type="dashed"
           onClick={() => (page ? handlePrintAll() : handlePrint())}
         >
-          <FileExcelFilled /> {t("Download Excel")}
+          <FileSpreadsheet size={16} /> {t("Download Excel")}
         </Button>
       </Menu.Item>
     </Menu>
@@ -341,7 +343,7 @@ const PrintToFile = ({ id, title, style, printSortedData = [], page }) => {
     <StyledPrint ref={parentRef}>
       {/* <Dropdown overlay={menu} placement="bottomLeft" >
         <Button className="print-btn" style={{ marginLeft: 10, height: 34, ...style }}>
-          <DownloadOutlined style={{ fontSize: 18 }} />
+          <Download size={18} />
           {' '}
           {t("Download actions")}
         </Button>

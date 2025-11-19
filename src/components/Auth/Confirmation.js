@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Result } from "antd";
+import { Button, Result } from "antd"; // Using Ant components for confirmation page
 import { useQueryParam, StringParam } from "use-query-params";
 import useInterval from "@use-it/interval";
 import { ReactComponent as IconLock } from "../../assets/auth/lock.svg";

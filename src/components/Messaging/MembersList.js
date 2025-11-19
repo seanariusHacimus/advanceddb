@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext, useCallback, Suspense, lazy, useRef, useMemo } from 'react';
 import { StyledMembersList } from '../../styles/messaging';
-import { List, Avatar, Input, Dropdown, Menu, Divider, Typography } from 'antd';
+import { List, Avatar, Input, Dropdown, Menu, Divider, Typography } from 'antd'; // Using Ant components for messaging
 import { useSelector } from 'react-redux';
 import { CommunicationsContext } from './index';
 import moment from 'moment';
 import Loader from '../UI/SpinnerLocal';
 import AvatarInitials from '../UI/AvatarInitials';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircle } from 'lucide-react';
 import Spinner from '../UI/Spinner';
 import groupImage from '../../assets/messaging/group.svg';
 import { useLocale } from "../../utils/locale";
@@ -93,7 +93,7 @@ export default function MembersList(props) {
             type="link"
             style={{ padding: 0, marginLeft: 4 }}
           >
-            <PlusCircleOutlined style={{ fontSize: 32, color: '#e7e7e7', color: "var(--blue)" }} />
+            <PlusCircle style={{ color: "hsl(var(--primary))" }} size={32} />
           </Button>
         </Dropdown>
       </div>

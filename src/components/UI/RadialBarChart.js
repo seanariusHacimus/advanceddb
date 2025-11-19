@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 import constants from "../../constants";
 import { getChartColors } from "../../utils/settings";
+import { useTheme } from "./ThemeProvider";
 
 // Get colors from settings/localStorage, fallback to defaults
 const getColorCode = () => {
@@ -38,28 +39,36 @@ const PillarLabelsContainer = styled.div`
   position: absolute;
   top: ${(props) =>
     props.chartSize ? `${Math.max(30, props.chartSize / 8)}px` : "30px"};
-  right: calc(50% + 6px);
+  right: calc(50% + 12px);
   display: flex;
   flex-direction: column;
   gap: ${(props) =>
-    props.chartSize ? `${Math.ceil(props.chartSize / 50)}px` : "3px"};
+    props.chartSize ? `${Math.max(8, Math.ceil(props.chartSize / 40))}px` : "8px"};
   z-index: 10;
   cursor: pointer;
 `;
 
 const PillarLabel = styled.button`
-  font-size: 12px;
-  font-weight: 500;
-  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  color: hsl(var(--foreground));
   cursor: pointer;
-  transition: color 0.2s ease;
-  background: transparent;
-  border: none;
+  transition: all 0.2s ease;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border) / 0.5);
   text-align: left;
-  padding: 0;
-  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: calc(var(--radius) - 2px);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 3px hsl(var(--foreground) / 0.05);
+  
   &:hover {
-    color: #527bdd;
+    color: hsl(var(--primary));
+    background: hsl(var(--accent));
+    border-color: hsl(var(--primary) / 0.5);
+    transform: translateX(-4px);
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.12);
   }
 `;
 
@@ -74,6 +83,7 @@ const SimpleRadialBarChart = ({
   showOverallScore = true,
 }) => {
   const history = useHistory();
+  const { theme } = useTheme();
 
   const handlePillarClick = (pillarId) => {
     if (onPillarClick) {
@@ -96,6 +106,11 @@ const SimpleRadialBarChart = ({
 
   // Get colors from settings
   const colorCode = getColorCode();
+  
+  // Theme-aware colors
+  const isDark = theme === 'dark';
+  const textColor = isDark ? 'hsl(210 40% 98%)' : 'hsl(222.2 84% 4.9%)';
+  const gridColor = isDark ? 'hsl(217.2 32.6% 17.5%)' : '#E2E4ED';
 
   return (
     <ChartContainer
@@ -156,7 +171,9 @@ const SimpleRadialBarChart = ({
           angleAxisId={0}
           ticks={[0, 25, 50, 75, 100]}
           tickSize={10}
-          fontSize={10}
+          fontSize={11}
+          fontWeight="600"
+          tick={{ fill: textColor, fontFamily: "'Inter', -apple-system, sans-serif" }}
         />
         <RadialBar
           dataKey="score"
@@ -164,7 +181,7 @@ const SimpleRadialBarChart = ({
           onClick={(data) => handlePillarClick(data.id)}
           background={{
             fill: "transparent",
-            stroke: "#E2E4ED",
+            stroke: gridColor,
             strokeDasharray: "3,3",
           }}
           style={{
@@ -172,14 +189,12 @@ const SimpleRadialBarChart = ({
           }}
           label={{
             position: "end",
-            fill: "#333",
-            fontSize: 10,
-            fontWeight: "bold",
-            fontFamily: "Montserrat",
+            fill: textColor,
+            fontSize: 12,
+            fontWeight: "800",
+            fontFamily: "'Inter', -apple-system, sans-serif",
           }}
         />
-        {/* <PolarGrid gridType="circle" stroke="#E2E4ED" /> */}
-        {/* <Tooltip defaultIndex={0} /> */}
         {showOverallScore && (
           <text
             x="50%"
@@ -188,7 +203,7 @@ const SimpleRadialBarChart = ({
             dominantBaseline="middle"
             fontSize={22}
             fontWeight="bold"
-            fill="#333"
+            fill={textColor}
             fontFamily="Montserrat"
             onClick={() => handlePillarClick("all")}
           >

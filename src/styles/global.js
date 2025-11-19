@@ -49,17 +49,51 @@ export default createGlobalStyle`
   }
 
   .has-box-shadow .editor-content {
-    max-width: 980px;
+    max-width: 1200px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+
+    h1, h2, h3, h4, h5, h6 {
+      color: hsl(var(--foreground));
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    a {
+      color: hsl(var(--primary));
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        text-decoration: underline;
+        color: hsl(var(--primary) / 0.8);
+      }
+    }
   }
 
   .has-box-shadow {
-    padding: 24px;
-    box-shadow: rgba(9,30,66,0.25) 0px 4px 8px -2px,rgba(9,30,66,0.31) 0px 0px 1px;
-    background: #fff;
-    border-radius: 5px;
+    padding: 48px;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+    border-radius: 12px;
+    transition: all 0.2s ease;
 
     &.editor img {
       width: 100%;
+      border-radius: 8px;
+      margin: 24px 0;
+      border: 1px solid hsl(var(--border));
+    }
+
+    @media (max-width: 768px) {
+      padding: 32px 24px;
     }
   }
   .clickable {

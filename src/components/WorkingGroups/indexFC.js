@@ -1,9 +1,9 @@
 import React, { Suspense, lazy, useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown, Menu, message } from "antd";
+import { Dropdown, Menu } from "antd";
 import { Popconfirm } from "../UI/shadcn";
-import { MoreOutlined } from "@ant-design/icons";
+import { MoreVertical } from "lucide-react";
 import Axios from "../../utils/axios";
 import { StyledWorkingGroup } from "../../styles/workingGroup";
 import {
@@ -89,7 +89,7 @@ function WorkingGroupList(props) {
               )}
             </Menu>
           }
-          icon={<MoreOutlined />}
+          icon={<MoreVertical size={16} />}
         />
       </div>
     ),

@@ -20,7 +20,7 @@ function MainContent(props) {
     <main
       style={{
         ...styles.content,
-        background: pathname.includes("/home") ? "hsl(var(--muted))" : "hsl(var(--background))",
+        background: pathname.includes("/home") ? "hsl(var(--card))" : "hsl(var(--background))",
       }}
     >
       {request_password_change &&

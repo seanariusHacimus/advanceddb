@@ -15,24 +15,40 @@ import iconLogo from "../../assets/logo.svg";
 // -------------- SHADCN UI -----------
 import { Button, Input, Label, FormGroup, FormError, Checkbox } from "../UI/shadcn";
 import { useToast } from "../UI/shadcn/toast";
+import { ThemeToggle } from "../UI/ThemeToggle";
 
 import { messaging } from "../../store";
 import { useLocale } from "../../utils/locale";
 
 function refreshToken() {
   try {
+    if (!messaging || !messaging.getToken) {
+      console.log("Messaging not initialized, skipping token refresh");
+      return Promise.resolve();
+    }
+    
     return messaging.getToken().then((token) => {
-      Axios.post("/graphql", {
+      if (!token) {
+        console.log("No token received, skipping");
+        return;
+      }
+      
+      return Axios.post("/graphql", {
         query: SEND_PUSH_TOKEN,
         variables: {
           push_token: token,
         },
       }).then(() => {
         console.log("Notification token was set up");
+      }).catch((err) => {
+        console.error("Failed to send push token:", err);
       });
+    }).catch((err) => {
+      console.error("Failed to get messaging token:", err);
     });
   } catch (err) {
     console.error("[Custom Catch Error]-->", err);
+    return Promise.resolve();
   }
 }
 
@@ -84,21 +100,82 @@ function SignIn(props) {
       e.preventDefault();
       setErrorAlerts([]);
       setErrors({});
+      
+      // Validate inputs
+      if (!email || !email.trim()) {
+        setErrors({ email: [t("Email is required")] });
+        toast.error({
+          title: t("Validation Error"),
+          description: t("Please enter your email address"),
+        });
+        return;
+      }
+      
+      if (!password || !password.trim()) {
+        setErrors({ password: [t("Password is required")] });
+        toast.error({
+          title: t("Validation Error"),
+          description: t("Please enter your password"),
+        });
+        return;
+      }
+      
       setIsLoading(true);
-      Axios.post("/graphql", {
-        query: SIGN_IN_MUTATION,
+      
+      // Ensure query is a string
+      const queryString = typeof SIGN_IN_MUTATION === 'string' 
+        ? SIGN_IN_MUTATION 
+        : String(SIGN_IN_MUTATION);
+      
+      const requestPayload = {
+        query: queryString,
         variables: {
-          email,
-          password,
+          email: email.trim(),
+          password: password.trim(),
         },
+      };
+      
+      // Validate that variables are not empty
+      if (!requestPayload.variables.email || !requestPayload.variables.password) {
+        toast.error({
+          title: t("Validation Error"),
+          description: t("Email and password are required"),
+        });
+        setIsLoading(false);
+        return;
+      }
+      
+      console.log('Sending login request:', {
+        url: '/graphql',
+        queryLength: queryString.length,
+        queryPreview: queryString.substring(0, 150) + '...',
+        variables: { email: email.trim(), password: '***' },
+        fullPayload: { ...requestPayload, variables: { ...requestPayload.variables, password: '***' } }
+      });
+      
+      Axios.post("/graphql", requestPayload, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       })
         .then((res) => {
-          if (res?.data) {
+          if (res?.data?.data?.sign_in) {
             props.signInSuccess(res.data.data.sign_in);
-            refreshToken();
-            messaging.onTokenRefresh(() => {
-              refreshToken();
+            
+            // Set up push notifications (safe to fail)
+            refreshToken().catch(err => {
+              console.warn("Failed to set up push notifications:", err);
             });
+            
+            if (messaging && messaging.onTokenRefresh) {
+              try {
+                messaging.onTokenRefresh(() => {
+                  refreshToken();
+                });
+              } catch (err) {
+                console.warn("Failed to set up token refresh listener:", err);
+              }
+            }
             
             toast.success({
               title: t("Welcome back!"),
@@ -117,23 +194,72 @@ function SignIn(props) {
           }
         })
         .catch((err) => {
-          if (err.message.includes("422")) {
-            const { alerts, errors } = parseErrors(
+          console.error('Login error:', err);
+          console.error('Error response:', err.response);
+          console.error('Error data:', err.response?.data);
+          
+          // Handle 400 Bad Request
+          if (err.response?.status === 400) {
+            const errorData = err.response.data;
+            const firstError = errorData?.errors?.[0];
+            const errorMessage = firstError?.message || errorData?.message || t("Invalid request. Please check your email and password.");
+            const errorPath = firstError?.path ? ` at ${firstError.path.join('.')}` : '';
+            
+            console.error('400 Bad Request - Full error:', {
+              message: errorMessage,
+              path: errorPath,
+              extensions: firstError?.extensions,
+              fullError: firstError,
+              allErrors: errorData?.errors
+            });
+            
+            toast.error({
+              title: t("Bad Request"),
+              description: `${errorMessage}${errorPath}`,
+            });
+            
+            // Try to extract validation errors
+            if (errorData?.errors?.[0]?.extensions?.validation) {
+              const { alerts, errors: validationErrors } = parseErrors(
+                errorsConfig,
+                errorData.errors[0].extensions.validation
+              );
+              setErrorAlerts(alerts);
+              setErrors(validationErrors);
+            } else {
+              setErrorAlerts([errorMessage + errorPath]);
+            }
+          } else if (err.response?.status === 422) {
+            const { alerts, errors: validationErrors } = parseErrors(
               errorsConfig,
               err.response.data?.errors[0]?.extensions?.validation
             );
             setErrorAlerts(alerts);
-            setErrors(errors);
+            setErrors(validationErrors);
             
             toast.error({
               title: t("Sign In Failed"),
               description: alerts[0] || t("Please check your credentials"),
             });
           } else {
+            console.error('Unexpected error details:', {
+              status: err.response?.status,
+              message: err.message,
+              response: err.response?.data,
+              stack: err.stack
+            });
+            
+            const errorMessage = err.response?.data?.errors?.[0]?.message || 
+                                err.response?.data?.message || 
+                                err.message || 
+                                t("An unexpected error occurred");
+            
             toast.error({
               title: t("Error"),
-              description: t("An unexpected error occurred"),
+              description: errorMessage,
             });
+            
+            setErrorAlerts([errorMessage]);
           }
         })
         .finally(() => {
@@ -145,6 +271,27 @@ function SignIn(props) {
 
   return (
     <SignInPage>
+      {/* Theme Toggle - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '24px',
+        right: '24px',
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '8px 12px',
+        background: 'hsl(var(--card))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: 'calc(var(--radius) - 2px)',
+        boxShadow: '0 2px 8px hsl(var(--foreground) / 0.08)',
+      }}>
+        <span style={{ fontSize: '13px', fontWeight: 500, color: 'hsl(var(--muted-foreground))' }}>
+          {t("Theme")}
+        </span>
+        <ThemeToggle />
+      </div>
+
       <Row style={{ flex: 1 }}>
         <Col xs={24} lg={8}>
           <div className="inner-container">
@@ -155,7 +302,17 @@ function SignIn(props) {
                 style={{ width: 150 }}
               />
             </Link>
-            <Title margin="0 0 40px">{t("Log in to your account")}</Title>
+            <Title 
+              margin="0 0 40px" 
+              style={{ 
+                color: 'hsl(var(--foreground))', 
+                fontSize: '28px',
+                fontWeight: 700,
+                lineHeight: 1.2,
+              }}
+            >
+              {t("Log in to your account")}
+            </Title>
             <form action="" autoComplete="off" onSubmit={submitForm}>
               <div ref={messageRef} style={{ position: "relative", marginBottom: '16px' }}>
                 <ErrorAlerts alerts={errorAlerts} />
@@ -251,7 +408,7 @@ function SignIn(props) {
 
 const styles = {
   backgroundImage: {
-    background: "rgb(99 143 225 / 6%)",
+    background: "hsl(var(--muted) / 0.3)",
     backgroundSize: "cover",
     flexGrow: 1,
     alignItems: "center",
@@ -260,40 +417,46 @@ const styles = {
     position: "relative",
     overflow: "hidden",
     borderLeftWidth: 1,
-    borderLeftColor: "rgb(82 123 221 / 21%)",
+    borderLeftColor: "hsl(var(--border))",
     borderLeftStyle: "solid",
     borderTopWidth: 1,
-    borderTopColor: "rgb(82 123 221 / 21%)",
+    borderTopColor: "hsl(var(--border))",
     borderTopStyle: "solid",
     minHeight: 450,
+    transition: "background 0.3s ease, border-color 0.3s ease",
   },
   textWrapper: {
     width: "100%",
     maxWidth: 450,
     padding: "80px 20px",
-    color: "#fff",
+    color: "hsl(var(--foreground))",
     margin: "auto",
     textAlign: "center",
     zIndex: 2,
+    transition: "color 0.3s ease",
   },
   title: {
     fontSize: 53,
     lineHeight: 1.1,
-    color: "#fff",
+    color: "hsl(var(--foreground))",
     fontWeight: "700",
+    transition: "color 0.3s ease",
   },
   subTitle: {
     fontSize: 16,
     lineHeight: 1.5,
     fontWeight: "500",
     marginTop: 21,
+    color: "hsl(var(--muted-foreground))",
+    transition: "color 0.3s ease",
   },
   flag: {
     width: "100%",
     padding: 40,
-    // opacity: 0.12,
+    opacity: 0.12,
     position: "absolute",
     maxWidth: 500,
+    transition: "opacity 0.3s ease",
   },
 };
 

@@ -13,44 +13,64 @@ const axios = Axios.create({
 axios.interceptors.request.use((config) => {
   const isSimulatorActive = window.location.pathname.endsWith("simulator");
   if (!config.hideSpinner) {
-    if (isSimulatorActive) {
-      document.querySelector("#spinner-container .ant-spin-text").innerHTML =
-        "Calculating...";
-      document.getElementById("spinner-container").classList.add("show");
-    } else {
-      document.querySelector("#spinner-container .ant-spin-text").innerHTML =
-        "Loading...";
-      document.getElementById("spinner-container").classList.add("show");
+    try {
+      const spinnerContainer = document.getElementById("spinner-container");
+      const spinnerText = document.querySelector("#spinner-container .ant-spin-text");
+      
+      if (spinnerText) {
+        spinnerText.innerHTML = isSimulatorActive ? "Calculating..." : "Loading...";
+      }
+      
+      if (spinnerContainer) {
+        spinnerContainer.classList.add("show");
+      }
+    } catch (err) {
+      console.warn("Spinner not found:", err);
     }
   }
 
   // TODO try to add PersistGates
-  const token =
-    store.getState().auth.access_token ||
-    (localStorage["persist:root"]
-      ? JSON.parse(JSON.parse(localStorage["persist:root"]).auth).access_token
-      : "");
-  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  try {
+    const token =
+      store.getState().auth.access_token ||
+      (localStorage["persist:root"]
+        ? JSON.parse(JSON.parse(localStorage["persist:root"]).auth).access_token
+        : "");
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
+  } catch (err) {
+    console.warn("Failed to get auth token:", err);
+  }
+  
   return config;
 });
 
 axios.interceptors.response.use(
   (res) => {
     if (!res.config.hideSpinner) {
-      document.getElementById("spinner-container")?.classList.remove("show");
+      try {
+        document.getElementById("spinner-container")?.classList.remove("show");
+      } catch (err) {
+        console.warn("Failed to hide spinner:", err);
+      }
     }
     return res;
   },
   (error) => {
-    console.error(error);
-    // if (!config.hideSpinner) {
-    document.getElementById("spinner-container")?.classList.remove("show");
-    // }
-    if (!error.message.includes("422")) {
-      if (error.message.includes("401")) {
-        return store.dispatch({ type: SIGN_OUT_SUCCESS });
-      }
+    console.error("Axios error:", error);
+    
+    // Hide spinner on error
+    try {
+      document.getElementById("spinner-container")?.classList.remove("show");
+    } catch (err) {
+      console.warn("Failed to hide spinner:", err);
     }
+    
+    // Handle specific error codes
+    if (error.response?.status === 401) {
+      console.log("Unauthorized - signing out");
+      store.dispatch({ type: SIGN_OUT_SUCCESS });
+    }
+    
     return Promise.reject(error);
   }
 );

@@ -1,4 +1,5 @@
-import { Divider, Popover } from "antd";
+import { Separator as Divider } from "../UI/shadcn";
+import { Popover } from "antd"; // Keep Popover for now
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import defaultProfile from "../../assets/startBusiness/user.svg";
@@ -10,7 +11,7 @@ import { roleNames } from "../../utils";
 import { useLocale } from "../../utils/locale";
 import { USER_ROLES } from "../../constants/userRoles";
 import { signOutAction } from "../../store/Auth/actions";
-import { SettingOutlined } from "@ant-design/icons";
+import { Settings } from "lucide-react";
 
 export default function Profile(props) {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function Profile(props) {
         {t("Profile")}
       </Link>
       <Link to="/settings/profile">
-        <SettingOutlined className="icon" />
+        <Settings className="icon" size={18} />
         {t("Settings")}
       </Link>
       <Divider style={{ margin: "0", borderColor: "#72717f" }} />

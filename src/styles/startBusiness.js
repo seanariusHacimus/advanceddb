@@ -25,8 +25,9 @@ export default styled.div`
     background: hsl(var(--card));
     width: 100%;
     border-radius: 10px;
-    box-shadow: var(--box-shadow);
+    border: 1px solid hsl(var(--border));
     height: 100%;
+    transition: all 0.2s ease;
   }
   .ant-tabs-nav::before {
     border-color: var(--border-grey);
@@ -267,26 +268,28 @@ export const ActionTablePage = styled.div`
   .ant-table-expanded-row > td,
   .ant-table-expanded-row:hover > td,
   .ant-table-thead > tr > th {
-    background-color: var(--background);
+    background-color: hsl(var(--card));
     height: 100%;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    transition: background-color 0.2s ease;
   }
   .ant-btn.ant-dropdown-trigger.ant-btn-default.ant-btn-icon-only {
     background-color: transparent;
     position: absolute;
   }
   .ant-table-tbody > tr .ant-table-wrapper:only-child .ant-table td {
-    background-color: var(--background);
+    background-color: hsl(var(--card));
+    transition: background-color 0.2s ease;
   }
 
   .custom-table-row:hover,
   .custom-table-row:hover > td,
   .custom-table-expanded-row tr:hover,
   .custom-table-expanded-row tr:hover > td {
-    background: #f0f1f6 !important;
-    transition: all 0s;
+    background: hsl(var(--muted) / 0.5) !important;
+    transition: background-color 0.2s ease;
   }
 
   .sub-action-wrapper {
@@ -329,17 +332,18 @@ export const ActionTablePage = styled.div`
     padding-bottom: 0px;
   }
   .ant-table-content::-webkit-scrollbar-track {
-    background: var(--background);
+    background: hsl(var(--card));
   }
 
   .ant-table-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(to right, #638fce82 20%, #ffeb3b00 10px);
+    background: hsl(var(--primary) / 0.5);
     border-radius: 3px;
-    border: 6px solid var(--background);
+    border: 6px solid hsl(var(--card));
   }
   .sub-action-row td,
   .sub-action-row {
-    background: #f3f6fd !important;
+    background: hsl(var(--accent) / 0.3) !important;
+    transition: background-color 0.2s ease;
   }
   .ant-table-content::-webkit-scrollbar {
     width: 4px;
@@ -353,7 +357,8 @@ export const ActionTablePage = styled.div`
   }
 
   .custom-table table {
-    background: var(--background);
+    background: hsl(var(--card));
+    transition: background-color 0.2s ease;
   }
   .complete-checkbox {
     padding-left: 0;
@@ -366,20 +371,22 @@ export const ActionTablePage = styled.div`
     grid-template-columns:
       30px minmax(200px, 1fr) minmax(150px, 0.5fr) minmax(150px, 0.5fr)
       minmax(200px, 0.5fr) minmax(200px, 0.5fr) 47px;
-    background-color: var(--background);
+    background-color: hsl(var(--card));
     align-items: center;
     width: calc(100vw - 270px - 120px);
+    transition: background-color 0.2s ease;
   }
 
   .custom-table-row,
   .custom-table thead > tr {
-    border-bottom: 1px solid var(--border-grey);
+    border-bottom: 1px solid hsl(var(--border));
   }
   .custom-table-expanded-row tr > td {
-    border-bottom: 1px solid var(--border-grey) !important;
+    border-bottom: 1px solid hsl(var(--border)) !important;
+    transition: border-color 0.3s ease;
   }
   .custom-table-expanded-row tr:hover > td {
-    border-bottom: 1px solid var(--blue) !important;
+    border-bottom: 1px solid hsl(var(--primary)) !important;
   }
   .custom-table thead > tr > th {
     border-bottom: none;
@@ -402,7 +409,8 @@ export const ActionTablePage = styled.div`
     letter-spacing: 0.01em;
   }
   .custom-draggable-table table {
-    background: #f3f6fd;
+    background: hsl(var(--accent) / 0.2);
+    transition: background-color 0.2s ease;
   }
 
   .ant-table-column-sorter-full {
@@ -491,75 +499,81 @@ export const MeetingMinutesPage = styled.div`
   }
   .ant-table-thead > tr > th,
   .ant-table-tbody > tr > td {
-    background-color: var(--background);
-    color: var(--text);
+    background-color: hsl(var(--card));
+    color: hsl(var(--foreground));
+    transition: background-color 0.2s ease, color 0.3s ease;
   }
   .ant-table-tbody > tr.ant-table-row:hover > td {
-    background-color: #f0f1f6;
+    background-color: hsl(var(--muted) / 0.5);
   }
   .ant-table-thead > tr > th {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 12px;
     line-height: 15px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #828a9d;
+    color: hsl(var(--muted-foreground));
+    background-color: hsl(var(--muted));
   }
   .expanded-content h3 {
     margin-bottom: 10px;
     margin-top: 15px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    font-weight: 500;
-    color: var(--text-light);
+    color: hsl(var(--muted-foreground));
+    transition: color 0.3s ease;
   }
   .expanded-content p {
     font-size: 14px;
     line-height: 150%;
-    color: #252a32;
+    color: hsl(var(--foreground));
+    transition: color 0.3s ease;
   }
 
   tr.ant-table-expanded-row > td {
     background-color: hsl(var(--card));
-    border: 1px solid var(--border-grey);
+    border: 1px solid hsl(var(--border));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-top: none;
+    transition: background-color 0.2s ease, border-color 0.3s ease;
   }
   .bg-white > td {
     background-color: hsl(var(--card)) !important;
   }
   .bg-white > td:first-of-type {
-    border-left: 1px solid var(--border-grey);
+    border-left: 1px solid hsl(var(--border));
   }
   .bg-white > td:last-of-type {
-    border-right: 1px solid var(--border-grey);
+    border-right: 1px solid hsl(var(--border));
   }
   .attachment-icon {
     margin-left: 10px;
     margin-right: 5px;
   }
   .icons-set .item-title {
-    border-bottom: 1px dashed var(--border-grey);
-    color: var(--text);
+    border-bottom: 1px dashed hsl(var(--border));
+    color: hsl(var(--foreground));
+    transition: color 0.3s ease;
   }
 
   .ant-pagination-item a {
-    color: var(--text);
+    color: hsl(var(--foreground));
+    transition: color 0.3s ease;
   }
 
   .ant-pagination-next:hover .ant-pagination-item-link,
   .ant-pagination-prev:hover .ant-pagination-item-link {
-    color: var(--blue);
+    color: hsl(var(--primary));
   }
   .ant-pagination-item-active {
     border-radius: 6px;
-    background-color: var(--blue);
-    border-color: var(--blue);
+    background-color: hsl(var(--primary));
+    border-color: hsl(var(--primary));
 
     a {
-      color: #fff;
+      color: hsl(var(--primary-foreground));
     }
   }
 `;
@@ -575,9 +589,10 @@ export const MeetingMinutesEmpty = styled(ActionPlanEmpty)`
     opacity: 0.3;
   }
   .ant-table-thead > tr > th {
-    background-color: var(--background);
-    color: #828a9d;
+    background-color: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
     font-size: 12px;
+    transition: all 0.2s ease;
   }
   .add-new-action {
     margin-left: auto;
@@ -631,13 +646,14 @@ export const MembersPage = styled(MeetingMinutesPage)`
       font-size: 14px;
       line-height: 17px;
       text-decoration-line: underline;
-      color: var(--text);
+      color: hsl(var(--foreground));
       margin-left: 4px;
+      transition: color 0.3s ease;
     }
   }
 
   .pending-subtitle {
-    color: #c1d3ff;
+    color: hsl(220 100% 80%);
   }
   .small {
     width: auto;
@@ -651,22 +667,23 @@ export const MembersPage = styled(MeetingMinutesPage)`
     }
   }
   .deny {
-    background-color: #777685;
-    color: #fff;
+    background-color: hsl(var(--muted-foreground));
+    color: hsl(var(--background));
     margin-left: 10px;
   }
 
   .bg-dark > td,
   .bg-dark .icons-set .item-title {
-    background-color: var(--dark) !important;
-    color: #fcfdff !important;
+    background-color: hsl(var(--muted)) !important;
+    color: hsl(var(--foreground)) !important;
+    transition: background-color 0.2s ease, color 0.3s ease;
   }
   .bg-dark .ant-btn.ant-dropdown-trigger.ant-btn-default.ant-btn-icon-only {
-    background: #777685;
+    background: hsl(var(--muted));
     position: absolute;
   }
   .bg-dark .anticon.anticon-more svg {
-    fill: #c6c5cc;
+    fill: hsl(var(--muted-foreground));
   }
   .ant-table-row-level-0.bg-dark > td:first-of-type::before,
   .bg-dark.ant-table-expanded-row > td:first-of-type::before {
@@ -677,7 +694,7 @@ export const MembersPage = styled(MeetingMinutesPage)`
     bottom: 1px;
     width: 4px;
     height: calc(100% - 4px);
-    background: #c1d3ff;
+    background: hsl(var(--primary));
     border-radius: 3px;
   }
   .bg-dark > td:first-of-type {
@@ -688,20 +705,23 @@ export const MembersPage = styled(MeetingMinutesPage)`
   }
   .bg-dark.ant-table-expanded-row > td {
     background-color: hsl(var(--card));
-    border: 1px solid var(--border-grey);
+    border: 1px solid hsl(var(--border));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-top: none;
+    transition: background-color 0.2s ease, border-color 0.3s ease;
   }
   .expanded-content {
     padding: 0 25px;
   }
   .bg-dark .expanded-content h3 {
-    color: #bcbcc2;
+    color: hsl(var(--muted-foreground));
+    transition: color 0.3s ease;
   }
   .bg-dark .expanded-content p,
   .bg-dark .expanded-content a {
-    color: #fcfdff;
+    color: hsl(var(--foreground));
+    transition: color 0.3s ease;
   }
 
   .bg-denied > td {
@@ -715,10 +735,11 @@ export const MembersPage = styled(MeetingMinutesPage)`
   .bg-denied.ant-table-expanded-row > td {
     opacity: 0.3;
     background-color: hsl(var(--card));
-    border: 1px solid var(--border-grey);
+    border: 1px solid hsl(var(--border));
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-top: none;
+    transition: background-color 0.2s ease, border-color 0.3s ease;
   }
 
   .ant-tag {
@@ -798,7 +819,8 @@ export const StyledMembersAll = styled(MembersPage)`
     min-width: 100px;
   }
   .ant-table-container {
-    background-color: var(--background);
+    background-color: hsl(var(--card));
+    transition: background-color 0.2s ease;
   }
   .ant-table-content {
     overflow: auto hidden;

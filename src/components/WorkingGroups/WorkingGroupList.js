@@ -1,13 +1,13 @@
 import { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { Table } from "antd";
+import { Table } from "antd"; // Using Ant Table for drag-and-drop functionality
 import {
   sortableContainer,
   sortableElement,
   sortableHandle,
 } from "react-sortable-hoc";
-import { MenuOutlined } from "@ant-design/icons";
+import { Menu as MenuIcon } from "lucide-react";
 import arrayMove from "array-move";
 import getQuery from "./queryGenerator";
 import Axios from "../../utils/axios";
@@ -16,7 +16,7 @@ import { fetchWorkingGroupsAction } from "../../store/WorkingGroups/actions";
 import { withLocale } from "../../utils/locale";
 
 const DragHandle = sortableHandle(() => (
-  <MenuOutlined style={{ cursor: "pointer", color: "#999" }} />
+  <MenuIcon style={{ cursor: "pointer", color: "hsl(var(--muted-foreground))" }} size={18} />
 ));
 
 const SortableItem = sortableElement((props) => <tr {...props} />);
