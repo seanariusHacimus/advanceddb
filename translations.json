@@ -1,0 +1,17 @@
+{
+    "Something went wrong while printing": "Something went wrong while printing",
+    "Download actions": "Download actions",
+    "Audit logs": "Audit logs",
+    "Summary": "Summary",
+    "Created date": "Created date",
+    "Event": "Event",
+    "Event description": "Event description",
+    "Creator": "Creator",
+    "Location": "Location",
+    "Download PDF": "Download PDF",
+    "The action status will be under review and needs to be approved or rejected by an authorized person": "The action status will be under review and needs to be approved or rejected by an authorized person",
+    "This will also mark related Subactions as Complete.": "This will also mark related Subactions as Complete.",
+    "Approval inbox": "Approval inbox",
+    "Can you confirm this?": "Can you confirm this?",
+    "Requested by": "Requested by",
+}

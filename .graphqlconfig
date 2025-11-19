@@ -1,0 +1,16 @@
+{
+  "name": "Upaynet",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "production": {
+        "url": "https://api.advance-db.upaynet.tel/api/graphql",
+        "introspect": true
+      },
+      "development": {
+        "url": "http://localhost:3002/api/graphql",
+        "introspect": true
+      }
+    }
+  }
+}
