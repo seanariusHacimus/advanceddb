@@ -344,10 +344,10 @@ const CustomGantt = ({ data, t }) => {
   const scrollRef = useRef(null);
 
   const statusColors = {
-    completed: { bg: 'hsl(221 83% 53%)', text: 'hsl(0 0% 100%)' },
-    ongoing_within_deadline: { bg: 'hsl(43 96% 56%)', text: 'hsl(43 96% 20%)' },
-    ongoing_past_deadline: { bg: 'hsl(0 84% 65%)', text: 'hsl(0 0% 100%)' },
-    not_started: { bg: 'hsl(var(--muted))', text: 'hsl(var(--muted-foreground))' },
+    completed: { bg: 'hsl(var(--status-completed))', text: 'hsl(0 0% 100%)' },
+    ongoing_within_deadline: { bg: 'hsl(var(--status-in-progress))', text: 'hsl(0 0% 100%)' },
+    ongoing_past_deadline: { bg: 'hsl(var(--status-overdue))', text: 'hsl(0 0% 100%)' },
+    not_started: { bg: 'hsl(var(--status-not-started))', text: 'hsl(var(--muted-foreground))' },
   };
 
   const columnWidth = useMemo(() => {

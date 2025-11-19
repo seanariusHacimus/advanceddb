@@ -9,14 +9,14 @@ const alertVariants = {
     color: hsl(var(--primary));
   `,
   success: css`
-    background: hsl(var(--chart-2) / 0.1);
-    border-color: hsl(var(--chart-2) / 0.3);
-    color: hsl(142 76% 36%);
+    background: hsl(var(--success) / 0.1);
+    border-color: hsl(var(--success) / 0.3);
+    color: hsl(var(--success));
   `,
   warning: css`
-    background: hsl(var(--chart-4) / 0.1);
-    border-color: hsl(var(--chart-4) / 0.3);
-    color: hsl(43 96% 40%);
+    background: hsl(var(--status-in-progress) / 0.1);
+    border-color: hsl(var(--status-in-progress) / 0.3);
+    color: hsl(var(--status-in-progress));
   `,
   error: css`
     background: hsl(var(--destructive) / 0.1);

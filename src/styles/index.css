@@ -37,29 +37,37 @@
     
     --radius: 0.5rem;
     
-    /* Chart colors (for data visualization) */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    /* Chart colors (for data visualization) - Standardized Palette */
+    --chart-1: 221 83% 53%;       /* Primary Blue - for completed/success */
+    --chart-2: 45 93% 47%;        /* Amber - for in-progress */
+    --chart-3: 0 84% 60%;         /* Red - for overdue/destructive */
+    --chart-4: 240 5% 84%;        /* Light Gray - for not-started/neutral */
+    --chart-5: 215 20% 65%;       /* Muted Blue-Gray - for under review */
+    
+    /* Semantic chart colors (task status) */
+    --status-completed: 221 83% 53%;
+    --status-in-progress: 45 93% 47%;
+    --status-overdue: 0 84% 60%;
+    --status-not-started: 240 5% 84%;
+    --status-under-review: 215 20% 65%;
+    --success: 142 76% 36%;       /* Green for success states */
     
     /* Legacy color variables (for backward compatibility during migration) */
-    --blue: #527BDD;
+    --blue: #3b82f6;
     --dark-blue: #313976;
     --title: #0D0C21;
     --text: #252A32;
     --dark: #535263;
-    --danger: #F181AB;
+    --danger: #ef4444;
     --text-light: #717A8F;
     --icon-color: #DADCE2;
     --border-grey: #E2E4ED;
     --default-dark: #e8e8e8;
     --default-light: #F3F3F4;
-    --chart-yellow: #F4D581;
-    --chart-blue: #527BDD;
-    --chart-red: #F4C9D9;
-    --chart-grey: #E5E7EF;
+    --chart-yellow: #eab308;
+    --chart-blue: #3b82f6;
+    --chart-red: #ef4444;
+    --chart-grey: #cbd5e1;
     --box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
 }
 
@@ -93,12 +101,20 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
     
-    /* Chart colors for dark mode */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Chart colors for dark mode - Standardized Palette */
+    --chart-1: 217 91% 60%;       /* Lighter Blue - for completed/success */
+    --chart-2: 48 96% 53%;        /* Lighter Amber - for in-progress */
+    --chart-3: 0 84% 65%;         /* Lighter Red - for overdue/destructive */
+    --chart-4: 240 5% 65%;        /* Medium Gray - for not-started/neutral */
+    --chart-5: 215 25% 70%;       /* Lighter Muted Blue-Gray - for under review */
+    
+    /* Semantic chart colors (task status) - dark mode */
+    --status-completed: 217 91% 60%;
+    --status-in-progress: 48 96% 53%;
+    --status-overdue: 0 84% 65%;
+    --status-not-started: 240 5% 65%;
+    --status-under-review: 215 25% 70%;
+    --success: 142 71% 45%;
 }
 
 *,

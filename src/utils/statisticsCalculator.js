@@ -8,15 +8,15 @@ export const getDonutChartData = (data) => {
   keys.forEach((item) => {
     let color = "";
     if (item === "completed") {
-      color = "#527BDD";
+      color = "hsl(var(--status-completed))";
     } else if (item === "not_started") {
-      color = "#E5E7EF";
+      color = "hsl(var(--status-not-started))";
     } else if (item === "ongoing_within_deadline") {
-      color = "#F4D581";
+      color = "hsl(var(--status-in-progress))";
     } else if (item === "on_review") {
-      color = "#f3f3f3";
+      color = "hsl(var(--status-under-review))";
     } else {
-      color = "#F4C9D9";
+      color = "hsl(var(--status-overdue))";
     }
 
     const value = {

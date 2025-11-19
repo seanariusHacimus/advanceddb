@@ -27,10 +27,10 @@ export const MiniProgressIndicator = ({ data }) => {
   const thickness = 3; // Thickness of donut ring
   const outerRadius = radius + thickness;
   
-  // Colors - both segments have same opacity/thickness, just different colors
-  const completedColor = isFullyCompleted ? '#22c55e' : '#527bdd'; // Green if 100%, else blue
+  // Colors - all progress uses same shadcn blue color
+  const completedColor = '#3b82f6'; // Shadcn blue for all progress
   const remainingColor = '#e5e7eb'; // Solid light gray for remaining (same thickness as completed)
-  const borderColor = '#527bdd'; // Outer border
+  const borderColor = '#3b82f6'; // Outer border matches progress color
   
   // Create arc path for a segment
   const createArc = (startAngle, endAngle, innerR, outerR) => {

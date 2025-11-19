@@ -199,31 +199,31 @@ const chartData = (t) => [
     name: "completed",
     title: t("Completed tasks"),
     count: 0,
-    color: "#527BDD",
+    color: "hsl(var(--status-completed))",
   },
   {
     name: "ongoing",
     title: t("In Progress"),
     count: 0,
-    color: "#F4D581",
+    color: "hsl(var(--status-in-progress))",
   },
   {
     name: "ongoingPast",
     title: t("Past Due"),
     count: 0,
-    color: "#F4C9D9",
+    color: "hsl(var(--status-overdue))",
   },
   {
     name: "notStarted",
     title: t("Not started"),
     count: 0,
-    color: "#E5E7EF",
+    color: "hsl(var(--status-not-started))",
   },
   {
     name: "onreview",
     title: t("Under Review"),
     count: 0,
-    color: "##f3f3f3",
+    color: "hsl(var(--status-under-review))",
   },
 ];
 
@@ -397,7 +397,7 @@ const Dashboard = () => {
                         <ProgressLabel>{t(item.title)}</ProgressLabel>
                         <ShProgress
                           trackColor="hsl(var(--muted) / 0.3)"
-                          color="hsl(var(--primary))"
+                          color="hsl(221 83% 53%)"
                           thickness={8}
                           value={percent}
                           format={(percent) => percent + "%"}

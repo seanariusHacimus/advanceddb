@@ -181,6 +181,7 @@ export function Select({
   allowClear = false,
   showSearch = false,
   mode, // 'multiple' for multi-select
+  multiple, // Alternative: boolean for multi-select
   className,
   style,
   error,
@@ -191,7 +192,7 @@ export function Select({
   const containerRef = useRef(null);
   const searchInputRef = useRef(null);
 
-  const isMultiple = mode === 'multiple';
+  const isMultiple = mode === 'multiple' || multiple === true;
   const selectedValues = isMultiple ? (Array.isArray(value) ? value : []) : value;
 
   useEffect(() => {

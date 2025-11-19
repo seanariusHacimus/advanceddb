@@ -188,7 +188,7 @@ export const ProgressBarContainer = styled.div`
 
 export const ProgressBarFill = styled.div`
   height: 100%;
-  background: ${props => props.color || 'hsl(var(--primary))'};
+  background: ${props => props.color || 'hsl(221 83% 53%)'};
   border-radius: 9999px;
   width: ${props => props.percentage}%;
   transition: width 0.3s ease;
@@ -240,15 +240,15 @@ export const TaskBadge = styled.div`
   font-weight: 600;
   background: ${props => {
     switch(props.variant) {
-      case 'danger': return 'hsl(var(--destructive))';
-      case 'warning': return 'hsl(45 93% 47%)';
+      case 'danger': return 'hsl(var(--status-overdue))';
+      case 'warning': return 'hsl(var(--status-in-progress))';
       case 'success': return 'hsl(var(--success))';
-      default: return 'hsl(var(--muted))';
+      default: return 'hsl(var(--status-not-started))';
     }
   }};
   color: ${props => {
     switch(props.variant) {
-      case 'danger': return 'hsl(var(--destructive-foreground))';
+      case 'danger': return 'white';
       case 'warning': return 'white';
       case 'success': return 'white';
       default: return 'hsl(var(--muted-foreground))';

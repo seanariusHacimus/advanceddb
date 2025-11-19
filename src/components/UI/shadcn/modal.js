@@ -1,11 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { X } from 'lucide-react';
 
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: ${props => props.$zIndex || 1000};
   background: hsl(var(--background) / 0.8);
   backdrop-filter: blur(4px);
   display: ${props => props.$open ? 'flex' : 'none'};
@@ -149,10 +150,12 @@ const ModalFooter = styled.div`
 export function Modal({ 
   open, 
   onClose, 
+  onCancel,
   title, 
   children, 
   footer,
   width,
+  zIndex,
   closable = true,
   maskClosable = true,
   className,
@@ -161,7 +164,13 @@ export function Modal({
   const handleOverlayClick = (e) => {
     if (maskClosable && e.target === e.currentTarget) {
       onClose?.();
+      onCancel?.();
     }
+  };
+
+  const handleClose = () => {
+    onClose?.();
+    onCancel?.();
   };
 
   React.useEffect(() => {
@@ -178,14 +187,14 @@ export function Modal({
 
   if (!open) return null;
 
-  return (
-    <Overlay $open={open} onClick={handleOverlayClick}>
+  const modalContent = (
+    <Overlay $open={open} $zIndex={zIndex} onClick={handleOverlayClick}>
       <ModalContent $open={open} $width={width} className={className} {...props}>
         {(title || closable) && (
           <ModalHeader>
             {title && <ModalTitle>{title}</ModalTitle>}
             {closable && (
-              <CloseButton onClick={onClose} aria-label="Close">
+              <CloseButton onClick={handleClose} aria-label="Close">
                 <X />
               </CloseButton>
             )}
@@ -195,6 +204,12 @@ export function Modal({
         {footer && <ModalFooter>{footer}</ModalFooter>}
       </ModalContent>
     </Overlay>
+  );
+
+  // Render modal in a portal to ensure it's at the root level
+  return ReactDOM.createPortal(
+    modalContent,
+    document.body
   );
 }
 

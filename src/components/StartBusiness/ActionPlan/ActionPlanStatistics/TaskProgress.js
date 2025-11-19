@@ -46,15 +46,8 @@ const TaskProgress = ({ actions }) => {
                 percent = 100;
               }
 
-              // Определяем цвет на основе прогресса
-              let color = 'hsl(var(--primary))';
-              if (percent === 100) {
-                color = 'hsl(var(--success))';
-              } else if (percent < 30) {
-                color = 'hsl(var(--destructive))';
-              } else if (percent < 70) {
-                color = 'hsl(45 93% 47%)';
-              }
+              // All progress bars use shadcn blue color
+              const color = 'hsl(221 83% 53%)';
 
               return (
                 <ProgressListItem

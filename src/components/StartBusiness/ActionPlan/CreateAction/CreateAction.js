@@ -2,8 +2,19 @@ import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import { Col, Row, Modal } from "../../../UI/shadcn";
-import { DatePicker, Select, Tag } from "antd"; // Keep for now - complex forms
+import { 
+  Col, 
+  Row, 
+  Modal, 
+  DatePicker, 
+  Select, 
+  Badge,
+  Button as ShButton,
+  Input,
+  Label,
+  FormGroup,
+  Separator
+} from "../../../UI/shadcn";
 import moment from "moment-timezone";
 import Axios from "../../../../utils/axios";
 import { CREATE_ACTION } from "../../../../graphql/actions";
@@ -16,7 +27,7 @@ import {
   TitleH1,
   TitleH3,
 } from "../../../../styles";
-import { ReactComponent as IconCheck } from "../../../../assets/list-icon.svg";
+import { X } from "lucide-react";
 import { fetchActionPlans } from "../../../../store/Actions/actions";
 import {
   dissoc,
@@ -336,6 +347,26 @@ class ActionPlanForm extends ActionPlanBase {
     this.setState({ attachments: data });
   };
 
+  handleSelectChange = (field, value) => {
+    this.setState({ 
+      [field]: value,
+      errors: dissoc(this.state.errors, field)
+    });
+  };
+
+  handleMultiSelectChange = (value) => {
+    this.setState({ 
+      responsive_account_ids: value,
+      errors: dissoc(this.state.errors, 'responsive_account_ids')
+    });
+  };
+
+  removeResponsible = (id) => {
+    this.setState(prev => ({
+      responsive_account_ids: prev.responsive_account_ids.filter(item => item !== id)
+    }));
+  };
+
   render() {
     const { t, indicatorGroup } = this.props;
     const workingGroupTitle = indicatorGroup.title;
@@ -350,9 +381,6 @@ class ActionPlanForm extends ActionPlanBase {
       allAccounts,
       alerts,
       errors,
-      tagSearch,
-      isStartAtFocused,
-      isEndAtFocused,
       responsive_tags,
       allTags,
       attachments = [],
@@ -364,406 +392,238 @@ class ActionPlanForm extends ActionPlanBase {
       isActionNameSelected,
     } = this.state;
 
-    console.log("errors", errors);
+    const allPeople = { ...allAccounts, ...allTags };
 
-    function tagRender(props) {
-      const { label, value, closable, onClose } = props;
-
-      return (
-        <Tag
-          closable={closable}
-          onClose={onClose}
-          style={{ marginRight: 3, fontSize: 16, padding: 5 }}
-          color={responsive_tags.includes(value) ? "blue" : "default"}
-        >
-          {label}
-        </Tag>
-      );
-    }
     return (
       <Modal
         title={t("Create a new action")}
         open={this.props.visible}
         onCancel={this.props.modalHandler}
         footer={
-          <Row gutter={[16]}>
-            <Col span={12}>
-              <Button
-                className="transparent cancel"
-                type="reset"
-                onClick={this.props.modalHandler}
-              >
-                {t("Cancel")}
-              </Button>
-            </Col>
-            <Col span={12}>
-              <ButtonPrimary type="submit" onClick={this.submitAction}>
-                {t("Create a new action")}
-              </ButtonPrimary>
-            </Col>
-          </Row>
+          <div style={{ 
+            display: 'flex', 
+            gap: '12px', 
+            justifyContent: 'flex-end',
+            padding: '16px 0 0'
+          }}>
+            <ShButton
+              variant="outline"
+              size="lg"
+              onClick={this.props.modalHandler}
+            >
+              {t("Cancel")}
+            </ShButton>
+            <ShButton 
+              size="lg"
+              onClick={this.submitAction}
+            >
+              {t("Create action")}
+            </ShButton>
+          </div>
         }
-        zIndex={1080}
-        styles={{
-          content: {
-            padding: "32px",
-          },
-        }}
+        zIndex={9999}
+        width="900px"
       >
-        <StyledActionPlan
-          id="add-action-plan"
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              console.log("parent Entered");
-              e.preventDefault();
-              this.submitAction(e);
-            }
-          }}
-        >
-          <form id="header" onSubmit={this.submitAction} ref={this.parentRef}>
+        <form id="header" onSubmit={this.submitAction} ref={this.parentRef} onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}>
+          <div style={{ padding: '24px 32px', display: 'grid', gap: '24px' }}>
             <ErrorAlerts alerts={alerts} />
-            <Row gutter={[22]}>
-              <Col xs={24} key="action-title">
-                <InputWrapper
-                  className="has-messages"
-                  margin="8px"
-                  align="flex-end"
-                >
-                  <ActionNameSelection
-                    onChange={this.handleActionNameChange}
-                    onSelect={this.onSelectActionName}
-                    value={name}
-                    topicName={workingGroupTitle}
-                    placeholder="Action name*"
-                    onClear={this.handleActionNameClear}
-                    existingActions={this.props.actions.map(
-                      (action) => action.name
-                    )}
-                  />
-                  <label htmlFor="" onClick={() => this.nameRef.focus()}>
-                    {t("Action name *")}
-                  </label>
-                  <InputErrors name={"name"} errors={errors} />
-                </InputWrapper>
-              </Col>
-              {!isUserAddedWorkingGroup && (
-                <>
-                  <Col xs={24} key="pillar_number">
-                    <InputWrapper
-                      className="has-messages"
-                      margin="8px"
-                      align="flex-end"
-                    >
-                      <Select
-                        showSearch
-                        style={{ width: "100%" }}
-                        size="large"
-                        placeholder={t("Pillar number *")}
-                        value={pillar_number}
-                        allowClear
-                        onChange={this.onPillarChange}
-                        disabled={isActionNameSelected}
-                        filterOption={(input, option) =>
-                          option.children
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                        className={`custom-select ${
-                          pillar_number ? "has-value" : ""
-                        } ${errors.pillar_number ? "input-error" : ""}`}
-                        getPopupContainer={(node) => node.parentNode}
-                        dropdownStyle={{ zIndex: 1090 }}
-                      >
-                        <Select.Option key={1} value={"I"}>
-                          Pillar I
-                        </Select.Option>
-                        <Select.Option key={2} value={"II"}>
-                          Pillar II
-                        </Select.Option>
-                        <Select.Option key={3} value={"III"}>
-                          Pillar III
-                        </Select.Option>
-                      </Select>
-                      <InputErrors name={"pillar_number"} errors={errors} />
-                    </InputWrapper>
-                  </Col>
-                  <Col xs={24} key="category">
-                    <InputWrapper
-                      className="has-messages"
-                      margin="8px"
-                      align="flex-end"
-                    >
-                      <Select
-                        style={{ width: "100%" }}
-                        size="large"
-                        placeholder={t("Category *")}
-                        value={category}
-                        onChange={this.onCategoryChange}
-                        disabled={!pillar_number || isActionNameSelected}
-                        allowClear
-                        filterOption={(input, option) =>
-                          option.children
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                        className={`custom-select ${
-                          category ? "has-value" : ""
-                        } ${errors.category ? "input-error" : ""}`}
-                        getPopupContainer={(node) => node.parentNode}
-                        dropdownStyle={{ zIndex: 1090 }}
-                      >
-                        {categoriesList?.map((item) => (
-                          <Select.Option key={item.value} value={item.value}>
-                            {item.value}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                      <InputErrors name={"category"} errors={errors} />
-                    </InputWrapper>
-                  </Col>
-                  <Col xs={24} key="sub_category">
-                    <InputWrapper className="has-messages" margin="8px">
-                      <Select
-                        showSearch
-                        style={{ width: "100%" }}
-                        placeholder={t("Sub-category *")}
-                        value={sub_category}
-                        onChange={(val) =>
-                          this.setState({
-                            sub_category: val,
-                            errors: dissoc(this.state.errors, "sub_category"),
-                          })
-                        }
-                        disabled={!category || isActionNameSelected}
-                        filterOption={(input, option) =>
-                          option.children
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                        className={`custom-select  ${
-                          sub_category ? "has-value" : ""
-                        } ${errors.sub_category ? "input-error" : ""}`}
-                        optionFilterProp="children"
-                        allowClear
-                        multiple={false}
-                        getPopupContainer={(node) => node.parentNode}
-                        dropdownStyle={{
-                          backgroundColor: "#535263",
-                          padding: 10,
-                          zIndex: 1090,
-                        }}
-                        size="large"
-                      >
-                        {subCategoriesList?.map((item) => (
-                          <Select.Option key={item.value} value={item.value}>
-                            {item.value}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                      <InputErrors name={"sub_category"} errors={errors} />
-                    </InputWrapper>
-                  </Col>
-                </>
-              )}
-              <Col xs={24} key="start_at">
-                <Row gutter={[22]}>
-                  <Col span={12}>
-                    <InputWrapper
-                      className="has-messages"
-                      margin="8px"
-                      align="flex-end"
-                    >
-                      <DatePicker
-                        required
-                        tabIndex="2"
-                        type="date"
-                        name="start_at"
-                        value={start_at}
-                        placeholder={t("Start Date *")}
-                        ref={(el) => (this.start_atRef = el)}
-                        open={isStartAtFocused}
-                        getPopupContainer={(el) => el.parentNode}
-                        onFocus={() =>
-                          this.setState({ isStartAtFocused: true })
-                        }
-                        onBlur={() =>
-                          this.setState({ isStartAtFocused: false })
-                        }
-                        onSelect={() =>
-                          this.setState({ isStartAtFocused: false })
-                        }
-                        disabledDate={(current) =>
-                          current < moment().startOf("day")
-                        }
-                        onChange={(val) =>
-                          this.setState({
-                            start_at: val
-                              ? val.startOf("day")
-                              : moment().startOf("day"),
-                            isStartAtFocused: false,
-                          })
-                        }
-                        className={`custom-datepicker large grey ${
-                          errors.start_at && "input-error"
-                        } ${start_at ? "has-value" : ""}`}
-                      />
-                      <InputErrors name={"start_at"} errors={errors} />
-                    </InputWrapper>
-                  </Col>
-                  <Col span={12} key="end_at">
-                    <InputWrapper
-                      className="has-messages"
-                      margin="8px"
-                      align="flex-end"
-                    >
-                      <DatePicker
-                        required
-                        tabIndex="3"
-                        type="date"
-                        name="end_at"
-                        placeholder={t("End Date *")}
-                        value={end_at}
-                        ref={(el) => (this.end_atRef = el)}
-                        open={isEndAtFocused}
-                        getPopupContainer={(el) => el.parentNode}
-                        onFocus={() => this.setState({ isEndAtFocused: true })}
-                        onBlur={() => this.setState({ isEndAtFocused: false })}
-                        onSelect={() =>
-                          this.setState({ isEndAtFocused: false })
-                        }
-                        onChange={(val) =>
-                          this.setState({
-                            end_at: val
-                              ? val.endOf("day")
-                              : moment().endOf("day"),
-                            isEndAtFocused: false,
-                          })
-                        }
-                        disabledDate={(current) =>
-                          current < moment(start_at).add(1, "day")
-                        }
-                        className={`custom-datepicker large grey ${
-                          errors.end_at && "input-error"
-                        } ${end_at ? "has-value" : ""}`}
-                      />
-                      <InputErrors name={"end_at"} errors={errors} />
-                    </InputWrapper>
-                  </Col>
-                </Row>
-              </Col>
-              <Col xs={24} key="responsive_accounts">
-                <InputWrapper
-                  className="has-messages"
-                  margin="8px"
-                  align="flex-end"
-                >
-                  <Select
-                    mode="multiple"
-                    required
-                    size="large"
-                    tabIndex="5"
-                    placeholder={t("Assign to*")}
-                    value={[
-                      ...new Set(
-                        responsive_account_ids.concat(responsive_tags)
-                      ),
-                    ]}
-                    onSearch={(tagSearch) => this.setState({ tagSearch })}
-                    style={{ width: "100%", backgroundColor: "#fafbfc" }}
-                    optionFilterProp="children"
-                    allowClear
-                    showSearch
-                    onChange={(arr) =>
-                      this.setState({ responsive_account_ids: arr })
-                    }
-                    className={`${
-                      responsive_account_ids?.length > 0 ? "has-value" : ""
-                    } ${errors.responsive_account_ids && "input-error"}`}
-                    getPopupContainer={(node) => node.parentNode}
-                    menuItemSelectedIcon={<IconCheck className="check-icon" />}
-                    dropdownStyle={{
-                      backgroundColor: "#535263",
-                      padding: 10,
-                      zIndex: 1090,
-                    }}
-                    notFoundContent={null}
-                    defaultActiveFirstOption={false}
-                    tagRender={tagRender}
-                    ref={(el) => (this.entityRef = el)}
-                    onDeselect={(tag) => this.handleRemoveTag(tag)}
-                    onInputKeyDown={(e) => {
-                      if (e.key === "Enter" && tagSearch.trim().length) {
-                        this.setState((prevState) => ({
-                          responsive_tags: [
-                            ...new Set([
-                              ...prevState.responsive_tags,
-                              tagSearch,
-                            ]),
-                          ],
-                          tagSearch: "",
-                        }));
-                        this.entityRef.blur();
-                        this.entityRef.focus();
-                      }
-                    }}
-                  >
-                    {Object.values({ ...allAccounts, ...allTags }).map(
-                      (acc) => {
-                        return (
-                          <Select.Option
-                            key={acc.id}
-                            className="select-item"
-                            value={acc.id}
-                          >
-                            {acc.isTag ? "#" : ""}
-                            {`${acc.first_name || ""} ${acc.last_name || ""}`}
-                          </Select.Option>
-                        );
-                      }
-                    )}
-                  </Select>
-                  <InputErrors
-                    name={"responsive_account_ids"}
-                    errors={errors}
-                  />
-                </InputWrapper>
-              </Col>
-
-              <Col span={24} style={{ marginBottom: 15 }}>
-                <InputWrapper
-                  className="has-messages"
-                  margin="8px"
-                  align="flex-start"
-                >
-                  <label htmlFor="" onClick={() => {}}>
-                    {t("Description")}
-                  </label>
-                  <Editor
-                    height={150}
-                    value={description}
-                    onChange={(val) =>
-                      this.setState({
-                        description: val,
-                        errors: dissoc(this.state.errors, "description"),
-                      })
-                    }
-                    className={`${errors.description && "input-error"}`}
-                  />
-
-                  <InputErrors name={"description"} errors={errors} />
-                </InputWrapper>
-              </Col>
-              <Col span={24} style={{ marginBottom: 15 }}>
-                <FileUpload
-                  attachments={[]}
-                  setAttachments={(attachments) =>
-                    this.setState({ attachments })
-                  }
+            
+            {/* Action Name */}
+            <FormGroup>
+              <Label>{t("Action name")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+              <ActionNameSelection
+                onChange={this.handleActionNameChange}
+                onSelect={this.onSelectActionName}
+                value={name}
+                topicName={workingGroupTitle}
+                placeholder={t("Enter action name")}
+                onClear={this.handleActionNameClear}
+                existingActions={this.props.actions.map(
+                  (action) => action.name
+                )}
+              />
+              <InputErrors name={"name"} errors={errors} />
+            </FormGroup>
+            
+            {/* Classification Fields */}
+            {!isUserAddedWorkingGroup && (
+              <>
+                <Separator />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+                  <FormGroup>
+                    <Label>{t("Pillar")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+                    <Select
+                      value={pillar_number}
+                      onChange={this.onPillarChange}
+                      disabled={isActionNameSelected}
+                      placeholder={t("Select")}
+                      options={[
+                        { value: 'I', label: 'Pillar I' },
+                        { value: 'II', label: 'Pillar II' },
+                        { value: 'III', label: 'Pillar III' },
+                      ]}
+                      error={!!errors.pillar_number}
+                    />
+                    <InputErrors name={"pillar_number"} errors={errors} />
+                  </FormGroup>
+                  
+                  <FormGroup>
+                    <Label>{t("Category")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+                    <Select
+                      value={category}
+                      onChange={this.onCategoryChange}
+                      disabled={!pillar_number || isActionNameSelected}
+                      placeholder={t("Select")}
+                      options={categoriesList.map(item => ({
+                        value: item.value,
+                        label: item.value
+                      }))}
+                      error={!!errors.category}
+                    />
+                    <InputErrors name={"category"} errors={errors} />
+                  </FormGroup>
+                  
+                  <FormGroup>
+                    <Label>{t("Sub-category")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+                    <Select
+                      value={sub_category}
+                      onChange={(val) => this.handleSelectChange('sub_category', val)}
+                      disabled={!category || isActionNameSelected}
+                      placeholder={t("Select")}
+                      options={subCategoriesList.map(item => ({
+                        value: item.value,
+                        label: item.value
+                      }))}
+                      error={!!errors.sub_category}
+                    />
+                    <InputErrors name={"sub_category"} errors={errors} />
+                  </FormGroup>
+                </div>
+              </>
+            )}
+            
+            <Separator />
+            
+            {/* Date Range */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <FormGroup>
+                <Label>{t("Start date")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+                <DatePicker
+                  value={start_at}
+                  onChange={(val) => this.setState({
+                    start_at: val ? val.startOf("day") : moment().startOf("day"),
+                    errors: dissoc(this.state.errors, 'start_at')
+                  })}
+                  placeholder={t("Select date")}
+                  disabled={false}
+                  min={moment().format('YYYY-MM-DD')}
+                  style={errors.start_at ? { borderColor: 'hsl(var(--destructive))' } : {}}
                 />
-              </Col>
-            </Row>
-          </form>
-        </StyledActionPlan>
+                <InputErrors name={"start_at"} errors={errors} />
+              </FormGroup>
+              
+              <FormGroup>
+                <Label>{t("End date")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+                <DatePicker
+                  value={end_at}
+                  onChange={(val) => this.setState({
+                    end_at: val ? val.endOf("day") : moment().endOf("day"),
+                    errors: dissoc(this.state.errors, 'end_at')
+                  })}
+                  placeholder={t("Select date")}
+                  disabled={false}
+                  min={start_at ? moment(start_at).add(1, 'day').format('YYYY-MM-DD') : moment().format('YYYY-MM-DD')}
+                  style={errors.end_at ? { borderColor: 'hsl(var(--destructive))' } : {}}
+                />
+                <InputErrors name={"end_at"} errors={errors} />
+              </FormGroup>
+            </div>
+            
+            <Separator />
+            
+            {/* Assign To */}
+            <FormGroup>
+              <Label>{t("Assign to")} <span style={{ color: 'hsl(var(--destructive))' }}>*</span></Label>
+              <Select
+                value={responsive_account_ids}
+                onChange={this.handleMultiSelectChange}
+                placeholder={t("Select people or add tags")}
+                options={Object.values(allPeople).map(acc => ({
+                  value: acc.id,
+                  label: `${acc.isTag ? '#' : ''}${acc.first_name || ''} ${acc.last_name || ''}`
+                }))}
+                multiple
+                showSearch
+                error={!!errors.responsive_account_ids}
+              />
+              
+              {responsive_account_ids.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+                  {responsive_account_ids.map(id => {
+                    const person = allPeople[id];
+                    if (!person) return null;
+                    const isTag = responsive_tags.includes(id);
+                    return (
+                      <Badge 
+                        key={id}
+                        variant={isTag ? "default" : "secondary"}
+                        style={{ 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          gap: '6px',
+                          padding: '6px 10px',
+                          fontSize: '13px'
+                        }}
+                      >
+                        {person.isTag ? '#' : ''}{person.first_name} {person.last_name}
+                        <X 
+                          size={14} 
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => this.removeResponsible(id)}
+                        />
+                      </Badge>
+                    );
+                  })}
+                </div>
+              )}
+              <InputErrors name={"responsive_account_ids"} errors={errors} />
+            </FormGroup>
+
+            <Separator />
+            
+            {/* Description */}
+            <FormGroup>
+              <Label>{t("Description")}</Label>
+              <Editor
+                height={150}
+                value={description}
+                onChange={(val) =>
+                  this.setState({
+                    description: val,
+                    errors: dissoc(this.state.errors, "description"),
+                  })
+                }
+                className={`${errors.description && "input-error"}`}
+              />
+              <InputErrors name={"description"} errors={errors} />
+            </FormGroup>
+            
+            {/* Attachments */}
+            <FormGroup>
+              <Label>{t("Attachments")}</Label>
+              <FileUpload
+                attachments={[]}
+                setAttachments={(attachments) =>
+                  this.setState({ attachments })
+                }
+              />
+            </FormGroup>
+          </div>
+        </form>
       </Modal>
     );
   }

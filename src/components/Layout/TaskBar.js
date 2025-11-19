@@ -455,20 +455,28 @@ export const TaskBar = () => {
       <Divider />
 
       {/* Profile Dropdown */}
-      <ProfileButton onClick={() => setProfileOpen(!profileOpen)}>
-        <Avatar
-          src={profileImg?.url}
-          alt={`${first_name} ${last_name}`}
-          fallback={`${first_name?.substring(0, 1) || ''}${last_name?.substring(0, 1) || ''}`}
-          size="sm"
-        />
-        <ProfileInfo>
-          <ProfileName>{first_name} {last_name}</ProfileName>
-          <ProfileRole>{t(role)}</ProfileRole>
-        </ProfileInfo>
-        <ChevronDown size={16} style={{ color: 'hsl(var(--muted-foreground))' }} />
+      <div style={{ position: 'relative' }}>
+        <ProfileButton onClick={(e) => {
+          e.stopPropagation();
+          setProfileOpen(!profileOpen);
+        }}>
+          <Avatar
+            src={profileImg?.url}
+            alt={`${first_name} ${last_name}`}
+            fallback={`${first_name?.substring(0, 1) || ''}${last_name?.substring(0, 1) || ''}`}
+            size="sm"
+          />
+          <ProfileInfo>
+            <ProfileName>{first_name} {last_name}</ProfileName>
+            <ProfileRole>{t(role)}</ProfileRole>
+          </ProfileInfo>
+          <ChevronDown size={16} style={{ color: 'hsl(var(--muted-foreground))' }} />
+        </ProfileButton>
         
-        <Dropdown $visible={profileOpen}>
+        <Dropdown 
+          $visible={profileOpen}
+          onClick={(e) => e.stopPropagation()}
+        >
           <DropdownHeader>
             <h3>{`${first_name} ${last_name}`}</h3>
             <span>{t(role)}</span>
@@ -491,7 +499,7 @@ export const TaskBar = () => {
             {t("Logout")}
           </DropdownButton>
         </Dropdown>
-      </ProfileButton>
+      </div>
 
       {/* Click outside to close */}
       {(profileOpen || notificationsOpen || languageOpen) && (

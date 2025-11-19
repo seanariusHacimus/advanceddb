@@ -181,7 +181,7 @@ class Simulator extends Component {
                     size="small"
                     width={85}
                     strokeWidth={18}
-                    strokeColor="#4A5187"
+                    strokeColor="hsl(var(--chart-1))"
                     strokeLinecap="square"
                   />
                   <Text color="#4A5187" className="progress-sub-title text-capitalize" fontSize="21px">{t('Overall score')}</Text>
@@ -202,7 +202,7 @@ class Simulator extends Component {
                     size="small"
                     width={85}
                     strokeWidth={18}
-                    strokeColor="#EFA5C1"
+                    strokeColor="hsl(var(--chart-3))"
                     strokeLinecap="square"
                   />
                   <Text color="#EFA5C1" className="progress-sub-title text-capitalize">{t('Overall ranking')}</Text>

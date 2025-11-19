@@ -31,19 +31,19 @@ const badgeVariants = {
     color: hsl(var(--foreground));
   `,
   success: css`
-    background: hsl(var(--chart-2));
+    background: hsl(var(--success));
     color: hsl(var(--primary-foreground));
     
     &:hover {
-      background: hsl(var(--chart-2) / 0.8);
+      background: hsl(var(--success) / 0.8);
     }
   `,
   warning: css`
-    background: hsl(var(--chart-4));
-    color: hsl(var(--foreground));
+    background: hsl(var(--status-in-progress));
+    color: hsl(var(--primary-foreground));
     
     &:hover {
-      background: hsl(var(--chart-4) / 0.8);
+      background: hsl(var(--status-in-progress) / 0.8);
     }
   `,
 };

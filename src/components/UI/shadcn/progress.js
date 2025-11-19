@@ -12,7 +12,7 @@ const Track = styled.div`
 const Fill = styled.div`
   height: 100%;
   width: ${(p) => Math.max(0, Math.min(100, p.$value))}%;
-  background: ${(p) => p.$color || "hsl(var(--primary))"};
+  background: ${(p) => p.$color || "hsl(221 83% 53%)"};
   transition: width 200ms ease, background-color 0.3s ease;
 `;
 
